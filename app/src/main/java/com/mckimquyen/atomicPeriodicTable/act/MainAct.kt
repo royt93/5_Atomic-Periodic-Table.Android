@@ -127,6 +127,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
+        Utils.fadeOutAnim(navBarMain, 150)
+        Utils.fadeOutAnim(moreBtn, 150)
     }
 
     private fun setupViews() {
