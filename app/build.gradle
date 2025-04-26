@@ -10,8 +10,8 @@ android {
         minSdkVersion 23
         //noinspection EditedTargetSdkVersion
         targetSdkVersion 35
-        versionCode 20250306
-        versionName "2025.03.06"
+        versionCode 20250426
+        versionName "2025.04.26"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -128,7 +128,7 @@ dependencies {
 //    implementation 'androidx.browser:browser:1.8.0'
     implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
-    implementation 'com.applovin:applovin-sdk:13.0.1'
+    implementation 'com.applovin:applovin-sdk:13.2.0'
 
 //    testImplementation 'junit:junit:4.13.2'
 //    androidTestImplementation 'androidx.test:runner:1.5.2'
