@@ -10,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.setting.AboutAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.FavoritePageAct
@@ -20,6 +23,7 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import kotlinx.android.synthetic.main.a_settings.aboutSettings
@@ -59,17 +63,27 @@ import kotlin.system.exitProcess
 
 class SettingsAct : BaseAct() {
 
-    //TODO roy93~ admob banner
 //    private var adView: MaxAdView? = null
+    private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
+    }
+
     override fun onDestroy() {
-        //TODO roy93~ admob banner
 //        flAd.destroyAdBanner(adView)
+        adView?.destroy()
         super.onDestroy()
     }
 
@@ -183,7 +197,7 @@ class SettingsAct : BaseAct() {
 //            openUrlInBrowser("https://github.com/gj-loitp/20-TESTER-FOR-CLOSED-TESTING/tree/main")
         }
         backBtnSetting.setOnClickListener {
-            Log.d("roy93~", "onBackPressed")
+//            Log.d("roy93~", "onBackPressed")
             this.onBackPressed()
 //            finishScreen()
         }
@@ -200,7 +214,12 @@ class SettingsAct : BaseAct() {
             startActivity(intent)
         }
 
-        //TODO roy93~ admob banner
+        adView = AdMobManager.loadBanner(
+            context = this,
+            adUnitId = BuildConfig.ADMOB_BANNER_ID,
+            container = flAd,
+            adSize = AdSize.LARGE_BANNER,
+        )
 //        adView = this.createAdBanner(
 //            logTag = SettingsAct::class.simpleName,
 //            viewGroup = flAd,
@@ -237,7 +256,7 @@ class SettingsAct : BaseAct() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        Log.d("roy93~", "onBackPressed")
+//        Log.d("roy93~", "onBackPressed")
         if (themePanel.visibility == View.VISIBLE) {
             Utils.fadeOutAnim(themePanel, 300) //Start Close Animation
             return
