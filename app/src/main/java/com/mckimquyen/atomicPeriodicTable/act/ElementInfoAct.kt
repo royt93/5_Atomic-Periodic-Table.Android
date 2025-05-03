@@ -9,11 +9,6 @@ import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.applovin.mediation.MaxAd
-import com.applovin.mediation.MaxAdListener
-import com.applovin.mediation.MaxError
-import com.applovin.mediation.ads.MaxAdView
-import com.applovin.mediation.ads.MaxInterstitialAd
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.MainAct
@@ -26,8 +21,6 @@ import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import com.mckimquyen.atomicPeriodicTable.util.createAdBanner
-import com.mckimquyen.atomicPeriodicTable.util.destroyAdBanner
 import kotlinx.android.synthetic.main.a_element_info.backBtn
 import kotlinx.android.synthetic.main.a_element_info.commonTitleBack
 import kotlinx.android.synthetic.main.a_element_info.detailEmission
@@ -57,17 +50,21 @@ import java.io.InputStream
 
 class ElementInfoAct : InfoExt() {
 
-    private var adView: MaxAdView? = null
-    private var interstitialAd: MaxInterstitialAd? = null
+    //TODO roy93~ admob banner
+//    private var adView: MaxAdView? = null
+    //TODO roy93~ admob inter
+//    private var interstitialAd: MaxInterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        createAdInter()
+        //TODO roy93~ admob inter
+//        createAdInter()
         setupViews()
     }
 
     override fun onDestroy() {
-        flAdRoy.destroyAdBanner(adView)
+        //TODO roy93~ admob banner
+//        flAdRoy.destroyAdBanner(adView)
         super.onDestroy()
     }
 
@@ -118,11 +115,12 @@ class ElementInfoAct : InfoExt() {
             startActivity(intent)
         }
 
-        adView = this.createAdBanner(
-            logTag = ElementInfoAct::class.simpleName,
-            viewGroup = flAdRoy,
-            isAdaptiveBanner = true,
-        )
+        //TODO roy93~ admob banner
+//        adView = this.createAdBanner(
+//            logTag = ElementInfoAct::class.simpleName,
+//            viewGroup = flAdRoy,
+//            isAdaptiveBanner = true,
+//        )
     }
 
     @Deprecated("Deprecated in Java")
@@ -137,9 +135,9 @@ class ElementInfoAct : InfoExt() {
             Utils.fadeOutAnim(detailEmissionBackground, 300)
             return
         } else {
-            showAd {
-                //do nothing
-            }
+//            showAd {
+//                //do nothing
+//            }
             super.onBackPressed()
         }
     }
@@ -268,94 +266,94 @@ class ElementInfoAct : InfoExt() {
         }
     }
 
-    private fun createAdInter() {
-        val enableAdInter = getString(R.string.EnableAdInter) == "true"
-        if (enableAdInter) {
-            interstitialAd = MaxInterstitialAd(getString(R.string.INTER), this)
-            interstitialAd?.let { ad ->
-                ad.setListener(object : MaxAdListener {
-                    override fun onAdLoaded(p0: MaxAd) {
-//                        logI("onAdLoaded")
-//                        retryAttempt = 0
-                    }
-
-                    override fun onAdDisplayed(p0: MaxAd) {
-//                        logI("onAdDisplayed")
-                    }
-
-                    override fun onAdHidden(p0: MaxAd) {
-//                        logI("onAdHidden")
-                        // Interstitial Ad is hidden. Pre-load the next ad
-                        interstitialAd?.loadAd()
-                    }
-
-                    override fun onAdClicked(p0: MaxAd) {
-//                        logI("onAdClicked")
-                    }
-
-                    override fun onAdLoadFailed(p0: String, p1: MaxError) {
-//                        logI("onAdLoadFailed")
-//                        retryAttempt++
-//                        val delayMillis =
-//                            TimeUnit.SECONDS.toMillis(2.0.pow(min(6, retryAttempt)).toLong())
+//    private fun createAdInter() {
+//        val enableAdInter = getString(R.string.EnableAdInter) == "true"
+//        if (enableAdInter) {
+//            interstitialAd = MaxInterstitialAd(getString(R.string.INTER), this)
+//            interstitialAd?.let { ad ->
+//                ad.setListener(object : MaxAdListener {
+//                    override fun onAdLoaded(p0: MaxAd) {
+////                        logI("onAdLoaded")
+////                        retryAttempt = 0
+//                    }
 //
-//                        Handler(Looper.getMainLooper()).postDelayed(
-//                            {
-//                                interstitialAd?.loadAd()
-//                            }, delayMillis
-//                        )
-                    }
-
-                    override fun onAdDisplayFailed(p0: MaxAd, p1: MaxError) {
-//                        logI("onAdDisplayFailed")
-                        // Interstitial ad failed to display. We recommend loading the next ad.
-                        interstitialAd?.loadAd()
-                    }
-
-                })
-                ad.setRevenueListener {
-//                    logI("onAdDisplayed")
-                }
-
-                // Load the first ad.
-                ad.loadAd()
-            }
-        }
-    }
-
-    private fun showAd(runnable: Runnable? = null) {
-        val enableAdInter = getString(R.string.EnableAdInter) == "true"
-        if (enableAdInter) {
-            if (interstitialAd == null) {
-                runnable?.run()
-            } else {
-                interstitialAd?.let { ad ->
-                    if (ad.isReady) {
-//                        showDialogProgress()
-//                        setDelay(500.getRandomNumber() + 500) {
-//                            hideDialogProgress()
+//                    override fun onAdDisplayed(p0: MaxAd) {
+////                        logI("onAdDisplayed")
+//                    }
+//
+//                    override fun onAdHidden(p0: MaxAd) {
+////                        logI("onAdHidden")
+//                        // Interstitial Ad is hidden. Pre-load the next ad
+//                        interstitialAd?.loadAd()
+//                    }
+//
+//                    override fun onAdClicked(p0: MaxAd) {
+////                        logI("onAdClicked")
+//                    }
+//
+//                    override fun onAdLoadFailed(p0: String, p1: MaxError) {
+////                        logI("onAdLoadFailed")
+////                        retryAttempt++
+////                        val delayMillis =
+////                            TimeUnit.SECONDS.toMillis(2.0.pow(min(6, retryAttempt)).toLong())
+////
+////                        Handler(Looper.getMainLooper()).postDelayed(
+////                            {
+////                                interstitialAd?.loadAd()
+////                            }, delayMillis
+////                        )
+//                    }
+//
+//                    override fun onAdDisplayFailed(p0: MaxAd, p1: MaxError) {
+////                        logI("onAdDisplayFailed")
+//                        // Interstitial ad failed to display. We recommend loading the next ad.
+//                        interstitialAd?.loadAd()
+//                    }
+//
+//                })
+//                ad.setRevenueListener {
+////                    logI("onAdDisplayed")
+//                }
+//
+//                // Load the first ad.
+//                ad.loadAd()
+//            }
+//        }
+//    }
+//
+//    private fun showAd(runnable: Runnable? = null) {
+//        val enableAdInter = getString(R.string.EnableAdInter) == "true"
+//        if (enableAdInter) {
+//            if (interstitialAd == null) {
+//                runnable?.run()
+//            } else {
+//                interstitialAd?.let { ad ->
+//                    if (ad.isReady) {
+////                        showDialogProgress()
+////                        setDelay(500.getRandomNumber() + 500) {
+////                            hideDialogProgress()
+////                            ad.showAd()
+////                            runnable?.run()
+////                        }
+//                        if (BuildConfig.DEBUG) {
+//                            Toast.makeText(
+//                                this@ElementInfoAct,
+//                                "interstitialAd showAd SUCCESSFULLY",
+//                                Toast.LENGTH_SHORT
+//                            )
+//                                .show()
+//                        } else {
 //                            ad.showAd()
-//                            runnable?.run()
 //                        }
-                        if (BuildConfig.DEBUG) {
-                            Toast.makeText(
-                                this@ElementInfoAct,
-                                "interstitialAd showAd SUCCESSFULLY",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        } else {
-                            ad.showAd()
-                        }
-                        runnable?.run()
-                    } else {
-                        runnable?.run()
-                    }
-                }
-            }
-        } else {
-            Toast.makeText(this, "Applovin show ad Inter in debug mode", Toast.LENGTH_SHORT).show()
-            runnable?.run()
-        }
-    }
+//                        runnable?.run()
+//                    } else {
+//                        runnable?.run()
+//                    }
+//                }
+//            }
+//        } else {
+//            Toast.makeText(this, "Applovin show ad Inter in debug mode", Toast.LENGTH_SHORT).show()
+//            runnable?.run()
+//        }
+//    }
 }

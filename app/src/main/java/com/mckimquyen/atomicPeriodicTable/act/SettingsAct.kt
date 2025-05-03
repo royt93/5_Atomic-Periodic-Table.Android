@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
-import com.applovin.mediation.ads.MaxAdView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.setting.AboutAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.FavoritePageAct
@@ -23,8 +22,6 @@ import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import com.mckimquyen.atomicPeriodicTable.util.createAdBanner
-import com.mckimquyen.atomicPeriodicTable.util.destroyAdBanner
 import kotlinx.android.synthetic.main.a_settings.aboutSettings
 import kotlinx.android.synthetic.main.a_settings.advancedBox
 import kotlinx.android.synthetic.main.a_settings.backBtnSetting
@@ -62,7 +59,8 @@ import kotlin.system.exitProcess
 
 class SettingsAct : BaseAct() {
 
-    private var adView: MaxAdView? = null
+    //TODO roy93~ admob banner
+//    private var adView: MaxAdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +68,8 @@ class SettingsAct : BaseAct() {
     }
 
     override fun onDestroy() {
-        flAd.destroyAdBanner(adView)
+        //TODO roy93~ admob banner
+//        flAd.destroyAdBanner(adView)
         super.onDestroy()
     }
 
@@ -201,11 +200,12 @@ class SettingsAct : BaseAct() {
             startActivity(intent)
         }
 
-        adView = this.createAdBanner(
-            logTag = SettingsAct::class.simpleName,
-            viewGroup = flAd,
-            isAdaptiveBanner = true,
-        )
+        //TODO roy93~ admob banner
+//        adView = this.createAdBanner(
+//            logTag = SettingsAct::class.simpleName,
+//            viewGroup = flAd,
+//            isAdaptiveBanner = true,
+//        )
     }
 
     override fun onApplySystemInsets(

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.CheckBox
 import androidx.core.content.ContextCompat
-import com.applovin.mediation.ads.MaxAdView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicCovalentPref
@@ -25,13 +24,12 @@ import com.mckimquyen.atomicPeriodicTable.pref.MeltingPref
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
-import com.mckimquyen.atomicPeriodicTable.util.createAdBanner
-import com.mckimquyen.atomicPeriodicTable.util.destroyAdBanner
 import kotlinx.android.synthetic.main.a_favorite_settings_page.*
 
 class FavoritePageAct : BaseAct() {
 
-    private var adView: MaxAdView? = null
+    //TODO roy93~ admob banner
+//    private var adView: MaxAdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +37,8 @@ class FavoritePageAct : BaseAct() {
     }
 
     override fun onDestroy() {
-        flAd.destroyAdBanner(adView)
+        //TODO roy93~ admob banner
+//        flAd.destroyAdBanner(adView)
         super.onDestroy()
     }
 
@@ -244,11 +243,12 @@ class FavoritePageAct : BaseAct() {
             this.onBackPressed()
         }
 
-        adView = this.createAdBanner(
-            logTag = FavoritePageAct::class.simpleName,
-            viewGroup = flAd,
-            isAdaptiveBanner = true,
-        )
+        //TODO roy93~ admob banner
+//        adView = this.createAdBanner(
+//            logTag = FavoritePageAct::class.simpleName,
+//            viewGroup = flAd,
+//            isAdaptiveBanner = true,
+//        )
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {

@@ -2,7 +2,6 @@ package com.mckimquyen.atomicPeriodicTable
 
 import android.app.Application
 import android.widget.Toast
-import com.mckimquyen.atomicPeriodicTable.util.setupApplovinAd
 
 //TODO roy93~ firebase
 
@@ -26,7 +25,8 @@ import com.mckimquyen.atomicPeriodicTable.util.setupApplovinAd
 class RoyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        this.setupApplovinAd()
+//        this.setupApplovinAd()
+        //TODO roy93~ admob init
         if (BuildConfig.DEBUG) {
             Toast.makeText(this, "$packageName onCreate", Toast.LENGTH_SHORT).show()
         }
