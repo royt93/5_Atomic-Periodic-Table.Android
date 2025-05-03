@@ -530,6 +530,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             btn.isFocusable = true
             btn.setOnClickListener {
                 //TODO roy93~ admob inter
+                val intent = Intent(this, ElementInfoAct::class.java)
+                val elementSend = ElementSendAndLoad(this)
+                elementSend.setValue(item.element)
+                startActivity(intent)
 //                showAd {
 //                    val intent = Intent(this, ElementInfoAct::class.java)
 //                    val elementSend = ElementSendAndLoad(this)

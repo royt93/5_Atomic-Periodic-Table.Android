@@ -9,6 +9,10 @@ import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.MainAct
@@ -20,6 +24,7 @@ import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import kotlinx.android.synthetic.main.a_element_info.backBtn
 import kotlinx.android.synthetic.main.a_element_info.commonTitleBack
@@ -48,23 +53,23 @@ import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 
-class ElementInfoAct : InfoExt() {
+class ElementInfoAct : InfoExt(), AdMobManager.InterstitialAdListener {
 
-    //TODO roy93~ admob banner
-//    private var adView: MaxAdView? = null
-    //TODO roy93~ admob inter
-//    private var interstitialAd: MaxInterstitialAd? = null
+    //    private var adView: MaxAdView? = null
+    private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO roy93~ admob inter
 //        createAdInter()
+        AdMobManager.setCurrentActivity(this)
+        AdMobManager.interstitialListener = this
+        AdMobManager.loadInterstitial(this, BuildConfig.ADMOB_INTERSTITIAL_ID)
         setupViews()
     }
 
     override fun onDestroy() {
-        //TODO roy93~ admob banner
 //        flAdRoy.destroyAdBanner(adView)
+        adView?.destroy()
         super.onDestroy()
     }
 
@@ -115,7 +120,12 @@ class ElementInfoAct : InfoExt() {
             startActivity(intent)
         }
 
-        //TODO roy93~ admob banner
+        adView = AdMobManager.loadBanner(
+            context = this,
+            adUnitId = BuildConfig.ADMOB_BANNER_ID,
+            container = flAdRoy,
+            adSize = AdSize.BANNER,
+        )
 //        adView = this.createAdBanner(
 //            logTag = ElementInfoAct::class.simpleName,
 //            viewGroup = flAdRoy,
@@ -138,6 +148,7 @@ class ElementInfoAct : InfoExt() {
 //            showAd {
 //                //do nothing
 //            }
+            AdMobManager.showInterstitial(this)
             super.onBackPressed()
         }
     }
@@ -178,6 +189,12 @@ class ElementInfoAct : InfoExt() {
     override fun onResume() {
         super.onResume()
         favoriteBarSetup()
+        adView?.resume()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
     }
 
     private fun detailViews() {
@@ -264,6 +281,27 @@ class ElementInfoAct : InfoExt() {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onAdLoaded() {
+    }
+
+    override fun onAdFailedToLoad(error: LoadAdError) {
+    }
+
+    override fun onAdShowed() {
+    }
+
+    override fun onAdDismissed() {
+    }
+
+    override fun onAdClicked() {
+    }
+
+    override fun onAdFailedToShow(error: AdError) {
+    }
+
+    override fun onAdNotAvailable() {
     }
 
 //    private fun createAdInter() {
