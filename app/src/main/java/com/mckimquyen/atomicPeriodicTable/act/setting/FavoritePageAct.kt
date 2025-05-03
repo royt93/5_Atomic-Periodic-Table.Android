@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.CheckBox
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicCovalentPref
@@ -24,21 +27,32 @@ import com.mckimquyen.atomicPeriodicTable.pref.MeltingPref
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import kotlinx.android.synthetic.main.a_favorite_settings_page.*
 
 class FavoritePageAct : BaseAct() {
 
-    //TODO roy93~ admob banner
-//    private var adView: MaxAdView? = null
+    //    private var adView: MaxAdView? = null
+    private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onPause() {
+        adView?.pause()
+        super.onPause()
+    }
+
     override fun onDestroy() {
-        //TODO roy93~ admob banner
 //        flAd.destroyAdBanner(adView)
+        adView?.destroy()
         super.onDestroy()
     }
 
@@ -243,7 +257,12 @@ class FavoritePageAct : BaseAct() {
             this.onBackPressed()
         }
 
-        //TODO roy93~ admob banner
+        adView = AdMobManager.loadBanner(
+            context = this,
+            adUnitId = BuildConfig.ADMOB_BANNER_ID,
+            container = flAd,
+            adSize = AdSize.LARGE_BANNER,
+        )
 //        adView = this.createAdBanner(
 //            logTag = FavoritePageAct::class.simpleName,
 //            viewGroup = flAd,
