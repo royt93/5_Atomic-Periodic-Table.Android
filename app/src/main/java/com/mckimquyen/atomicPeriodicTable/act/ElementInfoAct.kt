@@ -53,7 +53,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 
-class ElementInfoAct : InfoExt(), AdMobManager.InterstitialAdListener {
+class ElementInfoAct : InfoExt() {
 
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
@@ -61,9 +61,6 @@ class ElementInfoAct : InfoExt(), AdMobManager.InterstitialAdListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createAdInter()
-        AdMobManager.setCurrentActivity(this)
-        AdMobManager.interstitialListener = this
-        AdMobManager.loadInterstitial(this, BuildConfig.ADMOB_INTERSTITIAL_ID)
         setupViews()
     }
 
@@ -148,7 +145,6 @@ class ElementInfoAct : InfoExt(), AdMobManager.InterstitialAdListener {
 //            showAd {
 //                //do nothing
 //            }
-            AdMobManager.showInterstitial(this)
             super.onBackPressed()
         }
     }
@@ -281,27 +277,6 @@ class ElementInfoAct : InfoExt(), AdMobManager.InterstitialAdListener {
                 e.printStackTrace()
             }
         }
-    }
-
-    override fun onAdLoaded() {
-    }
-
-    override fun onAdFailedToLoad(error: LoadAdError) {
-    }
-
-    override fun onAdShowed() {
-    }
-
-    override fun onAdDismissed() {
-    }
-
-    override fun onAdClicked() {
-    }
-
-    override fun onAdFailedToShow(error: AdError) {
-    }
-
-    override fun onAdNotAvailable() {
     }
 
 //    private fun createAdInter() {

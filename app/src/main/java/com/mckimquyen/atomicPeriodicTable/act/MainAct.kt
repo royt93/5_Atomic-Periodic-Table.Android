@@ -24,11 +24,12 @@ import android.view.animation.ScaleAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
@@ -46,6 +47,7 @@ import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.SearchPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
@@ -103,16 +105,13 @@ import kotlinx.android.synthetic.main.view_nav_menu_view.solubilityBtn
 import org.deejdev.twowaynestedscrollview.TwoWayNestedScrollView
 import java.util.Locale
 
-class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
+class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.InterstitialAdListener {
     private var elementList = ArrayList<Element>()
     private var mAdapter = ElementAdt(elementList = elementList, clickListener = this, con = this)
 
     private var mScale = 1f
     private lateinit var mScaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
-
-    //TODO roy93~ admob inter
-//    private var interstitialAd: MaxInterstitialAd? = null
 
     override fun attachBaseContext(context: Context) {
         val override = Configuration(context.resources.configuration)
@@ -151,10 +150,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         setContentView(R.layout.a_main)
 
         val recyclerView = findViewById<RecyclerView>(R.id.rvElement)
-        recyclerView.layoutManager = LinearLayoutManager(
-            /* context = */ this,
-            /* orientation = */ RecyclerView.VERTICAL,
-            /* reverseLayout = */ false
+        recyclerView.layoutManager = LinearLayoutManager(/* context = */ this,/* orientation = */
+            RecyclerView.VERTICAL,/* reverseLayout = */
+            false
         )
         val elements = ArrayList<Element>()
         ElementModel.getList(elements)
@@ -189,25 +187,17 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         }, 250)
 
         gestureDetector = GestureDetector(/* context = */ this, /* listener = */ GestureListener())
-        mScaleDetector = ScaleGestureDetector(
-            /* context = */ this,
-            /* listener = */ object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        mScaleDetector = ScaleGestureDetector(/* context = */ this,/* listener = */
+            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
                     val scale = 1 - detector.scaleFactor
                     val pScale = mScale
                     mScale += scale
                     mScale += scale
-                    if (mScale < 1f)
-                        mScale = 1f
-                    if (mScale > 12.5f)
-                        mScale = 12.5f
+                    if (mScale < 1f) mScale = 1f
+                    if (mScale > 12.5f) mScale = 12.5f
                     val scaleAnimation = ScaleAnimation(
-                        1f / pScale,
-                        1f / mScale,
-                        1f / pScale,
-                        1f / mScale,
-                        detector.focusX,
-                        detector.focusY
+                        1f / pScale, 1f / mScale, 1f / pScale, 1f / mScale, detector.focusX, detector.focusY
                     )
                     if (mScale > 1f) {
                         topBar.visibility = View.GONE
@@ -227,8 +217,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 }
             })
 
-        scrollView.viewTreeObserver
-            .addOnScrollChangedListener(object : OnScrollChangedListener {
+        scrollView.viewTreeObserver.addOnScrollChangedListener(object : OnScrollChangedListener {
                 var y = 0f
                 override fun onScrollChanged() {
                     if (scrollView.scrollY > y) {
@@ -256,8 +245,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             }
         })
 
-        //TODO roy93~ admob inter
 //        createAdInter()
+        AdMobManager.setCurrentActivity(this)
+        AdMobManager.interstitialListener = this
+        AdMobManager.loadInterstitial(this, BuildConfig.ADMOB_INTERSTITIAL_ID)
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -298,8 +289,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
 
         val elementSendAndLoad = ElementSendAndLoad(this)
         elementSendAndLoad.setValue(item.element)
-        val intent =
-            Intent(/* packageContext = */ this, /* cls = */ ElementInfoAct::class.java)
+        val intent = Intent(/* packageContext = */ this, /* cls = */ ElementInfoAct::class.java)
         startActivity(intent)
     }
 
@@ -340,9 +330,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             }
         }, 10)
         recyclerView.adapter = ElementAdt(
-            elementList = filteredList,
-            clickListener = this,
-            con = this
+            elementList = filteredList, clickListener = this, con = this
         )
     }
 
@@ -394,8 +382,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 window.insetsController?.show(WindowInsets.Type.ime())
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                val imm: InputMethodManager =
-                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(editElement, InputMethodManager.SHOW_IMPLICIT)
             }
             Utils.fadeOutAnim(filterBox, 150)
@@ -522,18 +509,16 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             val resIDB = resources.getIdentifier(eViewBtn, "id", packageName)
 
             val btn = findViewById<TextView>(resIDB)
-            btn.foreground = ContextCompat.getDrawable(
-                /* context = */ this,
-                /* id = */ R.drawable.ripple_t_ripple
+            btn.foreground = ContextCompat.getDrawable(/* context = */ this,/* id = */ R.drawable.ripple_t_ripple
             )
             btn.isClickable = true
             btn.isFocusable = true
             btn.setOnClickListener {
-                //TODO roy93~ admob inter
                 val intent = Intent(this, ElementInfoAct::class.java)
                 val elementSend = ElementSendAndLoad(this)
                 elementSend.setValue(item.element)
                 startActivity(intent)
+                AdMobManager.showInterstitial(this)
 //                showAd {
 //                    val intent = Intent(this, ElementInfoAct::class.java)
 //                    val elementSend = ElementSendAndLoad(this)
@@ -572,9 +557,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
             recyclerView.adapter = ElementAdt(
-                elementList = filtList,
-                clickListener = this,
-                con = this
+                elementList = filtList, clickListener = this, con = this
             )
         }
         electroBtn.setOnClickListener {
@@ -592,9 +575,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
             recyclerView.adapter = ElementAdt(
-                elementList = filtList,
-                clickListener = this,
-                con = this
+                elementList = filtList, clickListener = this, con = this
             )
         }
         alphabetBtn.setOnClickListener {
@@ -615,9 +596,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
             recyclerView.adapter = ElementAdt(
-                elementList = filtList,
-                clickListener = this,
-                con = this
+                elementList = filtList, clickListener = this, con = this
             )
         }
     }
@@ -649,13 +628,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         params4.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         commonTitleBackSearch.layoutParams = params4
 
-        rvElement.setPadding(
-            /* left = */ 0,
-            /* top = */
-            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
-            /* right = */
-            0,
-            /* bottom = */
+        rvElement.setPadding(/* left = */ 0,/* top = */
+            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,/* right = */
+            0,/* bottom = */
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
@@ -809,8 +784,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         val display: Display? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             display // Sử dụng API mới
         } else {
-            @Suppress("DEPRECATION")
-            wm.defaultDisplay // Fallback cho API thấp hơn
+            @Suppress("DEPRECATION") wm.defaultDisplay // Fallback cho API thấp hơn
         }
 
 
@@ -825,5 +799,26 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 println("Adaptive refresh rate applied: ${highestRefreshRateMode.refreshRate} Hz")
             }
         }
+    }
+
+    override fun onAdLoaded() {
+    }
+
+    override fun onAdFailedToLoad(error: LoadAdError) {
+    }
+
+    override fun onAdShowed() {
+    }
+
+    override fun onAdDismissed() {
+    }
+
+    override fun onAdClicked() {
+    }
+
+    override fun onAdFailedToShow(error: AdError) {
+    }
+
+    override fun onAdNotAvailable() {
     }
 }
