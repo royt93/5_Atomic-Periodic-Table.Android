@@ -6,11 +6,9 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Display
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 
@@ -21,47 +19,21 @@ class SplashAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        AdMobManager.loadAppOpenAd(
-            context = this@SplashAct,
-            adUnitId = BuildConfig.ADMOB_APP_OPEN_ID,
-            onAdLoaded = { result ->
-                Log.d("roy93~", "onAdLoaded result $result")
-                goToMain()
-                AdMobManager.showAppOpenAd(this@SplashAct)
-            },
-        )
-
-//        lifecycleScope.launch {
-//            var hasCalledGoToMain = false
-//            val job = launch {
-//                delay(3_000)
-//                if (!hasCalledGoToMain) {
-//                    hasCalledGoToMain = true
-//                    Log.d("roy93~", "goToMain #1")
-//                    goToMain()
-//                }
-//            }
-//            AdMobManager.loadAppOpenAd(
-//                context = this@SplashAct,
-//                adUnitId = BuildConfig.ADMOB_APP_OPEN_ID,
-//                onAdLoaded = {
-//                    if (!hasCalledGoToMain) {
-//                        hasCalledGoToMain = true
-//                        job.cancel()
-//                        Log.d("roy93~", "goToMain #2")
-//                        goToMain()
-//                        AdMobManager.showAppOpenAd(this@SplashAct)
-//                    }
-//                },
-//            )
-//        }
+        AdMobManager.initSplashScreen(activity = this, onAdLoaded = {
+            goToMain()
+        })
     }
 
     private fun goToMain() {
         val intent = Intent(this, MainAct::class.java)
         startActivity(intent)
-        overridePendingTransition(0, 0)
-        finishAffinity()
+//        overridePendingTransition(0, 0)
+//        finishAffinity()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        // Trì hoãn finish để đợi animation hoàn tất
+        window.decorView.postDelayed({
+            finish() // Finish sau animation
+        }, 300) // delay khoảng 300ms (hoặc đúng thời gian của animation)
     }
 
     override fun attachBaseContext(context: Context) {
