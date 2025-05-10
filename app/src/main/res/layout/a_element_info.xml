@@ -161,8 +161,8 @@
                 android:id="@+id/flAdRoy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0sp"
-                android:layout_marginBottom="0sp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
 
             <Space
                 android:id="@+id/offlineDiv"

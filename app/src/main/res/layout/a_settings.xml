@@ -426,8 +426,8 @@
                 android:id="@+id/flAd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0sp"
-                android:layout_marginBottom="0sp" />
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/advancedBox"
