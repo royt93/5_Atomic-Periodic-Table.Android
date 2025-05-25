@@ -10,8 +10,8 @@ android {
         minSdkVersion 23
         //noinspection EditedTargetSdkVersion
         targetSdkVersion 35
-        versionCode 20250510
-        versionName "2025.05.10"
+        versionCode 20250525
+        versionName "2025.05.25"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -139,6 +139,7 @@ dependencies {
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
 //    implementation 'com.applovin:applovin-sdk:13.2.0'
     implementation("com.google.android.gms:play-services-ads:22.3.0")
+    implementation("com.google.ads.mediation:applovin:11.11.1.0")
 
 //    testImplementation 'junit:junit:4.13.2'
 //    androidTestImplementation 'androidx.test:runner:1.5.2'
