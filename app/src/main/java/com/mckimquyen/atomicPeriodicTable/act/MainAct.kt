@@ -218,18 +218,18 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             })
 
         scrollView.viewTreeObserver.addOnScrollChangedListener(object : OnScrollChangedListener {
-                var y = 0f
-                override fun onScrollChanged() {
-                    if (scrollView.scrollY > y) {
-                        Utils.fadeOutAnim(navBarMain, 150)
-                        Utils.fadeOutAnim(moreBtn, 150)
-                    } else {
-                        Utils.fadeInAnim(navBarMain, 150)
-                        Utils.fadeInAnim(moreBtn, 150)
-                    }
-                    y = scrollView.scrollY.toFloat()
+            var y = 0f
+            override fun onScrollChanged() {
+                if (scrollView.scrollY > y) {
+                    Utils.fadeOutAnim(navBarMain, 150)
+                    Utils.fadeOutAnim(moreBtn, 150)
+                } else {
+                    Utils.fadeInAnim(navBarMain, 150)
+                    Utils.fadeInAnim(moreBtn, 150)
                 }
-            })
+                y = scrollView.scrollY.toFloat()
+            }
+        })
 
         slidingLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {}
@@ -514,17 +514,17 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             btn.isClickable = true
             btn.isFocusable = true
             btn.setOnClickListener {
-                val intent = Intent(this, ElementInfoAct::class.java)
-                val elementSend = ElementSendAndLoad(this)
-                elementSend.setValue(item.element)
-                startActivity(intent)
-                AdMobManager.showInterstitial(this)
-//                showAd {
-//                    val intent = Intent(this, ElementInfoAct::class.java)
-//                    val elementSend = ElementSendAndLoad(this)
-//                    elementSend.setValue(item.element)
-//                    startActivity(intent)
-//                }
+                AdMobManager.showInterstitial(this) { success ->
+                    if (success) {
+                        Log.d("roy93~", "Ad đã hiển thị và đóng thành công")
+                    } else {
+                        Log.d("roy93~", "Ad không hiển thị được hoặc có lỗi")
+                    }
+                    val intent = Intent(this, ElementInfoAct::class.java)
+                    val elementSend = ElementSendAndLoad(this)
+                    elementSend.setValue(item.element)
+                    startActivity(intent)
+                }
             }
         }
     }

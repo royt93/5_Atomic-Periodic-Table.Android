@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -36,7 +35,6 @@ import kotlinx.android.synthetic.main.a_settings.elementTitle
 import kotlinx.android.synthetic.main.a_settings.elementTitleDownstate
 import kotlinx.android.synthetic.main.a_settings.experimentalSettings
 import kotlinx.android.synthetic.main.a_settings.favoriteSettings
-import kotlinx.android.synthetic.main.a_settings.flAd
 import kotlinx.android.synthetic.main.a_settings.github20TesterSettings
 import kotlinx.android.synthetic.main.a_settings.licensesSettings
 import kotlinx.android.synthetic.main.a_settings.offlineInternetSwitch
@@ -63,7 +61,7 @@ import kotlin.system.exitProcess
 
 class SettingsAct : BaseAct() {
 
-//    private var adView: MaxAdView? = null
+    //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -214,17 +212,15 @@ class SettingsAct : BaseAct() {
             startActivity(intent)
         }
 
+        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
+        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
         adView = AdMobManager.loadBanner(
             context = this,
             adUnitId = BuildConfig.ADMOB_BANNER_ID,
-            container = flAd,
+            container = bannerContainer,
+            tvLabelAd = tvLabelAd,
             adSize = AdSize.LARGE_BANNER,
         )
-//        adView = this.createAdBanner(
-//            logTag = SettingsAct::class.simpleName,
-//            viewGroup = flAd,
-//            isAdaptiveBanner = true,
-//        )
     }
 
     override fun onApplySystemInsets(

@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdSize
@@ -30,7 +31,6 @@ import kotlinx.android.synthetic.main.a_element_info.backBtn
 import kotlinx.android.synthetic.main.a_element_info.commonTitleBack
 import kotlinx.android.synthetic.main.a_element_info.detailEmission
 import kotlinx.android.synthetic.main.a_element_info.detailEmissionBackground
-import kotlinx.android.synthetic.main.a_element_info.flAdRoy
 import kotlinx.android.synthetic.main.a_element_info.frame
 import kotlinx.android.synthetic.main.a_element_info.iBtn
 import kotlinx.android.synthetic.main.a_element_info.nextBtn
@@ -117,17 +117,15 @@ class ElementInfoAct : InfoExt() {
             startActivity(intent)
         }
 
+        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
+        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
         adView = AdMobManager.loadBanner(
             context = this,
             adUnitId = BuildConfig.ADMOB_BANNER_ID,
-            container = flAdRoy,
-            adSize = AdSize.BANNER,
+            container = bannerContainer,
+            tvLabelAd = tvLabelAd,
+            adSize = AdSize.LARGE_BANNER,
         )
-//        adView = this.createAdBanner(
-//            logTag = ElementInfoAct::class.simpleName,
-//            viewGroup = flAdRoy,
-//            isAdaptiveBanner = true,
-//        )
     }
 
     @Deprecated("Deprecated in Java")

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
@@ -256,11 +257,13 @@ class FavoritePageAct : BaseAct() {
         backBtnFav.setOnClickListener {
             this.onBackPressed()
         }
-
+        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
+        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
         adView = AdMobManager.loadBanner(
             context = this,
             adUnitId = BuildConfig.ADMOB_BANNER_ID,
-            container = flAd,
+            container = bannerContainer,
+            tvLabelAd = tvLabelAd,
             adSize = AdSize.LARGE_BANNER,
         )
 //        adView = this.createAdBanner(
