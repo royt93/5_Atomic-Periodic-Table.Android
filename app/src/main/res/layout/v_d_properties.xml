@@ -206,7 +206,7 @@
             android:layout_margin="16dp"
             android:backgroundTint="?attr/colorSurfaceVariant"
             android:elevation="0dp"
-            app:cardCornerRadius="24dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
 
             <FrameLayout
@@ -301,7 +301,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            app:cardCornerRadius="24dp">
+            app:cardCornerRadius="16dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/openBtn2"

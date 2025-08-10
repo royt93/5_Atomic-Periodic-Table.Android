@@ -9,7 +9,7 @@
     android:focusable="true"
     android:orientation="vertical"
     app:cardBackgroundColor="#54818181"
-    app:cardCornerRadius="18dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="100dp">
 
     <FrameLayout
