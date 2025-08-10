@@ -271,15 +271,17 @@
                 <LinearLayout
                     android:id="@+id/llSocialmediaLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:elevation="0dp"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="48dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btRate"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_baseline_rate_review_24"
@@ -291,7 +293,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btShare"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_baseline_ios_share_24"
@@ -303,7 +305,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btMore"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_baseline_favorite_border_24"
@@ -315,7 +317,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btPolicy"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_baseline_policy_24"
@@ -327,7 +329,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btGithub"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_baseline_code_24"
