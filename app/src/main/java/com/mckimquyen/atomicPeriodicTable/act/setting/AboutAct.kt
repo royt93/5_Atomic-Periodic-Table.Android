@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -82,6 +83,22 @@ class AboutAct : BaseAct() {
         binding.versionNumber.text = "Version ${BuildConfig.VERSION_NAME}"
 
         // ===============================================================
+        // Apply Animations
+        // ===============================================================
+        // Scale fade in animation cho app icon
+        val scaleFadeIn = AnimationUtils.loadAnimation(this, R.anim.scale_fade_in)
+        binding.imageView3.startAnimation(scaleFadeIn)
+
+        // Fade slide up animation cho hero card
+        val fadeSlideUp = AnimationUtils.loadAnimation(this, R.anim.fade_slide_up)
+        binding.heroCard.startAnimation(fadeSlideUp)
+
+        // Fade slide up animation cho source code card với delay nhỏ
+        val fadeSlideUpDelayed = AnimationUtils.loadAnimation(this, R.anim.fade_slide_up)
+        fadeSlideUpDelayed.startOffset = 150 // 150ms delay
+        binding.sourceCodeCard.startAnimation(fadeSlideUpDelayed)
+
+        // ===============================================================
         // Back Button Handler (Modern API)
         // ===============================================================
         // Thay thế: onBackPressed() (deprecated)
@@ -123,10 +140,8 @@ class AboutAct : BaseAct() {
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.commonTitleBackInfo.layoutParams = params
 
-        // Adjust image top margin để tránh status bar
-        val params2 = binding.imageView3.layoutParams as ViewGroup.MarginLayoutParams
-        params2.topMargin += top
-        binding.imageView3.layoutParams = params2
+        // Note: Image margin không cần adjust nữa vì layout mới sử dụng card-based design
+        // Icon nằm trong CardView với proper spacing, không cần manual margin adjustment
 
         // Adjust title box margins để tránh navigation bar (left/right)
         val titleParam = binding.titleBoxInfo.layoutParams as ViewGroup.MarginLayoutParams

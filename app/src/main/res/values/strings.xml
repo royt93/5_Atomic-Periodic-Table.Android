@@ -254,6 +254,7 @@
     <string name="more_app">More app</string>
     <string name="policy">Policy</string>
     <string name="github">Github</string>
+    <string name="source_code">Source Code</string>
     <string name="specific_heat_text">specific_heat_text</string>
     <string name="get_forked_source_code"><u>Get forked Source code</u></string>
     <string name="get_original_source_code"><u>Get original Source code</u></string>

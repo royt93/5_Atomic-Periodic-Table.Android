@@ -4,171 +4,255 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?attr/backgroundColor">
 
+    <!-- Top App Bar -->
     <FrameLayout
-        android:id="@+id/viewInfo"
+        android:id="@+id/commonTitleBackInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent">
+        android:layout_height="56dp"
+        android:background="?attr/colorSurface"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <!-- Subtle tint overlay -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:alpha="0.08"
+            android:background="?attr/colorPrimary" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <!--                <androidx.appcompat.widget.AppCompatImageView-->
-                <!--                    android:id="@+id/imageView3"-->
-                <!--                    android:layout_width="200dp"-->
-                <!--                    android:layout_height="200dp"-->
-                <!--                    android:contentDescription="@string/app_name"-->
-                <!--                    app:srcCompat="@drawable/ic_launcher" />-->
-
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/imageView3"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="80dp"
-                    android:contentDescription="@string/atomic_periodic_table"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_launcher"
-                    app:layout_constraintBottom_toTopOf="@+id/etName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:roundPercent="1" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/mckimquyen"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="@id/commonTitleBackInfo" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/atomic_periodic_table"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorOnSurface"
-                    android:alpha="0.85"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toTopOf="@id/commonTitleBackInfo" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/versionNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="0dp"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorTertiary"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toTopOf="@id/commonTitleBackInfo"
-                    tools:ignore="PrivateResource"
-                    tools:text="Version 2023.05.06" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btGithubForked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:minHeight="48dp"
-                    android:background="@drawable/riple_chip_ripple"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
-                    android:text="@string/get_forked_source_code"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/colorError"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btGithub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:minHeight="48dp"
-                    android:background="@drawable/riple_chip_ripple"
-                    android:paddingStart="24dp"
-                    android:paddingEnd="24dp"
-                    android:text="@string/get_original_source_code"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/colorError"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </ScrollView>
-
-        <FrameLayout
-            android:id="@+id/commonTitleBackInfo"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:alpha="0.975"
-            android:background="?attr/colorSurface"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <FrameLayout
+                android:id="@+id/titleBoxInfo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical">
+                android:layout_height="56dp">
 
-                <FrameLayout
-                    android:id="@+id/titleBoxInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp">
+                <!-- Back Button -->
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/back_button"
+                    android:rotation="180"
+                    android:src="@drawable/ic_arrow_back_whit"
+                    app:tint="?attr/colorOnSecondaryContainer"
+                    tools:ignore="PrivateResource" />
 
-                    <ImageButton
-                        android:id="@+id/backBtn"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/back_button"
-                        android:rotation="180"
-                        android:src="@drawable/ic_arrow_back_whit"
-                        app:tint="?attr/colorOnSecondaryContainer"
-                        tools:ignore="PrivateResource" />
+                <!-- Title -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/elementTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginEnd="70dp"
+                    android:alpha="0.9"
+                    android:gravity="center_vertical"
+                    android:text="@string/about"
+                    android:textColor="?attr/colorOnSecondaryContainer"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/elementTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="56dp"
-                        android:layout_marginStart="70dp"
-                        android:alpha="0.9"
-                        android:gravity="center"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
-                        android:text="@string/about"
-                        android:textAlignment="center"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="PrivateResource" />
+            </FrameLayout>
 
-                </FrameLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </FrameLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </FrameLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/viewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:animateLayoutChanges="true"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commonTitleBackInfo">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
+
+            <!-- Hero Section Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/heroCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:animateLayoutChanges="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="?attr/colorSurface">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- App Icon with subtle elevation -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="60dp"
+                        app:cardElevation="4dp">
+
+                        <androidx.constraintlayout.utils.widget.ImageFilterView
+                            android:id="@+id/imageView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/atomic_periodic_table"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_launcher"
+                            app:roundPercent="1" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- App Name -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mckimquyen"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <!-- App Subtitle -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.85"
+                        android:text="@string/atomic_periodic_table"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp" />
+
+                    <!-- Version -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/versionNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:alpha="0.6"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="12sp"
+                        tools:text="Version 2025.09.13" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Source Code Section Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sourceCodeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:animateLayoutChanges="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="?attr/colorSurface">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Section Title -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/source_code"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Buttons Container with Max Width -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <!-- Forked Source Button -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btGithubForked"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxWidth="600dp"
+                            android:background="@drawable/shape_toast"
+                            android:backgroundTint="?attr/colorSurfaceVariant"
+                            android:drawableStart="@drawable/ic_info"
+                            android:drawablePadding="12dp"
+                            android:drawableTint="?attr/colorPrimary"
+                            android:minHeight="48dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:text="@string/get_forked_source_code"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp"
+                            tools:ignore="RtlCompat" />
+
+                        <!-- Original Source Button -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btGithub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:maxWidth="600dp"
+                            android:background="@drawable/shape_toast"
+                            android:backgroundTint="?attr/colorSurfaceVariant"
+                            android:drawableStart="@drawable/ic_info"
+                            android:drawablePadding="12dp"
+                            android:drawableTint="?attr/colorPrimary"
+                            android:minHeight="48dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:text="@string/get_original_source_code"
+                            android:textAlignment="textStart"
+                            android:textAllCaps="false"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp"
+                            tools:ignore="RtlCompat" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
