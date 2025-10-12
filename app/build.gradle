@@ -15,6 +15,14 @@ android {
         versionCode 20251013
         versionName "2025.10.13"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Vector drawable support for API < 21
+        vectorDrawables.useSupportLibrary = true
+
+        // Resource optimization - keep only specified languages
+        // Add your supported languages here (e.g., 'en', 'vi', 'zh', etc.)
+        // Remove this if you want to support all languages
+        // resConfigs 'en', 'vi'
     }
     buildTypes {
         debug {
@@ -41,14 +49,48 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
+    }
+
+    // ===============================================================
+    // APK/AAB Size Optimization
+    // ===============================================================
+
+    // Split APKs by ABI for smaller individual APK sizes
+    // Google Play will automatically serve the right APK for each device
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+            universalApk false // Set true if you need a universal APK
+        }
+    }
+
+    // Packaging options to reduce APK size
+    packagingOptions {
+        resources {
+            excludes += [
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE',
+                'META-INF/LICENSE.txt',
+                'META-INF/license.txt',
+                'META-INF/NOTICE',
+                'META-INF/NOTICE.txt',
+                'META-INF/notice.txt',
+                'META-INF/ASL2.0',
+                'META-INF/*.kotlin_module',
+                'META-INF/gradle/incremental.annotation.processors'
+            ]
+        }
     }
 
     signingConfigs {
@@ -64,13 +106,20 @@ android {
         release {
             debuggable false
             minifyEnabled true
-            //used android.enableR8=true in gradle.properties
+            shrinkResources true // Remove unused resources
+            //used android.enableR8=true in gradle.properties for R8 full mode
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 //            applicationIdSuffix ".release"
+
+            // Optimize for smaller APK/AAB size
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE' // Smaller native debug symbols
+            }
         }
         debug {
             minifyEnabled false
+            shrinkResources false
             //used android.enableR8=true in gradle.properties
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //            applicationIdSuffix ".debug"
@@ -118,9 +167,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // Kotlin stdlib - updated to 2.2.0 (Jan 2025)
+    // Kotlin stdlib - updated to 2.2.20 (Jan 2025)
     // All activities and extension classes migrated from kotlin-android-extensions to ViewBinding
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.20"
     // AndroidX AppCompat - updated to 1.7.1 (latest stable, tương thích Android 15+)
     implementation 'androidx.appcompat:appcompat:1.7.1'
     // AndroidX Core KTX - updated to 1.17.0 (Jan 2025) - QUAN TRỌNG cho performance

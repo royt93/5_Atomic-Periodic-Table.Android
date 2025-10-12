@@ -225,12 +225,26 @@
 -allowaccessmodification
 -dontpreverify
 
-# Remove logging in release builds (optional, comment out if you need logs)
-# -assumenosideeffects class android.util.Log {
-#     public static *** d(...);
-#     public static *** v(...);
-#     public static *** i(...);
-# }
+# Remove logging in release builds to reduce APK size
+# Uncomment the following to remove all logs in release
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** i(...);
+    public static *** w(...);
+    public static *** e(...);
+}
+
+# Remove println statements
+-assumenosideeffects class kotlin.io.ConsoleKt {
+    public static *** println(...);
+}
+
+# Remove System.out.println
+-assumenosideeffects class java.io.PrintStream {
+    public void println(...);
+    public void print(...);
+}
 
 # ===============================================================
 # End of ProGuard Rules
