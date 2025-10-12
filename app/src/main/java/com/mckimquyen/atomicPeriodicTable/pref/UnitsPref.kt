@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.pref
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class TemperatureUnits(context: Context) {
 
@@ -15,8 +16,8 @@ class TemperatureUnits(context: Context) {
     }
 
     fun setValue(tempUnit: String) {
-        val editor = preference.edit()
-        editor.putString(preferenceValue, tempUnit)
-        editor.apply()
+        preference.edit {
+            putString(preferenceValue, tempUnit)
+        }
     }
 }

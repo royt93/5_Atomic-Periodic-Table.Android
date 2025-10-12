@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.pref
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class ElementSendAndLoad(context: Context) {
 
@@ -16,8 +17,8 @@ class ElementSendAndLoad(context: Context) {
     }
 
     fun setValue(string: String) {
-        val editor = preference.edit()
-        editor.putString(prefValue, string)
-        editor.apply()
+        preference.edit {
+            putString(prefValue, string)
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.pref
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class OfflinePreference(context: Context) {
     private val prefName = "Offline_Preference"
@@ -15,8 +16,8 @@ class OfflinePreference(context: Context) {
     }
 
     fun setValue(count: Int) {
-        val editor = preference.edit()
-        editor.putInt(prefValue, count)
-        editor.apply()
+        preference.edit {
+            putInt(prefValue, count)
+        }
     }
 }

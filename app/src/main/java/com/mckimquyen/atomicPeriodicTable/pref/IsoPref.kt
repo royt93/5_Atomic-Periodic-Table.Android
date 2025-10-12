@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.pref
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class IsoPref(context: Context) {
 
@@ -18,9 +19,9 @@ class IsoPref(context: Context) {
     }
 
     fun setValue(count: Int) {
-        val editor = preference.edit()
-        editor.putInt(prefValue, count)
-        editor.apply()
+        preference.edit {
+            putInt(prefValue, count)
+        }
     }
 }
 
@@ -33,14 +34,15 @@ class SendIso(context: Context) {
         context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
     fun getValue(): String {
-        return preference.getString(prefValue, "false")!!
+        // Optimized: Use elvis operator instead of non-null assertion to avoid potential crash
+        return preference.getString(prefValue, "false") ?: "false"
         //0 == Not sent
         //1 == Sent
     }
 
     fun setValue(count: String) {
-        val editor = preference.edit()
-        editor.putString(prefValue, count)
-        editor.apply()
+        preference.edit {
+            putString(prefValue, count)
+        }
     }
 }
