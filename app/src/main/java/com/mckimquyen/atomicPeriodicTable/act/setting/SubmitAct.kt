@@ -2,11 +2,16 @@ package com.mckimquyen.atomicPeriodicTable.act.setting
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.activity.OnBackPressedCallback
+import androidx.core.net.toUri
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASubmitBinding
@@ -53,9 +58,24 @@ class SubmitAct : BaseAct() {
         binding = ASubmitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup system UI visibility
-        binding.viewSub.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewSub)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // Setup issue type dropdown selector
         dropSelector()
@@ -87,9 +107,32 @@ class SubmitAct : BaseAct() {
                 }
             })
 
-        // Back button - quay về màn hình trước
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        // Logic đặc biệt: Nếu dropdown đang hiển thị -> ẩn dropdown thay vì back
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kiểm tra xem dropdown có đang hiển thị không
+                if (binding.dropIssue.root.isVisible) {
+                    // Dropdown đang hiện -> ẩn dropdown và background thay vì finish activity
+                    Utils.fadeOutAnim(binding.background, 150)
+                    Utils.fadeOutAnim(binding.dropIssue.root, 150)
+                } else {
+                    // Dropdown đã ẩn -> finish activity và quay về màn hình trước
+                    finish()
+                }
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -111,17 +154,6 @@ class SubmitAct : BaseAct() {
                 R.dimen.header_down_margin
             )
         binding.submitTitleDownstate.layoutParams = params2
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        // Nếu dropdown đang hiển thị -> ẩn dropdown thay vì back
-        if (binding.dropIssue.root.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.background, 150)
-            Utils.fadeOutAnim(binding.dropIssue.root, 150)
-            return
-        }
-        super.onBackPressed()
     }
 
     private fun dropSelector() {
@@ -177,10 +209,8 @@ class SubmitAct : BaseAct() {
 
             // Tạo email intent với subject và body
             val request = Intent(Intent.ACTION_VIEW)
-            request.data = Uri.parse(
-                Uri.parse("mailto:roy.mobile.dev@gmail.com?subject=$type $title&body=$content")
-                    .toString()
-            )
+            request.data = "mailto:roy.mobile.dev@gmail.com?subject=$type $title&body=$content".toUri()
+                .toString().toUri()
             startActivity(request)
         }
     }

@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsLicensesBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import androidx.core.view.isVisible
 
 class LicensesAct : BaseAct() {
 
@@ -50,8 +55,24 @@ class LicensesAct : BaseAct() {
         binding = ASettingsLicensesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup system UI visibility
-        binding.viewLic.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewLic)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // Title Controller - hiển thị/ẩn title bar khi scroll
         binding.commonTitleBackLicColor.visibility = View.INVISIBLE
@@ -82,9 +103,31 @@ class LicensesAct : BaseAct() {
 
         listeners()
 
-        // Back button - quay về màn hình trước
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        // Logic đặc biệt: Nếu license info panel đang hiển thị -> ẩn panel thay vì back
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kiểm tra xem license info panel có đang hiển thị không
+                if (binding.lInc.root.isVisible) {
+                    // Panel đang hiện -> ẩn panel thay vì finish activity
+                    hideInfoPanel()
+                } else {
+                    // Panel đã ẩn -> finish activity và quay về màn hình trước
+                    finish()
+                }
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -101,17 +144,6 @@ class LicensesAct : BaseAct() {
                 R.dimen.header_down_margin
             )
         binding.licenseTitleDownstate.layoutParams = params3
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        // Nếu license info panel đang hiển thị -> ẩn panel thay vì back
-        if (binding.lInc.root.visibility == View.VISIBLE) {
-            hideInfoPanel()
-            return
-        } else {
-            super.onBackPressed()
-        }
     }
 
     private fun listeners() {

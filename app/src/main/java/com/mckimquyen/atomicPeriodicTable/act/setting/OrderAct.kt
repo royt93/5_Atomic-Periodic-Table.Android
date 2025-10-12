@@ -2,8 +2,11 @@ package com.mckimquyen.atomicPeriodicTable.act.setting
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.mckimquyen.atomicPeriodicTable.R
@@ -48,6 +51,9 @@ class OrderAct : BaseAct() {
         binding = AOrderSettingsPageBinding.inflate(layoutInflater)
         setContentView(binding.root) //REMEMBER: Never move any function calls above this
 
+        // ===============================================================
+        // Setup RecyclerView với Drag & Drop
+        // ===============================================================
         val dataSet = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
         val mAdapter = OrderAdt(dataSet)
         val mList = binding.ordRecycler
@@ -55,9 +61,43 @@ class OrderAct : BaseAct() {
         mList.adapter = mAdapter
         mList.dragListener = onItemDragListener
 
-        binding.viewOrd.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewOrd)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kết thúc activity và quay về màn hình trước
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtnOrd.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
