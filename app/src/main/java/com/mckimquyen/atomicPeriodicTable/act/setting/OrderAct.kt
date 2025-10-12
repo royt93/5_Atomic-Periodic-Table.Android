@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.mckimquyen.atomicPeriodicTable.R
@@ -65,20 +63,14 @@ class OrderAct : BaseAct() {
         // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
         // ===============================================================
         // Thay thế: systemUiVisibility (deprecated)
-        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
-
-        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        // Sử dụng: WindowCompat.setDecorFitsSystemWindows (modern, backward compatible)
+        //
+        // Logic gốc: SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // - Content vẽ DƯỚI system bars (status bar & navigation bar)
+        // - Navigation bar KHÔNG bị ẩn, vẫn hiển thị bình thường
+        //
+        // Modern equivalent: chỉ cần setDecorFitsSystemWindows(false)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // Lấy WindowInsetsController để điều khiển system bars
-        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewOrd)
-
-        // Ẩn navigation bar, giữ status bar
-        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
-
-        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // ===============================================================
         // Back Button Handler (Modern API)

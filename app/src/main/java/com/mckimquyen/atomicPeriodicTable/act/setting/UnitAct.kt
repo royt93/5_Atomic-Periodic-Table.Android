@@ -8,8 +8,6 @@ import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.databinding.AUnitBinding
@@ -55,20 +53,14 @@ class UnitAct : BaseAct() {
         // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
         // ===============================================================
         // Thay thế: systemUiVisibility (deprecated)
-        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
-
-        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        // Sử dụng: WindowCompat.setDecorFitsSystemWindows (modern, backward compatible)
+        //
+        // Logic gốc: SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // - Content vẽ DƯỚI system bars (status bar & navigation bar)
+        // - Navigation bar KHÔNG bị ẩn, vẫn hiển thị bình thường
+        //
+        // Modern equivalent: chỉ cần setDecorFitsSystemWindows(false)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // Lấy WindowInsetsController để điều khiển system bars
-        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewUnit)
-
-        // Ẩn navigation bar, giữ status bar
-        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
-
-        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // ===============================================================
         // Title Controller - Hiển thị/Ẩn Title Bar Khi Scroll
