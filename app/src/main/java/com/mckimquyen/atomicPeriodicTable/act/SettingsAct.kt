@@ -1,7 +1,9 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
@@ -31,6 +37,7 @@ import java.text.DecimalFormat
 import kotlin.math.log10
 import kotlin.math.pow
 import kotlin.system.exitProcess
+import androidx.core.view.isVisible
 
 class SettingsAct : BaseAct() {
 
@@ -39,6 +46,23 @@ class SettingsAct : BaseAct() {
 
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
+
+    // ===============================================================
+    // Helper function: Modern Activity Transition API
+    // ===============================================================
+    // Thay thế: overridePendingTransition() (deprecated in Android 13+)
+    // Sử dụng: overrideActivityTransition() (modern API for Android 13+)
+
+    private fun Activity.overrideTransition(enterAnim: Int, exitAnim: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            // Android 14+ (API 34+): Use modern overrideActivityTransition
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, enterAnim, exitAnim)
+        } else {
+            // Android 13 and below: Use deprecated overridePendingTransition
+            @Suppress("DEPRECATION")
+            overridePendingTransition(enterAnim, exitAnim)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,7 +162,24 @@ class SettingsAct : BaseAct() {
             binding.offlineInternetSwitch.toggle()
         }
 
-        binding.view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.view)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         //Title Controller
         binding.commonTitleSettingsColor.visibility = View.INVISIBLE
@@ -173,10 +214,30 @@ class SettingsAct : BaseAct() {
             rateApp("com.mckimquyen.bemytester")
 //            openUrlInBrowser("https://github.com/gj-loitp/20-TESTER-FOR-CLOSED-TESTING/tree/main")
         }
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press với logic đóng theme panel trước
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Nếu theme panel đang hiển thị, đóng nó lại
+                if (binding.themePanel.root.isVisible) {
+                    Utils.fadeOutAnim(binding.themePanel.root, 300) //Start Close Animation
+                    return
+                }
+                // Không có panel nào mở, kết thúc activity
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtnSetting.setOnClickListener {
-//            Log.d("roy93~", "onBackPressed")
-            this.onBackPressed()
-//            finishScreen()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.submitSettings.setOnClickListener {
             val intent = Intent(this, SubmitAct::class.java)
@@ -227,17 +288,6 @@ class SettingsAct : BaseAct() {
         binding.personalizationBox.setPadding(left, 0, right, 0)
         binding.advancedBox.setPadding(left, 0, right, 0)
 
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-//        Log.d("roy93~", "onBackPressed")
-        if (binding.themePanel.root.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.themePanel.root, 300) //Start Close Animation
-            return
-        } else {
-            super.onBackPressed()
-        }
     }
 
 //    private fun finishScreen() {
@@ -292,7 +342,8 @@ class SettingsAct : BaseAct() {
         var size: Long = 0
         size += getDirSize(this.cacheDir)
         size += getDirSize(this.externalCacheDir)
-        (findViewById<View>(R.id.clearCacheContent) as TextView).text = readableFileSize(size)
+        // Use findViewById<TextView> directly - no cast needed
+        findViewById<TextView>(R.id.clearCacheContent).text = readableFileSize(size)
     }
 
     private fun getDirSize(dir: File?): Long {
@@ -333,11 +384,11 @@ class SettingsAct : BaseAct() {
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
                 finish()
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
                 startActivity(intent)
                 SettingsAct().finish()
                 exitProcess(0)
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
             }, 302)
         }
         binding.themePanel.lightBtn.setOnClickListener {
@@ -349,11 +400,11 @@ class SettingsAct : BaseAct() {
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
                 finish()
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
                 startActivity(intent)
                 SettingsAct().finish()
                 exitProcess(0)
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
             }, 302)
         }
         binding.themePanel.darkBtn.setOnClickListener {
@@ -365,11 +416,11 @@ class SettingsAct : BaseAct() {
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
                 finish()
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
                 startActivity(intent)
                 SettingsAct().finish()
                 exitProcess(0)
-                overridePendingTransition(0, 0)
+                overrideTransition(0, 0)
             }, 302)
         }
         binding.themesSettings.setOnClickListener {

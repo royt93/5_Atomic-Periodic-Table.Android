@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
 
 abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     companion object {
@@ -40,15 +41,30 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         right: Int,
     ) = Unit
 
+    // ===============================================================
+    // Window Insets Handler (Modern API - Android 11+)
+    // ===============================================================
+    // Thay thế: WindowInsets với systemWindowInsetTop/Bottom/Left/Right (deprecated)
+    // Sử dụng: WindowInsetsCompat với getInsets() (modern, backward compatible)
+
+    @Suppress("DEPRECATION")
     override fun onApplyWindowInsets(v: View, insets: WindowInsets): WindowInsets {
-//        Pasteur.info(TAG, "height: ${insets.systemWindowInsetBottom}")
+        // Convert platform WindowInsets to WindowInsetsCompat for modern API
+        val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets, v)
+
+        // Lấy system bars insets (status bar, navigation bar) bằng modern API
+        val systemBarsInsets = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+
+        // Gọi callback với insets values
         onApplySystemInsets(
-            insets.systemWindowInsetTop,
-            insets.systemWindowInsetBottom,
-            insets.systemWindowInsetLeft,
-            insets.systemWindowInsetRight
+            systemBarsInsets.top,
+            systemBarsInsets.bottom,
+            systemBarsInsets.left,
+            systemBarsInsets.right
         )
-        return insets.consumeSystemWindowInsets()
+
+        // Return consumed insets using modern API
+        return WindowInsetsCompat.CONSUMED.toWindowInsets() ?: insets
     }
 
     override fun onResume() {

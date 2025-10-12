@@ -9,22 +9,22 @@ import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.gms.ads.AdError
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
-import com.mckimquyen.atomicPeriodicTable.act.MainAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.FavoritePageAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
+import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.mckimquyen.atomicPeriodicTable.ext.InfoExt
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
-import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
@@ -32,6 +32,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
+import androidx.core.view.isVisible
 
 class ElementInfoAct : InfoExt() {
 
@@ -84,10 +85,56 @@ class ElementInfoAct : InfoExt() {
         nextPrev()
         favoriteBarSetup()
         elementAnim(binding.overviewInc.root, binding.propertiesInc.root)
-        binding.view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.view)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press với logic đóng panel trước
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Nếu shell panel đang hiển thị, đóng nó lại
+                if (binding.shellBackground.isVisible) {
+                    Utils.fadeOutAnim(binding.shell.root, 300)
+                    Utils.fadeOutAnim(binding.shellBackground, 300)
+                    return
+                }
+                // Nếu emission panel đang hiển thị, đóng nó lại
+                if (binding.detailEmission.root.isVisible) {
+                    Utils.fadeOutAnim(binding.detailEmission.root, 300)
+                    Utils.fadeOutAnim(binding.detailEmissionBackground, 300)
+                    return
+                }
+                // Không có panel nào mở, kết thúc activity
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            super.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.favoriteBarInclude.editFavBtn.setOnClickListener {
             val intent = Intent(this, FavoritePageAct::class.java)
@@ -109,24 +156,6 @@ class ElementInfoAct : InfoExt() {
         )
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (binding.shellBackground.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.shell.root, 300)
-            Utils.fadeOutAnim(binding.shellBackground, 300)
-            return
-        }
-        if (binding.detailEmission.root.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.detailEmission.root, 300)
-            Utils.fadeOutAnim(binding.detailEmissionBackground, 300)
-            return
-        } else {
-//            showAd {
-//                //do nothing
-//            }
-            super.onBackPressed()
-        }
-    }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
         val params = binding.frame.layoutParams as ViewGroup.MarginLayoutParams

@@ -1,7 +1,6 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Looper
@@ -12,18 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.adt.IsotopeAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
+import com.mckimquyen.atomicPeriodicTable.databinding.AIsotopesExperimentalBinding
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.IsoPref
 import com.mckimquyen.atomicPeriodicTable.pref.SendIso
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.mckimquyen.atomicPeriodicTable.databinding.AIsotopesExperimentalBinding
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -97,7 +101,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         })
 
         binding.backgroundI2.setOnClickListener {
-            if (binding.panelInfo.root.visibility == View.VISIBLE) {
+            if (binding.panelInfo.root.isVisible) {
                 Utils.fadeOutAnim(binding.panelInfo.root, 300)
                 Utils.fadeOutAnim(binding.backgroundI2, 300)
             } else {
@@ -106,12 +110,58 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
             }
         }
 
-        binding.view1.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.view1)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
         clickSearch()
         searchFilter(elements, binding.rView)
         sentIsotope()
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press với logic đóng panel trước
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Nếu sliding panel đang hiển thị, đóng nó lại
+                if (binding.backgroundI2.isVisible) {
+                    binding.slidPanel.slidingLayoutI.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+                    return
+                }
+                // Nếu filter panel đang hiển thị, đóng nó lại
+                if (binding.filterBackground.isVisible) {
+                    Utils.fadeOutAnim(binding.filterBackground, 150)
+                    Utils.fadeOutAnim(binding.isoFilterBox.root, 150)
+                    return
+                }
+                // Không có panel nào mở, kết thúc activity
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -136,7 +186,8 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
             Utils.fadeOutAnim(binding.isoFilterBox.root, 150)
             Utils.fadeOutAnim(binding.filterBackground, 150)
             filtList.sortWith { lhs, rhs ->
-                if (lhs.element < rhs.element) -1 else if (lhs.element < rhs.element) 1 else 0
+                // Fixed: Thay điều kiện thứ 2 từ '<' thành '>' để sort đúng
+                if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
@@ -173,7 +224,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
 
             binding.editIso.requestFocus()
             val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.editIso, InputMethodManager.SHOW_IMPLICIT)
         }
         binding.closeIsoSearch.setOnClickListener {
@@ -182,7 +233,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
 
             val view = this.currentFocus
             if (view != null) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
@@ -201,7 +252,8 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         }
         if (isoPrefValue == 0) {
             filteredList.sortWith { lhs, rhs ->
-                if (lhs.element < rhs.element) -1 else if (lhs.element < rhs.element) 1 else 0
+                // Fixed: Thay điều kiện thứ 2 từ '<' thành '>' để sort đúng
+                if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
         }
         val handler = android.os.Handler(Looper.getMainLooper())
@@ -242,20 +294,6 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (binding.backgroundI2.visibility == View.VISIBLE) {
-            binding.slidPanel.slidingLayoutI.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-            return
-        }
-        if (binding.filterBackground.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.filterBackground, 150)
-            Utils.fadeOutAnim(binding.isoFilterBox.root, 150)
-            return
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     @SuppressLint("SetTextI18n")
     private fun drawCard(list: ArrayList<Element>) {
@@ -284,7 +322,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                     val fLayout: View =
                         inflater.inflate(R.layout.view_row_iso_panel_title_item, aLayout, false)
 
-                    val iTitle = fLayout.findViewById(R.id.tvIsoTitle) as TextView
+                    val iTitle: TextView = fLayout.findViewById(R.id.tvIsoTitle)
                     val iExt = " Isotopes"
                     iTitle.text = "${
                         nameVal.replaceFirstChar {
@@ -316,12 +354,12 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                         val isoHalf = jsonObject.optString("$half$i", "---")
                         val isoMass = jsonObject.optString("$mass$i", "---")
 
-                        val iName = myLayout.findViewById(R.id.tvIName) as TextView
-                        val iZ = myLayout.findViewById(R.id.tviIZ) as TextView
-                        val iN = myLayout.findViewById(R.id.tvIN) as TextView
-                        val iA = myLayout.findViewById(R.id.tvIA) as TextView
-                        val iHalf = myLayout.findViewById(R.id.tvIHalf) as TextView
-                        val iMass = myLayout.findViewById(R.id.tvIMass) as TextView
+                        val iName: TextView = myLayout.findViewById(R.id.tvIName)
+                        val iZ: TextView = myLayout.findViewById(R.id.tviIZ)
+                        val iN: TextView = myLayout.findViewById(R.id.tvIN)
+                        val iA: TextView = myLayout.findViewById(R.id.tvIA)
+                        val iHalf: TextView = myLayout.findViewById(R.id.tvIHalf)
+                        val iMass: TextView = myLayout.findViewById(R.id.tvIMass)
 
                         iName.text = isoName
                         iZ.text = isoZ
@@ -333,7 +371,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                         mainLayout.addView(myLayout)
                     }
                 }
-            } catch (e: IOException) {
+            } catch (_: IOException) {
                 ToastUtil.showToast(this, "Couldn't load Data")
             }
         }

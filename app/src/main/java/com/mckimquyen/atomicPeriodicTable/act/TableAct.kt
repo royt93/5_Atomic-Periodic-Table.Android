@@ -6,6 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.table.ElectrodeAct
 import com.mckimquyen.atomicPeriodicTable.act.table.EquationsAct
@@ -51,7 +55,24 @@ class TableAct : BaseAct() {
         binding = ATablesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.viewSub.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewSub)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         //Title Controller
         binding.commonTitleTableColor.visibility = View.INVISIBLE
@@ -80,8 +101,24 @@ class TableAct : BaseAct() {
 
         tableListeners()
 
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kết thúc activity và quay về màn hình trước
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 

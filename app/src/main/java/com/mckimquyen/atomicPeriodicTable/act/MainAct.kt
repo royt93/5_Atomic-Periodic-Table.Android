@@ -24,7 +24,11 @@ import android.view.animation.ScaleAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +58,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
 import org.deejdev.twowaynestedscrollview.TwoWayNestedScrollView
 import java.util.Locale
+import androidx.core.view.isVisible
 
 class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.InterstitialAdListener {
     // binding inherited from TableExt
@@ -131,7 +136,25 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         binding.moreBtn.setOnClickListener { openHover() }
         binding.hoverBackground.setOnClickListener { closeHover() }
         binding.hoverMenuInclude.btRandomBtn.setOnClickListener { getRandomItem() }
-        binding.viewMain.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewMain)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         val handler = android.os.Handler(Looper.getMainLooper())
         handler.postDelayed({
@@ -163,8 +186,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                     }
                     scaleAnimation.duration = 0
                     scaleAnimation.fillAfter = true
-                    val layout = binding.scrollLin as LinearLayout
-                    layout.startAnimation(scaleAnimation)
+                    // No cast needed - ViewBinding provides correct type
+                    binding.scrollLin.startAnimation(scaleAnimation)
                     return true
                 }
             })
@@ -201,6 +224,47 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         AdMobManager.setCurrentActivity(this)
         AdMobManager.interstitialListener = this
         AdMobManager.loadInterstitial(this, BuildConfig.ADMOB_INTERSTITIAL_ID)
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press với logic đóng panel trước
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Nếu nav menu đang hiển thị, đóng nó lại
+                if (binding.navBackground.isVisible) {
+                    binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
+                    Utils.fadeOutAnim(binding.navBackground, 150)
+                    return
+                }
+                // Nếu hover menu đang hiển thị, đóng nó lại
+                if (binding.hoverBackground.isVisible) {
+                    Utils.fadeOutAnim(binding.hoverBackground, 150)
+                    Utils.fadeOutAnim(binding.hoverMenuInclude.root, 150)
+                    return
+                }
+                // Nếu search menu đang hiển thị, đóng nó lại
+                if (binding.searchMenuInclude.root.isVisible) {
+                    Utils.fadeInAnim(binding.navBarMain, 150)
+                    Utils.fadeOutAnim(binding.navBackground, 150)
+                    Utils.fadeOutAnim(binding.searchMenuInclude.root, 150)
+                    Utils.fadeInAnim(binding.moreBtn, 300)
+                    return
+                }
+                // Nếu search filter đang hiển thị, đóng nó lại
+                if (binding.searchMenuInclude.root.isVisible && binding.searchMenuInclude.background.isVisible) {
+                    Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
+                    Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+                    Utils.fadeInAnim(binding.moreBtn, 300)
+                    return
+                }
+                // Không có panel nào mở, kết thúc activity
+                finish()
+            }
+        })
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -268,7 +332,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         val searchPrefValue = searchPreference.getValue()
         if (searchPrefValue == 2) {
             filteredList.sortWith { lhs, rhs ->
-                if (lhs.element < rhs.element) -1 else if (lhs.element < rhs.element) 1 else 0
+                // Fixed: Thay điều kiện thứ 2 từ '<' thành '>' để sort đúng
+                if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
         }
         mAdapter.filterList(filteredList)
@@ -294,34 +359,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         startActivity(intent)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (binding.navBackground.visibility == View.VISIBLE) {
-            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
-            Utils.fadeOutAnim(binding.navBackground, 150)
-            return
-        }
-        if (binding.hoverBackground.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.hoverBackground, 150)
-            Utils.fadeOutAnim(binding.hoverMenuInclude.root, 150)
-            return
-        }
-        if (binding.searchMenuInclude.root.visibility == View.VISIBLE) {
-            Utils.fadeInAnim(binding.navBarMain, 150)
-            Utils.fadeOutAnim(binding.navBackground, 150)
-            Utils.fadeOutAnim(binding.searchMenuInclude.root, 150)
-            Utils.fadeInAnim(binding.moreBtn, 300)
-            return
-        }
-        if (binding.searchMenuInclude.root.visibility == View.VISIBLE && binding.searchMenuInclude.background.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
-            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
-            Utils.fadeInAnim(binding.moreBtn, 300)
-            return
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     private fun searchListener() {
         binding.searchBox.setOnClickListener {
@@ -334,7 +371,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 window.insetsController?.show(WindowInsets.Type.ime())
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(binding.searchMenuInclude.editElement, InputMethodManager.SHOW_IMPLICIT)
             }
             Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
@@ -352,7 +389,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                         window.insetsController?.hide(WindowInsets.Type.ime())
                     }
                 } else {
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             }
@@ -543,7 +580,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
             Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             filtList.sortWith { lhs, rhs ->
-                if (lhs.element < rhs.element) -1 else if (lhs.element < rhs.element) 1 else 0
+                // Fixed: Thay điều kiện thứ 2 từ '<' thành '>' để sort đúng
+                if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
@@ -559,7 +597,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         left: Int,
         right: Int,
     ) {
-        binding.navMenuInclude.navLin.setPadding(/* left = */ left, /* top = */ 0, /* right = */ right, /* bottom = */ 0)
+        binding.navMenuInclude.navLin.setPadding(/* left = */ left, /* top = */
+            0, /* right = */
+            right, /* bottom = */
+            0
+        )
 
         val params = binding.commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
