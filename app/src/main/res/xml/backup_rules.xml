@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Backup rules for Android 11 and below
+    Specifies which files should be included/excluded from cloud backups
+-->
+<full-backup-content>
+    <!-- Include app preferences -->
+    <include domain="sharedpref" path="." />
+
+    <!-- Include database files -->
+    <include domain="database" path="." />
+
+    <!-- Exclude cache directory -->
+    <exclude domain="file" path="cache/" />
+
+    <!-- Exclude temp files -->
+    <exclude domain="file" path="tmp/" />
+
+    <!-- Exclude large files that can be re-downloaded -->
+    <exclude domain="file" path="images/" />
+
+    <!-- Exclude external storage (SD card) -->
+    <exclude domain="external" path="." />
+</full-backup-content>

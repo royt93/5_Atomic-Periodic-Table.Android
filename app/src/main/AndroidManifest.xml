@@ -8,12 +8,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- AdMob Advertising ID Permission
+         Used ONLY for advertising and analytics purposes:
+         - Serving personalized ads through Google AdMob
+         - Measuring ad performance and analytics
+         - Frequency capping
+         User can opt-out via device settings: Settings > Google > Ads
+    -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:name=".RoyApp"
         android:allowBackup="true"
-        android:fullBackupContent="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,8 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="DiscouragedApi,LockedOrientationActivity"
-        tools:targetApi="m">
+        tools:ignore="DiscouragedApi,LockedOrientationActivity">
 
         <!-- =============================================================== -->
         <!-- AdMob Configuration -->
