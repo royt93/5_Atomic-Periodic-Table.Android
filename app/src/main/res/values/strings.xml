@@ -102,6 +102,8 @@
     <string name="wikipedia_button">Wikipedia</string>
     <string name="previous_button">Previous element</string>
     <string name="next_button">Next element</string>
+    <string name="search_button">Search</string>
+    <string name="close_search_button">Close search</string>
     <string name="no_results">No results</string>
     <string name="try_searching_for_another_word_or_check_your_spelling">Try searching for another word or check your spelling.</string>
     <string name="dictionary">Dictionary</string>

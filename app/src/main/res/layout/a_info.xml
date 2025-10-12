@@ -36,6 +36,8 @@
                     android:id="@+id/imageView3"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@string/atomic_periodic_table"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_launcher"
                     app:layout_constraintBottom_toTopOf="@+id/etName"
@@ -63,10 +65,10 @@
                     android:layout_marginTop="0dp"
                     android:text="@string/atomic_periodic_table"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textColor="?attr/colorOnSurface"
+                    android:alpha="0.85"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toTopOf="@id/commonTitleBackInfo"
-                    tools:ignore="PrivateResource" />
+                    app:layout_constraintTop_toTopOf="@id/commonTitleBackInfo" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/versionNumber"
@@ -80,30 +82,34 @@
                     tools:ignore="PrivateResource"
                     tools:text="Version 2023.05.06" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btGithubForked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:minHeight="48dp"
                     android:background="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
                     android:text="@string/get_forked_source_code"
                     android:textAllCaps="false"
                     android:textColor="?attr/colorError"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btGithub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:minHeight="48dp"
                     android:background="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
                     android:text="@string/get_original_source_code"
                     android:textAllCaps="false"
                     android:textColor="?attr/colorError"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -130,20 +136,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <ImageButton
                         android:id="@+id/backBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/app_name"
-                        android:elevation="0dp"
+                        android:contentDescription="@string/back_button"
                         android:rotation="180"
                         android:src="@drawable/ic_arrow_back_whit"
-                        app:backgroundTint="@color/transparent"
-                        app:borderWidth="0dp"
-                        app:elevation="0dp"
-                        app:fabSize="normal"
-                        app:pressedTranslationZ="0dp" />
+                        app:tint="?attr/colorOnSecondaryContainer"
+                        tools:ignore="PrivateResource" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/elementTitle"

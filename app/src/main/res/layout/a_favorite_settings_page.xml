@@ -49,17 +49,20 @@
                 android:textStyle="normal|normal"
                 tools:ignore="RtlSymmetry" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/molarMassCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -72,7 +75,7 @@
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView20"
@@ -81,17 +84,20 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/phaseCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -102,7 +108,7 @@
                     android:text="@string/show_stp_phase"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView21"
@@ -111,17 +117,20 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/electronegativityCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -132,7 +141,7 @@
                     android:text="@string/show_electronegativity"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
                 android:id="@+id/textView22"
@@ -141,17 +150,20 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/densityCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -162,7 +174,7 @@
                     android:text="@string/show_density"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/general_header2"
@@ -191,20 +203,22 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/kelvinBtn"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="36dp"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="180dp"
+                    android:minWidth="100dp"
+                    android:minHeight="48dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="9dp"
                     android:layout_marginEnd="9dp"
                     android:layout_marginBottom="9dp"
-                    android:layout_weight="1"
                     android:background="@drawable/shape_chip_outline"
                     android:clickable="true"
                     android:elevation="2dp"
@@ -220,9 +234,11 @@
                     android:id="@+id/celsiusBtn"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="180dp"
+                    android:minWidth="100dp"
+                    android:minHeight="48dp"
                     android:layout_margin="9dp"
-                    android:layout_weight="1"
                     android:background="@drawable/shape_toast_outline"
                     android:clickable="true"
                     android:elevation="2dp"
@@ -238,12 +254,14 @@
                     android:id="@+id/fahrenheitbtn"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="180dp"
+                    android:minWidth="100dp"
+                    android:minHeight="48dp"
                     android:layout_marginStart="9dp"
                     android:layout_marginTop="9dp"
-                    android:layout_marginEnd="36dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="9dp"
-                    android:layout_weight="1"
                     android:background="@drawable/shape_chip_outline"
                     android:clickable="true"
                     android:elevation="2dp"
@@ -263,18 +281,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/boilingCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -286,7 +307,7 @@
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView23"
@@ -295,18 +316,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/meltingCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -317,7 +341,7 @@
                     android:text="@string/show_melting_point"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -334,18 +358,21 @@
                 android:textStyle="normal|normal"
                 tools:ignore="RtlSymmetry" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/atomicRadiusEmpiricalCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -356,7 +383,7 @@
                     android:text="@string/show_atomic_radius_empirical"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView24"
@@ -365,18 +392,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/atomicRadiusCalculatedCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -387,7 +417,7 @@
                     android:text="@string/show_atomic_radius_calculated"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView25"
@@ -396,18 +426,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/covalentRadiusCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -418,7 +451,7 @@
                     android:text="@string/show_covalent_radius"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView26"
@@ -427,18 +460,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/vanDerWaalsRadiusCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -449,7 +485,7 @@
                     android:text="@string/show_van_der_waals_radius"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/general_header3"
@@ -467,18 +503,21 @@
                 android:textStyle="normal|normal"
                 tools:ignore="RtlSymmetry" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/fusionHeatCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -489,7 +528,7 @@
                     android:text="@string/show_fusion_heat"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView27"
@@ -498,18 +537,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/specificHeatCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -520,7 +562,7 @@
                     android:text="@string/show_specific_heat_capacity"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView28"
@@ -529,18 +571,21 @@
                 android:alpha="0.5"
                 android:background="?attr/rippleColor" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple">
 
                 <CheckBox
                     android:id="@+id/vaporizationHeatCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:buttonTint="?attr/colorPrimary"
@@ -551,7 +596,7 @@
                     android:text="@string/show_vaporization_heat"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
-            </FrameLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.legacy.widget.Space
                 android:layout_width="match_parent"
@@ -594,7 +639,7 @@
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/back_button"
                     android:elevation="2dp"
                     android:rotation="180"
                     android:src="@drawable/ic_arrow_back_whit"

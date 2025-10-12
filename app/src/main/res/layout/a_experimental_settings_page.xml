@@ -30,20 +30,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageButton
                     android:id="@+id/backBtnExp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:contentDescription="@string/app_name"
-                    android:elevation="0dp"
+                    android:contentDescription="@string/back_button"
                     android:rotation="180"
                     android:src="@drawable/ic_arrow_back_whit"
-                    app:backgroundTint="@color/transparent"
-                    app:borderWidth="0dp"
-                    app:elevation="0dp"
-                    app:fabSize="normal" />
+                    app:tint="?attr/colorOnPrimary"
+                    tools:ignore="PrivateResource" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/elementTitle"
@@ -54,7 +52,7 @@
                     android:paddingEnd="0dp"
                     android:text="@string/experimental"
                     android:textAlignment="center"
-                    android:textColor="?attr/actionMenuTextColor"
+                    android:textColor="?attr/colorOnPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </FrameLayout>
@@ -86,21 +84,24 @@
                 android:paddingBottom="9dp"
                 android:text="@string/warning_these_settings_are_either_early_in_development_or_very_unstable_enable_at_your_own_risk"
                 android:textAllCaps="true"
-                android:textColor="@color/colorLightError"
+                android:textColor="#FFFFFFFF"
                 android:textStyle="normal|bold"
                 tools:ignore="RtlSymmetry" />
 
-            <FrameLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="?attr/colorPrimary"
+                android:gravity="center"
                 android:clickable="true"
                 android:focusable="true">
 
                 <CheckBox
                     android:id="@+id/zoomCheck"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:maxWidth="600dp"
+                    android:minWidth="300dp"
                     android:layout_marginStart="18dp"
                     android:layout_marginEnd="18dp"
                     android:checked="false"
@@ -108,8 +109,8 @@
                     android:drawablePadding="9dp"
                     android:layoutDirection="rtl"
                     android:text="@string/enable_zoom_in_tables"
-                    android:textColor="?attr/actionMenuTextColor" />
-            </FrameLayout>
+                    android:textColor="?attr/colorOnPrimary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.legacy.widget.Space
                 android:layout_width="match_parent"
