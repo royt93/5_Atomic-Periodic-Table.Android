@@ -65,19 +65,8 @@ class AboutAct : BaseAct() {
         // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
 
         // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        // Status bar và navigation bar vẫn hiển thị bình thường (giống các màn hình khác)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // Lấy WindowInsetsController để điều khiển system bars
-        // WindowInsetsController luôn non-null khi window đã được khởi tạo
-        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewInfo)
-
-        // Ẩn system bars (status bar & navigation bar)
-        // Tương đương với: SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-
-        // Set behavior khi user swipe: system bars sẽ hiện tạm thời rồi tự ẩn
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // Hiển thị version number từ BuildConfig
         binding.versionNumber.text = "Version ${BuildConfig.VERSION_NAME}"

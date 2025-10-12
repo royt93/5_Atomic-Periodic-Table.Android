@@ -205,9 +205,10 @@
                         <!-- Forked Source Button -->
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btGithubForked"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxWidth="600dp"
+                            android:minWidth="300dp"
                             android:background="@drawable/shape_toast"
                             android:backgroundTint="?attr/colorSurfaceVariant"
                             android:drawableStart="@drawable/ic_info"
@@ -226,10 +227,11 @@
                         <!-- Original Source Button -->
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btGithub"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:maxWidth="600dp"
+                            android:minWidth="300dp"
                             android:background="@drawable/shape_toast"
                             android:backgroundTint="?attr/colorSurfaceVariant"
                             android:drawableStart="@drawable/ic_info"
