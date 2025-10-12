@@ -721,16 +721,15 @@
         <FrameLayout
             android:id="@+id/navContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="top"
-            android:fitsSystemWindows="true"
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/settingsBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end|center_vertical"
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:focusable="true"
@@ -744,7 +743,7 @@
                 android:id="@+id/menuBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_gravity="start|center_vertical"
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:focusable="true"
