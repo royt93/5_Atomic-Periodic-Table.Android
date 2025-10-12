@@ -42,7 +42,7 @@ class ShortCommandWidget : AppWidgetProvider() {
             )
 
             //Update Widget
-            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
     }
 

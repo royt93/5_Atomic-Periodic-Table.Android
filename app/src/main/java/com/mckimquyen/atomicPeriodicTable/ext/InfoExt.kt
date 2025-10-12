@@ -41,6 +41,9 @@ import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.OkHttp3Downloader
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -401,8 +404,50 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     private fun loadImage(url: String?) {
         try {
             Log.d(TAG, "roy93 loadImage url $url")
-            Picasso.get().load(url.toString()).into(binding.elementImage)
-        } catch (_: ConnectException) {
+            // Optimized: Validate URL before loading to prevent errors
+            if (url.isNullOrEmpty() || url == "---") {
+                Log.w(TAG, "Invalid image URL: $url")
+                binding.offlineDiv.visibility = View.VISIBLE
+                binding.frame.visibility = View.GONE
+                return
+            }
+
+            // Fix HTTP 403: Add custom OkHttpClient with User-Agent interceptor
+            val client = OkHttpClient.Builder()
+                .addInterceptor { chain: Interceptor.Chain ->
+                    // Add User-Agent header to bypass Wikipedia's bot protection
+                    val request = chain.request().newBuilder()
+                        .addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36")
+                        .build()
+                    chain.proceed(request)
+                }
+                .build()
+
+            val picasso = Picasso.Builder(this)
+                .downloader(OkHttp3Downloader(client))
+                .build()
+
+            // Add Picasso callback for better debugging
+            picasso
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(binding.elementImage, object : com.squareup.picasso.Callback {
+                    override fun onSuccess() {
+                        Log.d(TAG, "roy93 loadImage SUCCESS: Image loaded for $url")
+                        binding.offlineDiv.visibility = View.GONE
+                        binding.frame.visibility = View.VISIBLE
+                    }
+
+                    override fun onError(e: Exception?) {
+                        Log.e(TAG, "roy93 loadImage ERROR: Failed to load image", e)
+                        binding.offlineDiv.visibility = View.VISIBLE
+                        binding.frame.visibility = View.GONE
+                    }
+                })
+        } catch (e: Exception) {
+            // Optimized: Catch all exceptions, not just ConnectException
+            Log.e(TAG, "Failed to load image: ${e.message}", e)
             binding.offlineDiv.visibility = View.VISIBLE
             binding.frame.visibility = View.GONE
         }
