@@ -1,7 +1,6 @@
 package com.mckimquyen.atomicPeriodicTable.act.table
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +10,10 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mckimquyen.atomicPeriodicTable.R
@@ -61,9 +64,42 @@ class ElectrodeAct : BaseAct() {
         recyclerView()
         clickSearch()
 
-        binding.viewEle.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewEle)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kết thúc activity và quay về màn hình trước
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -73,11 +109,10 @@ class ElectrodeAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        binding.eView.setPadding(
-            /* left = */ 0,
-            /* top = */ resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
-            /* right = */ 0,
-            /* bottom = */ resources.getDimensionPixelSize(R.dimen.title_bar)
+        binding.eView.setPadding(/* left = */ 0,/* top = */
+            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,/* right = */
+            0,/* bottom = */
+            resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
         val params2 = binding.commonTitleBackElo.layoutParams as ViewGroup.LayoutParams
@@ -95,10 +130,9 @@ class ElectrodeAct : BaseAct() {
         val series = ArrayList<Series>()
 
         SeriesModel.getList(series)
-        recyclerView.layoutManager = LinearLayoutManager(
-            /* context = */ this,
-            /* orientation = */ RecyclerView.VERTICAL,
-            /* reverseLayout = */ false
+        recyclerView.layoutManager = LinearLayoutManager(/* context = */ this,/* orientation = */
+            RecyclerView.VERTICAL,/* reverseLayout = */
+            false
         )
         val adapter = ElectrodeAdt(list = series, clickListener = this, context = this)
         recyclerView.adapter = adapter
@@ -159,8 +193,7 @@ class ElectrodeAct : BaseAct() {
             Utils.fadeOutAnim(binding.titleBox, 1)
 
             binding.editEle.requestFocus()
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.editEle, InputMethodManager.SHOW_IMPLICIT)
         }
         binding.closeEleSearch.setOnClickListener {
@@ -173,7 +206,7 @@ class ElectrodeAct : BaseAct() {
 
             val view = this.currentFocus
             if (view != null) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }

@@ -1,7 +1,6 @@
 package com.mckimquyen.atomicPeriodicTable.act.table
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -12,14 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.adt.IonAdapter
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
-import com.mckimquyen.atomicPeriodicTable.model.Ion
 import com.mckimquyen.atomicPeriodicTable.databinding.AIonBinding
+import com.mckimquyen.atomicPeriodicTable.model.Ion
 import com.mckimquyen.atomicPeriodicTable.model.IonModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
@@ -63,12 +67,56 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
 
         recyclerView()
         clickSearch()
-        binding.viewIon.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewIon)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // Click listener cho background của ion detail panel để ẩn panel
         binding.ionDetail.tvDetailBackgroundIon.setOnClickListener {
             Utils.fadeOutAnim(binding.ionDetail.root, 300)
         }
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        // Logic đặc biệt: Nếu ion detail panel đang hiển thị -> ẩn panel thay vì back
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kiểm tra xem ion detail panel có đang hiển thị không
+                if (binding.ionDetail.root.isVisible) {
+                    // Panel đang hiện -> ẩn panel với fade animation thay vì finish activity
+                    Utils.fadeOutAnim(binding.ionDetail.root, 300)
+                } else {
+                    // Panel đã ẩn -> finish activity và quay về màn hình trước
+                    finish()
+                }
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtnIon.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -81,11 +129,11 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
                     Locale.getDefault()
                 ) else it.toString()
             } + " " + "ionization")
-            var jsonString: String? = null
+            var jsonString: String?
             val ext = ".json"
             val element = item.name
             val elementJson = "$element$ext"
-            val inputStream: InputStream = assets.open(elementJson.toString())
+            val inputStream: InputStream = assets.open(elementJson)
             jsonString = inputStream.bufferedReader().use { it.readText() }
 
             val jsonArray = JSONArray(jsonString)
@@ -185,7 +233,7 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
             Utils.fadeOutAnim(binding.titleBox, 1)
             binding.editIon.requestFocus()
             val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.editIon, InputMethodManager.SHOW_IMPLICIT)
         }
         binding.closeEleSearchIon.setOnClickListener {
@@ -197,19 +245,9 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
 
             val view = this.currentFocus
             if (view != null) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (binding.ionDetail.root.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(binding.ionDetail.root, 300)
-            return
-        } else {
-            super.onBackPressed()
         }
     }
 

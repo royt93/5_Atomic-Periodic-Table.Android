@@ -13,12 +13,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.text.isDigitsOnly
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
@@ -119,15 +122,52 @@ class NuclideAct : BaseAct() {
                 )
                 scaleAnimation.duration = 0
                 scaleAnimation.fillAfter = true
-                val layout = binding.scrollNuc as LinearLayout
-                layout.startAnimation(scaleAnimation)
+                // binding.scrollNuc is LinearLayoutCompat (no cast needed, ViewBinding provides correct type)
+                binding.scrollNuc.startAnimation(scaleAnimation)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
-        binding.viewNuc.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        binding.nucBackBtn.setOnClickListener { this.onBackPressed() }
+
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewNuc)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kết thúc activity và quay về màn hình trước
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
+        binding.nucBackBtn.setOnClickListener {
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -150,20 +190,22 @@ class NuclideAct : BaseAct() {
     @SuppressLint("SetTextI18n")
     private fun addViews(list: ArrayList<Element>) {
         ElementModel.getList(list)
-        val dLayout = findViewById<RelativeLayout>(R.id.nuc_view)
+        // Cache layout references để tránh multiple findViewById calls
+        val nuclideContainer = findViewById<RelativeLayout>(R.id.nuc_view)
         val inflate = layoutInflater
-        val mLayout: View = inflate.inflate(R.layout.view_item_nuclide, dLayout, false)
+        val mLayout: View = inflate.inflate(R.layout.view_item_nuclide, nuclideContainer, false)
         val param = RelativeLayout.LayoutParams(
             /* w = */ resources.getDimensionPixelSize(R.dimen.item_nuclide),
             /* h = */ resources.getDimensionPixelSize(R.dimen.item_nuclide)
         )
-        param.leftMargin = resources.getDimensionPixelSize(R.dimen.item_nuclide) * 0
-        param.topMargin = resources.getDimensionPixelSize(R.dimen.item_nuclide) * 1
+        // Position cho neutron (n) ở tọa độ (0, 1) trong nuclide chart
+        param.leftMargin = 0 // Column 0 (Z=0 for neutron)
+        param.topMargin = resources.getDimensionPixelSize(R.dimen.item_nuclide) // Row 1 (N=1)
         val s: TextView = mLayout.findViewById(R.id.tvnNuclideElement)
         val t: TextView = mLayout.findViewById(R.id.tvNuclideNumber)
         s.text = "n"
         t.text = "1"
-        dLayout.addView(mLayout, param)
+        nuclideContainer.addView(mLayout, param)
         binding.ldnPlace.root.visibility = View.GONE
 
         for (item in list) {
@@ -180,22 +222,21 @@ class NuclideAct : BaseAct() {
                 for (i in 1..item.isotopes) {
                     val isoN = "iso_N_"
                     val isoZ = "iso_Z_"
-                    val isoHalf = "iso_half_"
+                    // val isoHalf = "iso_half_" // Unused - half-life data not displayed
                     val decayType = "decay_type_"
                     val number = i.toString()
                     val nJson = "$isoN$number"
                     val zJson = "$isoZ$number"
-                    val halfJson = "$isoHalf$number"
+                    // val halfJson = "$isoHalf$number" // Unused
                     val decayTypeString = "$decayType$number"
                     val n = jsonObject.optString(nJson, "-")
                     val z = jsonObject.optString(zJson, "-")
-//                    val half = jsonObject.optString(halfJson, "-")
+                    // val half = jsonObject.optString(halfJson, "-") // Unused - half-life not shown
 
                     val decayTypeResult = jsonObject.optString(decayTypeString, "default")
-                    val mainLayout = findViewById<RelativeLayout>(R.id.nuc_view)
-                    val inflater = layoutInflater
+                    // Reuse cached nuclideContainer thay vì findViewById trong loop (performance)
                     val myLayout: View =
-                        inflater.inflate(R.layout.view_item_nuclide, mainLayout, false)
+                        inflate.inflate(R.layout.view_item_nuclide, nuclideContainer, false)
                     val params = RelativeLayout.LayoutParams(
                         resources.getDimensionPixelSize(R.dimen.item_nuclide),
                         resources.getDimensionPixelSize(R.dimen.item_nuclide)
@@ -269,7 +310,7 @@ class NuclideAct : BaseAct() {
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
-                        mainLayout.addView(myLayout, params)
+                        nuclideContainer.addView(myLayout, params)
                     }
                 }
             } catch (e: IOException) {

@@ -1,10 +1,8 @@
 package com.mckimquyen.atomicPeriodicTable.act.table
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,8 +14,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mckimquyen.atomicPeriodicTable.R
@@ -77,21 +81,52 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
 
         recyclerView()
         clickSearch()
-        chipListeners(itemse, recyclerView)
+        chipListeners()
         binding.clearBtn.visibility = View.GONE
 
-//        val dictionaryPreference = DictionaryPref(this)
-        binding.viewDic.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // ===============================================================
+        // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
+        // ===============================================================
+        // Thay thế: systemUiVisibility (deprecated)
+        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
+
+        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Lấy WindowInsetsController để điều khiển system bars
+        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewDic)
+
+        // Ẩn navigation bar, giữ status bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+
+        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // ===============================================================
+        // Back Button Handler (Modern API)
+        // ===============================================================
+        // Thay thế: onBackPressed() (deprecated)
+        // Sử dụng: OnBackPressedDispatcher (modern, supports predictive back gesture)
+
+        // Đăng ký callback để xử lý back button press
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Kết thúc activity và quay về màn hình trước
+                finish()
+            }
+        })
+
+        // Click listener cho nút back trên UI
         binding.backBtnD.setOnClickListener {
-            this.onBackPressed()
+            // Trigger back press event qua dispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun chipListeners(
-        list: ArrayList<Dictionary>,
-        recyclerView: RecyclerView,
-    ) {
+    private fun chipListeners() {
+        // Setup chip button listeners cho category selection
         binding.chemistryBtn.setOnClickListener {
             updateButtonColor("chemistry_btn")
             val dictionaryPreference = DictionaryPref(this)
@@ -173,8 +208,9 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = DictionaryAdt(dictionaryList = dictionaryList, clickListener = this, con = this)
         recyclerView.adapter = adapter
+        // Sắp xếp danh sách dictionary theo heading (alphabetically)
         dictionaryList.sortWith { lhs, rhs ->
-            if (lhs.heading < rhs.heading) -1 else if (lhs.heading < rhs.heading) 1 else 0
+            if (lhs.heading < rhs.heading) -1 else if (lhs.heading > rhs.heading) 1 else 0
         }
 
         adapter.notifyDataSetChanged()
@@ -228,21 +264,23 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
             Utils.fadeOutAnim(binding.titleBox, 1)
 
             binding.editIso.requestFocus()
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            // Hiện keyboard
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.editIso, InputMethodManager.SHOW_IMPLICIT)
         }
         binding.closeIsoSearch.setOnClickListener {
             Utils.fadeOutAnim(binding.searchBarIso, 1)
 
-            val delayClose = Handler()
+            // Handler với Looper để delay hiện lại title box
+            val delayClose = Handler(Looper.getMainLooper())
             delayClose.postDelayed({
                 Utils.fadeInAnim(binding.titleBox, 150)
             }, 151)
 
+            // Ẩn keyboard
             val view = this.currentFocus
             if (view != null) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
@@ -256,20 +294,21 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
     ) {
         wiki.setOnClickListener {
             val packageNameString = "com.android.chrome"
-            val customTabBuilder = CustomTabsIntent.Builder()
 
-            customTabBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
-            customTabBuilder.setSecondaryToolbarColor(
-                ContextCompat.getColor(
-                    /* context = */ this,
-                    /* id = */ R.color.wikipediaColor
-                )
-            )
-            customTabBuilder.setShowTitle(true)
+            // Modern Custom Tabs API - sử dụng CustomTabColorSchemeParams
+            val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
+                .setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
+                .build()
+
+            val customTabBuilder = CustomTabsIntent.Builder()
+                .setDefaultColorSchemeParams(colorSchemeParams)
+                .setShowTitle(true)
 
             val customTab = customTabBuilder.build()
             val intent = customTab.intent
-            intent.data = Uri.parse(url)
+            // Sử dụng toUri() extension thay vì Uri.parse()
+            intent.data = url.toUri()
 
             val packageManager = packageManager
             val resolveInfoList = packageManager.queryIntentActivities(

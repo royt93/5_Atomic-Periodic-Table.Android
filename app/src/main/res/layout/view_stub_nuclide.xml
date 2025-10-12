@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Changed from FrameLayout to RelativeLayout to support absolute positioning for nuclide chart grid -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nuc_view"
     android:layout_width="wrap_content"
     android:layout_height="match_parent" />
