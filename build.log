@@ -1,0 +1,211 @@
+Calculating task graph as no cached configuration is available for tasks: assembleDebug
+
+> Configure project :
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/build.gradle': line 24
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('url = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9m0d1olm06f5vqxe8fz9rqmet$_run_closure1$_closure3$_closure4.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/build.gradle:24)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9m0d1olm06f5vqxe8fz9rqmet$_run_closure1$_closure3.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/build.gradle:24)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :app
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 59
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('viewBinding = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure8.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:59)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:58)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 60
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('buildConfig = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure8.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:60)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:58)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 71
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('enable = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure9$_closure19.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:71)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure9.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:70)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 74
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('universalApk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure9$_closure19.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:74)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure9.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:70)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 109
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('shrinkResources = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12$_closure22.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:109)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:106)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 112
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('signingConfig = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12$_closure22.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:112)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:106)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 117
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('debugSymbolLevel = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12$_closure22$_closure24.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:117)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12$_closure22.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:116)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 122
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('shrinkResources = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12$_closure23.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:122)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1$_closure12.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:120)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file '/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle': line 165
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14.3/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ag8n5uriyo4pspku4xxxefoz1$_run_closure1.doCall$original(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:165)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ag8n5uriyo4pspku4xxxefoz1.run(/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/build.gradle:7)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preDevDebugBuild UP-TO-DATE
+> Task :app:preProductionDebugBuild UP-TO-DATE
+> Task :app:mergeDevDebugNativeDebugMetadata NO-SOURCE
+> Task :app:mergeDevDebugShaders UP-TO-DATE
+> Task :app:compileDevDebugShaders NO-SOURCE
+> Task :app:generateDevDebugAssets UP-TO-DATE
+> Task :app:generateDevDebugResValues UP-TO-DATE
+> Task :app:generateDevDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDevDebug UP-TO-DATE
+> Task :app:createDevDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDevDebug UP-TO-DATE
+> Task :app:generateDevDebugResources
+> Task :app:processDevDebugNavigationResources
+> Task :app:compileDevDebugNavigationResources UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDevDebug UP-TO-DATE
+> Task :app:checkDevDebugAarMetadata UP-TO-DATE
+> Task :app:mapDevDebugSourceSetPaths
+> Task :app:writeDevDebugAppMetadata UP-TO-DATE
+> Task :app:validateSigningDevDebug UP-TO-DATE
+> Task :app:mergeDevDebugAssets UP-TO-DATE
+> Task :app:mergeDevDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeProductionDebugNativeDebugMetadata NO-SOURCE
+> Task :app:dataBindingMergeDependencyArtifactsProductionDebug
+> Task :app:compressDevDebugAssets UP-TO-DATE
+> Task :app:writeDevDebugSigningConfigVersions
+> Task :app:generateProductionDebugBuildConfig
+> Task :app:generateProductionDebugResValues
+> Task :app:processProductionDebugNavigationResources FROM-CACHE
+> Task :app:generateProductionDebugResources FROM-CACHE
+> Task :app:compileProductionDebugNavigationResources FROM-CACHE
+> Task :app:mapProductionDebugSourceSetPaths
+> Task :app:createProductionDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksProductionDebug FROM-CACHE
+> Task :app:processDevDebugMainManifest
+> Task :app:processProductionDebugMainManifest
+> Task :app:processProductionDebugManifest
+> Task :app:processDevDebugManifest
+> Task :app:mergeDevDebugNativeLibs UP-TO-DATE
+> Task :app:checkProductionDebugAarMetadata
+> Task :app:javaPreCompileProductionDebug FROM-CACHE
+> Task :app:stripDevDebugDebugSymbols UP-TO-DATE
+> Task :app:processDevDebugManifestForPackage
+> Task :app:checkDevDebugDuplicateClasses UP-TO-DATE
+> Task :app:processProductionDebugManifestForPackage
+> Task :app:mergeProductionDebugShaders
+> Task :app:mergeProductionDebugJniLibFolders
+> Task :app:compileProductionDebugShaders NO-SOURCE
+> Task :app:generateProductionDebugAssets UP-TO-DATE
+> Task :app:checkProductionDebugDuplicateClasses
+> Task :app:mergeLibDexDevDebug
+> Task :app:mergeProductionDebugNativeLibs
+> Task :app:mergeLibDexProductionDebug
+> Task :app:writeProductionDebugAppMetadata
+> Task :app:writeProductionDebugSigningConfigVersions
+> Task :app:desugarProductionDebugFileDependencies
+> Task :app:validateSigningProductionDebug
+> Task :app:desugarDevDebugFileDependencies FROM-CACHE
+> Task :app:mergeProductionDebugAssets
+> Task :app:compressProductionDebugAssets FROM-CACHE
+> Task :app:stripProductionDebugDebugSymbols
+
+> Task :app:mergeProductionDebugResources
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v23/styles.xml:76:4: Ignoring configuration 'v23' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v27/styles.xml:82:4: Ignoring configuration 'v27' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v26/styles.xml:76:4: Ignoring configuration 'v26' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v31/styles.xml:82:4: Ignoring configuration 'v31' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v28/styles.xml:84:4: Ignoring configuration 'v28' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v30/styles.xml:82:4: Ignoring configuration 'v30' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v24/styles.xml:76:4: Ignoring configuration 'v24' for <declare-styleable> tag.
+
+> Task :app:mergeDevDebugResources
+> Task :app:mergeExtDexProductionDebug
+> Task :app:mergeExtDexDevDebug
+
+> Task :app:mergeProductionDebugResources
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v29/styles.xml:83:4: Ignoring configuration 'v29' for <declare-styleable> tag.
+/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/res/values-v25/styles.xml:76:4: Ignoring configuration 'v25' for <declare-styleable> tag.
+
+> Task :app:dataBindingGenBaseClassesProductionDebug
+> Task :app:dataBindingGenBaseClassesDevDebug FROM-CACHE
+> Task :app:processProductionDebugResources
+> Task :app:processDevDebugResources
+
+> Task :app:compileDevDebugKotlin
+w: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/act/CalculatorAct.kt:51:18 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
+
+> Task :app:processDevDebugJavaRes UP-TO-DATE
+> Task :app:mergeDevDebugJavaResource UP-TO-DATE
+
+> Task :app:compileProductionDebugKotlin
+w: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/act/CalculatorAct.kt:51:18 'fun onBackPressed(): Unit' is deprecated. Deprecated in Java.
+w: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/act/SplashAct.kt:32:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/sdkadbmob/AdMobManager.kt:645:57 'val activeNetworkInfo: NetworkInfo?' is deprecated. Deprecated in Java.
+w: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/sdkadbmob/AdMobManager.kt:646:67 'val isConnected: Boolean' is deprecated. Deprecated in Java.
+
+> Task :app:processProductionDebugJavaRes
+> Task :app:mergeProductionDebugJavaResource
+> Task :app:compileDevDebugJavaWithJavac
+> Task :app:compileProductionDebugJavaWithJavac
+> Task :app:dexBuilderDevDebug
+> Task :app:mergeDevDebugGlobalSynthetics
+> Task :app:mergeProjectDexDevDebug
+> Task :app:dexBuilderProductionDebug
+> Task :app:mergeProductionDebugGlobalSynthetics FROM-CACHE
+> Task :app:mergeProjectDexProductionDebug
+> Task :app:packageProductionDebug FAILED
+> Task :app:packageDevDebug FAILED
+
+[Incubating] Problems report is available at: file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/0913Atomic-Periodic-Table.Android/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:packageProductionDebug'.
+> A failure occurred while executing com.android.build.gradle.tasks.PackageAndroidArtifact$IncrementalSplitterRunnable
+   > java.io.EOFException: Unexpected end of ZLIB input stream
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:packageDevDebug'.
+> A failure occurred while executing com.android.build.gradle.tasks.PackageAndroidArtifact$IncrementalSplitterRunnable
+   > java.util.zip.ZipException: invalid stored block lengths
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+BUILD FAILED in 1m 10s
+76 actionable tasks: 49 executed, 9 from cache, 18 up-to-date
+Configuration cache entry stored.

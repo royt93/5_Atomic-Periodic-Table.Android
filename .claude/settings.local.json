@@ -7,7 +7,9 @@
       "WebFetch(domain:developers.google.com)",
       "Bash(find:*)",
       "Bash(git log:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(./gradlew:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

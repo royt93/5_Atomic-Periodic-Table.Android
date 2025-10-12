@@ -4,22 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/viewDic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/backgroundColor"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Empty State -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/emptySearchBoxDic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="72dp"
             android:elevation="1dp"
             android:orientation="vertical"
             android:visibility="gone">
@@ -29,136 +32,130 @@
                 android:layout_width="164dp"
                 android:layout_height="164dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="100dp"
                 app:srcCompat="@drawable/bkg_graphic_light_search" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
                 android:text="@string/no_results"
-                android:textColor="?attr/colorOnBackground"
-                android:textSize="24sp" />
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginEnd="42dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:alpha="0.7"
                 android:gravity="center_horizontal"
                 android:text="@string/try_searching_for_another_word_or_check_your_spelling"
-                android:textColor="?attr/colorOnBackground"
-                android:textSize="16sp" />
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="15sp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Top App Bar with Filters -->
         <FrameLayout
             android:id="@+id/commonTitleBackDic"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="72dp"
             android:background="?attr/colorSurface"
-            android:elevation="8dp"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
+            android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Subtle tint overlay -->
             <FrameLayout
                 android:id="@+id/commonTitleDictionaryColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.11"
+                android:alpha="0.08"
                 android:background="?attr/colorPrimary" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
                 android:orientation="vertical">
 
+                <!-- Title Bar (56dp) -->
                 <FrameLayout
                     android:id="@+id/titleBox"
                     android:layout_width="match_parent"
                     android:layout_height="56dp">
 
+                    <!-- Back Button -->
                     <ImageButton
                         android:id="@+id/backBtnD"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:alpha="0.9"
                         android:contentDescription="@string/app_name"
                         android:rotation="180"
                         android:src="@drawable/ic_arrow_back_whit"
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Search Button -->
                     <ImageButton
                         android:id="@+id/searchBtn"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical|end"
-                        android:alpha="0.9"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_search"
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Title -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/elementTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="56dp"
                         android:layout_marginStart="70dp"
-                        android:alpha="0.9"
-                        android:gravity="center"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
+                        android:gravity="center_vertical"
                         android:text="@string/dictionary"
-                        android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="PrivateResource" />
+                        android:textStyle="bold" />
 
                 </FrameLayout>
 
+                <!-- Search Bar (Hidden by default) -->
                 <FrameLayout
                     android:id="@+id/searchBarIso"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:visibility="gone">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_gravity="bottom"
-                        android:alpha="0.5" />
-
+                    <!-- Close Search Button -->
                     <ImageButton
                         android:id="@+id/closeIsoSearch"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:alpha="0.9"
                         android:contentDescription="@string/app_name"
                         android:rotation="180"
                         android:src="@drawable/ic_arrow_back_whit"
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Search Input -->
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="56dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:elevation="0dp">
+                        android:layout_marginBottom="8dp">
 
                         <EditText
                             android:id="@+id/editIso"
@@ -173,114 +170,129 @@
                             android:maxLines="1"
                             android:paddingStart="0dp"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textColorHint="?attr/colorOnSecondaryContainer"
-                            android:textSize="14sp"
-                            tools:ignore="Autofill,PrivateResource,RtlSymmetry" />
+                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textSize="16sp"
+                            tools:ignore="Autofill,RtlSymmetry" />
+
                     </FrameLayout>
+
                 </FrameLayout>
 
+                <!-- Filter Chips (16dp tall strip) -->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_gravity="bottom">
+                    android:layout_height="48dp"
+                    android:fadeScrollbars="true"
+                    android:scrollbars="none">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <Button
                             android:id="@+id/clearBtn"
+                            style="@style/Widget.Material3.Button.TonalButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="9dp"
-                            android:layout_weight="1"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip_filled"
+                            android:backgroundTint="?attr/colorSecondaryContainer"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
+                            android:minWidth="0dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@string/clear_filter"
                             android:textAllCaps="false"
                             android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textSize="13sp"
                             android:visibility="visible"
-                            tools:ignore="PrivateResource" />
+                            tools:ignore="PrivateResource,RedundantNamespace" />
 
                         <Button
                             android:id="@+id/chemistryBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="9dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
+                            android:minWidth="0dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@string/chip_chemistry"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
                         <Button
                             android:id="@+id/physicsBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="9dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="9dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
+                            android:minWidth="0dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@string/chip_physics"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
                         <Button
                             android:id="@+id/mathBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="9dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="9dp"
-                            android:layout_weight="1"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
+                            android:minWidth="0dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@string/chip_math"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
                         <Button
                             android:id="@+id/reactionsBtn"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="9dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="9dp"
-                            android:layout_weight="1"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
+                            android:minWidth="0dp"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
                             android:text="@string/chip_reactions"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -288,19 +300,20 @@
                 </HorizontalScrollView>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
         </FrameLayout>
 
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id='@+id/rcView'
+            android:id="@+id/rcView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="?attr/backgroundColor"
+            android:layout_marginTop="72dp"
             android:clipToPadding="false"
-            android:paddingTop="9dp"
-            android:paddingBottom="60dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="80dp"
             android:scrollbarStyle="insideOverlay"
-            android:scrollbars="vertical"
-            android:verticalScrollbarPosition="defaultPosition" />
+            android:scrollbars="vertical" />
 
     </FrameLayout>
 
