@@ -1,293 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
     tools:ignore="PrivateResource,HardcodedText">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/physicsProperties"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <!-- Section Header -->
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginBottom="12dp"
             android:drawableStart="@drawable/ic_overview_icon"
-            android:drawablePadding="9dp"
+            android:drawablePadding="12dp"
             android:drawableTint="?attr/colorPrimary"
             android:text="@string/atomic_properties"
             android:textColor="?attr/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Divider -->
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:alpha="0.75"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutline" />
 
+        <!-- Oxidation States -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/electron_Config_title2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/oxidation_states"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <include
             android:id="@+id/oxView"
             layout="@layout/view_oxidiation_states"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
+        <!-- Electron Configuration -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/electronConfigTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/electron_configuration"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/electronConfigText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/electron_config_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Ion Charge -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ionChargeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/ion_charge"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ionChargeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/ion_charge_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Ionization Energies -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ionization_energies_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/ionization_energies"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ionizationEnergiesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/ionization_energies_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Atomic Radius (Empirical) -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atomicRadiusETitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/atomic_radius_empirical"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atomicRadiusEText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/atomic_radius_e_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Atomic Radius (Calculated) -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atomicRadiusTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/atomic_radius_calculated"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atomicRadiusText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/atomic_radius_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Covalent Radius -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/covalentRadiusTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/covalent_radius"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/covalentRadiusText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.87"
             android:text="@string/covalent_radius_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Subtle Divider -->
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorOutlineVariant" />
 
+        <!-- Van der Waals Radius -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/vanDerWaalsRadiusTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/van_der_waals_radius"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/vanDerWaalsRadiusText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
+            android:alpha="0.87"
             android:text="@string/van_der_waals_radius_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:textColor="?attr/colorOnSurface"
             android:textIsSelectable="true"
             android:textSize="14sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

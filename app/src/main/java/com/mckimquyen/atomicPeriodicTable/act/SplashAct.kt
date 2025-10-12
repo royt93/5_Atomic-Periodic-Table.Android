@@ -19,9 +19,107 @@ class SplashAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // Set version text dynamically
+        findViewById<android.widget.TextView>(R.id.versionText)?.text =
+            "Version ${com.mckimquyen.atomicPeriodicTable.BuildConfig.VERSION_NAME}"
+
+        // Animate splash screen elements
+        animateSplashScreen()
+
         AdMobManager.initSplashScreen(activity = this, onAdLoaded = {
             goToMain()
         })
+    }
+
+    private fun animateSplashScreen() {
+        // Get views
+        val logoCard = findViewById<android.view.View>(R.id.logoCard)
+        val appNameText = findViewById<android.view.View>(R.id.appNameText)
+        val loadingText = findViewById<android.view.View>(R.id.loadingText)
+        val progressBar = findViewById<android.view.View>(R.id.progressBar)
+        val versionText = findViewById<android.view.View>(R.id.versionText)
+        val decorCircle1 = findViewById<android.view.View>(R.id.decorCircle1)
+        val decorCircle2 = findViewById<android.view.View>(R.id.decorCircle2)
+
+        // Initial state - all invisible
+        logoCard?.alpha = 0f
+        logoCard?.scaleX = 0.7f
+        logoCard?.scaleY = 0.7f
+        appNameText?.alpha = 0f
+        appNameText?.translationY = 20f
+        loadingText?.alpha = 0f
+        progressBar?.alpha = 0f
+        versionText?.alpha = 0f
+
+        // Animate logo card - scale and fade in
+        logoCard?.animate()
+            ?.alpha(1f)
+            ?.scaleX(1f)
+            ?.scaleY(1f)
+            ?.setDuration(600)
+            ?.setInterpolator(android.view.animation.DecelerateInterpolator())
+            ?.start()
+
+        // Animate app name - fade in and slide up
+        appNameText?.animate()
+            ?.alpha(1f)
+            ?.translationY(0f)
+            ?.setStartDelay(200)
+            ?.setDuration(500)
+            ?.setInterpolator(android.view.animation.DecelerateInterpolator())
+            ?.start()
+
+        // Animate loading text - fade in
+        loadingText?.animate()
+            ?.alpha(0.87f)
+            ?.setStartDelay(400)
+            ?.setDuration(400)
+            ?.start()
+
+        // Animate progress bar - fade in
+        progressBar?.animate()
+            ?.alpha(1f)
+            ?.setStartDelay(600)
+            ?.setDuration(400)
+            ?.start()
+
+        // Animate decorative circles - continuous subtle rotation
+        decorCircle1?.animate()
+            ?.rotation(360f)
+            ?.setDuration(20000)
+            ?.setInterpolator(android.view.animation.LinearInterpolator())
+            ?.withEndAction {
+                // Repeat animation
+                decorCircle1.rotation = 0f
+                decorCircle1.animate()
+                    .rotation(360f)
+                    .setDuration(20000)
+                    .setInterpolator(android.view.animation.LinearInterpolator())
+                    .start()
+            }
+            ?.start()
+
+        decorCircle2?.animate()
+            ?.rotation(-360f)
+            ?.setDuration(25000)
+            ?.setInterpolator(android.view.animation.LinearInterpolator())
+            ?.withEndAction {
+                // Repeat animation
+                decorCircle2.rotation = 0f
+                decorCircle2.animate()
+                    .rotation(-360f)
+                    .setDuration(25000)
+                    .setInterpolator(android.view.animation.LinearInterpolator())
+                    .start()
+            }
+            ?.start()
+
+        // Animate version text - fade in
+        versionText?.animate()
+            ?.alpha(0.5f)
+            ?.setStartDelay(800)
+            ?.setDuration(400)
+            ?.start()
     }
 
     private fun goToMain() {

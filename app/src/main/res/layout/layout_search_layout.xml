@@ -6,174 +6,156 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:elevation="12dp"
-    android:orientation="vertical"
     tools:ignore="PrivateResource">
 
+    <!-- Main Content Area -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
+        <!-- Empty State -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/emptySearchBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="56dp"
+            android:gravity="center"
             android:orientation="vertical"
+            android:paddingStart="42dp"
+            android:paddingEnd="42dp"
             android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivEmptyEleSearchImage"
                 android:layout_width="164dp"
                 android:layout_height="164dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="44dp"
+                android:layout_marginBottom="32dp"
                 app:srcCompat="@drawable/bkg_graphic_light_search" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
                 android:text="@string/no_results"
-                android:textColor="?attr/actionMenuTextColor"
-                android:textSize="24sp" />
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginEnd="42dp"
-                android:gravity="center_horizontal"
+                android:alpha="0.75"
+                android:gravity="center"
                 android:text="@string/try_searching_for_another_word_or_check_your_spelling"
-                android:textColor="?attr/actionMenuTextColor"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Results List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvElement"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="64dp"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="60dp"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical" />
+
+        <!-- Search Bar -->
         <FrameLayout
             android:id="@+id/commonTitleBackSearch"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:alpha="0.975"
             android:background="?attr/colorSurface"
-            android:elevation="8dp"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+            android:elevation="8dp">
 
+            <!-- Tint Overlay -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.12"
+                android:alpha="0.08"
                 android:background="?attr/colorPrimary" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
 
+                <!-- Close Button -->
+                <ImageButton
+                    android:id="@+id/closeElementSearch"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/back_button"
+                    android:src="@drawable/ic_close"
+                    app:tint="?attr/colorOnSecondaryContainer" />
+
+                <!-- Search Input -->
                 <FrameLayout
-                    android:id="@+id/titleBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp">
+                    android:id="@+id/flSearchBarElement"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_toast"
+                    android:backgroundTint="?attr/colorSurfaceVariant">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/btFilterBtn"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_vertical|end"
-                        android:clickable="true"
-                        android:contentDescription="@string/app_name"
-                        android:elevation="0dp"
-                        android:focusable="true"
-                        android:src="@drawable/ic_sort"
-                        android:tint="?attr/colorOnSecondaryContainer"
-                        app:backgroundTint="@color/transparent"
-                        app:borderWidth="0dp"
-                        app:elevation="0dp"
-                        app:fabSize="auto" />
-
-                    <FrameLayout
-                        android:id="@+id/flSearchBarElement"
+                    <EditText
+                        android:id="@+id/editElement"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="56dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="56dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/shape_toast"
-                        android:backgroundTint="?attr/colorSurface"
-                        android:elevation="0dp"
-                        android:visibility="visible">
-
-                        <EditText
-                            android:id="@+id/editElement"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/transparent"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:hint="@string/search_for_elements"
-                            android:imeOptions="actionSearch"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingStart="18dp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textColorHint="?attr/colorOnSurface"
-                            android:textSize="14sp"
-                            tools:ignore="RtlSymmetry" />
-
-                    </FrameLayout>
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/closeElementSearch"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center_vertical"
-                        android:clickable="true"
-                        android:contentDescription="@string/app_name"
-                        android:elevation="0dp"
-                        android:focusable="true"
-                        android:src="@drawable/ic_close"
-                        android:tint="?attr/colorOnSecondaryContainer"
-                        app:backgroundTint="@color/transparent"
-                        app:borderWidth="0dp"
-                        app:elevation="0dp"
-                        app:fabSize="auto" />
+                        android:background="@android:color/transparent"
+                        android:hint="@string/search_for_elements"
+                        android:imeOptions="actionSearch"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textColorHint="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
 
                 </FrameLayout>
 
+                <!-- Filter Button -->
+                <ImageButton
+                    android:id="@+id/btFilterBtn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/filter"
+                    android:src="@drawable/ic_sort"
+                    app:tint="?attr/colorOnSecondaryContainer" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
+
         </FrameLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvElement"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="9dp"
-            android:paddingBottom="60dp"
-            android:scrollbarStyle="insideOverlay"
-            android:scrollbars="vertical"
-            android:verticalScrollbarPosition="defaultPosition">
-
-        </androidx.recyclerview.widget.RecyclerView>
 
     </FrameLayout>
 
+    <!-- Background Overlay for Filter -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:focusable="true" />
+        android:elevation="10dp"
+        android:focusable="true"
+        android:visibility="gone" />
 
+    <!-- Filter Panel -->
     <include
         android:id="@+id/filterBox"
         layout="@layout/view_filter_view"
@@ -181,9 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="9dp"
-        android:clickable="true"
-        android:elevation="8dp"
-        android:focusable="true" />
+        android:layout_marginEnd="8dp"
+        android:elevation="12dp" />
 
 </FrameLayout>

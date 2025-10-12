@@ -1,44 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightPrimary"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="56dp">
+    android:background="@color/colorLightPrimary">
 
+    <!-- Background Decorative Circle 1 -->
+    <View
+        android:id="@+id/decorCircle1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-100dp"
+        android:layout_marginEnd="-100dp"
+        android:alpha="0.05"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/light_blue_600" />
+
+    <!-- Background Decorative Circle 2 -->
+    <View
+        android:id="@+id/decorCircle2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="-80dp"
+        android:layout_marginBottom="-80dp"
+        android:alpha="0.04"
+        android:background="@drawable/shape_circle"
+        android:backgroundTint="@color/light_blue_600" />
+
+    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
 
-        <!--        <ProgressBar-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content" />-->
-        <ImageView
+        <!-- Spacer for top -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- App Logo with Card Background -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/logoCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher_960" />
+            android:elevation="8dp"
+            app:cardBackgroundColor="@color/colorLightPrimaryDark"
+            app:cardCornerRadius="180dp"
+            app:cardElevation="8dp">
+
+            <ImageView
+                android:id="@+id/appLogo"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/appNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorLightText"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <!-- Loading Text -->
+        <TextView
+            android:id="@+id/loadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:alpha="0.87"
+            android:text="@string/loading"
+            android:textColor="@color/colorLightText"
+            android:textSize="15sp" />
+
+        <!-- Progress Indicator -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            style="@style/Widget.Material3.LinearProgressIndicator"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/colorLightError"
+            app:trackColor="@color/colorLightPrimaryDark"
+            app:trackCornerRadius="8dp"
+            app:trackThickness="6dp" />
+
+        <!-- Spacer for bottom -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Ad Notice -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.70"
+            android:text="Please note: this action may show ads"
+            android:textColor="@color/colorLightText"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <!-- Version Info -->
+        <TextView
+            android:id="@+id/versionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:alpha="0.50"
+            android:textColor="@color/colorLightText"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Please note: this action may show ads"
-        android:textColor="#000000"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateTint="#000000" />
-
-</LinearLayout>
+</FrameLayout>

@@ -26,6 +26,8 @@
     <string name="submit_send">Submit issue</string>
     <string name="select_issue_type">Select issue type dropdown</string>
     <string name="send_issue_form">Send issue form</string>
+    <string name="loading">Loading...</string>
+    <string name="filter">Filter</string>
     <string name="submit_title">Report Issue</string>
     <string name="submit_text">Report bugs and data errors</string>
     <string name="licenses_title">Licenses</string>
@@ -48,6 +50,12 @@
     <string name="table_ionization_text">A table with different elements ionization energies</string>
     <string name="table_nuclide">Table of Nuclides</string>
     <string name="table_nuclide_text">A two-dimensional table of nuclide, with color differentiating decay type</string>
+    <string name="open_ph_table">Open pH indicators table</string>
+    <string name="open_electrochemical_table">Open electrochemical series table</string>
+    <string name="open_equations_table">Open formulas table</string>
+    <string name="open_ionization_table">Open ionization energies table</string>
+    <string name="open_nuclide_table">Open nuclide table</string>
+    <string name="open_solubility_table">Open solubility table</string>
     <!-- Activity Unit-->
     <string name="activity_unit_title">Table Units</string>
     <!-- Activity Equations -->

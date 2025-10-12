@@ -127,8 +127,10 @@ android {
     }
 
     android.applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach {
-            outputFileName = defaultConfig.applicationId + buildType.name + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
+        variant.outputs.configureEach { output ->
+            def abiFilter = output.getFilter(com.android.build.OutputFile.ABI)
+            def abiSuffix = abiFilter != null ? "_${abiFilter}" : ""
+            outputFileName = defaultConfig.applicationId + buildType.name + abiSuffix + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
         }
     }
 
