@@ -23,7 +23,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="56dp"
             android:elevation="1dp"
+            android:gravity="center"
             android:orientation="vertical"
+            android:padding="32dp"
             android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -31,16 +33,14 @@
                 android:layout_width="164dp"
                 android:layout_height="164dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
-                android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/bkg_graphic_light_search" />
+                android:contentDescription="@string/no_results"
+                app:srcCompat="@drawable/bkg_graphic_light_search"
+                app:tint="?attr/colorOnSecondary" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="48dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
                 android:text="@string/no_results"
@@ -51,8 +51,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
                 android:alpha="0.7"
                 android:gravity="center_horizontal"
                 android:text="@string/try_searching_for_another_word_or_check_your_spelling"
@@ -83,7 +81,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <!-- Title Bar (56dp) -->
+                <!-- Title Bar -->
                 <FrameLayout
                     android:id="@+id/titleBox"
                     android:layout_width="match_parent"
@@ -109,7 +107,7 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical|end"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/search_button"
                         android:src="@drawable/ic_search"
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
@@ -144,7 +142,7 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/close_search_button"
                         android:rotation="180"
                         android:src="@drawable/ic_arrow_back_whit"
                         app:tint="?attr/colorOnSecondaryContainer"
@@ -172,6 +170,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
                             android:textColor="?attr/colorOnSecondaryContainer"
                             android:textColorHint="?attr/colorOnSurface"
                             android:textSize="16sp"
@@ -185,7 +184,7 @@
 
         </FrameLayout>
 
-        <!-- Divider (Subtle separator) -->
+        <!-- Subtle Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -200,7 +199,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="57dp"
             android:clipToPadding="false"
-            android:paddingTop="8dp"
+            android:paddingTop="12dp"
             android:paddingBottom="80dp"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical" />

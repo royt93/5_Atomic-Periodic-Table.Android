@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor">
 
     <FrameLayout
         android:id="@+id/viewNuc"
@@ -11,30 +12,33 @@
         android:layout_height="match_parent"
         android:background="?attr/colorSurface"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Loading Indicator -->
         <include
             android:id="@+id/ldnPlace"
             layout="@layout/view_loading_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_gravity="center_horizontal|center_vertical" />
+            android:layout_gravity="center" />
 
+        <!-- Top App Bar -->
         <FrameLayout
             android:id="@+id/commonTitleBackNuc"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="?attr/colorSurface"
-            android:elevation="8dp"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
+            android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Subtle tint overlay -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.11"
+                android:alpha="0.08"
                 android:background="?attr/colorPrimary" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -43,45 +47,48 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
+                <!-- Title Bar -->
                 <FrameLayout
                     android:id="@+id/titleBox"
                     android:layout_width="match_parent"
                     android:layout_height="56dp">
 
+                    <!-- Back Button -->
                     <ImageButton
                         android:id="@+id/nucBackBtn"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/back_button"
                         android:rotation="180"
                         android:src="@drawable/ic_arrow_back_whit"
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Title -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nucTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="56dp"
                         android:layout_marginStart="70dp"
-                        android:alpha="0.9"
-                        android:gravity="center"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
+                        android:gravity="center_vertical"
                         android:text="@string/nuclide_table"
-                        android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:ignore="PrivateResource" />
+                        android:textStyle="bold" />
+
                 </FrameLayout>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
+
         </FrameLayout>
 
+        <!-- Zoomable Nuclide Table -->
         <com.otaliastudios.zoom.ZoomLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
             app:animationDuration="200"
             app:flingEnabled="true"
             app:hasClickableChildren="true"
@@ -119,10 +126,12 @@
                         android:layout="@layout/view_stub_nuclide" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
             </FrameLayout>
 
         </com.otaliastudios.zoom.ZoomLayout>
 
+        <!-- Zoom Seek Bar (Hidden by default) -->
         <SeekBar
             android:id="@+id/seekBarNuc"
             android:layout_width="240dp"
@@ -140,6 +149,7 @@
             android:rotation="270"
             android:visibility="gone"
             tools:ignore="UnusedAttribute" />
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

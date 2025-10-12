@@ -11,16 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Empty State -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/emptySearchBoxEqu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="56dp"
             android:elevation="1dp"
+            android:gravity="center"
             android:orientation="vertical"
+            android:padding="32dp"
             android:visibility="gone">
 
             <ImageView
@@ -28,16 +33,14 @@
                 android:layout_width="164dp"
                 android:layout_height="164dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
                 android:contentDescription="@string/no_results"
-                app:srcCompat="@drawable/bkg_graphic_light_search" />
+                app:srcCompat="@drawable/bkg_graphic_light_search"
+                app:tint="?attr/colorOnSecondary" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="48dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal"
                 android:text="@string/no_results"
@@ -48,30 +51,29 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
                 android:alpha="0.7"
                 android:gravity="center_horizontal"
                 android:text="@string/try_searching_for_another_word_or_check_your_spelling"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="15sp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Top App Bar -->
         <FrameLayout
             android:id="@+id/commonTitleBackEqu"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar"
+            android:layout_height="56dp"
             android:background="?attr/colorSurface"
-            android:elevation="@dimen/title_bar_elevation"
-            android:gravity="center|center_vertical"
-            android:orientation="horizontal"
+            android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Subtle tint overlay -->
             <FrameLayout
                 android:id="@+id/commonTitleBackEquColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.11"
+                android:alpha="0.08"
                 android:background="?attr/colorPrimary" />
 
             <LinearLayout
@@ -80,11 +82,13 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
+                <!-- Title Bar -->
                 <FrameLayout
                     android:id="@+id/titleBoxEqu"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/title_bar">
+                    android:layout_height="56dp">
 
+                    <!-- Back Button -->
                     <ImageButton
                         android:id="@+id/backBtnEqu"
                         style="?android:attr/borderlessButtonStyle"
@@ -97,6 +101,7 @@
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Search Button -->
                     <ImageButton
                         android:id="@+id/searchBtnEqu"
                         style="?android:attr/borderlessButtonStyle"
@@ -108,29 +113,28 @@
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Title -->
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/elementTitle"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/title_bar"
+                        android:layout_height="56dp"
                         android:layout_marginStart="70dp"
-                        android:alpha="0.9"
-                        android:gravity="center"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
+                        android:gravity="center_vertical"
                         android:text="@string/activity_equations_title"
-                        android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </FrameLayout>
 
+                <!-- Search Bar (Hidden by default) -->
                 <FrameLayout
                     android:id="@+id/searchBarEqu"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:visibility="gone">
 
+                    <!-- Close Search Button -->
                     <ImageButton
                         android:id="@+id/closeEquSearch"
                         style="?android:attr/borderlessButtonStyle"
@@ -143,19 +147,20 @@
                         app:tint="?attr/colorOnSecondaryContainer"
                         tools:ignore="PrivateResource" />
 
+                    <!-- Search Input -->
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="56dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:elevation="0dp">
+                        android:layout_marginBottom="8dp">
 
                         <EditText
                             android:id="@+id/editEqu"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:autofillHints=""
                             android:background="@android:color/transparent"
                             android:focusable="true"
                             android:focusableInTouchMode="true"
@@ -164,28 +169,35 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:paddingStart="0dp"
+                            android:paddingEnd="0dp"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textColorHint="?attr/colorOnSecondaryContainer"
-                            android:textSize="14sp"
-                            tools:ignore="PrivateResource,RtlSymmetry"
-                            android:autofillHints="" />
+                            android:textColorHint="?attr/colorOnSurface"
+                            android:textSize="16sp"
+                            tools:ignore="PrivateResource,RtlSymmetry" />
+
                     </FrameLayout>
+
                 </FrameLayout>
+
             </LinearLayout>
+
         </FrameLayout>
 
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/equRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
             android:clipToPadding="false"
-            android:paddingTop="64dp"
+            android:paddingTop="12dp"
             android:paddingBottom="80dp"
             android:scrollbarStyle="insideOverlay"
-            android:scrollbars="vertical"
-            android:verticalScrollbarPosition="defaultPosition" />
+            android:scrollbars="vertical" />
+
     </FrameLayout>
 
+    <!-- Equations Detail Panel -->
     <include
         android:id="@+id/eInc"
         layout="@layout/view_equations_info"
