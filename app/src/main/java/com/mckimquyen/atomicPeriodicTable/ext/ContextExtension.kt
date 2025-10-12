@@ -1,8 +1,5 @@
 package com.mckimquyen.atomicPeriodicTable.ext
 
-import android.content.Context
-import com.mckimquyen.atomicPeriodicTable.R
-
 //fun Context.getStatusBarHeight(): Int {
 //    return try {
 //        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")

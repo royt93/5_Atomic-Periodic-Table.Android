@@ -3,12 +3,9 @@ package com.mckimquyen.atomicPeriodicTable.ext
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
-import com.google.android.play.core.review.ReviewException
+import androidx.core.net.toUri
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.model.ReviewErrorCode
 import com.mckimquyen.atomicPeriodicTable.R
 import java.util.Calendar
 
@@ -178,7 +175,7 @@ fun Activity.rateApp(
     try {
         this.startActivity(
             Intent(
-                Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")
+                Intent.ACTION_VIEW, "market://details?id=$packageName".toUri()
             )
         )
     } catch (e: android.content.ActivityNotFoundException) {
@@ -186,7 +183,7 @@ fun Activity.rateApp(
         this.startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("http://play.google.com/store/apps/details?id=$packageName")
+                "http://play.google.com/store/apps/details?id=$packageName".toUri()
             )
         )
     }
@@ -196,7 +193,7 @@ fun Activity.moreApp(
     nameOfDeveloper: String = "SAIGON PHANTOM LABS",
 ) {
     val uri = "https://play.google.com/store/apps/developer?id=$nameOfDeveloper"
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    val intent = Intent(Intent.ACTION_VIEW, uri.toUri())
     this.startActivity(intent)
 }
 
@@ -207,7 +204,8 @@ fun Activity.shareApp(
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.app_name))
         // Optimized: Use string template instead of concatenation
-        val sAux = "\nỨng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
+        val sAux =
+            "\nỨng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
         intent.putExtra(Intent.EXTRA_TEXT, sAux)
         this.startActivity(Intent.createChooser(intent, "Vui lòng chọn"))
     } catch (e: Exception) {

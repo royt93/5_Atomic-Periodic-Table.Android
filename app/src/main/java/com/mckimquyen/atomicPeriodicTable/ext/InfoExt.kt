@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
@@ -17,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.IsotopesActExperimental
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicCovalentPref
@@ -388,7 +388,7 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
                 loadSp(short)
             }
             wikiListener(wikipedia)
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             binding.elementTitle.text = "Not able to load json"
             val stringText = "Couldn't load element:"
             val elementSendAndLoadPreference = ElementSendAndLoad(this)
@@ -402,7 +402,7 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         try {
             Log.d(TAG, "roy93 loadImage url $url")
             Picasso.get().load(url.toString()).into(binding.elementImage)
-        } catch (e: ConnectException) {
+        } catch (_: ConnectException) {
             binding.offlineDiv.visibility = View.VISIBLE
             binding.frame.visibility = View.GONE
         }
@@ -416,7 +416,7 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         try {
             Picasso.get().load(fURL).into(binding.propertiesInc.spImg)
             Picasso.get().load(fURL).into(binding.detailEmission.ivSpImgFetail)
-        } catch (e: ConnectException) {
+        } catch (_: ConnectException) {
             binding.propertiesInc.spImg.visibility = View.GONE
             binding.propertiesInc.spOffline.text = "No Data"
             binding.propertiesInc.spOffline.visibility = View.VISIBLE
@@ -444,7 +444,7 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
 
             val customTab = customTabBuilder.build()
             val intent = customTab.intent
-            intent.data = Uri.parse(url)
+            intent.data = url?.toUri()
 
             val packageManager = packageManager
             val resolveInfoList = packageManager.queryIntentActivities(
