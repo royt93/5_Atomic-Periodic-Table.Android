@@ -2,21 +2,23 @@ buildscript {
     ext.support_lib_version = '30.0.3'
     repositories {
         google()
-        jcenter()
+        // jcenter() - Removed: JCenter đã shutdown từ Feb 2021, không còn maintain
         gradlePluginPortal()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
-//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
+        classpath 'com.android.tools.build:gradle:8.13.0'
+        // Updated: Kotlin 1.9.25 → 2.0.21 after ViewBinding migration completed
+        // ViewBinding migration: All activities and extension classes migrated from kotlin-android-extensions
+        // Compatible with: kotlinx-coroutines 1.8.1, play-services-ads 24.7.0, Material 1.12.0, core-ktx 1.12.0
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        // jcenter() - Removed: JCenter đã shutdown từ Feb 2021
         gradlePluginPortal()
         mavenCentral()
         maven { url 'https://jitpack.io' }

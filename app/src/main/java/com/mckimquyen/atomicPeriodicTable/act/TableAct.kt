@@ -12,28 +12,13 @@ import com.mckimquyen.atomicPeriodicTable.act.table.EquationsAct
 import com.mckimquyen.atomicPeriodicTable.act.table.IonAct
 import com.mckimquyen.atomicPeriodicTable.act.table.NuclideAct
 import com.mckimquyen.atomicPeriodicTable.act.table.PHAct
+import com.mckimquyen.atomicPeriodicTable.databinding.ATablesBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_solubility.backBtn
-import kotlinx.android.synthetic.main.a_submit.viewSub
-import kotlinx.android.synthetic.main.a_tables.commonTitleBackTab
-import kotlinx.android.synthetic.main.a_tables.commonTitleTableColor
-import kotlinx.android.synthetic.main.a_tables.eleButton
-import kotlinx.android.synthetic.main.a_tables.eleTable
-import kotlinx.android.synthetic.main.a_tables.equButton
-import kotlinx.android.synthetic.main.a_tables.equTable
-import kotlinx.android.synthetic.main.a_tables.ionButton
-import kotlinx.android.synthetic.main.a_tables.ionTable
-import kotlinx.android.synthetic.main.a_tables.nucButton
-import kotlinx.android.synthetic.main.a_tables.nucTable
-import kotlinx.android.synthetic.main.a_tables.phButton
-import kotlinx.android.synthetic.main.a_tables.phTable
-import kotlinx.android.synthetic.main.a_tables.solButton
-import kotlinx.android.synthetic.main.a_tables.solTable
-import kotlinx.android.synthetic.main.a_tables.tableScroll
-import kotlinx.android.synthetic.main.a_tables.tablesTitle
-import kotlinx.android.synthetic.main.a_tables.tablesTitleDownstate
 
 class TableAct : BaseAct() {
+
+    // Khai báo binding cho ViewBinding
+    private lateinit var binding: ATablesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,38 +46,41 @@ class TableAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_tables)
 
-        viewSub.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // Khởi tạo ViewBinding
+        binding = ATablesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.viewSub.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         //Title Controller
-        commonTitleTableColor.visibility = View.INVISIBLE
-        tablesTitle.visibility = View.INVISIBLE
-        commonTitleBackTab.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        tableScroll.viewTreeObserver
+        binding.commonTitleTableColor.visibility = View.INVISIBLE
+        binding.tablesTitle.visibility = View.INVISIBLE
+        binding.commonTitleBackTab.elevation = (resources.getDimension(R.dimen.zero_elevation))
+        binding.tableScroll.viewTreeObserver
             .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
                 var y = 300f
                 override fun onScrollChanged() {
-                    if (tableScroll.scrollY > 150) {
-                        commonTitleTableColor.visibility = View.VISIBLE
-                        tablesTitle.visibility = View.VISIBLE
-                        tablesTitleDownstate.visibility = View.INVISIBLE
-                        commonTitleBackTab.elevation =
+                    if (binding.tableScroll.scrollY > 150) {
+                        binding.commonTitleTableColor.visibility = View.VISIBLE
+                        binding.tablesTitle.visibility = View.VISIBLE
+                        binding.tablesTitleDownstate.visibility = View.INVISIBLE
+                        binding.commonTitleBackTab.elevation =
                             (resources.getDimension(R.dimen.one_elevation))
                     } else {
-                        commonTitleTableColor.visibility = View.INVISIBLE
-                        tablesTitle.visibility = View.INVISIBLE
-                        tablesTitleDownstate.visibility = View.VISIBLE
-                        commonTitleBackTab.elevation =
+                        binding.commonTitleTableColor.visibility = View.INVISIBLE
+                        binding.tablesTitle.visibility = View.INVISIBLE
+                        binding.tablesTitleDownstate.visibility = View.VISIBLE
+                        binding.commonTitleBackTab.elevation =
                             (resources.getDimension(R.dimen.zero_elevation))
                     }
-                    y = tableScroll.scrollY.toFloat()
+                    y = binding.tableScroll.scrollY.toFloat()
                 }
             })
 
         tableListeners()
 
-        backBtn.setOnClickListener {
+        binding.backBtn.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -103,65 +91,65 @@ class TableAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        val params = commonTitleBackTab.layoutParams as ViewGroup.LayoutParams
+        val params = binding.commonTitleBackTab.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackTab.layoutParams = params
+        binding.commonTitleBackTab.layoutParams = params
 
-        val params2 = tablesTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
+        val params2 = binding.tablesTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
         params2.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(
                 R.dimen.header_down_margin
             )
-        tablesTitleDownstate.layoutParams = params2
+        binding.tablesTitleDownstate.layoutParams = params2
 
     }
 
     private fun tableListeners() {
-        solTable.setOnClickListener {
+        binding.solTable.setOnClickListener {
             val intent = Intent(this, SolubilityAct::class.java)
             startActivity(intent)
         }
-        solButton.setOnClickListener {
+        binding.solButton.setOnClickListener {
             val intent = Intent(this, SolubilityAct::class.java)
             startActivity(intent)
         }
-        eleTable.setOnClickListener {
+        binding.eleTable.setOnClickListener {
             val intent = Intent(this, ElectrodeAct::class.java)
             startActivity(intent)
         }
-        eleButton.setOnClickListener {
+        binding.eleButton.setOnClickListener {
             val intent = Intent(this, ElectrodeAct::class.java)
             startActivity(intent)
         }
-        equTable.setOnClickListener {
+        binding.equTable.setOnClickListener {
             val intent = Intent(this, EquationsAct::class.java)
             startActivity(intent)
         }
-        equButton.setOnClickListener {
+        binding.equButton.setOnClickListener {
             val intent = Intent(this, EquationsAct::class.java)
             startActivity(intent)
         }
-        ionTable.setOnClickListener {
+        binding.ionTable.setOnClickListener {
             val intent = Intent(this, IonAct::class.java)
             startActivity(intent)
         }
-        ionButton.setOnClickListener {
+        binding.ionButton.setOnClickListener {
             val intent = Intent(this, IonAct::class.java)
             startActivity(intent)
         }
-        nucTable.setOnClickListener {
+        binding.nucTable.setOnClickListener {
             val intent = Intent(this, NuclideAct::class.java)
             startActivity(intent)
         }
-        nucButton.setOnClickListener {
+        binding.nucButton.setOnClickListener {
             val intent = Intent(this, NuclideAct::class.java)
             startActivity(intent)
         }
-        phTable.setOnClickListener {
+        binding.phTable.setOnClickListener {
             val intent = Intent(this, PHAct::class.java)
             startActivity(intent)
         }
-        phButton.setOnClickListener {
+        binding.phButton.setOnClickListener {
             val intent = Intent(this, PHAct::class.java)
             startActivity(intent)
         }

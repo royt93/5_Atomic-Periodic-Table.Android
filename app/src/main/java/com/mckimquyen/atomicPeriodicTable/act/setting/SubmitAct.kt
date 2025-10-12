@@ -9,26 +9,14 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
+import com.mckimquyen.atomicPeriodicTable.databinding.ASubmitBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_solubility.backBtn
-import kotlinx.android.synthetic.main.a_submit.background
-import kotlinx.android.synthetic.main.a_submit.commonTitleBackSub
-import kotlinx.android.synthetic.main.a_submit.commonTitleBackSubColor
-import kotlinx.android.synthetic.main.a_submit.dropBtn
-import kotlinx.android.synthetic.main.a_submit.dropIssue
-import kotlinx.android.synthetic.main.a_submit.iBtn
-import kotlinx.android.synthetic.main.a_submit.iContent
-import kotlinx.android.synthetic.main.a_submit.iTitle
-import kotlinx.android.synthetic.main.a_submit.submitScroll
-import kotlinx.android.synthetic.main.a_submit.submitTitle
-import kotlinx.android.synthetic.main.a_submit.submitTitleDownstate
-import kotlinx.android.synthetic.main.a_submit.viewSub
-import kotlinx.android.synthetic.main.view_drop_issue.bug
-import kotlinx.android.synthetic.main.view_drop_issue.dataIssue
-import kotlinx.android.synthetic.main.view_drop_issue.question
 
 class SubmitAct : BaseAct() {
+
+    // ViewBinding - thay thế Kotlin Synthetics (deprecated)
+    private lateinit var binding: ASubmitBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +24,12 @@ class SubmitAct : BaseAct() {
     }
 
     private fun setupViews() {
+        // Apply theme dựa trên user preference
         val themePref = ThemePref(this)
         val themePrefValue = themePref.getValue()
 
         if (themePrefValue == 100) {
+            // Theme tự động theo system
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_NO -> {
                     setTheme(R.style.AppTheme)
@@ -51,43 +41,54 @@ class SubmitAct : BaseAct() {
             }
         }
         if (themePrefValue == 0) {
+            // Light theme
             setTheme(R.style.AppTheme)
         }
         if (themePrefValue == 1) {
+            // Dark theme
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_submit)
 
-        viewSub.systemUiVisibility =
+        // Inflate ViewBinding và set content view
+        binding = ASubmitBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Setup system UI visibility
+        binding.viewSub.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        // Setup issue type dropdown selector
         dropSelector()
 
-        //Title Controller
-        commonTitleBackSubColor.visibility = View.INVISIBLE
-        submitTitle.visibility = View.INVISIBLE
-        commonTitleBackSub.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        submitScroll.viewTreeObserver
+        // Title Controller - hiển thị/ẩn title bar khi scroll
+        binding.commonTitleBackSubColor.visibility = View.INVISIBLE
+        binding.submitTitle.visibility = View.INVISIBLE
+        binding.commonTitleBackSub.elevation = (resources.getDimension(R.dimen.zero_elevation))
+        binding.submitScroll.viewTreeObserver
             .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
                 var y = 200f
                 override fun onScrollChanged() {
-                    if (submitScroll.scrollY > 150f) {
-                        commonTitleBackSubColor.visibility = View.VISIBLE
-                        submitTitle.visibility = View.VISIBLE
-                        submitTitleDownstate.visibility = View.INVISIBLE
-                        commonTitleBackSub.elevation =
+                    if (binding.submitScroll.scrollY > 150f) {
+                        // Đã scroll xuống -> hiện title bar compact
+                        binding.commonTitleBackSubColor.visibility = View.VISIBLE
+                        binding.submitTitle.visibility = View.VISIBLE
+                        binding.submitTitleDownstate.visibility = View.INVISIBLE
+                        binding.commonTitleBackSub.elevation =
                             (resources.getDimension(R.dimen.one_elevation))
                     } else {
-                        commonTitleBackSubColor.visibility = View.INVISIBLE
-                        submitTitle.visibility = View.INVISIBLE
-                        submitTitleDownstate.visibility = View.VISIBLE
-                        commonTitleBackSub.elevation =
+                        // Ở đầu trang → hiện title bar expanded
+                        binding.commonTitleBackSubColor.visibility = View.INVISIBLE
+                        binding.submitTitle.visibility = View.INVISIBLE
+                        binding.submitTitleDownstate.visibility = View.VISIBLE
+                        binding.commonTitleBackSub.elevation =
                             (resources.getDimension(R.dimen.zero_elevation))
                     }
-                    y = submitScroll.scrollY.toFloat()
+                    y = binding.submitScroll.scrollY.toFloat()
                 }
             })
 
-        backBtn.setOnClickListener {
+        // Back button - quay về màn hình trước
+        binding.backBtn.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -98,68 +99,83 @@ class SubmitAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        val params = commonTitleBackSub.layoutParams as ViewGroup.LayoutParams
+        // Adjust title bar height để tránh status bar
+        val params = binding.commonTitleBackSub.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackSub.layoutParams = params
+        binding.commonTitleBackSub.layoutParams = params
 
-        val params2 = submitTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
+        // Adjust expanded title top margin
+        val params2 = binding.submitTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
         params2.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(
                 R.dimen.header_down_margin
             )
-        submitTitleDownstate.layoutParams = params2
-
+        binding.submitTitleDownstate.layoutParams = params2
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (dropIssue.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(background, 150)
-            Utils.fadeOutAnim(dropIssue, 150)
+        // Nếu dropdown đang hiển thị -> ẩn dropdown thay vì back
+        if (binding.dropIssue.root.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.background, 150)
+            Utils.fadeOutAnim(binding.dropIssue.root, 150)
             return
         }
         super.onBackPressed()
     }
 
     private fun dropSelector() {
+        // Mặc định chọn "data_issue"
         var type = "#data_issue"
         buildForm(type)
-        dropBtn.setOnClickListener {
-            Utils.fadeInAnim(dropIssue, 150)
-            Utils.fadeInAnim(background, 150)
-        }
-        background.setOnClickListener {
-            Utils.fadeOutAnim(dropIssue, 150)
-            Utils.fadeOutAnim(background, 150)
+
+        // Click dropdown button -> hiện dropdown menu
+        binding.dropBtn.setOnClickListener {
+            Utils.fadeInAnim(binding.dropIssue.root, 150)
+            Utils.fadeInAnim(binding.background, 150)
         }
 
-        dataIssue.setOnClickListener {
+        // Click background -> ẩn dropdown
+        binding.background.setOnClickListener {
+            Utils.fadeOutAnim(binding.dropIssue.root, 150)
+            Utils.fadeOutAnim(binding.background, 150)
+        }
+
+        // Chọn "Data Issue"
+        binding.dropIssue.dataIssue.setOnClickListener {
             type = "#data_issue"
-            Utils.fadeOutAnim(dropIssue, 150)
-            Utils.fadeOutAnim(background, 150)
-            dropBtn.text = getString(R.string.data_issue)
+            Utils.fadeOutAnim(binding.dropIssue.root, 150)
+            Utils.fadeOutAnim(binding.background, 150)
+            binding.dropBtn.text = getString(R.string.data_issue)
             buildForm(type)
         }
-        bug.setOnClickListener {
+
+        // Chọn "Bug"
+        binding.dropIssue.bug.setOnClickListener {
             type = "#bug"
-            Utils.fadeOutAnim(dropIssue, 150)
-            Utils.fadeOutAnim(background, 150)
-            dropBtn.text = getString(R.string.bug)
+            Utils.fadeOutAnim(binding.dropIssue.root, 150)
+            Utils.fadeOutAnim(binding.background, 150)
+            binding.dropBtn.text = getString(R.string.bug)
             buildForm(type)
         }
-        question.setOnClickListener {
+
+        // Chọn "Question"
+        binding.dropIssue.question.setOnClickListener {
             type = "#question"
-            Utils.fadeOutAnim(dropIssue, 150)
-            Utils.fadeOutAnim(background, 150)
-            dropBtn.text = getString(R.string.question)
+            Utils.fadeOutAnim(binding.dropIssue.root, 150)
+            Utils.fadeOutAnim(binding.background, 150)
+            binding.dropBtn.text = getString(R.string.question)
             buildForm(type)
         }
     }
 
     private fun buildForm(type: String) {
-        iBtn.setOnClickListener {
-            val title = iTitle.text.toString()
-            val content = iContent.text.toString()
+        // Submit button - mở email client với pre-filled subject & body
+        binding.iBtn.setOnClickListener {
+            val title = binding.iTitle.text.toString()
+            val content = binding.iContent.text.toString()
+
+            // Tạo email intent với subject và body
             val request = Intent(Intent.ACTION_VIEW)
             request.data = Uri.parse(
                 Uri.parse("mailto:roy.mobile.dev@gmail.com?subject=$type $title&body=$content")
@@ -168,5 +184,4 @@ class SubmitAct : BaseAct() {
             startActivity(request)
         }
     }
-
 }

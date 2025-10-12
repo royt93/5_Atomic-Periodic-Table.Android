@@ -6,19 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
+import com.mckimquyen.atomicPeriodicTable.databinding.ASolubilityBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_solubility.backBtn
-import kotlinx.android.synthetic.main.a_solubility.boxm
-import kotlinx.android.synthetic.main.a_solubility.commonTitleBackSul
-import kotlinx.android.synthetic.main.a_solubility.infoBtn
-import kotlinx.android.synthetic.main.a_solubility.infoPanel
-import kotlinx.android.synthetic.main.a_solubility.viewSub
-import kotlinx.android.synthetic.main.view_panel_info.infoBackBtn
-import kotlinx.android.synthetic.main.view_panel_info.infoBackground
-import kotlinx.android.synthetic.main.view_panel_info.infoTitle
-import kotlinx.android.synthetic.main.view_panel_info.tvInfoText
 
 class SolubilityAct : BaseAct() {
+
+    // Khai báo binding cho ViewBinding
+    private lateinit var binding: ASolubilityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +40,16 @@ class SolubilityAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_solubility) //Don't move down (Needs to be before we call our functions)
-        viewSub.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        // Khởi tạo ViewBinding
+        binding = ASolubilityBinding.inflate(layoutInflater)
+        setContentView(binding.root) //Don't move down (Needs to be before we call our functions)
+
+        binding.viewSub.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         infoPanel()
 
-        backBtn.setOnClickListener {
+        binding.backBtn.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -62,27 +60,27 @@ class SolubilityAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        val paramsO = boxm.layoutParams as ViewGroup.MarginLayoutParams
+        val paramsO = binding.boxm.layoutParams as ViewGroup.MarginLayoutParams
         paramsO.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        boxm.layoutParams = paramsO
+        binding.boxm.layoutParams = paramsO
 
-        val params2 = commonTitleBackSul.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackSul.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackSul.layoutParams = params2
+        binding.commonTitleBackSul.layoutParams = params2
 
     }
 
     private fun infoPanel() {
-        infoBtn.setOnClickListener {
-            Anim.fadeIn(infoPanel, 300)
-            infoTitle.text = resources.getString(R.string.solubility_info_t)
-            tvInfoText.text = resources.getString(R.string.solubility_info_c)
+        binding.infoBtn.setOnClickListener {
+            Anim.fadeIn(binding.infoPanel.root, 300)
+            binding.infoPanel.infoTitle.text = resources.getString(R.string.solubility_info_t)
+            binding.infoPanel.tvInfoText.text = resources.getString(R.string.solubility_info_c)
         }
-        infoBackBtn.setOnClickListener {
-            Anim.fadeOutAnim(infoPanel, 300)
+        binding.infoPanel.infoBackBtn.setOnClickListener {
+            Anim.fadeOutAnim(binding.infoPanel.root, 300)
         }
-        infoBackground.setOnClickListener {
-            Anim.fadeOutAnim(infoPanel, 300)
+        binding.infoPanel.infoBackground.setOnClickListener {
+            Anim.fadeOutAnim(binding.infoPanel.root, 300)
         }
     }
 }

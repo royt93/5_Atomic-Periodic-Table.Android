@@ -9,10 +9,13 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemDragListener
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.adt.OrderAdt
+import com.mckimquyen.atomicPeriodicTable.databinding.AOrderSettingsPageBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_order_settings_page.*
 
 class OrderAct : BaseAct() {
+
+    // Khai báo binding cho ViewBinding
+    private lateinit var binding: AOrderSettingsPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +43,20 @@ class OrderAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_order_settings_page) //REMEMBER: Never move any function calls above this
+
+        // Khởi tạo ViewBinding
+        binding = AOrderSettingsPageBinding.inflate(layoutInflater)
+        setContentView(binding.root) //REMEMBER: Never move any function calls above this
+
         val dataSet = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
         val mAdapter = OrderAdt(dataSet)
-        val mList = ordRecycler
+        val mList = binding.ordRecycler
         mList.layoutManager = LinearLayoutManager(this)
         mList.adapter = mAdapter
         mList.dragListener = onItemDragListener
 
-        viewOrd.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        backBtnOrd.setOnClickListener {
+        binding.viewOrd.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.backBtnOrd.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -65,7 +72,7 @@ class OrderAct : BaseAct() {
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
-        ordRecycler.setPadding(
+        binding.ordRecycler.setPadding(
             /* left = */ 0,
             /* top = */
             resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
@@ -75,9 +82,9 @@ class OrderAct : BaseAct() {
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
-        val params2 = commonTitleBackOrd.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackOrd.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackOrd.layoutParams = params2
+        binding.commonTitleBackOrd.layoutParams = params2
     }
 
 }

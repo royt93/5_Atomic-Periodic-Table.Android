@@ -47,65 +47,16 @@ import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.SearchPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
-import kotlinx.android.synthetic.main.a_main.commonTitleBackMain
-import kotlinx.android.synthetic.main.a_main.corner
-import kotlinx.android.synthetic.main.a_main.hoverBackground
-import kotlinx.android.synthetic.main.a_main.hoverMenuInclude
-import kotlinx.android.synthetic.main.a_main.leftBar
-import kotlinx.android.synthetic.main.a_main.menuBtn
-import kotlinx.android.synthetic.main.a_main.moreBtn
-import kotlinx.android.synthetic.main.a_main.navBackground
-import kotlinx.android.synthetic.main.a_main.navBarMain
-import kotlinx.android.synthetic.main.a_main.navContent
-import kotlinx.android.synthetic.main.a_main.navMenuInclude
-import kotlinx.android.synthetic.main.a_main.scrollLin
-import kotlinx.android.synthetic.main.a_main.scrollView
-import kotlinx.android.synthetic.main.a_main.searchBox
-import kotlinx.android.synthetic.main.a_main.searchMenuInclude
-import kotlinx.android.synthetic.main.a_main.settingsBtn
-import kotlinx.android.synthetic.main.a_main.topBar
-import kotlinx.android.synthetic.main.a_main.view_main
-import kotlinx.android.synthetic.main.layout_search_layout.background
-import kotlinx.android.synthetic.main.layout_search_layout.btFilterBtn
-import kotlinx.android.synthetic.main.layout_search_layout.closeElementSearch
-import kotlinx.android.synthetic.main.layout_search_layout.commonTitleBackSearch
-import kotlinx.android.synthetic.main.layout_search_layout.editElement
-import kotlinx.android.synthetic.main.layout_search_layout.emptySearchBox
-import kotlinx.android.synthetic.main.layout_search_layout.filterBox
-import kotlinx.android.synthetic.main.layout_search_layout.rvElement
-import kotlinx.android.synthetic.main.view_filter_view.alphabetBtn
-import kotlinx.android.synthetic.main.view_filter_view.electroBtn
-import kotlinx.android.synthetic.main.view_filter_view.elmtNumbBtn2
-import kotlinx.android.synthetic.main.view_hover_menu.atomicWeightBtn
-import kotlinx.android.synthetic.main.view_hover_menu.boilingBtn
-import kotlinx.android.synthetic.main.view_hover_menu.btRandomBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hElectronegativityBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hFusionBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hGroupBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hNameBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hPhaseBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hSpecificBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hVaporizatonBtn
-import kotlinx.android.synthetic.main.view_hover_menu.hYearBtn
-import kotlinx.android.synthetic.main.view_hover_menu.meltingPoint
-import kotlinx.android.synthetic.main.view_nav_menu_view.btGithub
-import kotlinx.android.synthetic.main.view_nav_menu_view.btMore
-import kotlinx.android.synthetic.main.view_nav_menu_view.btPolicy
-import kotlinx.android.synthetic.main.view_nav_menu_view.btRate
-import kotlinx.android.synthetic.main.view_nav_menu_view.btShare
-import kotlinx.android.synthetic.main.view_nav_menu_view.dictionaryBtn
-import kotlinx.android.synthetic.main.view_nav_menu_view.isotopesBtn
-import kotlinx.android.synthetic.main.view_nav_menu_view.navLin
-import kotlinx.android.synthetic.main.view_nav_menu_view.slidingLayout
-import kotlinx.android.synthetic.main.view_nav_menu_view.solubilityBtn
 import org.deejdev.twowaynestedscrollview.TwoWayNestedScrollView
 import java.util.Locale
 
 class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.InterstitialAdListener {
+    // binding inherited from TableExt
     private var elementList = ArrayList<Element>()
     private var mAdapter = ElementAdt(elementList = elementList, clickListener = this, con = this)
 
@@ -123,8 +74,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
-        Utils.fadeOutAnim(navBarMain, 150)
-        Utils.fadeOutAnim(moreBtn, 150)
+        Utils.fadeOutAnim(binding.navBarMain, 150)
+        Utils.fadeOutAnim(binding.moreBtn, 150)
     }
 
     private fun setupViews() {
@@ -147,9 +98,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_main)
+        binding = AMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rvElement)
+        val recyclerView = binding.searchMenuInclude.rvElement
         recyclerView.layoutManager = LinearLayoutManager(/* context = */ this,/* orientation = */
             RecyclerView.VERTICAL,/* reverseLayout = */
             false
@@ -158,7 +110,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         ElementModel.getList(elements)
         val adapter = ElementAdt(elementList = elements, clickListener = this, con = this)
         recyclerView.adapter = adapter
-        editElement.addTextChangedListener(object : TextWatcher {
+        binding.searchMenuInclude.editElement.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
@@ -171,15 +123,15 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         setupNavListeners()
         onClickNav()
         searchListener()
-        slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
         searchFilter(elements, recyclerView)
         mediaListeners()
         hoverListeners(elements)
         initName(elements)
-        moreBtn.setOnClickListener { openHover() }
-        hoverBackground.setOnClickListener { closeHover() }
-        btRandomBtn.setOnClickListener { getRandomItem() }
-        view_main.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.moreBtn.setOnClickListener { openHover() }
+        binding.hoverBackground.setOnClickListener { closeHover() }
+        binding.hoverMenuInclude.btRandomBtn.setOnClickListener { getRandomItem() }
+        binding.viewMain.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         val handler = android.os.Handler(Looper.getMainLooper())
         handler.postDelayed({
@@ -200,47 +152,47 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                         1f / pScale, 1f / mScale, 1f / pScale, 1f / mScale, detector.focusX, detector.focusY
                     )
                     if (mScale > 1f) {
-                        topBar.visibility = View.GONE
-                        leftBar.visibility = View.GONE
-                        corner.visibility = View.GONE
+                        binding.topBar.visibility = View.GONE
+                        binding.leftBar.visibility = View.GONE
+                        binding.corner.visibility = View.GONE
                     }
                     if (mScale == 1f) {
-                        topBar.visibility = View.VISIBLE
-                        leftBar.visibility = View.VISIBLE
-                        corner.visibility = View.VISIBLE
+                        binding.topBar.visibility = View.VISIBLE
+                        binding.leftBar.visibility = View.VISIBLE
+                        binding.corner.visibility = View.VISIBLE
                     }
                     scaleAnimation.duration = 0
                     scaleAnimation.fillAfter = true
-                    val layout = scrollLin as LinearLayout
+                    val layout = binding.scrollLin as LinearLayout
                     layout.startAnimation(scaleAnimation)
                     return true
                 }
             })
 
-        scrollView.viewTreeObserver.addOnScrollChangedListener(object : OnScrollChangedListener {
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(object : OnScrollChangedListener {
             var y = 0f
             override fun onScrollChanged() {
-                if (scrollView.scrollY > y) {
-                    Utils.fadeOutAnim(navBarMain, 150)
-                    Utils.fadeOutAnim(moreBtn, 150)
+                if (binding.scrollView.scrollY > y) {
+                    Utils.fadeOutAnim(binding.navBarMain, 150)
+                    Utils.fadeOutAnim(binding.moreBtn, 150)
                 } else {
-                    Utils.fadeInAnim(navBarMain, 150)
-                    Utils.fadeInAnim(moreBtn, 150)
+                    Utils.fadeInAnim(binding.navBarMain, 150)
+                    Utils.fadeInAnim(binding.moreBtn, 150)
                 }
-                y = scrollView.scrollY.toFloat()
+                y = binding.scrollView.scrollY.toFloat()
             }
         })
 
-        slidingLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+        binding.navMenuInclude.slidingLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {}
             override fun onPanelStateChanged(
                 panel: View?,
                 previousState: PanelState,
                 newState: PanelState,
             ) {
-                if (slidingLayout.panelState === PanelState.COLLAPSED) {
-                    navMenuInclude.visibility = View.GONE
-                    Utils.fadeOutAnim(view = navBackground, time = 100)
+                if (binding.navMenuInclude.slidingLayout.panelState === PanelState.COLLAPSED) {
+                    binding.navMenuInclude.root.visibility = View.GONE
+                    Utils.fadeOutAnim(view = binding.navBackground, time = 100)
                 }
             }
         })
@@ -269,15 +221,15 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     }
 
     private fun scrollAdapter() {
-        scrollView.setOnScrollChangeListener {
+        binding.scrollView.setOnScrollChangeListener {
                 _: TwoWayNestedScrollView?,
                 scrollX: Int,
                 scrollY: Int,
                 _: Int,
                 _: Int,
             ->
-            leftBar.scrollTo(/* x = */ 0, /* y = */ scrollY)
-            topBar.scrollTo(/* x = */ scrollX, /* y = */ 0)
+            binding.leftBar.scrollTo(/* x = */ 0, /* y = */ scrollY)
+            binding.topBar.scrollTo(/* x = */ scrollX, /* y = */ 0)
         }
     }
 
@@ -294,13 +246,13 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     }
 
     private fun openHover() {
-        Utils.fadeInAnimBack(hoverBackground, 200)
-        Utils.fadeInAnim(hoverMenuInclude, 300)
+        Utils.fadeInAnimBack(binding.hoverBackground, 200)
+        Utils.fadeInAnim(binding.hoverMenuInclude.root, 300)
     }
 
     private fun closeHover() {
-        Utils.fadeOutAnim(hoverBackground, 200)
-        Utils.fadeOutAnim(hoverMenuInclude, 300)
+        Utils.fadeOutAnim(binding.hoverBackground, 200)
+        Utils.fadeOutAnim(binding.hoverMenuInclude.root, 300)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -324,9 +276,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         val handler = android.os.Handler(Looper.getMainLooper())
         handler.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
-                Anim.fadeIn(emptySearchBox, 300)
+                Anim.fadeIn(binding.searchMenuInclude.emptySearchBox, 300)
             } else {
-                emptySearchBox.visibility = View.GONE
+                binding.searchMenuInclude.emptySearchBox.visibility = View.GONE
             }
         }, 10)
         recyclerView.adapter = ElementAdt(
@@ -344,27 +296,27 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (navBackground.visibility == View.VISIBLE) {
-            slidingLayout.panelState = PanelState.COLLAPSED
-            Utils.fadeOutAnim(navBackground, 150)
+        if (binding.navBackground.visibility == View.VISIBLE) {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
+            Utils.fadeOutAnim(binding.navBackground, 150)
             return
         }
-        if (hoverBackground.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(hoverBackground, 150)
-            Utils.fadeOutAnim(hoverMenuInclude, 150)
+        if (binding.hoverBackground.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.hoverBackground, 150)
+            Utils.fadeOutAnim(binding.hoverMenuInclude.root, 150)
             return
         }
-        if (searchMenuInclude.visibility == View.VISIBLE) {
-            Utils.fadeInAnim(navBarMain, 150)
-            Utils.fadeOutAnim(navBackground, 150)
-            Utils.fadeOutAnim(searchMenuInclude, 150)
-            Utils.fadeInAnim(moreBtn, 300)
+        if (binding.searchMenuInclude.root.visibility == View.VISIBLE) {
+            Utils.fadeInAnim(binding.navBarMain, 150)
+            Utils.fadeOutAnim(binding.navBackground, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.root, 150)
+            Utils.fadeInAnim(binding.moreBtn, 300)
             return
         }
-        if (searchMenuInclude.visibility == View.VISIBLE && background.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(background, 150)
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeInAnim(moreBtn, 300)
+        if (binding.searchMenuInclude.root.visibility == View.VISIBLE && binding.searchMenuInclude.background.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeInAnim(binding.moreBtn, 300)
             return
         } else {
             super.onBackPressed()
@@ -372,31 +324,31 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     }
 
     private fun searchListener() {
-        searchBox.setOnClickListener {
-            Utils.fadeInAnim(searchMenuInclude, 300)
-            navBarMain.visibility = View.GONE
-            Utils.fadeOutAnim(moreBtn, 300)
+        binding.searchBox.setOnClickListener {
+            Utils.fadeInAnim(binding.searchMenuInclude.root, 300)
+            binding.navBarMain.visibility = View.GONE
+            Utils.fadeOutAnim(binding.moreBtn, 300)
 
-            editElement.requestFocus()
+            binding.searchMenuInclude.editElement.requestFocus()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.show(WindowInsets.Type.ime())
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                 val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(editElement, InputMethodManager.SHOW_IMPLICIT)
+                imm.showSoftInput(binding.searchMenuInclude.editElement, InputMethodManager.SHOW_IMPLICIT)
             }
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeOutAnim(background, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
         }
-        closeElementSearch.setOnClickListener {
-            Utils.fadeOutAnim(searchMenuInclude, 300)
-            Utils.fadeInAnim(moreBtn, 300)
-            navBarMain.visibility = View.VISIBLE
+        binding.searchMenuInclude.closeElementSearch.setOnClickListener {
+            Utils.fadeOutAnim(binding.searchMenuInclude.root, 300)
+            Utils.fadeInAnim(binding.moreBtn, 300)
+            binding.navBarMain.visibility = View.VISIBLE
 
             val view = this.currentFocus
             if (view != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    view_main.doOnLayout {
+                    binding.viewMain.doOnLayout {
                         window.insetsController?.hide(WindowInsets.Type.ime())
                     }
                 } else {
@@ -408,93 +360,93 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     }
 
     private fun mediaListeners() {
-        btRate.setOnClickListener {
-            slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.btRate.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
             rateApp(packageName)
         }
-        btMore.setOnClickListener {
-            slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.btMore.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
             moreApp()
         }
-        btShare.setOnClickListener {
-            slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.btShare.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
             shareApp()
         }
-        btPolicy.setOnClickListener {
-            slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.btPolicy.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
             openBrowserPolicy()
         }
-        btGithub.setOnClickListener {
-            slidingLayout.panelState = PanelState.COLLAPSED
+        binding.navMenuInclude.btGithub.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
             openUrlInBrowser("https://github.com/JLindemann42/Atomic-Periodic-Table.Android")
         }
     }
 
     private fun onClickNav() {
-        menuBtn.setOnClickListener {
-            navMenuInclude.visibility = View.VISIBLE
-            navBackground.visibility = View.VISIBLE
-            Utils.fadeInAnimBack(navBackground, 200)
-            slidingLayout.panelState = PanelState.EXPANDED
+        binding.menuBtn.setOnClickListener {
+            binding.navMenuInclude.root.visibility = View.VISIBLE
+            binding.navBackground.visibility = View.VISIBLE
+            Utils.fadeInAnimBack(binding.navBackground, 200)
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.EXPANDED
         }
-        navBackground.setOnClickListener {
-            searchMenuInclude.visibility = View.GONE
-            slidingLayout.panelState = PanelState.COLLAPSED
-            navBarMain.visibility = View.VISIBLE
-            Utils.fadeOutAnim(navBackground, 100)
+        binding.navBackground.setOnClickListener {
+            binding.searchMenuInclude.root.visibility = View.GONE
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
+            binding.navBarMain.visibility = View.VISIBLE
+            Utils.fadeOutAnim(binding.navBackground, 100)
         }
-        solubilityBtn.setOnClickListener {
+        binding.navMenuInclude.solubilityBtn.setOnClickListener {
             val intent = Intent(this, TableAct::class.java)
             startActivity(intent)
         }
-        isotopesBtn.setOnClickListener {
+        binding.navMenuInclude.isotopesBtn.setOnClickListener {
             val intent = Intent(this, IsotopesActExperimental::class.java)
             startActivity(intent)
         }
-        dictionaryBtn.setOnClickListener {
+        binding.navMenuInclude.dictionaryBtn.setOnClickListener {
             val intent = Intent(this, DictionaryAct::class.java)
             startActivity(intent)
         }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {
-        hNameBtn.setOnClickListener {
+        binding.hoverMenuInclude.hNameBtn.setOnClickListener {
             initName(elements)
         }
-        hGroupBtn.setOnClickListener {
+        binding.hoverMenuInclude.hGroupBtn.setOnClickListener {
             initGroups(elements)
         }
-        hElectronegativityBtn.setOnClickListener {
+        binding.hoverMenuInclude.hElectronegativityBtn.setOnClickListener {
             initElectro(elements)
         }
-        atomicWeightBtn.setOnClickListener {
+        binding.hoverMenuInclude.atomicWeightBtn.setOnClickListener {
             initWeight(elements)
         }
-        boilingBtn.setOnClickListener {
+        binding.hoverMenuInclude.boilingBtn.setOnClickListener {
             initBoiling(elements)
         }
-        meltingPoint.setOnClickListener {
+        binding.hoverMenuInclude.meltingPoint.setOnClickListener {
             initMelting(elements)
         }
-        hPhaseBtn.setOnClickListener {
+        binding.hoverMenuInclude.hPhaseBtn.setOnClickListener {
             initPhase(elements)
         }
-        hYearBtn.setOnClickListener {
+        binding.hoverMenuInclude.hYearBtn.setOnClickListener {
             initYear(elements)
         }
-        hFusionBtn.setOnClickListener {
+        binding.hoverMenuInclude.hFusionBtn.setOnClickListener {
             initHeat(elements)
         }
-        hSpecificBtn.setOnClickListener {
+        binding.hoverMenuInclude.hSpecificBtn.setOnClickListener {
             initSpecific(elements)
         }
-        hVaporizatonBtn.setOnClickListener {
+        binding.hoverMenuInclude.hVaporizatonBtn.setOnClickListener {
             initVape(elements)
         }
     }
 
     private fun setupNavListeners() {
-        settingsBtn.setOnClickListener {
+        binding.settingsBtn.setOnClickListener {
             val intent = Intent(this, SettingsAct::class.java)
             startActivity(intent)
         }
@@ -531,19 +483,19 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
 
     @SuppressLint("NotifyDataSetChanged")
     private fun searchFilter(list: ArrayList<Element>, recyclerView: RecyclerView) {
-        filterBox.visibility = View.GONE
-        background.visibility = View.GONE
+        binding.searchMenuInclude.filterBox.root.visibility = View.GONE
+        binding.searchMenuInclude.background.visibility = View.GONE
 
-        btFilterBtn.setOnClickListener {
-            Utils.fadeInAnim(filterBox, 150)
-            Utils.fadeInAnim(background, 150)
+        binding.searchMenuInclude.btFilterBtn.setOnClickListener {
+            Utils.fadeInAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeInAnim(binding.searchMenuInclude.background, 150)
         }
-        background.setOnClickListener {
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeOutAnim(background, 150)
+        binding.searchMenuInclude.background.setOnClickListener {
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
         }
-        elmtNumbBtn2.setOnClickListener {
-            editElement.setText("")
+        binding.searchMenuInclude.filterBox.elmtNumbBtn2.setOnClickListener {
+            binding.searchMenuInclude.editElement.setText("")
 
             val searchPreference = SearchPref(this)
             searchPreference.setValue(0)
@@ -552,16 +504,16 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             for (item in list) {
                 filtList.add(item)
             }
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeOutAnim(background, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
             recyclerView.adapter = ElementAdt(
                 elementList = filtList, clickListener = this, con = this
             )
         }
-        electroBtn.setOnClickListener {
-            editElement.setText("")
+        binding.searchMenuInclude.filterBox.electroBtn.setOnClickListener {
+            binding.searchMenuInclude.editElement.setText("")
 
             val searchPreference = SearchPref(this)
             searchPreference.setValue(1)
@@ -570,16 +522,16 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             for (item in list) {
                 filtList.add(item)
             }
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeOutAnim(background, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             mAdapter.filterList(filtList)
             mAdapter.notifyDataSetChanged()
             recyclerView.adapter = ElementAdt(
                 elementList = filtList, clickListener = this, con = this
             )
         }
-        alphabetBtn.setOnClickListener {
-            editElement.setText("")
+        binding.searchMenuInclude.filterBox.alphabetBtn.setOnClickListener {
+            binding.searchMenuInclude.editElement.setText("")
 
             val searchPreference = SearchPref(this)
             searchPreference.setValue(2)
@@ -588,8 +540,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             for (item in list) {
                 filtList.add(item)
             }
-            Utils.fadeOutAnim(filterBox, 150)
-            Utils.fadeOutAnim(background, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
+            Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             filtList.sortWith { lhs, rhs ->
                 if (lhs.element < rhs.element) -1 else if (lhs.element < rhs.element) 1 else 0
             }
@@ -607,81 +559,81 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         left: Int,
         right: Int,
     ) {
-        navLin.setPadding(/* left = */ left, /* top = */ 0, /* right = */ right, /* bottom = */ 0)
+        binding.navMenuInclude.navLin.setPadding(/* left = */ left, /* top = */ 0, /* right = */ right, /* bottom = */ 0)
 
-        val params = commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
+        val params = binding.commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        commonTitleBackMain.layoutParams = params
+        binding.commonTitleBackMain.layoutParams = params
 
-        val params2 = navBarMain.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.navBarMain.layoutParams as ViewGroup.LayoutParams
         params2.height = bottom + resources.getDimensionPixelSize(R.dimen.nav_bar)
-        navBarMain.layoutParams = params2
+        binding.navBarMain.layoutParams = params2
 
-        val params3 = moreBtn.layoutParams as ViewGroup.MarginLayoutParams
+        val params3 = binding.moreBtn.layoutParams as ViewGroup.MarginLayoutParams
         params3.bottomMargin =
             bottom + (resources.getDimensionPixelSize(R.dimen.nav_bar)) / 2 + (resources.getDimensionPixelSize(
                 R.dimen.title_bar_elevation
             ))
-        moreBtn.layoutParams = params3
+        binding.moreBtn.layoutParams = params3
 
-        val params4 = commonTitleBackSearch.layoutParams as ViewGroup.LayoutParams
+        val params4 = binding.searchMenuInclude.commonTitleBackSearch.layoutParams as ViewGroup.LayoutParams
         params4.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackSearch.layoutParams = params4
+        binding.searchMenuInclude.commonTitleBackSearch.layoutParams = params4
 
-        rvElement.setPadding(/* left = */ 0,/* top = */
+        binding.searchMenuInclude.rvElement.setPadding(/* left = */ 0,/* top = */
             resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,/* right = */
             0,/* bottom = */
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
-        val navSide = navContent.layoutParams as ViewGroup.MarginLayoutParams
+        val navSide = binding.navContent.layoutParams as ViewGroup.MarginLayoutParams
         navSide.rightMargin = right
         navSide.leftMargin = left
-        navContent.layoutParams = navSide
+        binding.navContent.layoutParams = navSide
 
-        val barSide = searchBox.layoutParams as ViewGroup.MarginLayoutParams
+        val barSide = binding.searchBox.layoutParams as ViewGroup.MarginLayoutParams
         barSide.rightMargin = right + resources.getDimensionPixelSize(R.dimen.search_margin_side)
         barSide.leftMargin = left + resources.getDimensionPixelSize(R.dimen.search_margin_side)
-        searchBox.layoutParams = barSide
+        binding.searchBox.layoutParams = barSide
 
-        val leftScrollBar = leftBar.layoutParams as ViewGroup.MarginLayoutParams
+        val leftScrollBar = binding.leftBar.layoutParams as ViewGroup.MarginLayoutParams
         leftScrollBar.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar_main) + resources.getDimensionPixelSize(
                 R.dimen.left_bar
             )
-        leftBar.layoutParams = leftScrollBar
+        binding.leftBar.layoutParams = leftScrollBar
 
-        val topScrollBar = topBar.layoutParams as ViewGroup.MarginLayoutParams
+        val topScrollBar = binding.topBar.layoutParams as ViewGroup.MarginLayoutParams
         topScrollBar.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        topBar.layoutParams = topScrollBar
+        binding.topBar.layoutParams = topScrollBar
 
-        val numb = leftBar.layoutParams as ViewGroup.LayoutParams
+        val numb = binding.leftBar.layoutParams as ViewGroup.LayoutParams
         numb.width = left + resources.getDimensionPixelSize(R.dimen.left_bar)
-        leftBar.layoutParams = numb
+        binding.leftBar.layoutParams = numb
 
-        val cornerP = corner.layoutParams as ViewGroup.LayoutParams
+        val cornerP = binding.corner.layoutParams as ViewGroup.LayoutParams
         cornerP.width = left + resources.getDimensionPixelSize(R.dimen.left_bar)
-        corner.layoutParams = cornerP
+        binding.corner.layoutParams = cornerP
 
-        val cornerM = corner.layoutParams as ViewGroup.MarginLayoutParams
+        val cornerM = binding.corner.layoutParams as ViewGroup.MarginLayoutParams
         cornerM.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        corner.layoutParams = cornerM
+        binding.corner.layoutParams = cornerM
 
-        val params5 = hoverMenuInclude.layoutParams as ViewGroup.MarginLayoutParams
+        val params5 = binding.hoverMenuInclude.root.layoutParams as ViewGroup.MarginLayoutParams
         params5.bottomMargin = bottom
-        hoverMenuInclude.layoutParams = params5
+        binding.hoverMenuInclude.root.layoutParams = params5
 
-        val params6 = scrollView.layoutParams as ViewGroup.MarginLayoutParams
+        val params6 = binding.scrollView.layoutParams as ViewGroup.MarginLayoutParams
         params6.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        scrollView.layoutParams = params6
+        binding.scrollView.layoutParams = params6
 
-        val params7 = slidingLayout.layoutParams as ViewGroup.LayoutParams
+        val params7 = binding.navMenuInclude.slidingLayout.layoutParams as ViewGroup.LayoutParams
         params7.height = bottom + resources.getDimensionPixelSize(R.dimen.nav_view)
-        slidingLayout.layoutParams = params7
+        binding.navMenuInclude.slidingLayout.layoutParams = params7
 
-        val searchEmptyImgPrm = emptySearchBox.layoutParams as ViewGroup.MarginLayoutParams
+        val searchEmptyImgPrm = binding.searchMenuInclude.emptySearchBox.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
-        emptySearchBox.layoutParams = searchEmptyImgPrm
+        binding.searchMenuInclude.emptySearchBox.layoutParams = searchEmptyImgPrm
     }
 
 //    private fun createAdInter() {

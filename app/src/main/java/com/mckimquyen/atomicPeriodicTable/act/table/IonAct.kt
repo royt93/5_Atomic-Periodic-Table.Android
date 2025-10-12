@@ -19,28 +19,17 @@ import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.adt.IonAdapter
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.model.Ion
+import com.mckimquyen.atomicPeriodicTable.databinding.AIonBinding
 import com.mckimquyen.atomicPeriodicTable.model.IonModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_dictionary.titleBox
-import kotlinx.android.synthetic.main.a_ion.backBtnIon
-import kotlinx.android.synthetic.main.a_ion.closeEleSearchIon
-import kotlinx.android.synthetic.main.a_ion.commonTitleBackIon
-import kotlinx.android.synthetic.main.a_ion.editIon
-import kotlinx.android.synthetic.main.a_ion.emptySearchBoxIon
-import kotlinx.android.synthetic.main.a_ion.ionDetail
-import kotlinx.android.synthetic.main.a_ion.ionView
-import kotlinx.android.synthetic.main.a_ion.searchBarIon
-import kotlinx.android.synthetic.main.a_ion.searchBtnIon
-import kotlinx.android.synthetic.main.a_ion.viewIon
-import kotlinx.android.synthetic.main.view_ion_details.ionDetailTitle
-import kotlinx.android.synthetic.main.view_ion_details.tvDetailBackgroundIon
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStream
 import java.util.Locale
 
 class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
+    private lateinit var binding: AIonBinding
     private var ionList = ArrayList<Ion>()
     private var mAdapter = IonAdapter(list = ionList, clickListener = this, context = this)
 
@@ -69,15 +58,16 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_ion) //REMEMBER: Never move any function calls above this
+        binding = AIonBinding.inflate(layoutInflater)
+        setContentView(binding.root) //REMEMBER: Never move any function calls above this
 
         recyclerView()
         clickSearch()
-        viewIon.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        tvDetailBackgroundIon.setOnClickListener {
-            Utils.fadeOutAnim(ionDetail, 300)
+        binding.viewIon.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.ionDetail.tvDetailBackgroundIon.setOnClickListener {
+            Utils.fadeOutAnim(binding.ionDetail.root, 300)
         }
-        backBtnIon.setOnClickListener {
+        binding.backBtnIon.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -85,8 +75,8 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
     @SuppressLint("SetTextI18n", "DiscouragedApi")
     override fun ionClickListener(item: Ion, position: Int) {
         if (item.count > 1) {
-            Utils.fadeInAnim(ionDetail, 300)
-            ionDetailTitle.text = ((item.name).replaceFirstChar {
+            Utils.fadeInAnim(binding.ionDetail.root, 300)
+            binding.ionDetail.ionDetailTitle.text = ((item.name).replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()
                 ) else it.toString()
@@ -132,7 +122,7 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
         left: Int,
         right: Int,
     ) {
-        ionView.setPadding(
+        binding.ionView.setPadding(
             /* left = */ 0,
             /* top = */
             resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
@@ -141,30 +131,29 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
             /* bottom = */
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
-        val params2 = commonTitleBackIon.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackIon.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackIon.layoutParams = params2
+        binding.commonTitleBackIon.layoutParams = params2
 
-        val searchEmptyImgPrm = emptySearchBoxIon.layoutParams as ViewGroup.MarginLayoutParams
+        val searchEmptyImgPrm = binding.emptySearchBoxIon.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
-        emptySearchBoxIon.layoutParams = searchEmptyImgPrm
+        binding.emptySearchBoxIon.layoutParams = searchEmptyImgPrm
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun recyclerView() {
-        val ionView = findViewById<RecyclerView>(R.id.ionView)
         val ionList = ArrayList<Ion>()
         IonModel.getList(ionList)
-        ionView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.ionView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = IonAdapter(ionList, this, this)
-        ionView.adapter = adapter
+        binding.ionView.adapter = adapter
         adapter.notifyDataSetChanged()
 
-        editIon.addTextChangedListener(object : TextWatcher {
+        binding.editIon.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                filter(s.toString(), ionList, ionView)
+                filter(s.toString(), ionList, binding.ionView)
             }
         })
     }
@@ -180,9 +169,9 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             if (recyclerView.adapter!!.itemCount == 0) {
-                Anim.fadeIn(emptySearchBoxIon, 300)
+                Anim.fadeIn(binding.emptySearchBoxIon, 300)
             } else {
-                emptySearchBoxIon.visibility = View.GONE
+                binding.emptySearchBoxIon.visibility = View.GONE
             }
         }, 10)
         mAdapter.filterList(filteredList)
@@ -191,19 +180,19 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
     }
 
     private fun clickSearch() {
-        searchBtnIon.setOnClickListener {
-            Utils.fadeInAnim(searchBarIon, 150)
-            Utils.fadeOutAnim(titleBox, 1)
-            editIon.requestFocus()
+        binding.searchBtnIon.setOnClickListener {
+            Utils.fadeInAnim(binding.searchBarIon, 150)
+            Utils.fadeOutAnim(binding.titleBox, 1)
+            binding.editIon.requestFocus()
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editIon, InputMethodManager.SHOW_IMPLICIT)
+            imm.showSoftInput(binding.editIon, InputMethodManager.SHOW_IMPLICIT)
         }
-        closeEleSearchIon.setOnClickListener {
-            Utils.fadeOutAnim(searchBarIon, 1)
+        binding.closeEleSearchIon.setOnClickListener {
+            Utils.fadeOutAnim(binding.searchBarIon, 1)
             val delayClose = Handler(Looper.getMainLooper())
             delayClose.postDelayed({
-                Utils.fadeInAnim(titleBox, 150)
+                Utils.fadeInAnim(binding.titleBox, 150)
             }, 151)
 
             val view = this.currentFocus
@@ -216,8 +205,8 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (ionDetail.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(ionDetail, 300)
+        if (binding.ionDetail.root.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.ionDetail.root, 300)
             return
         } else {
             super.onBackPressed()

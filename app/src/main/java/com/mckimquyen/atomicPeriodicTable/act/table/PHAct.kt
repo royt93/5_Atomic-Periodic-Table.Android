@@ -11,25 +11,14 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
+import com.mckimquyen.atomicPeriodicTable.databinding.APhBinding
 import com.mckimquyen.atomicPeriodicTable.model.Indicator
 import com.mckimquyen.atomicPeriodicTable.model.IndicatorModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_ph.acidInfo
-import kotlinx.android.synthetic.main.a_ph.alkalineInfo
-import kotlinx.android.synthetic.main.a_ph.backBtnPh
-import kotlinx.android.synthetic.main.a_ph.center
-import kotlinx.android.synthetic.main.a_ph.commonTitleBackPh
-import kotlinx.android.synthetic.main.a_ph.left
-import kotlinx.android.synthetic.main.a_ph.neutralInfo
-import kotlinx.android.synthetic.main.a_ph.phScroll
-import kotlinx.android.synthetic.main.a_ph.right
-import kotlinx.android.synthetic.main.a_ph.viewPh
-import kotlinx.android.synthetic.main.view_bar_ph_chips.bromothymolBlueBtn
-import kotlinx.android.synthetic.main.view_bar_ph_chips.congoRedBtn
-import kotlinx.android.synthetic.main.view_bar_ph_chips.methylOrangeBtn
-import kotlinx.android.synthetic.main.view_bar_ph_chips.phenolphthaleinBtn
 
 class PHAct : BaseAct() {
+    private lateinit var binding: APhBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -56,13 +45,14 @@ class PHAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_ph) //REMEMBER: Never move any function calls above this
+        binding = APhBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         indicatorListener()
-        viewPh.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.viewPh.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         //Title Controller
 
-        backBtnPh.setOnClickListener {
+        binding.backBtnPh.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -76,41 +66,41 @@ class PHAct : BaseAct() {
         val alkalineText = "[H+]<[OH-] pH>"
 
         val item = indicatorList[0]
-        acidInfo.text = acidText + item.acid
-        neutralInfo.text = neutralText + item.neutral
-        alkalineInfo.text = alkalineText + item.alkali
+        binding.acidInfo.text = acidText + item.acid
+        binding.neutralInfo.text = neutralText + item.neutral
+        binding.alkalineInfo.text = alkalineText + item.alkali
         updatePhColor(item)
         updateButtonColor("bromothymol_blue_btn")
 
-        bromothymolBlueBtn.setOnClickListener {
+        binding.phChipBar.bromothymolBlueBtn.setOnClickListener {
             val item = indicatorList[0]
-            acidInfo.text = acidText + item.acid
-            neutralInfo.text = neutralText + item.neutral
-            alkalineInfo.text = alkalineText + item.alkali
+            binding.acidInfo.text = acidText + item.acid
+            binding.neutralInfo.text = neutralText + item.neutral
+            binding.alkalineInfo.text = alkalineText + item.alkali
             updatePhColor(item)
             updateButtonColor("bromothymol_blue_btn")
         }
-        methylOrangeBtn.setOnClickListener {
+        binding.phChipBar.methylOrangeBtn.setOnClickListener {
             val item = indicatorList[1]
-            acidInfo.text = acidText + item.acid
-            neutralInfo.text = neutralText + item.neutral
-            alkalineInfo.text = alkalineText + item.alkali
+            binding.acidInfo.text = acidText + item.acid
+            binding.neutralInfo.text = neutralText + item.neutral
+            binding.alkalineInfo.text = alkalineText + item.alkali
             updatePhColor(item)
             updateButtonColor("methyl_orange_btn")
         }
-        congoRedBtn.setOnClickListener {
+        binding.phChipBar.congoRedBtn.setOnClickListener {
             val item = indicatorList[2]
-            acidInfo.text = acidText + item.acid
-            neutralInfo.text = neutralText + item.neutral
-            alkalineInfo.text = alkalineText + item.alkali
+            binding.acidInfo.text = acidText + item.acid
+            binding.neutralInfo.text = neutralText + item.neutral
+            binding.alkalineInfo.text = alkalineText + item.alkali
             updatePhColor(item)
             updateButtonColor("congo_red_btn")
         }
-        phenolphthaleinBtn.setOnClickListener {
+        binding.phChipBar.phenolphthaleinBtn.setOnClickListener {
             val item = indicatorList[3]
-            acidInfo.text = acidText + item.acid
-            neutralInfo.text = neutralText + item.neutral
-            alkalineInfo.text = alkalineText + item.alkali
+            binding.acidInfo.text = acidText + item.acid
+            binding.neutralInfo.text = neutralText + item.neutral
+            binding.alkalineInfo.text = alkalineText + item.alkali
             updatePhColor(item)
             updateButtonColor("phenolphthalein_btn")
         }
@@ -123,15 +113,15 @@ class PHAct : BaseAct() {
             val centerColor = resources.getIdentifier(item.neutralColor, "color", packageName)
             val rightColor = resources.getIdentifier(item.alkaliColor, "color", packageName)
 
-            left.setColorFilter(
+            binding.left.setColorFilter(
                 ContextCompat.getColor(this, leftColor),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
-            center.setColorFilter(
+            binding.center.setColorFilter(
                 ContextCompat.getColor(this, centerColor),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
-            right.setColorFilter(
+            binding.right.setColorFilter(
                 ContextCompat.getColor(this, rightColor),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
@@ -142,10 +132,10 @@ class PHAct : BaseAct() {
 
     @SuppressLint("UseCompatLoadingForDrawables", "DiscouragedApi")
     private fun updateButtonColor(btn: String) {
-        methylOrangeBtn.background = getDrawable(R.drawable.shape_chip)
-        bromothymolBlueBtn.background = getDrawable(R.drawable.shape_chip)
-        congoRedBtn.background = getDrawable(R.drawable.shape_chip)
-        phenolphthaleinBtn.background = getDrawable(R.drawable.shape_chip)
+        binding.phChipBar.methylOrangeBtn.background = getDrawable(R.drawable.shape_chip)
+        binding.phChipBar.bromothymolBlueBtn.background = getDrawable(R.drawable.shape_chip)
+        binding.phChipBar.congoRedBtn.background = getDrawable(R.drawable.shape_chip)
+        binding.phChipBar.phenolphthaleinBtn.background = getDrawable(R.drawable.shape_chip)
 
         val delay = Handler(Looper.getMainLooper())
         delay.postDelayed({
@@ -161,12 +151,12 @@ class PHAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        val paramsTitle = commonTitleBackPh.layoutParams as ViewGroup.LayoutParams
+        val paramsTitle = binding.commonTitleBackPh.layoutParams as ViewGroup.LayoutParams
         paramsTitle.height = top + resources.getDimensionPixelSize(R.dimen.title_bar_ph)
-        commonTitleBackPh.layoutParams = paramsTitle
+        binding.commonTitleBackPh.layoutParams = paramsTitle
 
-        val pScroll = phScroll.layoutParams as ViewGroup.MarginLayoutParams
+        val pScroll = binding.phScroll.layoutParams as ViewGroup.MarginLayoutParams
         pScroll.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_ph)
-        phScroll.layoutParams = pScroll
+        binding.phScroll.layoutParams = pScroll
     }
 }

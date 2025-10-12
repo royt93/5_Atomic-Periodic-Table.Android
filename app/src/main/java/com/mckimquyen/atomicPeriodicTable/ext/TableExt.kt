@@ -15,13 +15,10 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.pref.TemperatureUnits
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
 import com.mckimquyen.atomicPeriodicTable.util.Pasteur
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_main.hoverBackground
-import kotlinx.android.synthetic.main.a_main.hoverMenuInclude
-import kotlinx.android.synthetic.main.v_group_3.actinoidsBtn
-import kotlinx.android.synthetic.main.v_group_3.lanthanoidsBtn
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -29,6 +26,8 @@ import java.io.InputStream
 import java.util.Locale
 
 abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
+    protected lateinit var binding: AMainBinding
+
     companion object {
         private const val TAG = "BaseActivity"
     }
@@ -66,8 +65,8 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
     private var elementList = ArrayList<Element>()
 
     private fun closeHover() {
-        Utils.fadeOutAnim(hoverBackground, 200)
-        Utils.fadeOutAnim(hoverMenuInclude, 300)
+        Utils.fadeOutAnim(binding.hoverBackground, 200)
+        Utils.fadeOutAnim(binding.hoverMenuInclude.root, 300)
     }
 
     @SuppressLint("DiscouragedApi")
@@ -96,33 +95,33 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
             text.layoutParams = params
             text.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
             btn.elevation = (resources.getDimension(R.dimen.zero_elevation))
-            lanthanoidsBtn.elevation = (resources.getDimension(R.dimen.zero_elevation))
-            actinoidsBtn.elevation = (resources.getDimension(R.dimen.zero_elevation))
+            binding.vGroup3.lanthanoidsBtn.elevation = (resources.getDimension(R.dimen.zero_elevation))
+            binding.vGroup3.actinoidsBtn.elevation = (resources.getDimension(R.dimen.zero_elevation))
 
             if (themePrefValue == 100) {
                 when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                     Configuration.UI_MODE_NIGHT_NO -> {
                         btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                        lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                        actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                        binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                        binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
                     }
 
                     Configuration.UI_MODE_NIGHT_YES -> {
                         btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                        lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                        actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                        binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                        binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
                     }
                 }
             }
             if (themePrefValue == 0) {
                 btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
             }
             if (themePrefValue == 1) {
                 btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
             }
         }
     }

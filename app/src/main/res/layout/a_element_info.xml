@@ -173,7 +173,7 @@
                 android:visibility="gone" />
 
             <include
-                android:id="@+id/favoriteBar"
+                android:id="@+id/favoriteBarInclude"
                 layout="@layout/view_favorite_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -191,16 +191,19 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/temperaturesInc"
                 layout="@layout/v_d_temperatures"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/atomicInc"
                 layout="@layout/v_d_atomic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/electromagneticInc"
                 layout="@layout/v_d_electromagnetic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -212,6 +215,7 @@
                 android:layout_height="wrap_content" />
 
             <include
+                android:id="@+id/nuclearInc"
                 layout="@layout/v_d_nuclear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

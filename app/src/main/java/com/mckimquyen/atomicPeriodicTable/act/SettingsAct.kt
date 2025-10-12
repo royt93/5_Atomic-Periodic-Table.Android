@@ -19,40 +19,13 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.LicensesAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.OrderAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
+import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_settings.aboutSettings
-import kotlinx.android.synthetic.main.a_settings.advancedBox
-import kotlinx.android.synthetic.main.a_settings.backBtnSetting
-import kotlinx.android.synthetic.main.a_settings.cacheLay
-import kotlinx.android.synthetic.main.a_settings.commonTitleBackSet
-import kotlinx.android.synthetic.main.a_settings.commonTitleSettingsColor
-import kotlinx.android.synthetic.main.a_settings.elementTitle
-import kotlinx.android.synthetic.main.a_settings.elementTitleDownstate
-import kotlinx.android.synthetic.main.a_settings.experimentalSettings
-import kotlinx.android.synthetic.main.a_settings.favoriteSettings
-import kotlinx.android.synthetic.main.a_settings.github20TesterSettings
-import kotlinx.android.synthetic.main.a_settings.licensesSettings
-import kotlinx.android.synthetic.main.a_settings.offlineInternetSwitch
-import kotlinx.android.synthetic.main.a_settings.offlineSettings
-import kotlinx.android.synthetic.main.a_settings.orderSettings
-import kotlinx.android.synthetic.main.a_settings.personalizationBox
-import kotlinx.android.synthetic.main.a_settings.scrollSettings
-import kotlinx.android.synthetic.main.a_settings.submitSettings
-import kotlinx.android.synthetic.main.a_settings.themePanel
-import kotlinx.android.synthetic.main.a_settings.themesSettings
-import kotlinx.android.synthetic.main.a_settings.titleBoxSettings
-import kotlinx.android.synthetic.main.a_settings.unitSettings
-import kotlinx.android.synthetic.main.a_settings.view
-import kotlinx.android.synthetic.main.view_theme_panel.cancelBtn
-import kotlinx.android.synthetic.main.view_theme_panel.darkBtn
-import kotlinx.android.synthetic.main.view_theme_panel.lightBtn
-import kotlinx.android.synthetic.main.view_theme_panel.systemDefaultBtn
-import kotlinx.android.synthetic.main.view_theme_panel.themeBackground
 import java.io.File
 import java.text.DecimalFormat
 import kotlin.math.log10
@@ -60,6 +33,9 @@ import kotlin.math.pow
 import kotlin.system.exitProcess
 
 class SettingsAct : BaseAct() {
+
+    // Khai báo binding cho ViewBinding
+    private lateinit var binding: ASettingsBinding
 
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
@@ -106,47 +82,50 @@ class SettingsAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_settings)
+
+        // Khởi tạo ViewBinding
+        binding = ASettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (themePrefValue == 100) {
-            systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
+            binding.themePanel.systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
                 /* left = */ R.drawable.ic_radio_checked,
                 /* top = */ 0,
                 /* right = */ 0,
                 /* bottom = */ 0
             )
-            lightBtn.setCompoundDrawablesWithIntrinsicBounds(
+            binding.themePanel.lightBtn.setCompoundDrawablesWithIntrinsicBounds(
                 /* left = */ R.drawable.ic_radio_unchecked,
                 /* top = */ 0,
                 /* right = */ 0,
                 /* bottom = */ 0
             )
-            darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_unchecked, 0, 0, 0)
+            binding.themePanel.darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_unchecked, 0, 0, 0)
         }
         if (themePrefValue == 0) {
-            systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
+            binding.themePanel.systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
                 /* left = */ R.drawable.ic_radio_unchecked,
                 /* top = */ 0,
                 /* right = */ 0,
                 /* bottom = */ 0
             )
-            lightBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_checked, 0, 0, 0)
-            darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_unchecked, 0, 0, 0)
+            binding.themePanel.lightBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_checked, 0, 0, 0)
+            binding.themePanel.darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_unchecked, 0, 0, 0)
         }
         if (themePrefValue == 1) {
-            systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
+            binding.themePanel.systemDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
                 /* left = */ R.drawable.ic_radio_unchecked,
                 /* top = */ 0,
                 /* right = */ 0,
                 /* bottom = */ 0
             )
-            lightBtn.setCompoundDrawablesWithIntrinsicBounds(
+            binding.themePanel.lightBtn.setCompoundDrawablesWithIntrinsicBounds(
                 /* left = */ R.drawable.ic_radio_unchecked,
                 /* top = */ 0,
                 /* right = */ 0,
                 /* bottom = */ 0
             )
-            darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_checked, 0, 0, 0)
+            binding.themePanel.darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_checked, 0, 0, 0)
         }
 
         openPages()
@@ -155,59 +134,59 @@ class SettingsAct : BaseAct() {
         cacheSettings()
         initOfflineSwitches()
 
-        offlineSettings.setOnClickListener {
-            offlineInternetSwitch.toggle()
+        binding.offlineSettings.setOnClickListener {
+            binding.offlineInternetSwitch.toggle()
         }
 
-        view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         //Title Controller
-        commonTitleSettingsColor.visibility = View.INVISIBLE
-        elementTitle.visibility = View.INVISIBLE
-        commonTitleBackSet.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        scrollSettings.viewTreeObserver
+        binding.commonTitleSettingsColor.visibility = View.INVISIBLE
+        binding.elementTitle.visibility = View.INVISIBLE
+        binding.commonTitleBackSet.elevation = (resources.getDimension(R.dimen.zero_elevation))
+        binding.scrollSettings.viewTreeObserver
             .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
                 var y = 300f
                 override fun onScrollChanged() {
-                    if (scrollSettings.scrollY > 150) {
-                        commonTitleSettingsColor.visibility = View.VISIBLE
-                        elementTitle.visibility = View.VISIBLE
-                        elementTitleDownstate.visibility = View.INVISIBLE
-                        commonTitleBackSet.elevation =
+                    if (binding.scrollSettings.scrollY > 150) {
+                        binding.commonTitleSettingsColor.visibility = View.VISIBLE
+                        binding.elementTitle.visibility = View.VISIBLE
+                        binding.elementTitleDownstate.visibility = View.INVISIBLE
+                        binding.commonTitleBackSet.elevation =
                             (resources.getDimension(R.dimen.one_elevation))
                     } else {
-                        commonTitleSettingsColor.visibility = View.INVISIBLE
-                        elementTitle.visibility = View.INVISIBLE
-                        elementTitleDownstate.visibility = View.VISIBLE
-                        commonTitleBackSet.elevation =
+                        binding.commonTitleSettingsColor.visibility = View.INVISIBLE
+                        binding.elementTitle.visibility = View.INVISIBLE
+                        binding.elementTitleDownstate.visibility = View.VISIBLE
+                        binding.commonTitleBackSet.elevation =
                             (resources.getDimension(R.dimen.zero_elevation))
                     }
-                    y = scrollSettings.scrollY.toFloat()
+                    y = binding.scrollSettings.scrollY.toFloat()
                 }
             })
 
-        aboutSettings.setOnClickListener {
+        binding.aboutSettings.setOnClickListener {
             val intent = Intent(this, AboutAct::class.java)
             startActivity(intent)
         }
-        github20TesterSettings.setOnClickListener {
+        binding.github20TesterSettings.setOnClickListener {
             rateApp("com.mckimquyen.bemytester")
 //            openUrlInBrowser("https://github.com/gj-loitp/20-TESTER-FOR-CLOSED-TESTING/tree/main")
         }
-        backBtnSetting.setOnClickListener {
+        binding.backBtnSetting.setOnClickListener {
 //            Log.d("roy93~", "onBackPressed")
             this.onBackPressed()
 //            finishScreen()
         }
-        submitSettings.setOnClickListener {
+        binding.submitSettings.setOnClickListener {
             val intent = Intent(this, SubmitAct::class.java)
             startActivity(intent)
         }
-        licensesSettings.setOnClickListener {
+        binding.licensesSettings.setOnClickListener {
             val intent = Intent(this, LicensesAct::class.java)
             startActivity(intent)
         }
-        unitSettings.setOnClickListener {
+        binding.unitSettings.setOnClickListener {
             val intent = Intent(this, UnitAct::class.java)
             startActivity(intent)
         }
@@ -229,32 +208,32 @@ class SettingsAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        val params = commonTitleBackSet.layoutParams as ViewGroup.LayoutParams
+        val params = binding.commonTitleBackSet.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackSet.layoutParams = params
+        binding.commonTitleBackSet.layoutParams = params
 
-        val titleParam = titleBoxSettings.layoutParams as ViewGroup.MarginLayoutParams
+        val titleParam = binding.titleBoxSettings.layoutParams as ViewGroup.MarginLayoutParams
         titleParam.rightMargin = right
         titleParam.leftMargin = left
-        titleBoxSettings.layoutParams = titleParam
+        binding.titleBoxSettings.layoutParams = titleParam
 
-        val params2 = elementTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
+        val params2 = binding.elementTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
         params2.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(
                 R.dimen.header_down_margin
             )
-        elementTitleDownstate.layoutParams = params2
+        binding.elementTitleDownstate.layoutParams = params2
 
-        personalizationBox.setPadding(left, 0, right, 0)
-        advancedBox.setPadding(left, 0, right, 0)
+        binding.personalizationBox.setPadding(left, 0, right, 0)
+        binding.advancedBox.setPadding(left, 0, right, 0)
 
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
 //        Log.d("roy93~", "onBackPressed")
-        if (themePanel.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(themePanel, 300) //Start Close Animation
+        if (binding.themePanel.root.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.themePanel.root, 300) //Start Close Animation
             return
         } else {
             super.onBackPressed()
@@ -274,10 +253,10 @@ class SettingsAct : BaseAct() {
     private fun initOfflineSwitches() {
         val offlinePreferences = OfflinePreference(this)
         val offlinePrefValue = offlinePreferences.getValue()
-        offlineInternetSwitch.isChecked = offlinePrefValue == 1
+        binding.offlineInternetSwitch.isChecked = offlinePrefValue == 1
 
-        offlineInternetSwitch.setOnCheckedChangeListener { _, _ ->
-            if (offlineInternetSwitch.isChecked) {
+        binding.offlineInternetSwitch.setOnCheckedChangeListener { _, _ ->
+            if (binding.offlineInternetSwitch.isChecked) {
                 val offlinePreference = OfflinePreference(this)
                 offlinePreference.setValue(1)
             } else {
@@ -288,22 +267,22 @@ class SettingsAct : BaseAct() {
     }
 
     private fun openPages() {
-        favoriteSettings.setOnClickListener {
+        binding.favoriteSettings.setOnClickListener {
             val intent = Intent(this, FavoritePageAct::class.java)
             startActivity(intent)
         }
-        orderSettings.setOnClickListener {
+        binding.orderSettings.setOnClickListener {
             val intent = Intent(this, OrderAct::class.java)
             startActivity(intent)
         }
-        experimentalSettings.setOnClickListener {
+        binding.experimentalSettings.setOnClickListener {
             val intent = Intent(this, ExperimentalAct::class.java)
             startActivity(intent)
         }
     }
 
     private fun cacheSettings() {
-        cacheLay.setOnClickListener {
+        binding.cacheLay.setOnClickListener {
             this.cacheDir.deleteRecursively()
             initializeCache()
         }
@@ -339,7 +318,7 @@ class SettingsAct : BaseAct() {
     }
 
     private fun themeSettings() {
-        systemDefaultBtn.setOnClickListener {
+        binding.themePanel.systemDefaultBtn.setOnClickListener {
             val themePref = ThemePref(this)
             themePref.setValue(100)
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -350,7 +329,7 @@ class SettingsAct : BaseAct() {
                     setTheme(R.style.AppThemeDark)
                 } // Night mode is active, we're using dark theme
             }
-            Utils.fadeOutAnim(themePanel, 300)
+            Utils.fadeOutAnim(binding.themePanel.root, 300)
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
                 finish()
@@ -361,11 +340,11 @@ class SettingsAct : BaseAct() {
                 overridePendingTransition(0, 0)
             }, 302)
         }
-        lightBtn.setOnClickListener {
+        binding.themePanel.lightBtn.setOnClickListener {
             val themePref = ThemePref(this)
             themePref.setValue(0)
             setTheme(R.style.AppTheme)
-            Utils.fadeOutAnim(themePanel, 300)
+            Utils.fadeOutAnim(binding.themePanel.root, 300)
 
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
@@ -377,11 +356,11 @@ class SettingsAct : BaseAct() {
                 overridePendingTransition(0, 0)
             }, 302)
         }
-        darkBtn.setOnClickListener {
+        binding.themePanel.darkBtn.setOnClickListener {
             val themePref = ThemePref(this)
             themePref.setValue(1)
             setTheme(R.style.AppThemeDark)
-            Utils.fadeOutAnim(themePanel, 300)
+            Utils.fadeOutAnim(binding.themePanel.root, 300)
 
             val delayChange = Handler(Looper.getMainLooper())
             delayChange.postDelayed({
@@ -393,14 +372,14 @@ class SettingsAct : BaseAct() {
                 overridePendingTransition(0, 0)
             }, 302)
         }
-        themesSettings.setOnClickListener {
-            Utils.fadeInAnim(view = themePanel, time = 300)
+        binding.themesSettings.setOnClickListener {
+            Utils.fadeInAnim(view = binding.themePanel.root, time = 300)
         }
-        themeBackground.setOnClickListener {
-            Utils.fadeOutAnim(themePanel, 300)
+        binding.themePanel.themeBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.themePanel.root, 300)
         }
-        cancelBtn.setOnClickListener {
-            Utils.fadeOutAnim(themePanel, 300)
+        binding.themePanel.cancelBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.themePanel.root, 300)
         }
     }
 }

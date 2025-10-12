@@ -469,6 +469,7 @@
                     android:paddingTop="32dp">
 
                     <include
+                        android:id="@+id/vGroup3"
                         layout="@layout/v_group_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

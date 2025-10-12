@@ -17,23 +17,15 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.adt.ElectrodeAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
+import com.mckimquyen.atomicPeriodicTable.databinding.AElectrodeBinding
 import com.mckimquyen.atomicPeriodicTable.model.Series
 import com.mckimquyen.atomicPeriodicTable.model.SeriesModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_dictionary.searchBtn
-import kotlinx.android.synthetic.main.a_dictionary.titleBox
-import kotlinx.android.synthetic.main.a_electrode.backBtn
-import kotlinx.android.synthetic.main.a_electrode.closeEleSearch
-import kotlinx.android.synthetic.main.a_electrode.commonTitleBackElo
-import kotlinx.android.synthetic.main.a_electrode.eView
-import kotlinx.android.synthetic.main.a_electrode.editEle
-import kotlinx.android.synthetic.main.a_electrode.emptySearchBoxEle
-import kotlinx.android.synthetic.main.a_electrode.searchBarEle
-import kotlinx.android.synthetic.main.a_electrode.viewEle
 import java.util.Locale
 
 class ElectrodeAct : BaseAct() {
+    private lateinit var binding: AElectrodeBinding
     private var seriesList = ArrayList<Series>()
     private var mAdapter = ElectrodeAdt(list = seriesList, clickListener = this, context = this)
 
@@ -63,13 +55,14 @@ class ElectrodeAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_electrode) //REMEMBER: Never move any function calls above this
+        binding = AElectrodeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         recyclerView()
         clickSearch()
 
-        viewEle.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        backBtn.setOnClickListener {
+        binding.viewEle.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.backBtn.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -80,25 +73,25 @@ class ElectrodeAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        eView.setPadding(
+        binding.eView.setPadding(
             /* left = */ 0,
             /* top = */ resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
             /* right = */ 0,
             /* bottom = */ resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
-        val params2 = commonTitleBackElo.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackElo.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackElo.layoutParams = params2
+        binding.commonTitleBackElo.layoutParams = params2
 
-        val searchEmptyImgPrm = emptySearchBoxEle.layoutParams as ViewGroup.MarginLayoutParams
+        val searchEmptyImgPrm = binding.emptySearchBoxEle.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
-        emptySearchBoxEle.layoutParams = searchEmptyImgPrm
+        binding.emptySearchBoxEle.layoutParams = searchEmptyImgPrm
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun recyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.eView)
+        val recyclerView = binding.eView
         val series = ArrayList<Series>()
 
         SeriesModel.getList(series)
@@ -112,7 +105,7 @@ class ElectrodeAct : BaseAct() {
 
         adapter.notifyDataSetChanged()
 
-        editEle.addTextChangedListener(object : TextWatcher {
+        binding.editEle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -150,9 +143,9 @@ class ElectrodeAct : BaseAct() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
-                Anim.fadeIn(emptySearchBoxEle, 300)
+                Anim.fadeIn(binding.emptySearchBoxEle, 300)
             } else {
-                emptySearchBoxEle.visibility = View.GONE
+                binding.emptySearchBoxEle.visibility = View.GONE
             }
         }, 10)
         mAdapter.filterList(filteredList)
@@ -161,21 +154,21 @@ class ElectrodeAct : BaseAct() {
     }
 
     private fun clickSearch() {
-        searchBtn.setOnClickListener {
-            Utils.fadeInAnim(searchBarEle, 150)
-            Utils.fadeOutAnim(titleBox, 1)
+        binding.searchBtn.setOnClickListener {
+            Utils.fadeInAnim(binding.searchBarEle, 150)
+            Utils.fadeOutAnim(binding.titleBox, 1)
 
-            editEle.requestFocus()
+            binding.editEle.requestFocus()
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editEle, InputMethodManager.SHOW_IMPLICIT)
+            imm.showSoftInput(binding.editEle, InputMethodManager.SHOW_IMPLICIT)
         }
-        closeEleSearch.setOnClickListener {
-            Utils.fadeOutAnim(searchBarEle, 1)
+        binding.closeEleSearch.setOnClickListener {
+            Utils.fadeOutAnim(binding.searchBarEle, 1)
 
             val delayClose = Handler(Looper.getMainLooper())
             delayClose.postDelayed({
-                Utils.fadeInAnim(titleBox, 150)
+                Utils.fadeInAnim(binding.titleBox, 150)
             }, 151)
 
             val view = this.currentFocus

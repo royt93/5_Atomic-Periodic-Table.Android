@@ -39,107 +39,8 @@ import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
 import com.mckimquyen.atomicPeriodicTable.util.Pasteur
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
+import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.a_element_info.elementImage
-import kotlinx.android.synthetic.main.a_element_info.elementTitle
-import kotlinx.android.synthetic.main.a_element_info.frame
-import kotlinx.android.synthetic.main.a_element_info.nextBtn
-import kotlinx.android.synthetic.main.a_element_info.offlineDiv
-import kotlinx.android.synthetic.main.a_element_info.previousBtn
-import kotlinx.android.synthetic.main.a_element_info.wikipediaBtn
-import kotlinx.android.synthetic.main.v_d_atomic.atomicRadiusEText
-import kotlinx.android.synthetic.main.v_d_atomic.atomicRadiusText
-import kotlinx.android.synthetic.main.v_d_atomic.covalentRadiusText
-import kotlinx.android.synthetic.main.v_d_atomic.electronConfigText
-import kotlinx.android.synthetic.main.v_d_atomic.ionChargeText
-import kotlinx.android.synthetic.main.v_d_atomic.ionizationEnergiesText
-import kotlinx.android.synthetic.main.v_d_atomic.oxView
-import kotlinx.android.synthetic.main.v_d_atomic.vanDerWaalsRadiusText
-import kotlinx.android.synthetic.main.v_d_electromagnetic.elementElectricalType
-import kotlinx.android.synthetic.main.v_d_electromagnetic.elementMagneticType
-import kotlinx.android.synthetic.main.v_d_electromagnetic.elementResistivity
-import kotlinx.android.synthetic.main.v_d_electromagnetic.elementSuperconductingPoint
-import kotlinx.android.synthetic.main.v_d_nuclear.isotopesFrame
-import kotlinx.android.synthetic.main.v_d_nuclear.neutronCrossSectionalText
-import kotlinx.android.synthetic.main.v_d_nuclear.radioactiveText
-import kotlinx.android.synthetic.main.v_d_overview.descriptionName
-import kotlinx.android.synthetic.main.v_d_overview.dscBtn
-import kotlinx.android.synthetic.main.v_d_overview.electronsEl
-import kotlinx.android.synthetic.main.v_d_overview.elementAppearance
-import kotlinx.android.synthetic.main.v_d_overview.elementDiscoveredBy
-import kotlinx.android.synthetic.main.v_d_overview.elementElectrons
-import kotlinx.android.synthetic.main.v_d_overview.elementGroup
-import kotlinx.android.synthetic.main.v_d_overview.elementName
-import kotlinx.android.synthetic.main.v_d_overview.elementNeutronsCommon
-import kotlinx.android.synthetic.main.v_d_overview.elementProtons
-import kotlinx.android.synthetic.main.v_d_overview.elementYear
-import kotlinx.android.synthetic.main.v_d_properties.elementAtomicNumber
-import kotlinx.android.synthetic.main.v_d_properties.elementAtomicWeight
-import kotlinx.android.synthetic.main.v_d_properties.elementBlock
-import kotlinx.android.synthetic.main.v_d_properties.elementDensity
-import kotlinx.android.synthetic.main.v_d_properties.elementElectronegativty
-import kotlinx.android.synthetic.main.v_d_properties.elementShellsElectrons
-import kotlinx.android.synthetic.main.v_d_properties.modelView
-import kotlinx.android.synthetic.main.v_d_properties.spImg
-import kotlinx.android.synthetic.main.v_d_properties.spOffline
-import kotlinx.android.synthetic.main.v_d_temperatures.elementBoilingCelsius
-import kotlinx.android.synthetic.main.v_d_temperatures.elementBoilingFahrenheit
-import kotlinx.android.synthetic.main.v_d_temperatures.elementBoilingKelvin
-import kotlinx.android.synthetic.main.v_d_temperatures.elementMeltingCelsius
-import kotlinx.android.synthetic.main.v_d_temperatures.elementMeltingFahrenheit
-import kotlinx.android.synthetic.main.v_d_temperatures.elementMeltingKelvin
-import kotlinx.android.synthetic.main.v_d_thermodynamic.phaseIcon
-import kotlinx.android.synthetic.main.v_d_thermodynamic.tvFusionHeatText
-import kotlinx.android.synthetic.main.v_d_thermodynamic.tvPhaseText
-import kotlinx.android.synthetic.main.v_d_thermodynamic.tvSpecificHeatText
-import kotlinx.android.synthetic.main.v_d_thermodynamic.tvVaporizationHeatText
-import kotlinx.android.synthetic.main.view_detail_emission.ivSpImgFetail
-import kotlinx.android.synthetic.main.view_favorite_bar.aCalculatedF
-import kotlinx.android.synthetic.main.view_favorite_bar.aCalculatedLay
-import kotlinx.android.synthetic.main.view_favorite_bar.aEmpiricalF
-import kotlinx.android.synthetic.main.view_favorite_bar.aEmpiricalLay
-import kotlinx.android.synthetic.main.view_favorite_bar.boilingF
-import kotlinx.android.synthetic.main.view_favorite_bar.boilingLay
-import kotlinx.android.synthetic.main.view_favorite_bar.covalentF
-import kotlinx.android.synthetic.main.view_favorite_bar.covalentLay
-import kotlinx.android.synthetic.main.view_favorite_bar.densityF
-import kotlinx.android.synthetic.main.view_favorite_bar.densityLay
-import kotlinx.android.synthetic.main.view_favorite_bar.electronegativityF
-import kotlinx.android.synthetic.main.view_favorite_bar.electronegativityLay
-import kotlinx.android.synthetic.main.view_favorite_bar.fusionHeatF
-import kotlinx.android.synthetic.main.view_favorite_bar.fusionHeatLay
-import kotlinx.android.synthetic.main.view_favorite_bar.meltingF
-import kotlinx.android.synthetic.main.view_favorite_bar.meltingLay
-import kotlinx.android.synthetic.main.view_favorite_bar.molarMassF
-import kotlinx.android.synthetic.main.view_favorite_bar.molarMassLay
-import kotlinx.android.synthetic.main.view_favorite_bar.phaseF
-import kotlinx.android.synthetic.main.view_favorite_bar.phaseLay
-import kotlinx.android.synthetic.main.view_favorite_bar.specificHeatF
-import kotlinx.android.synthetic.main.view_favorite_bar.specificHeatLay
-import kotlinx.android.synthetic.main.view_favorite_bar.vanF
-import kotlinx.android.synthetic.main.view_favorite_bar.vanLay
-import kotlinx.android.synthetic.main.view_favorite_bar.vaporizationHeatF
-import kotlinx.android.synthetic.main.view_favorite_bar.vaporizationHeatLay
-import kotlinx.android.synthetic.main.view_loading_view.noImg
-import kotlinx.android.synthetic.main.view_loading_view.progressBar
-import kotlinx.android.synthetic.main.view_oxidiation_states.m1ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.m2ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.m3ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.m4ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.m5ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.ox0
-import kotlinx.android.synthetic.main.view_oxidiation_states.p1ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p2ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p3ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p4ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p5ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p6ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p7ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p8ox
-import kotlinx.android.synthetic.main.view_oxidiation_states.p9ox
-import kotlinx.android.synthetic.main.view_shell_view.cardModelView
-import kotlinx.android.synthetic.main.view_shell_view.configData
-import kotlinx.android.synthetic.main.view_shell_view.eConfigData
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -149,6 +50,8 @@ import java.util.Locale
 import kotlin.math.pow
 
 abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
+    protected lateinit var binding: AElementInfoBinding
+
     companion object {
         private const val TAG = "BaseActivity"
     }
@@ -194,21 +97,21 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     @SuppressLint("SetTextI18n")
     fun readJson() {
         val jsonString: String?
-        oxView.refreshDrawableState()
+        binding.atomicInc.oxView.root.refreshDrawableState()
 
         try {
             //Setup json reader
             val elementSendAndLoadPreference = ElementSendAndLoad(this)
             val elementSendAndLoadValue = elementSendAndLoadPreference.getValue()
             if (elementSendAndLoadValue == "hydrogen") {
-                previousBtn.visibility = View.GONE
+                binding.previousBtn.visibility = View.GONE
             } else {
-                previousBtn.visibility = View.VISIBLE
+                binding.previousBtn.visibility = View.VISIBLE
             }
             if (elementSendAndLoadValue == "oganesson") {
-                nextBtn.visibility = View.GONE
+                binding.nextBtn.visibility = View.GONE
             } else {
-                nextBtn.visibility = View.VISIBLE
+                binding.nextBtn.visibility = View.VISIBLE
             }
             val ext = ".json"
             val elementJson = "$elementSendAndLoadValue$ext"
@@ -277,59 +180,59 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
             val neutronCrossSection = jsonObject.optString("neutron_cross_sectional", "---")
 
             if (rMultiplier == "---") {
-                elementResistivity.text = "---"
+                binding.electromagneticInc.elementResistivity.text = "---"
             } else {
                 val input = resistivity.toFloat() * rMultiplier.toFloat()
                 val output = input.pow(-1).toString()
-                elementResistivity.text = output.replace("E", "*10^") + " (S/m)"
+                binding.electromagneticInc.elementResistivity.text = output.replace("E", "*10^") + " (S/m)"
             }
 
-            descriptionName.setOnClickListener {
-                descriptionName.maxLines = 100
-                descriptionName.requestLayout()
-                dscBtn.text = "collapse"
+            binding.overviewInc.descriptionName.setOnClickListener {
+                binding.overviewInc.descriptionName.maxLines = 100
+                binding.overviewInc.descriptionName.requestLayout()
+                binding.overviewInc.dscBtn.text = "collapse"
             }
-            dscBtn.setOnClickListener {
-                if (dscBtn.text == "..more") {
-                    descriptionName.maxLines = 100
-                    descriptionName.requestLayout()
-                    dscBtn.text = "collapse"
+            binding.overviewInc.dscBtn.setOnClickListener {
+                if (binding.overviewInc.dscBtn.text == "..more") {
+                    binding.overviewInc.descriptionName.maxLines = 100
+                    binding.overviewInc.descriptionName.requestLayout()
+                    binding.overviewInc.dscBtn.text = "collapse"
                 } else {
-                    descriptionName.maxLines = 4
-                    descriptionName.requestLayout()
-                    dscBtn.text = "..more"
+                    binding.overviewInc.descriptionName.maxLines = 4
+                    binding.overviewInc.descriptionName.requestLayout()
+                    binding.overviewInc.dscBtn.text = "..more"
                 }
             }
 
             //set elements
-            elementTitle.text = element
-            descriptionName.text = description
-            elementName.text = element
-            electronsEl.text = sElementElectrons
-            elementYear.text = sElementYear
-            elementShellsElectrons.text = elementShellElectrons
-            elementDiscoveredBy.text = sElementDiscoveredBy
-            elementElectrons.text = sElementElectrons
-            elementProtons.text = sElementProtons
-            elementNeutronsCommon.text = sElementNeutronsCommon
-            elementGroup.text = sElementGroup
-            elementBoilingKelvin.text = sElementBoilingKelvin
-            elementBoilingCelsius.text = sElementBoilingCelsius
-            elementBoilingFahrenheit.text = sElementBoilingFahrenheit
-            elementElectronegativty.text = elementElectronegativity
-            elementMeltingKelvin.text = sElementMeltingKelvin
-            elementMeltingCelsius.text = sElementMeltingCelsius
-            elementMeltingFahrenheit.text = sElementMeltingFahrenheit
-            elementAtomicNumber.text = sElementAtomicNumber
-            elementAtomicWeight.text = sElementAtomicWeight
-            elementDensity.text = sElementDensity
-            elementBlock.text = sElementBlock
-            elementAppearance.text = sElementAppearance
+            binding.elementTitle.text = element
+            binding.overviewInc.descriptionName.text = description
+            binding.overviewInc.elementName.text = element
+            binding.overviewInc.electronsEl.text = sElementElectrons
+            binding.overviewInc.elementYear.text = sElementYear
+            binding.propertiesInc.elementShellsElectrons.text = elementShellElectrons
+            binding.overviewInc.elementDiscoveredBy.text = sElementDiscoveredBy
+            binding.overviewInc.elementElectrons.text = sElementElectrons
+            binding.overviewInc.elementProtons.text = sElementProtons
+            binding.overviewInc.elementNeutronsCommon.text = sElementNeutronsCommon
+            binding.overviewInc.elementGroup.text = sElementGroup
+            binding.temperaturesInc.elementBoilingKelvin.text = sElementBoilingKelvin
+            binding.temperaturesInc.elementBoilingCelsius.text = sElementBoilingCelsius
+            binding.temperaturesInc.elementBoilingFahrenheit.text = sElementBoilingFahrenheit
+            binding.propertiesInc.elementElectronegativty.text = elementElectronegativity
+            binding.temperaturesInc.elementMeltingKelvin.text = sElementMeltingKelvin
+            binding.temperaturesInc.elementMeltingCelsius.text = sElementMeltingCelsius
+            binding.temperaturesInc.elementMeltingFahrenheit.text = sElementMeltingFahrenheit
+            binding.propertiesInc.elementAtomicNumber.text = sElementAtomicNumber
+            binding.propertiesInc.elementAtomicWeight.text = sElementAtomicWeight
+            binding.propertiesInc.elementDensity.text = sElementDensity
+            binding.propertiesInc.elementBlock.text = sElementBlock
+            binding.overviewInc.elementAppearance.text = sElementAppearance
 
             //Nuclear Properties
-            radioactiveText.text = isRadioactive
-            neutronCrossSectionalText.text = neutronCrossSection
-            isotopesFrame.setOnClickListener {
+            binding.nuclearInc.radioactiveText.text = isRadioactive
+            binding.nuclearInc.neutronCrossSectionalText.text = neutronCrossSection
+            binding.nuclearInc.isotopesFrame.setOnClickListener {
                 val isoPreference = ElementSendAndLoad(this)
                 isoPreference.setValue(element.lowercase(Locale.getDefault())) //Send element number
                 val isoSend = SendIso(this)
@@ -338,137 +241,137 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
                 startActivity(intent) //Send intent
             }
 
-            tvPhaseText.text = phaseText
-            tvFusionHeatText.text = fusionHeat
-            tvSpecificHeatText.text = specificHeatCapacity
-            tvVaporizationHeatText.text = vaporizationHeat
+            binding.additionPhysics.tvPhaseText.text = phaseText
+            binding.additionPhysics.tvFusionHeatText.text = fusionHeat
+            binding.additionPhysics.tvSpecificHeatText.text = specificHeatCapacity
+            binding.additionPhysics.tvVaporizationHeatText.text = vaporizationHeat
 
-            electronConfigText.text = electronConfig
-            ionChargeText.text = ionCharge
-            ionizationEnergiesText.text = ionizationEnergies
-            atomicRadiusText.text = atomicRadius
-            atomicRadiusEText.text = atomicRadiusE
-            covalentRadiusText.text = covalentRadius
-            vanDerWaalsRadiusText.text = vanDerWaalsRadius
+            binding.atomicInc.electronConfigText.text = electronConfig
+            binding.atomicInc.ionChargeText.text = ionCharge
+            binding.atomicInc.ionizationEnergiesText.text = ionizationEnergies
+            binding.atomicInc.atomicRadiusText.text = atomicRadius
+            binding.atomicInc.atomicRadiusEText.text = atomicRadiusE
+            binding.atomicInc.covalentRadiusText.text = covalentRadius
+            binding.atomicInc.vanDerWaalsRadiusText.text = vanDerWaalsRadius
 
             //Shell View items
-            configData.text = elementShellElectrons
-            eConfigData.text = electronConfig
+            binding.shell.configData.text = elementShellElectrons
+            binding.shell.eConfigData.text = electronConfig
 
             //Electromagnetic Properties Items
-            elementElectricalType.text = electricalType
-            elementMagneticType.text = magneticType
-            elementSuperconductingPoint.text = "$superconductingPoint (K)"
+            binding.electromagneticInc.elementElectricalType.text = electricalType
+            binding.electromagneticInc.elementMagneticType.text = magneticType
+            binding.electromagneticInc.elementSuperconductingPoint.text = "$superconductingPoint (K)"
 
             if (phaseText.toString() == "Solid") {
-                phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_solid))
+                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_solid))
             }
             if (phaseText.toString() == "Gas") {
-                phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_gas))
+                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_gas))
             }
             if (phaseText.toString() == "Liquid") {
-                phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_liquid))
+                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_liquid))
             }
 
             if (oxidationNeg1.contains(0.toString())) {
-                ox0.text = "0"
-                ox0.background.setTint(getColor(R.color.non_metals))
+                binding.atomicInc.oxView.ox0.text = "0"
+                binding.atomicInc.oxView.ox0.background.setTint(getColor(R.color.non_metals))
             }
             if (oxidationNeg1.contains(1.toString())) {
-                m1ox.text = "-1"
-                m1ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m1ox.text = "-1"
+                binding.atomicInc.oxView.m1ox.background.setTint(getColor(R.color.noble_gas))
             }
             if (oxidationNeg1.contains(2.toString())) {
-                m2ox.text = "-2"
-                m2ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m2ox.text = "-2"
+                binding.atomicInc.oxView.m2ox.background.setTint(getColor(R.color.noble_gas))
             }
             if (oxidationNeg1.contains(3.toString())) {
-                m3ox.text = "-3"
-                m3ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m3ox.text = "-3"
+                binding.atomicInc.oxView.m3ox.background.setTint(getColor(R.color.noble_gas))
             }
             if (oxidationNeg1.contains(4.toString())) {
-                m4ox.text = "-4"
-                m4ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m4ox.text = "-4"
+                binding.atomicInc.oxView.m4ox.background.setTint(getColor(R.color.noble_gas))
             }
             if (oxidationNeg1.contains(5.toString())) {
-                m5ox.text = "-5"
-                m5ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m5ox.text = "-5"
+                binding.atomicInc.oxView.m5ox.background.setTint(getColor(R.color.noble_gas))
             }
 
             if (oxidationPos1.contains(1.toString())) {
-                p1ox.text = "+1"
-                p1ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p1ox.text = "+1"
+                binding.atomicInc.oxView.p1ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(2.toString())) {
-                p2ox.text = "+2"
-                p2ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p2ox.text = "+2"
+                binding.atomicInc.oxView.p2ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(3.toString())) {
-                p3ox.text = "+3"
-                p3ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p3ox.text = "+3"
+                binding.atomicInc.oxView.p3ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(4.toString())) {
-                p4ox.text = "+4"
-                p4ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p4ox.text = "+4"
+                binding.atomicInc.oxView.p4ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(5.toString())) {
-                p5ox.text = "+5"
-                p5ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p5ox.text = "+5"
+                binding.atomicInc.oxView.p5ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(6.toString())) {
-                p6ox.text = "+6"
-                p6ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p6ox.text = "+6"
+                binding.atomicInc.oxView.p6ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(7.toString())) {
-                p7ox.text = "+7"
-                p7ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p7ox.text = "+7"
+                binding.atomicInc.oxView.p7ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(8.toString())) {
-                p8ox.text = "+8"
-                p8ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p8ox.text = "+8"
+                binding.atomicInc.oxView.p8ox.background.setTint(getColor(R.color.alkali_metals))
             }
             if (oxidationPos1.contains(9.toString())) {
-                p9ox.text = "+9"
-                p9ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p9ox.text = "+9"
+                binding.atomicInc.oxView.p9ox.background.setTint(getColor(R.color.alkali_metals))
             }
 
             //set element data for favorite bar
-            molarMassF.text = sElementAtomicWeight
-            phaseF.text = phaseText
-            electronegativityF.text = elementElectronegativity
-            densityF.text = sElementDensity
+            binding.favoriteBarInclude.molarMassF.text = sElementAtomicWeight
+            binding.favoriteBarInclude.phaseF.text = phaseText
+            binding.favoriteBarInclude.electronegativityF.text = elementElectronegativity
+            binding.favoriteBarInclude.densityF.text = sElementDensity
 
             val degreePref = DegreePref(this)
             val degreePrefValue = degreePref.getValue()
 
             if (degreePrefValue == 0) {
-                boilingF.text = sElementBoilingKelvin
-                meltingF.text = sElementMeltingKelvin
+                binding.favoriteBarInclude.boilingF.text = sElementBoilingKelvin
+                binding.favoriteBarInclude.meltingF.text = sElementMeltingKelvin
             }
             if (degreePrefValue == 1) {
-                boilingF.text = sElementBoilingCelsius
-                meltingF.text = sElementMeltingCelsius
+                binding.favoriteBarInclude.boilingF.text = sElementBoilingCelsius
+                binding.favoriteBarInclude.meltingF.text = sElementMeltingCelsius
             }
             if (degreePrefValue == 2) {
-                boilingF.text = sElementBoilingFahrenheit
-                meltingF.text = sElementMeltingFahrenheit
+                binding.favoriteBarInclude.boilingF.text = sElementBoilingFahrenheit
+                binding.favoriteBarInclude.meltingF.text = sElementMeltingFahrenheit
             }
 
             if (url == "empty") {
-                Utils.fadeInAnim(noImg, 150)
-                progressBar.visibility = View.GONE
+                Utils.fadeInAnim(binding.ldnPlace.noImg, 150)
+                binding.ldnPlace.progressBar.visibility = View.GONE
             } else {
-                Utils.fadeInAnim(progressBar, 150)
-                noImg.visibility = View.GONE
+                Utils.fadeInAnim(binding.ldnPlace.progressBar, 150)
+                binding.ldnPlace.noImg.visibility = View.GONE
             }
 
-            fusionHeatF.text = fusionHeat
-            specificHeatF.text = specificHeatCapacity
-            vaporizationHeatF.text = vaporizationHeat
-            aEmpiricalF.text = atomicRadiusE
-            aCalculatedF.text = atomicRadius
-            covalentF.text = covalentRadius
-            vanF.text = vanDerWaalsRadius
+            binding.favoriteBarInclude.fusionHeatF.text = fusionHeat
+            binding.favoriteBarInclude.specificHeatF.text = specificHeatCapacity
+            binding.favoriteBarInclude.vaporizationHeatF.text = vaporizationHeat
+            binding.favoriteBarInclude.aEmpiricalF.text = atomicRadiusE
+            binding.favoriteBarInclude.aCalculatedF.text = atomicRadius
+            binding.favoriteBarInclude.covalentF.text = covalentRadius
+            binding.favoriteBarInclude.vanF.text = vanDerWaalsRadius
 
             val offlinePreferences = OfflinePreference(this)
             val offlinePrefValue = offlinePreferences.getValue()
@@ -479,7 +382,7 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
             }
             wikiListener(wikipedia)
         } catch (e: IOException) {
-            elementTitle.text = "Not able to load json"
+            binding.elementTitle.text = "Not able to load json"
             val stringText = "Couldn't load element:"
             val elementSendAndLoadPreference = ElementSendAndLoad(this)
             val elementSendAndLoadValue = elementSendAndLoadPreference.getValue()
@@ -491,10 +394,10 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     private fun loadImage(url: String?) {
         try {
             Log.d(TAG, "roy93 loadImage url $url")
-            Picasso.get().load(url.toString()).into(elementImage)
+            Picasso.get().load(url.toString()).into(binding.elementImage)
         } catch (e: ConnectException) {
-            offlineDiv.visibility = View.VISIBLE
-            frame.visibility = View.GONE
+            binding.offlineDiv.visibility = View.VISIBLE
+            binding.frame.visibility = View.GONE
         }
     }
 
@@ -504,23 +407,23 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         val ext = ".gif"
         val fURL = hUrl + url + ext
         try {
-            Picasso.get().load(fURL).into(spImg)
-            Picasso.get().load(fURL).into(ivSpImgFetail)
+            Picasso.get().load(fURL).into(binding.propertiesInc.spImg)
+            Picasso.get().load(fURL).into(binding.detailEmission.ivSpImgFetail)
         } catch (e: ConnectException) {
-            spImg.visibility = View.GONE
-            spOffline.text = "No Data"
-            spOffline.visibility = View.VISIBLE
+            binding.propertiesInc.spImg.visibility = View.GONE
+            binding.propertiesInc.spOffline.text = "No Data"
+            binding.propertiesInc.spOffline.visibility = View.VISIBLE
         }
     }
 
     private fun loadModelView(url: String?) {
-        Picasso.get().load(url.toString()).into(modelView)
-        Picasso.get().load(url.toString()).into(cardModelView)
+        Picasso.get().load(url.toString()).into(binding.propertiesInc.modelView)
+        Picasso.get().load(url.toString()).into(binding.shell.cardModelView)
     }
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun wikiListener(url: String?) {
-        wikipediaBtn.setOnClickListener {
+        binding.wikipediaBtn.setOnClickListener {
             val pkgName = "com.android.chrome"
             val customTabBuilder = CustomTabsIntent.Builder()
 
@@ -561,130 +464,130 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         val molarPreference = FavoriteBarPref(this)
         val molarPrefValue = molarPreference.getValue()
         if (molarPrefValue == 1) {
-            molarMassLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.molarMassLay.visibility = View.VISIBLE
         }
         if (molarPrefValue == 0) {
-            molarMassLay.visibility = View.GONE
+            binding.favoriteBarInclude.molarMassLay.visibility = View.GONE
         }
 
         //Favorite Phase
         val phasePreferences = FavoritePhase(this)
         val phasePrefValue = phasePreferences.getValue()
         if (phasePrefValue == 1) {
-            phaseLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.phaseLay.visibility = View.VISIBLE
         }
         if (phasePrefValue == 0) {
-            phaseLay.visibility = View.GONE
+            binding.favoriteBarInclude.phaseLay.visibility = View.GONE
         }
 
         //Electronegativity Phase
         val electronegativityPreferences = ElectronegativityPref(this)
         val electronegativityPrefValue = electronegativityPreferences.getValue()
         if (electronegativityPrefValue == 1) {
-            electronegativityLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.electronegativityLay.visibility = View.VISIBLE
         }
         if (electronegativityPrefValue == 0) {
-            electronegativityLay.visibility = View.GONE
+            binding.favoriteBarInclude.electronegativityLay.visibility = View.GONE
         }
 
         //Density
         val densityPreference = DensityPref(this)
         val densityPrefValue = densityPreference.getValue()
         if (densityPrefValue == 1) {
-            densityLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.densityLay.visibility = View.VISIBLE
         }
         if (densityPrefValue == 0) {
-            densityLay.visibility = View.GONE
+            binding.favoriteBarInclude.densityLay.visibility = View.GONE
         }
 
         //Boiling
         val boilingPreference = BoilingPref(this)
         val boilingPrefValue = boilingPreference.getValue()
         if (boilingPrefValue == 1) {
-            boilingLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.boilingLay.visibility = View.VISIBLE
         }
         if (boilingPrefValue == 0) {
-            boilingLay.visibility = View.GONE
+            binding.favoriteBarInclude.boilingLay.visibility = View.GONE
         }
 
         //Melting
         val meltingPref = MeltingPref(this)
         val meltingPrefValue = meltingPref.getValue()
         if (meltingPrefValue == 1) {
-            meltingLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.meltingLay.visibility = View.VISIBLE
         }
         if (meltingPrefValue == 0) {
-            meltingLay.visibility = View.GONE
+            binding.favoriteBarInclude.meltingLay.visibility = View.GONE
         }
 
         //Empirical
         val empiricalPreference = AtomicRadiusEmpPref(this)
         val empiricalPrefValue = empiricalPreference.getValue()
         if (empiricalPrefValue == 1) {
-            aEmpiricalLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.aEmpiricalLay.visibility = View.VISIBLE
         }
         if (empiricalPrefValue == 0) {
-            aEmpiricalLay.visibility = View.GONE
+            binding.favoriteBarInclude.aEmpiricalLay.visibility = View.GONE
         }
 
         //Calculated
         val calculatedPreference = AtomicRadiusCalPref(this)
         val calculatedPrefValue = calculatedPreference.getValue()
         if (calculatedPrefValue == 1) {
-            aCalculatedLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.aCalculatedLay.visibility = View.VISIBLE
         }
         if (calculatedPrefValue == 0) {
-            aCalculatedLay.visibility = View.GONE
+            binding.favoriteBarInclude.aCalculatedLay.visibility = View.GONE
         }
 
         //Covalent
         val covalentPreference = AtomicCovalentPref(this)
         val covalentPrefValue = covalentPreference.getValue()
         if (covalentPrefValue == 1) {
-            covalentLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.covalentLay.visibility = View.VISIBLE
         }
         if (covalentPrefValue == 0) {
-            covalentLay.visibility = View.GONE
+            binding.favoriteBarInclude.covalentLay.visibility = View.GONE
         }
 
         //Van Der Waals
         val vanPreference = AtomicVanPref(this)
         val vanPrefValue = vanPreference.getValue()
         if (vanPrefValue == 1) {
-            vanLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.vanLay.visibility = View.VISIBLE
         }
         if (vanPrefValue == 0) {
-            vanLay.visibility = View.GONE
+            binding.favoriteBarInclude.vanLay.visibility = View.GONE
         }
 
         //Fusion Heat
         val fusionHeatPref = FusionHeatPref(this)
         val fusionHeatValue = fusionHeatPref.getValue()
         if (fusionHeatValue == 1) {
-            fusionHeatLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.fusionHeatLay.visibility = View.VISIBLE
         }
         if (fusionHeatValue == 0) {
-            fusionHeatLay.visibility = View.GONE
+            binding.favoriteBarInclude.fusionHeatLay.visibility = View.GONE
         }
 
         //Specific Heat
         val specificHeatPref = SpecificHeatPref(this)
         val specificHeatValue = specificHeatPref.getValue()
         if (specificHeatValue == 1) {
-            specificHeatLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.specificHeatLay.visibility = View.VISIBLE
         }
         if (specificHeatValue == 0) {
-            specificHeatLay.visibility = View.GONE
+            binding.favoriteBarInclude.specificHeatLay.visibility = View.GONE
         }
 
         //Vaporization Heat
         val vaporizationHeatPref = VaporizationHeatPref(this)
         val vaporizationHeatValue = vaporizationHeatPref.getValue()
         if (vaporizationHeatValue == 1) {
-            vaporizationHeatLay.visibility = View.VISIBLE
+            binding.favoriteBarInclude.vaporizationHeatLay.visibility = View.VISIBLE
         }
         if (vaporizationHeatValue == 0) {
-            vaporizationHeatLay.visibility = View.GONE
+            binding.favoriteBarInclude.vaporizationHeatLay.visibility = View.GONE
         }
     }
 

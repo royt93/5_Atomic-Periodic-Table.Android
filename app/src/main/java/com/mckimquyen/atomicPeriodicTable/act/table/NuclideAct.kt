@@ -23,23 +23,16 @@ import androidx.core.text.isDigitsOnly
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.model.Element
+import com.mckimquyen.atomicPeriodicTable.databinding.ANuclideBinding
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_nuclide.commonTitleBackNuc
-import kotlinx.android.synthetic.main.a_nuclide.ldnPlace
-import kotlinx.android.synthetic.main.a_nuclide.nucBackBtn
-import kotlinx.android.synthetic.main.a_nuclide.scrollNuc
-import kotlinx.android.synthetic.main.a_nuclide.scrollViewNuc
-import kotlinx.android.synthetic.main.a_nuclide.seekBarNuc
-import kotlinx.android.synthetic.main.a_nuclide.viewNuc
-import kotlinx.android.synthetic.main.a_nuclide.viewStub
-import kotlinx.android.synthetic.main.view_stub_nuclide.nuc_view
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 
 class NuclideAct : BaseAct() {
+    private lateinit var binding: ANuclideBinding
     private val elementLists = ArrayList<Element>()
     var mScale = 1f
     private lateinit var mScaleDetector: ScaleGestureDetector
@@ -70,12 +63,13 @@ class NuclideAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_nuclide) //REMEMBER: Never move any function calls above this
+        binding = ANuclideBinding.inflate(layoutInflater)
+        setContentView(binding.root) //REMEMBER: Never move any function calls above this
 
-        viewStub.inflate()
+        binding.viewStub.inflate()
 
         runOnUiThread {
-            ldnPlace.visibility = View.VISIBLE
+            binding.ldnPlace.root.visibility = View.VISIBLE
         }
 
         val handler = Handler(Looper.getMainLooper())
@@ -108,14 +102,14 @@ class NuclideAct : BaseAct() {
                     scaleAnimation.fillAfter = true
                     scaleAnimation.willChangeBounds()
                     scaleAnimation.willChangeTransformationMatrix()
-                    val layout = scrollNuc as LinearLayoutCompat?
+                    val layout = binding.scrollNuc as LinearLayoutCompat?
                     layout?.startAnimation(scaleAnimation)
 
                     return true
                 }
             })
 
-        seekBarNuc.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekBarNuc.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, currentValue: Int, p2: Boolean) {
                 val scaleAnimation = ScaleAnimation(
                     /* fromX = */ 1f / currentValue,
@@ -125,15 +119,15 @@ class NuclideAct : BaseAct() {
                 )
                 scaleAnimation.duration = 0
                 scaleAnimation.fillAfter = true
-                val layout = scrollNuc as LinearLayout
+                val layout = binding.scrollNuc as LinearLayout
                 layout.startAnimation(scaleAnimation)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
-        viewNuc.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        nucBackBtn.setOnClickListener { this.onBackPressed() }
+        binding.viewNuc.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.nucBackBtn.setOnClickListener { this.onBackPressed() }
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -156,7 +150,7 @@ class NuclideAct : BaseAct() {
     @SuppressLint("SetTextI18n")
     private fun addViews(list: ArrayList<Element>) {
         ElementModel.getList(list)
-        val dLayout = nuc_view
+        val dLayout = findViewById<RelativeLayout>(R.id.nuc_view)
         val inflate = layoutInflater
         val mLayout: View = inflate.inflate(R.layout.view_item_nuclide, dLayout, false)
         val param = RelativeLayout.LayoutParams(
@@ -170,7 +164,7 @@ class NuclideAct : BaseAct() {
         s.text = "n"
         t.text = "1"
         dLayout.addView(mLayout, param)
-        ldnPlace.visibility = View.GONE
+        binding.ldnPlace.root.visibility = View.GONE
 
         for (item in list) {
             var jsonString: String?
@@ -198,7 +192,7 @@ class NuclideAct : BaseAct() {
 //                    val half = jsonObject.optString(halfJson, "-")
 
                     val decayTypeResult = jsonObject.optString(decayTypeString, "default")
-                    val mainLayout = nuc_view
+                    val mainLayout = findViewById<RelativeLayout>(R.id.nuc_view)
                     val inflater = layoutInflater
                     val myLayout: View =
                         inflater.inflate(R.layout.view_item_nuclide, mainLayout, false)
@@ -286,16 +280,16 @@ class NuclideAct : BaseAct() {
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
-        scrollViewNuc.setPadding(
+        binding.scrollViewNuc.setPadding(
             /* left = */ 0,
             /* top = */ resources.getDimensionPixelSize(R.dimen.title_bar) + top,
             /* right = */ 0,
             /* bottom = */ resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
-        val params2 = commonTitleBackNuc.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackNuc.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackNuc.layoutParams = params2
+        binding.commonTitleBackNuc.layoutParams = params2
     }
 
 }

@@ -24,30 +24,10 @@ import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
+import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_element_info.backBtn
-import kotlinx.android.synthetic.main.a_element_info.commonTitleBack
-import kotlinx.android.synthetic.main.a_element_info.detailEmission
-import kotlinx.android.synthetic.main.a_element_info.detailEmissionBackground
-import kotlinx.android.synthetic.main.a_element_info.frame
-import kotlinx.android.synthetic.main.a_element_info.iBtn
-import kotlinx.android.synthetic.main.a_element_info.nextBtn
-import kotlinx.android.synthetic.main.a_element_info.offlineSpace
-import kotlinx.android.synthetic.main.a_element_info.overviewInc
-import kotlinx.android.synthetic.main.a_element_info.previousBtn
-import kotlinx.android.synthetic.main.a_element_info.propertiesInc
-import kotlinx.android.synthetic.main.a_element_info.scrView
-import kotlinx.android.synthetic.main.a_element_info.shell
-import kotlinx.android.synthetic.main.a_element_info.shellBackground
-import kotlinx.android.synthetic.main.a_element_info.view
-import kotlinx.android.synthetic.main.v_d_properties.electronView
-import kotlinx.android.synthetic.main.v_d_properties.spImg
-import kotlinx.android.synthetic.main.v_d_properties.spOffline
-import kotlinx.android.synthetic.main.view_detail_emission.closeEmissionBtn
-import kotlinx.android.synthetic.main.view_favorite_bar.editFavBtn
-import kotlinx.android.synthetic.main.view_shell_view.closeShellBtn
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -93,26 +73,27 @@ class ElementInfoAct : InfoExt() {
         }
 //        val elementSendAndLoadPreference = ElementSendAndLoad(this)
 //        var elementSendAndLoadValue = elementSendAndLoadPreference.getValue()
-        setContentView(R.layout.a_element_info)
-        Utils.fadeInAnim(scrView, 300)
+        binding = AElementInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        Utils.fadeInAnim(binding.scrView, 300)
         readJson()
-        shell.visibility = View.GONE
-        detailEmission.visibility = View.GONE
+        binding.shell.root.visibility = View.GONE
+        binding.detailEmission.root.visibility = View.GONE
         detailViews()
         offlineCheck()
         nextPrev()
         favoriteBarSetup()
-        elementAnim(overviewInc, propertiesInc)
-        view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        elementAnim(binding.overviewInc.root, binding.propertiesInc.root)
+        binding.view.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
-        backBtn.setOnClickListener {
+        binding.backBtn.setOnClickListener {
             super.onBackPressed()
         }
-        editFavBtn.setOnClickListener {
+        binding.favoriteBarInclude.editFavBtn.setOnClickListener {
             val intent = Intent(this, FavoritePageAct::class.java)
             startActivity(intent)
         }
-        iBtn.setOnClickListener {
+        binding.iBtn.setOnClickListener {
             val intent = Intent(this, SubmitAct::class.java)
             startActivity(intent)
         }
@@ -130,14 +111,14 @@ class ElementInfoAct : InfoExt() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (shellBackground.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(shell, 300)
-            Utils.fadeOutAnim(shellBackground, 300)
+        if (binding.shellBackground.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.shell.root, 300)
+            Utils.fadeOutAnim(binding.shellBackground, 300)
             return
         }
-        if (detailEmission.visibility == View.VISIBLE) {
-            Utils.fadeOutAnim(detailEmission, 300)
-            Utils.fadeOutAnim(detailEmissionBackground, 300)
+        if (binding.detailEmission.root.visibility == View.VISIBLE) {
+            Utils.fadeOutAnim(binding.detailEmission.root, 300)
+            Utils.fadeOutAnim(binding.detailEmissionBackground, 300)
             return
         } else {
 //            showAd {
@@ -148,17 +129,17 @@ class ElementInfoAct : InfoExt() {
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
-        val params = frame.layoutParams as ViewGroup.MarginLayoutParams
+        val params = binding.frame.layoutParams as ViewGroup.MarginLayoutParams
         params.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        frame.layoutParams = params
+        binding.frame.layoutParams = params
 
-        val paramsO = offlineSpace.layoutParams as ViewGroup.MarginLayoutParams
+        val paramsO = binding.offlineSpace.layoutParams as ViewGroup.MarginLayoutParams
         paramsO.topMargin += top
-        offlineSpace.layoutParams = paramsO
+        binding.offlineSpace.layoutParams = paramsO
 
-        val params2 = commonTitleBack.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBack.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBack.layoutParams = params2
+        binding.commonTitleBack.layoutParams = params2
     }
 
     @SuppressLint("SetTextI18n")
@@ -167,16 +148,16 @@ class ElementInfoAct : InfoExt() {
         val offlinePrefValue = offlinePreferences.getValue()
 
         if (offlinePrefValue == 1) {
-            frame.visibility = View.GONE
-            offlineSpace.visibility = View.VISIBLE
-            spImg.visibility = View.GONE
-            spOffline.visibility = View.VISIBLE
-            spOffline.text = "Go online for emission lines"
+            binding.frame.visibility = View.GONE
+            binding.offlineSpace.visibility = View.VISIBLE
+            binding.propertiesInc.spImg.visibility = View.GONE
+            binding.propertiesInc.spOffline.visibility = View.VISIBLE
+            binding.propertiesInc.spOffline.text = "Go online for emission lines"
         } else {
-            frame.visibility = View.VISIBLE
-            offlineSpace.visibility = View.GONE
-            spImg.visibility = View.VISIBLE
-            spOffline.visibility = View.GONE
+            binding.frame.visibility = View.VISIBLE
+            binding.offlineSpace.visibility = View.GONE
+            binding.propertiesInc.spImg.visibility = View.VISIBLE
+            binding.propertiesInc.spOffline.visibility = View.GONE
         }
     }
 
@@ -192,29 +173,29 @@ class ElementInfoAct : InfoExt() {
     }
 
     private fun detailViews() {
-        electronView.setOnClickListener {
-            Utils.fadeInAnim(shell, 300)
-            Utils.fadeInAnim(shellBackground, 300)
+        binding.propertiesInc.electronView.setOnClickListener {
+            Utils.fadeInAnim(binding.shell.root, 300)
+            Utils.fadeInAnim(binding.shellBackground, 300)
         }
-        closeShellBtn.setOnClickListener {
-            Utils.fadeOutAnim(shell, 300)
-            Utils.fadeOutAnim(shellBackground, 300)
+        binding.shell.closeShellBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.shell.root, 300)
+            Utils.fadeOutAnim(binding.shellBackground, 300)
         }
-        shellBackground.setOnClickListener {
-            Utils.fadeOutAnim(shell, 300)
-            Utils.fadeOutAnim(shellBackground, 300)
+        binding.shellBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.shell.root, 300)
+            Utils.fadeOutAnim(binding.shellBackground, 300)
         }
-        spImg.setOnClickListener {
-            Utils.fadeInAnim(detailEmission, 300)
-            Utils.fadeInAnim(detailEmissionBackground, 300)
+        binding.propertiesInc.spImg.setOnClickListener {
+            Utils.fadeInAnim(binding.detailEmission.root, 300)
+            Utils.fadeInAnim(binding.detailEmissionBackground, 300)
         }
-        closeEmissionBtn.setOnClickListener {
-            Utils.fadeOutAnim(detailEmission, 300)
-            Utils.fadeOutAnim(detailEmissionBackground, 300)
+        binding.detailEmission.closeEmissionBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.detailEmission.root, 300)
+            Utils.fadeOutAnim(binding.detailEmissionBackground, 300)
         }
-        detailEmissionBackground.setOnClickListener {
-            Utils.fadeOutAnim(detailEmission, 300)
-            Utils.fadeOutAnim(detailEmissionBackground, 300)
+        binding.detailEmissionBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.detailEmission.root, 300)
+            Utils.fadeOutAnim(binding.detailEmissionBackground, 300)
         }
     }
 
@@ -231,7 +212,7 @@ class ElementInfoAct : InfoExt() {
     }
 
     private fun nextPrev() {
-        nextBtn.setOnClickListener {
+        binding.nextBtn.setOnClickListener {
             val jsonString: String?
             try {
                 val elementSendAndLoadPreference = ElementSendAndLoad(this)
@@ -253,7 +234,7 @@ class ElementInfoAct : InfoExt() {
                 e.printStackTrace()
             }
         }
-        previousBtn.setOnClickListener {
+        binding.previousBtn.setOnClickListener {
             val jsonString: String?
             try {
                 val elementSendAndLoadPreference = ElementSendAndLoad(this)

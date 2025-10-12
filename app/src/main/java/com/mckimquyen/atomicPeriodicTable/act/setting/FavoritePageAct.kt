@@ -26,12 +26,15 @@ import com.mckimquyen.atomicPeriodicTable.pref.FavoritePhase
 import com.mckimquyen.atomicPeriodicTable.pref.FusionHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.MeltingPref
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
+import com.mckimquyen.atomicPeriodicTable.databinding.AFavoriteSettingsPageBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
-import kotlinx.android.synthetic.main.a_favorite_settings_page.*
 
 class FavoritePageAct : BaseAct() {
+
+    // Khai báo binding cho ViewBinding
+    private lateinit var binding: AFavoriteSettingsPageBinding
 
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
@@ -78,183 +81,186 @@ class FavoritePageAct : BaseAct() {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_favorite_settings_page)
+
+        // Khởi tạo ViewBinding
+        binding = AFavoriteSettingsPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val molarPreference = FavoriteBarPref(this)
         val molarPrefValue = molarPreference.getValue()
         if (molarPrefValue == 1) {
-            molarMassCheck.isChecked = true
+            binding.molarMassCheck.isChecked = true
         }
         if (molarPrefValue == 0) {
-            molarMassCheck.isChecked = false
+            binding.molarMassCheck.isChecked = false
         }
 
         val phasePreferences = FavoritePhase(this)
         val phasePrefValue = phasePreferences.getValue()
         if (phasePrefValue == 1) {
-            phaseCheck.isChecked = true
+            binding.phaseCheck.isChecked = true
         }
         if (phasePrefValue == 0) {
-            phaseCheck.isChecked = false
+            binding.phaseCheck.isChecked = false
         }
 
         val electronegativityPreferences = ElectronegativityPref(this)
         val electronegativityPrefValue = electronegativityPreferences.getValue()
         if (electronegativityPrefValue == 1) {
-            electronegativityCheck.isChecked = true
+            binding.electronegativityCheck.isChecked = true
         }
         if (electronegativityPrefValue == 0) {
-            electronegativityCheck.isChecked = false
+            binding.electronegativityCheck.isChecked = false
         }
 
         //Density
         val densityPreference = DensityPref(this)
         val densityPrefValue = densityPreference.getValue()
         if (densityPrefValue == 1) {
-            densityCheck.isChecked = true
+            binding.densityCheck.isChecked = true
         }
         if (densityPrefValue == 0) {
-            densityCheck.isChecked = false
+            binding.densityCheck.isChecked = false
         }
 
         //Degree
         val degreePref = DegreePref(this)
         val degreePrefValue = degreePref.getValue()
         if (degreePrefValue == 0) {
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
         if (degreePrefValue == 1) {
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
         if (degreePrefValue == 2) {
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
         }
 
         //Boiling Point
         val boilingPreference = BoilingPref(this)
         val boilingPrefValue = boilingPreference.getValue()
         if (boilingPrefValue == 1) {
-            boilingCheck.isChecked = true
+            binding.boilingCheck.isChecked = true
         }
         if (boilingPrefValue == 0) {
-            boilingCheck.isChecked = false
+            binding.boilingCheck.isChecked = false
         }
 
         //Melting Point
         val meltingPref = MeltingPref(this)
         val meltingPrefValue = meltingPref.getValue()
         if (meltingPrefValue == 1) {
-            meltingCheck.isChecked = true
+            binding.meltingCheck.isChecked = true
         }
         if (meltingPrefValue == 0) {
-            meltingCheck.isChecked = false
+            binding.meltingCheck.isChecked = false
         }
 
         //Atomic Radius Emp Point
         val atomicEmpPreference = AtomicRadiusEmpPref(this)
         val atomicEmpPrefValue = atomicEmpPreference.getValue()
         if (atomicEmpPrefValue == 1) {
-            atomicRadiusEmpiricalCheck.isChecked = true
+            binding.atomicRadiusEmpiricalCheck.isChecked = true
         }
         if (atomicEmpPrefValue == 0) {
-            atomicRadiusEmpiricalCheck.isChecked = false
+            binding.atomicRadiusEmpiricalCheck.isChecked = false
         }
 
         //Atomic Radius Cal Point
         val atomicCalPreference = AtomicRadiusCalPref(this)
         val atomicCalPrefValue = atomicCalPreference.getValue()
         if (atomicCalPrefValue == 1) {
-            atomicRadiusCalculatedCheck.isChecked = true
+            binding.atomicRadiusCalculatedCheck.isChecked = true
         }
         if (atomicCalPrefValue == 0) {
-            atomicRadiusCalculatedCheck.isChecked = false
+            binding.atomicRadiusCalculatedCheck.isChecked = false
         }
 
         //Covalent Radius Point
         val covalentPreference = AtomicCovalentPref(this)
         val atomicCovalentPrefValue = covalentPreference.getValue()
         if (atomicCovalentPrefValue == 1) {
-            covalentRadiusCheck.isChecked = true
+            binding.covalentRadiusCheck.isChecked = true
         }
         if (atomicCovalentPrefValue == 0) {
-            covalentRadiusCheck.isChecked = false
+            binding.covalentRadiusCheck.isChecked = false
         }
 
         //Covalent Radius Point
         val vanPreference = AtomicVanPref(this)
         val vanprefValue = vanPreference.getValue()
         if (vanprefValue == 1) {
-            vanDerWaalsRadiusCheck.isChecked = true
+            binding.vanDerWaalsRadiusCheck.isChecked = true
         }
         if (vanprefValue == 0) {
-            vanDerWaalsRadiusCheck.isChecked = false
+            binding.vanDerWaalsRadiusCheck.isChecked = false
         }
 
         //Specific Heat Capacity
         val specificHeatPref = SpecificHeatPref(this)
         val specificHeatValue = specificHeatPref.getValue()
         if (specificHeatValue == 1) {
-            specificHeatCheck.isChecked = true
+            binding.specificHeatCheck.isChecked = true
         }
         if (specificHeatValue == 0) {
-            specificHeatCheck.isChecked = false
+            binding.specificHeatCheck.isChecked = false
         }
 
         //Fusion Heat
         val fusionheatPref = FusionHeatPref(this)
         val fusionHeatValue = fusionheatPref.getValue()
         if (fusionHeatValue == 1) {
-            fusionHeatCheck.isChecked = true
+            binding.fusionHeatCheck.isChecked = true
         }
         if (fusionHeatValue == 0) {
-            fusionHeatCheck.isChecked = false
+            binding.fusionHeatCheck.isChecked = false
         }
 
         //Vaporization heat
         val vaporizationHeatPref = VaporizationHeatPref(this)
         val vaporizationHeatValue = vaporizationHeatPref.getValue()
         if (vaporizationHeatValue == 1) {
-            vaporizationHeatCheck.isChecked = true
+            binding.vaporizationHeatCheck.isChecked = true
         }
         if (vaporizationHeatValue == 0) {
-            vaporizationHeatCheck.isChecked = false
+            binding.vaporizationHeatCheck.isChecked = false
         }
         onCheckboxClicked()
-        viewf.systemUiVisibility =
+        binding.viewf.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         //Title Controller
-        commonTitleBackFavColor.visibility = View.INVISIBLE
-        favoriteSetTitle.visibility = View.INVISIBLE
-        commonTitleBackFav.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        favSetScroll.viewTreeObserver
+        binding.commonTitleBackFavColor.visibility = View.INVISIBLE
+        binding.favoriteSetTitle.visibility = View.INVISIBLE
+        binding.commonTitleBackFav.elevation = (resources.getDimension(R.dimen.zero_elevation))
+        binding.favSetScroll.viewTreeObserver
             .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
                 var y = 300f
                 override fun onScrollChanged() {
-                    if (favSetScroll.scrollY > 150) {
-                        commonTitleBackFavColor.visibility = View.VISIBLE
-                        favoriteSetTitle.visibility = View.VISIBLE
-                        favoriteSetTitleDownstate.visibility = View.INVISIBLE
-                        commonTitleBackFav.elevation =
+                    if (binding.favSetScroll.scrollY > 150) {
+                        binding.commonTitleBackFavColor.visibility = View.VISIBLE
+                        binding.favoriteSetTitle.visibility = View.VISIBLE
+                        binding.favoriteSetTitleDownstate.visibility = View.INVISIBLE
+                        binding.commonTitleBackFav.elevation =
                             (resources.getDimension(R.dimen.one_elevation))
                     } else {
-                        commonTitleBackFavColor.visibility = View.INVISIBLE
-                        favoriteSetTitle.visibility = View.INVISIBLE
-                        favoriteSetTitleDownstate.visibility = View.VISIBLE
-                        commonTitleBackFav.elevation =
+                        binding.commonTitleBackFavColor.visibility = View.INVISIBLE
+                        binding.favoriteSetTitle.visibility = View.INVISIBLE
+                        binding.favoriteSetTitleDownstate.visibility = View.VISIBLE
+                        binding.commonTitleBackFav.elevation =
                             (resources.getDimension(R.dimen.zero_elevation))
                     }
-                    y = favSetScroll.scrollY.toFloat()
+                    y = binding.favSetScroll.scrollY.toFloat()
                 }
             })
 
-        backBtnFav.setOnClickListener {
+        binding.backBtnFav.setOnClickListener {
             this.onBackPressed()
         }
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
@@ -274,23 +280,23 @@ class FavoritePageAct : BaseAct() {
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
-        val params = commonTitleBackFav.layoutParams as ViewGroup.LayoutParams
+        val params = binding.commonTitleBackFav.layoutParams as ViewGroup.LayoutParams
         params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackFav.layoutParams = params
+        binding.commonTitleBackFav.layoutParams = params
 
-        val params2 = favoriteSetTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
+        val params2 = binding.favoriteSetTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
         params2.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(
                 R.dimen.header_down_margin
             )
-        favoriteSetTitleDownstate.layoutParams = params2
+        binding.favoriteSetTitleDownstate.layoutParams = params2
     }
 
     private fun onCheckboxClicked() {
         //Molar Mass
         val molarPreference = FavoriteBarPref(this)
 //        var molarPrefValue = molarPreference.getValue()
-        val checkBox: CheckBox = molarMassCheck
+        val checkBox: CheckBox = binding.molarMassCheck
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 molarPreference.setValue(1)
@@ -299,38 +305,38 @@ class FavoritePageAct : BaseAct() {
             }
         }
 
-        kelvinBtn.setOnClickListener {
+        binding.kelvinBtn.setOnClickListener {
             val degreePref = DegreePref(this)
 //            var degreePrefValue = degreePref.getValue()
 
             degreePref.setValue(0)
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
-        celsiusBtn.setOnClickListener {
+        binding.celsiusBtn.setOnClickListener {
             val degreePref = DegreePref(this)
 //            var degreePrefValue = degreePref.getValue()
 
             degreePref.setValue(1)
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
-        fahrenheitbtn.setOnClickListener {
+        binding.fahrenheitbtn.setOnClickListener {
             val degreePref = DegreePref(this)
 //            var degreePrefValue = degreePref.getValue()
 
             degreePref.setValue(2)
-            kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
         }
 
         //STP Phase
         val phasePreference = FavoritePhase(this)
 //        var phasePrefValue = phasePreference.getValue()
-        val phaseCheckBox: CheckBox = phaseCheck
+        val phaseCheckBox: CheckBox = binding.phaseCheck
         phaseCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 phasePreference.setValue(1)
@@ -342,7 +348,7 @@ class FavoritePageAct : BaseAct() {
         //Electronegativity
         val electronegativityPref = ElectronegativityPref(this)
 //        var electronegativityPrefValue = electronegativityPref.getValue()
-        val electronegativityCheckBox: CheckBox = electronegativityCheck
+        val electronegativityCheckBox: CheckBox = binding.electronegativityCheck
         electronegativityCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 electronegativityPref.setValue(1)
@@ -354,7 +360,7 @@ class FavoritePageAct : BaseAct() {
         //Density
         val densityPreference = DensityPref(this)
 //        var densityPrefValue = densityPreference.getValue()
-        val densityCheckBox: CheckBox = densityCheck
+        val densityCheckBox: CheckBox = binding.densityCheck
         densityCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 densityPreference.setValue(1)
@@ -367,7 +373,7 @@ class FavoritePageAct : BaseAct() {
         //Boiling Point
         val boilingPreference = BoilingPref(this)
 //        var boilingPrefValue = boilingPreference.getValue()
-        val boilingCheckBox: CheckBox = boilingCheck
+        val boilingCheckBox: CheckBox = binding.boilingCheck
         boilingCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 boilingPreference.setValue(1)
@@ -379,7 +385,7 @@ class FavoritePageAct : BaseAct() {
 
         //Melting Point
         val meltingPref = MeltingPref(this)
-        val meltingCheckBox: CheckBox = meltingCheck
+        val meltingCheckBox: CheckBox = binding.meltingCheck
         meltingCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 meltingPref.setValue(1)
@@ -390,7 +396,7 @@ class FavoritePageAct : BaseAct() {
 
         //Atomic Radius Empirical Point
         val atomicEmpiricalPreference = AtomicRadiusEmpPref(this)
-        val atomicEmpiricalBox: CheckBox = atomicRadiusEmpiricalCheck
+        val atomicEmpiricalBox: CheckBox = binding.atomicRadiusEmpiricalCheck
         atomicEmpiricalBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 atomicEmpiricalPreference.setValue(1)
@@ -401,7 +407,7 @@ class FavoritePageAct : BaseAct() {
 
         //Atomic Radius Calculated Point
         val atomicCalculatedPreference = AtomicRadiusCalPref(this)
-        val atomicCalculatedBox: CheckBox = atomicRadiusCalculatedCheck
+        val atomicCalculatedBox: CheckBox = binding.atomicRadiusCalculatedCheck
         atomicCalculatedBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 atomicCalculatedPreference.setValue(1)
@@ -412,7 +418,7 @@ class FavoritePageAct : BaseAct() {
 
         //Covalent Radius Point
         val covalentPreference = AtomicCovalentPref(this)
-        val covalentCheckBox: CheckBox = covalentRadiusCheck
+        val covalentCheckBox: CheckBox = binding.covalentRadiusCheck
         covalentCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 covalentPreference.setValue(1)
@@ -423,7 +429,7 @@ class FavoritePageAct : BaseAct() {
 
         //Van Der Waals Radius Point
         val vanPreference = AtomicVanPref(this)
-        val vanCheckBox: CheckBox = vanDerWaalsRadiusCheck
+        val vanCheckBox: CheckBox = binding.vanDerWaalsRadiusCheck
         vanCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 vanPreference.setValue(1)
@@ -435,7 +441,7 @@ class FavoritePageAct : BaseAct() {
         //Specific Heat Point
         val specificHeatPref = SpecificHeatPref(this)
 //        var specificHeatValue = specificHeatPref.getValue()
-        val specificCheckBox: CheckBox = specificHeatCheck
+        val specificCheckBox: CheckBox = binding.specificHeatCheck
         specificCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 specificHeatPref.setValue(1)
@@ -448,7 +454,7 @@ class FavoritePageAct : BaseAct() {
         //Fusion Heat
         val fusionHeatPref = FusionHeatPref(this)
 //        var fusionHeatValue = fusionHeatPref.getValue()
-        val fusionCheckBox: CheckBox = fusionHeatCheck
+        val fusionCheckBox: CheckBox = binding.fusionHeatCheck
         fusionCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 fusionHeatPref.setValue(1)
@@ -461,7 +467,7 @@ class FavoritePageAct : BaseAct() {
         //Vapor Heat
         val vaporizationHeatPref = VaporizationHeatPref(this)
 //        var vaporizationHeatValue = vaporizationHeatPref.getValue()
-        val vaporizationCheckBox: CheckBox = vaporizationHeatCheck
+        val vaporizationCheckBox: CheckBox = binding.vaporizationHeatCheck
         vaporizationCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 vaporizationHeatPref.setValue(1)

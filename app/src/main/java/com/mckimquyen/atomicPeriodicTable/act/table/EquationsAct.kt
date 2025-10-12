@@ -20,26 +20,13 @@ import com.mckimquyen.atomicPeriodicTable.adt.EquationsAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.model.Equation
 import com.mckimquyen.atomicPeriodicTable.model.EquationModel
+import com.mckimquyen.atomicPeriodicTable.databinding.AEquationsBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
-import kotlinx.android.synthetic.main.a_equations.backBtnEqu
-import kotlinx.android.synthetic.main.a_equations.closeEquSearch
-import kotlinx.android.synthetic.main.a_equations.commonTitleBackEqu
-import kotlinx.android.synthetic.main.a_equations.eInc
-import kotlinx.android.synthetic.main.a_equations.editEqu
-import kotlinx.android.synthetic.main.a_equations.emptySearchBoxEqu
-import kotlinx.android.synthetic.main.a_equations.equRecycler
-import kotlinx.android.synthetic.main.a_equations.searchBarEqu
-import kotlinx.android.synthetic.main.a_equations.searchBtnEqu
-import kotlinx.android.synthetic.main.a_equations.titleBoxEqu
-import kotlinx.android.synthetic.main.a_equations.viewEqu
-import kotlinx.android.synthetic.main.view_equations_info.eBackBtn
-import kotlinx.android.synthetic.main.view_equations_info.eText
-import kotlinx.android.synthetic.main.view_equations_info.eTitle
-import kotlinx.android.synthetic.main.view_equations_info.lBackgroundE
 import java.util.Locale
 
 class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
+    private lateinit var binding: AEquationsBinding
     private var equationList = ArrayList<Equation>()
     private var mAdapter = EquationsAdt(list = equationList, clickListener = this, context = this)
 
@@ -69,15 +56,16 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
         if (themePrefValue == 1) {
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_equations) //REMEMBER: Never move any function calls above this
+        binding = AEquationsBinding.inflate(layoutInflater)
+        setContentView(binding.root) //REMEMBER: Never move any function calls above this
 
         recyclerView()
         clickSearch()
-        eBackBtn.setOnClickListener { hideInfoPanel() }
-        lBackgroundE.setOnClickListener { hideInfoPanel() }
+        binding.eInc.eBackBtn.setOnClickListener { hideInfoPanel() }
+        binding.eInc.lBackgroundE.setOnClickListener { hideInfoPanel() }
 
-        viewEqu.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        backBtnEqu.setOnClickListener {
+        binding.viewEqu.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        binding.backBtnEqu.setOnClickListener {
             this.onBackPressed()
         }
     }
@@ -88,7 +76,7 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
         left: Int,
         right: Int,
     ) {
-        equRecycler.setPadding(
+        binding.equRecycler.setPadding(
             /* left = */ 0,
             /* top = */
             resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
@@ -98,28 +86,27 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
-        val params2 = commonTitleBackEqu.layoutParams as ViewGroup.LayoutParams
+        val params2 = binding.commonTitleBackEqu.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackEqu.layoutParams = params2
+        binding.commonTitleBackEqu.layoutParams = params2
 
-        val searchEmptyImgPrm = emptySearchBoxEqu.layoutParams as ViewGroup.MarginLayoutParams
+        val searchEmptyImgPrm = binding.emptySearchBoxEqu.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
-        emptySearchBoxEqu.layoutParams = searchEmptyImgPrm
+        binding.emptySearchBoxEqu.layoutParams = searchEmptyImgPrm
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun recyclerView() {
-        val equRecycler = findViewById<RecyclerView>(R.id.equRecycler)
         val equation = ArrayList<Equation>()
 
         EquationModel.getList(equation)
-        equRecycler.layoutManager = LinearLayoutManager(
+        binding.equRecycler.layoutManager = LinearLayoutManager(
             /* context = */ this,
             /* orientation = */ RecyclerView.VERTICAL,
             /* reverseLayout = */ false
         )
         val adapter = EquationsAdt(list = equation, clickListener = this, context = this)
-        equRecycler.adapter = adapter
+        binding.equRecycler.adapter = adapter
 
         equation.sortWith { lhs, rhs ->
             if (lhs.equationTitle < rhs.equationTitle) -1 else if (lhs.equationTitle < rhs.equationTitle) 1 else 0
@@ -127,7 +114,7 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
 
         adapter.notifyDataSetChanged()
 
-        editEqu.addTextChangedListener(object : TextWatcher {
+        binding.editEqu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -145,14 +132,14 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
             }
 
             override fun afterTextChanged(s: Editable) {
-                filter(s.toString(), equation, equRecycler)
+                filter(s.toString(), equation, binding.equRecycler)
             }
         })
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (eInc.visibility == View.VISIBLE) {
+        if (binding.eInc.root.visibility == View.VISIBLE) {
             hideInfoPanel()
             return
         } else {
@@ -171,9 +158,9 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
-                Anim.fadeIn(emptySearchBoxEqu, 300)
+                Anim.fadeIn(binding.emptySearchBoxEqu, 300)
             } else {
-                emptySearchBoxEqu.visibility = View.GONE
+                binding.emptySearchBoxEqu.visibility = View.GONE
             }
         }, 10)
         mAdapter.filterList(filteredList)
@@ -182,21 +169,21 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     }
 
     private fun clickSearch() {
-        searchBtnEqu.setOnClickListener {
-            Utils.fadeInAnim(searchBarEqu, 150)
-            Utils.fadeOutAnim(titleBoxEqu, 1)
+        binding.searchBtnEqu.setOnClickListener {
+            Utils.fadeInAnim(binding.searchBarEqu, 150)
+            Utils.fadeOutAnim(binding.titleBoxEqu, 1)
 
-            editEqu.requestFocus()
+            binding.editEqu.requestFocus()
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editEqu, InputMethodManager.SHOW_IMPLICIT)
+            imm.showSoftInput(binding.editEqu, InputMethodManager.SHOW_IMPLICIT)
         }
-        closeEquSearch.setOnClickListener {
-            Utils.fadeOutAnim(searchBarEqu, 1)
+        binding.closeEquSearch.setOnClickListener {
+            Utils.fadeOutAnim(binding.searchBarEqu, 1)
 
             val delayClose = Handler(Looper.getMainLooper())
             delayClose.postDelayed({
-                Utils.fadeInAnim(titleBoxEqu, 150)
+                Utils.fadeInAnim(binding.titleBoxEqu, 150)
             }, 151)
 
             val view = this.currentFocus
@@ -212,26 +199,26 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     }
 
     private fun showInfoPanel(title: Int, text: String) {
-        Anim.fadeIn(eInc, 150)
+        Anim.fadeIn(binding.eInc.root, 150)
 
-        eTitle.setImageResource(title)
+        binding.eInc.eTitle.setImageResource(title)
         val themePref = ThemePref(this)
         val themePrefValue = themePref.getValue()
         if (themePrefValue == 1) {
-            eTitle.colorFilter = ColorMatrixColorFilter(negative)
+            binding.eInc.eTitle.colorFilter = ColorMatrixColorFilter(negative)
         }
         if (themePrefValue == 100) {
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_YES -> {
-                    eTitle.colorFilter = ColorMatrixColorFilter(negative)
+                    binding.eInc.eTitle.colorFilter = ColorMatrixColorFilter(negative)
                 }
             }
         }
-        eText.text = text
+        binding.eInc.eText.text = text
     }
 
     private fun hideInfoPanel() {
-        Anim.fadeOutAnim(view = eInc, time = 150)
+        Anim.fadeOutAnim(view = binding.eInc.root, time = 150)
     }
 
     private val negative = floatArrayOf(

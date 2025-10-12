@@ -8,33 +8,25 @@ import android.view.ViewTreeObserver
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
+import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsLicensesBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import kotlinx.android.synthetic.main.a_settings_licenses.backBtn
-import kotlinx.android.synthetic.main.a_settings_licenses.commonTitleBackLic
-import kotlinx.android.synthetic.main.a_settings_licenses.commonTitleBackLicColor
-import kotlinx.android.synthetic.main.a_settings_licenses.lInc
-import kotlinx.android.synthetic.main.a_settings_licenses.lSothreeBtn
-import kotlinx.android.synthetic.main.a_settings_licenses.lWikiBtn
-import kotlinx.android.synthetic.main.a_settings_licenses.licenseScroll
-import kotlinx.android.synthetic.main.a_settings_licenses.licenseTitle
-import kotlinx.android.synthetic.main.a_settings_licenses.licenseTitleDownstate
-import kotlinx.android.synthetic.main.a_settings_licenses.viewLic
-import kotlinx.android.synthetic.main.view_license_info.lBackBtn
-import kotlinx.android.synthetic.main.view_license_info.lBackground3
-import kotlinx.android.synthetic.main.view_license_info.lText
-import kotlinx.android.synthetic.main.view_license_info.lTitle
 
 class LicensesAct : BaseAct() {
+
+    // ViewBinding - thay thế Kotlin Synthetics (deprecated)
+    private lateinit var binding: ASettingsLicensesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
     }
 
     private fun setupViews() {
+        // Apply theme dựa trên user preference
         val themePref = ThemePref(this)
         val themePrefValue = themePref.getValue()
 
         if (themePrefValue == 100) {
+            // Theme tự động theo system
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_NO -> {
                     setTheme(R.style.AppTheme)
@@ -46,62 +38,75 @@ class LicensesAct : BaseAct() {
             }
         }
         if (themePrefValue == 0) {
+            // Light theme
             setTheme(R.style.AppTheme)
         }
         if (themePrefValue == 1) {
+            // Dark theme
             setTheme(R.style.AppThemeDark)
         }
-        setContentView(R.layout.a_settings_licenses) //REMEMBER: Never move any function calls above this
 
-        viewLic.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // Inflate ViewBinding và set content view
+        binding = ASettingsLicensesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        //Title Controller
-        commonTitleBackLicColor.visibility = View.INVISIBLE
-        licenseTitle.visibility = View.INVISIBLE
-        commonTitleBackLic.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        licenseScroll.viewTreeObserver
+        // Setup system UI visibility
+        binding.viewLic.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        // Title Controller - hiển thị/ẩn title bar khi scroll
+        binding.commonTitleBackLicColor.visibility = View.INVISIBLE
+        binding.licenseTitle.visibility = View.INVISIBLE
+        binding.commonTitleBackLic.elevation = (resources.getDimension(R.dimen.zero_elevation))
+        binding.licenseScroll.viewTreeObserver
             .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
                 var y = 300f
                 override fun onScrollChanged() {
-                    if (licenseScroll.scrollY > 150) {
-                        commonTitleBackLicColor.visibility = View.VISIBLE
-                        licenseTitle.visibility = View.VISIBLE
-                        licenseTitleDownstate.visibility = View.INVISIBLE
-                        commonTitleBackLic.elevation =
+                    if (binding.licenseScroll.scrollY > 150) {
+                        // Đã scroll xuống -> hiện title bar compact
+                        binding.commonTitleBackLicColor.visibility = View.VISIBLE
+                        binding.licenseTitle.visibility = View.VISIBLE
+                        binding.licenseTitleDownstate.visibility = View.INVISIBLE
+                        binding.commonTitleBackLic.elevation =
                             (resources.getDimension(R.dimen.one_elevation))
                     } else {
-                        commonTitleBackLicColor.visibility = View.INVISIBLE
-                        licenseTitle.visibility = View.INVISIBLE
-                        licenseTitleDownstate.visibility = View.VISIBLE
-                        commonTitleBackLic.elevation =
+                        // Ở đầu trang → hiện title bar expanded
+                        binding.commonTitleBackLicColor.visibility = View.INVISIBLE
+                        binding.licenseTitle.visibility = View.INVISIBLE
+                        binding.licenseTitleDownstate.visibility = View.VISIBLE
+                        binding.commonTitleBackLic.elevation =
                             (resources.getDimension(R.dimen.zero_elevation))
                     }
-                    y = licenseScroll.scrollY.toFloat()
+                    y = binding.licenseScroll.scrollY.toFloat()
                 }
             })
 
         listeners()
-        backBtn.setOnClickListener {
+
+        // Back button - quay về màn hình trước
+        binding.backBtn.setOnClickListener {
             this.onBackPressed()
         }
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
-        val params2 = commonTitleBackLic.layoutParams as ViewGroup.LayoutParams
+        // Adjust title bar height để tránh status bar
+        val params2 = binding.commonTitleBackLic.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
-        commonTitleBackLic.layoutParams = params2
+        binding.commonTitleBackLic.layoutParams = params2
 
-        val params3 = licenseTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
+        // Adjust expanded title top margin
+        val params3 = binding.licenseTitleDownstate.layoutParams as ViewGroup.MarginLayoutParams
         params3.topMargin =
             top + resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(
                 R.dimen.header_down_margin
             )
-        licenseTitleDownstate.layoutParams = params3
+        binding.licenseTitleDownstate.layoutParams = params3
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (lInc.visibility == View.VISIBLE) {
+        // Nếu license info panel đang hiển thị -> ẩn panel thay vì back
+        if (binding.lInc.root.visibility == View.VISIBLE) {
             hideInfoPanel()
             return
         } else {
@@ -110,28 +115,36 @@ class LicensesAct : BaseAct() {
     }
 
     private fun listeners() {
-        lWikiBtn.setOnClickListener {
+        // Wikipedia license button
+        binding.lWikiBtn.setOnClickListener {
             val title = resources.getString(R.string.wikipedia_license)
             val text = resources.getString(R.string.wikipedia_license_text)
             showInfoPanel(title, text)
         }
-        lSothreeBtn.setOnClickListener {
+
+        // Sothree (SlidingUpPanel) license button
+        binding.lSothreeBtn.setOnClickListener {
             val title = resources.getString(R.string.sothree_license)
             val text = resources.getString(R.string.sothree_license_text)
             showInfoPanel(title, text)
         }
-        lBackBtn.setOnClickListener { hideInfoPanel() }
-        lBackground3.setOnClickListener { hideInfoPanel() }
+
+        // Close license info panel buttons
+        binding.lInc.lBackBtn.setOnClickListener { hideInfoPanel() }
+        binding.lInc.lBackground3.setOnClickListener { hideInfoPanel() }
     }
 
     private fun showInfoPanel(title: String, text: String) {
-        Anim.fadeIn(lInc, 150)
+        // Hiển thị license info panel với animation fade in
+        Anim.fadeIn(binding.lInc.root, 150)
 
-        lTitle.text = title
-        lText.text = text
+        // Set nội dung license
+        binding.lInc.lTitle.text = title
+        binding.lInc.lText.text = text
     }
 
     private fun hideInfoPanel() {
-        Anim.fadeOutAnim(view = lInc, time = 150)
+        // Ẩn license info panel với animation fade out
+        Anim.fadeOutAnim(view = binding.lInc.root, time = 150)
     }
 }
