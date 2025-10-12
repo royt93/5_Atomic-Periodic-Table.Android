@@ -47,13 +47,11 @@ class ElectrodeAdt(
             item: Series,
             context: Context,
         ) {
-            textViewName.text = item.name
+            // Fixed: Remove redundant first assignment - only use the capitalized version
             textViewName.text = item.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
             textViewShort.text = item.short
-            val voltage = item.voltage.toString()
-            val shortVolt = " (Volt)"
-            val textVolt = voltage + shortVolt
-            textViewVoltage.text = textVolt
+            // Optimized: Use string template instead of concatenation
+            textViewVoltage.text = "${item.voltage} (Volt)"
             textViewCharge.text = item.charge
 
             itemView.foreground = ContextCompat.getDrawable(context, R.drawable.shape_toast_card_ripple)

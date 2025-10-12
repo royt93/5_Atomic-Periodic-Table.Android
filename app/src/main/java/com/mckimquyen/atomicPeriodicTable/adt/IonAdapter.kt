@@ -75,14 +75,15 @@ class IonAdapter(
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            textViewName.text = item.name
+            // Fixed: Remove redundant first assignment - only use the capitalized version
             textViewName.text = item.name.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
                     Locale.getDefault()
                 ) else it.toString()
             }
             textViewShort.text = item.short
-            textViewCharge.text = "View all" + " " + item.count.toString()
+            // Optimized: Use string template instead of concatenation
+            textViewCharge.text = "View all ${item.count}"
 
             cardView.foreground = ContextCompat.getDrawable(context, R.drawable.shape_toast_card_ripple)
             cardView.isClickable = true

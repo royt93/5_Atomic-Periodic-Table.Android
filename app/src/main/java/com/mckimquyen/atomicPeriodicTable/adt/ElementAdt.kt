@@ -55,7 +55,7 @@ class ElementAdt(
             val searchPreference = SearchPref(con)
             val searchPrefValue = searchPreference.getValue()
 
-            textViewElement.text = item.element
+            // Fixed: Remove redundant first assignment - only use the capitalized version
             textViewElement.text = item.element.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             textViewShort.text = item.short
 

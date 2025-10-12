@@ -48,33 +48,21 @@ class EquationsAdt(
 
         fun initialize(item: Equation, action: OnEquationClickListener, context: Context) {
             equTitle.text = item.equationTitle
-            if (item.category == "Mechanics") {
-                equCategory.text = "Me"
+
+            // Optimized: Replace multiple if statements with when expression
+            equCategory.text = when (item.category) {
+                "Mechanics" -> "Me"
+                "General" -> "Ge"
+                "Theory of Relativity" -> "TR"
+                "Thermodynamics" -> "Th"
+                "Wavelengths" -> "Wv"
+                "Electricity" -> "El"
+                "Magnetism and Induction" -> "MI"
+                "Atomic Physics" -> "AP"
+                "Nuclear Physics" -> "NP"
+                else -> ""
             }
-            if (item.category == "General") {
-                equCategory.text = "Ge"
-            }
-            if (item.category == "Theory of Relativity") {
-                equCategory.text = "TR"
-            }
-            if (item.category == "Thermodynamics") {
-                equCategory.text = "Th"
-            }
-            if (item.category == "Wavelengths") {
-                equCategory.text = "Wv"
-            }
-            if (item.category == "Electricity") {
-                equCategory.text = "El"
-            }
-            if (item.category == "Magnetism and Induction") {
-                equCategory.text = "MI"
-            }
-            if (item.category == "Atomic Physics") {
-                equCategory.text = "AP"
-            }
-            if (item.category == "Nuclear Physics") {
-                equCategory.text = "NP"
-            }
+
             equImg.setImageResource(item.equation)
             val themePref = ThemePref(context)
             val themePrefValue = themePref.getValue()
@@ -97,12 +85,15 @@ class EquationsAdt(
             }
         }
 
-        private val NEGATIVE = floatArrayOf(
-            -1.0f, 0f, 0f, 0f, 255f,
-            0f, -1.0f, 0f, 0f, 255f,
-            0f, 0f, -1.0f, 0f, 255f,
-            0f, 0f, 0f, 1.0f, 0f
-        )
+        companion object {
+            // Moved constant to companion object for proper scope and reusability
+            private val NEGATIVE = floatArrayOf(
+                -1.0f, 0f, 0f, 0f, 255f,
+                0f, -1.0f, 0f, 0f, 255f,
+                0f, 0f, -1.0f, 0f, 255f,
+                0f, 0f, 0f, 1.0f, 0f
+            )
+        }
     }
 
 
