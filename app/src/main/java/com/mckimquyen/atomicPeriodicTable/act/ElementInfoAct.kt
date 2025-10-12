@@ -151,12 +151,8 @@ class ElementInfoAct : InfoExt() {
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
         val params = binding.frame.layoutParams as ViewGroup.MarginLayoutParams
-        params.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar)
+        params.topMargin = 0
         binding.frame.layoutParams = params
-
-        val paramsO = binding.offlineSpace.layoutParams as ViewGroup.MarginLayoutParams
-        paramsO.topMargin += top
-        binding.offlineSpace.layoutParams = paramsO
 
         val params2 = binding.commonTitleBack.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
@@ -170,13 +166,11 @@ class ElementInfoAct : InfoExt() {
 
         if (offlinePrefValue == 1) {
             binding.frame.visibility = View.GONE
-            binding.offlineSpace.visibility = View.VISIBLE
             binding.propertiesInc.spImg.visibility = View.GONE
             binding.propertiesInc.spOffline.visibility = View.VISIBLE
             binding.propertiesInc.spOffline.text = "Go online for emission lines"
         } else {
             binding.frame.visibility = View.VISIBLE
-            binding.offlineSpace.visibility = View.GONE
             binding.propertiesInc.spImg.visibility = View.VISIBLE
             binding.propertiesInc.spOffline.visibility = View.GONE
         }

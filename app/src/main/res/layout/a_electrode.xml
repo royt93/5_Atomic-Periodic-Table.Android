@@ -173,7 +173,7 @@
                             android:maxLines="1"
                             android:paddingStart="0dp"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textColorHint="?attr/colorOnSurface"
                             android:textSize="16sp"
                             tools:ignore="RtlSymmetry" />
 

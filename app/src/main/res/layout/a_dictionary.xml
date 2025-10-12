@@ -170,7 +170,7 @@
                             android:maxLines="1"
                             android:paddingStart="0dp"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textColorHint="?attr/colorOnSurface"
                             android:textSize="16sp"
                             tools:ignore="Autofill,RtlSymmetry" />
 
@@ -201,7 +201,7 @@
                             android:layout_marginStart="4dp"
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/shape_chip_filled"
-                            android:backgroundTint="?attr/colorSecondaryContainer"
+                            android:backgroundTint="?attr/colorSurfaceVariant"
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="@drawable/riple_chip_ripple"
@@ -231,7 +231,7 @@
                             android:paddingEnd="16dp"
                             android:text="@string/chip_chemistry"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
@@ -251,7 +251,7 @@
                             android:paddingEnd="16dp"
                             android:text="@string/chip_physics"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
@@ -271,7 +271,7 @@
                             android:paddingEnd="16dp"
                             android:text="@string/chip_math"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 
@@ -291,7 +291,7 @@
                             android:paddingEnd="16dp"
                             android:text="@string/chip_reactions"
                             android:textAllCaps="false"
-                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="13sp"
                             tools:ignore="PrivateResource" />
 

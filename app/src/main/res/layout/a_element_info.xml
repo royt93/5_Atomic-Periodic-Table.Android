@@ -5,22 +5,25 @@
     android:id="@+id/view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     android:orientation="vertical">
 
+    <!-- Top App Bar -->
     <FrameLayout
         android:id="@+id/commonTitleBack"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="?attr/colorSurface"
-        android:elevation="1dp"
-        android:gravity="center|center_vertical"
-        android:orientation="horizontal"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Subtle tint overlay -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.11"
+            android:alpha="0.08"
             android:background="?attr/colorPrimary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -34,222 +37,273 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
 
+                <!-- Back Button -->
                 <ImageButton
                     android:id="@+id/backBtn"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical"
-                    android:alpha="0.9"
                     android:contentDescription="@string/app_name"
                     android:rotation="180"
                     android:src="@drawable/ic_arrow_back_whit"
                     app:tint="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
+                <!-- Wikipedia Button -->
                 <ImageButton
                     android:id="@+id/wikipediaBtn"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical|end"
-                    android:alpha="0.9"
                     android:contentDescription="@string/app_name"
                     android:padding="16dp"
-                    android:scaleType="fitStart"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_wikipedia_logo"
                     app:tint="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
+                <!-- Element Title -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/elementTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
-                    android:alpha="0.9"
-                    android:gravity="center"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
+                    android:layout_marginEnd="70dp"
+                    android:gravity="center_vertical"
                     android:text="@string/periodic_table"
-                    android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondaryContainer"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:ignore="PrivateResource" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
             </FrameLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </FrameLayout>
 
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scrView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commonTitleBack">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/backgroundColor"
             android:orientation="vertical">
 
-            <Space
-                android:id="@+id/offlineSpace"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:visibility="gone" />
-
-            <FrameLayout
+            <!-- Hero Image Section -->
+            <androidx.cardview.widget.CardView
                 android:id="@+id/frame"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:layout_marginTop="56dp">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorSurface"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2dp">
 
-                <include
-                    android:id="@+id/ldnPlace"
-                    layout="@layout/view_loading_view"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_horizontal|center_vertical" />
-
-                <ImageView
-                    android:id="@+id/elementImage"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/app_name"
-                    android:elevation="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:layout_height="240dp">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/previousBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_margin="18dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:elevation="8dp"
-                    android:focusable="true"
-                    android:rotation="180"
-                    android:tint="?attr/colorPrimary"
-                    android:visibility="visible"
-                    app:backgroundTint="?attr/colorSurface"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_arrow_back_whit" />
+                    <!-- Loading Indicator -->
+                    <include
+                        android:id="@+id/ldnPlace"
+                        layout="@layout/view_loading_view"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/nextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_margin="18dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:elevation="8dp"
-                    android:focusable="true"
-                    android:tint="?attr/colorPrimary"
-                    android:visibility="visible"
-                    app:backgroundTint="?attr/colorSurface"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_arrow_back_whit" />
-            </FrameLayout>
+                    <!-- Element Image -->
+                    <ImageView
+                        android:id="@+id/elementImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_launcher_background" />
 
+                    <!-- Previous Button -->
+                    <ImageButton
+                        android:id="@+id/previousBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:rotation="180"
+                        android:background="@drawable/shape_toast"
+                        android:backgroundTint="?attr/colorSurface"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_arrow_back_whit"
+                        app:tint="?attr/colorPrimary" />
+
+                    <!-- Next Button -->
+                    <ImageButton
+                        android:id="@+id/nextBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:background="@drawable/shape_toast"
+                        android:backgroundTint="?attr/colorSurface"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_arrow_back_whit"
+                        app:tint="?attr/colorPrimary" />
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Ad Banner -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
 
                 <include
                     android:id="@+id/layoutAdBanner"
                     layout="@layout/layout_ad_banner" />
+
             </FrameLayout>
 
+            <!-- Offline Divider (Hidden) -->
             <Space
                 android:id="@+id/offlineDiv"
-                android:layout_width="wrap_content"
-                android:layout_height="110dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:visibility="gone" />
 
+            <!-- Favorite Bar -->
             <include
                 android:id="@+id/favoriteBarInclude"
                 layout="@layout/view_favorite_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
+            <!-- Detail Sections -->
             <include
                 android:id="@+id/overviewInc"
                 layout="@layout/v_d_overview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/propertiesInc"
                 layout="@layout/v_d_properties"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/temperaturesInc"
                 layout="@layout/v_d_temperatures"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/atomicInc"
                 layout="@layout/v_d_atomic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/electromagneticInc"
                 layout="@layout/v_d_electromagnetic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/additionPhysics"
                 layout="@layout/v_d_thermodynamic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
             <include
                 android:id="@+id/nuclearInc"
                 layout="@layout/v_d_nuclear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
 
+            <!-- Submit Data Issue Button -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/iBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/shape_toast"
-                android:backgroundTint="?attr/colorPrimary"
-                android:clickable="true"
-                android:elevation="2dp"
-                android:focusable="true"
-                android:foreground="@drawable/ripple_bkg"
+                android:layout_margin="16dp"
+                android:minHeight="48dp"
                 android:text="@string/submit_data_issue"
-                android:textColor="?attr/colorOnPrimary" />
+                android:textAllCaps="false"
+                android:background="@drawable/shape_toast"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                android:textColor="?attr/colorOnSurface"
+                android:drawableStart="@drawable/ic_info"
+                android:drawablePadding="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                tools:ignore="PrivateResource" />
 
+            <!-- Bottom Padding -->
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="80dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
 
+    <!-- Dialog Overlays (Preserved) -->
+
+    <!-- Shell Background Overlay -->
     <LinearLayout
         android:id="@+id/shellBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#A8000000"
+        android:clickable="true"
         android:elevation="12dp"
+        android:focusable="true"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -257,12 +311,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Emission Background Overlay -->
     <LinearLayout
         android:id="@+id/detailEmissionBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#A8000000"
+        android:clickable="true"
         android:elevation="12dp"
+        android:focusable="true"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -270,15 +327,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Shell View Dialog -->
     <include
         android:id="@+id/shell"
         layout="@layout/view_shell_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="130dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
         android:elevation="112dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -286,15 +344,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Emission Detail Dialog -->
     <include
         android:id="@+id/detailEmission"
         layout="@layout/view_detail_emission"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="130dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
         android:elevation="112dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
