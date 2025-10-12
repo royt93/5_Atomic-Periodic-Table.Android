@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- =============================================================== -->
+    <!-- Permissions -->
+    <!-- =============================================================== -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -10,13 +13,28 @@
     <application
         android:name=".RoyApp"
         android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="DiscouragedApi,LockedOrientationActivity">
+        tools:ignore="DiscouragedApi,LockedOrientationActivity"
+        tools:targetApi="m">
+
+        <!-- =============================================================== -->
+        <!-- AdMob Configuration -->
+        <!-- =============================================================== -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3612191981543807~8639804669" />
+
+        <!-- =============================================================== -->
+        <!-- App Widget -->
+        <!-- =============================================================== -->
         <receiver
             android:name=".widget.ShortCommandWidget"
             android:exported="true">
@@ -29,230 +47,308 @@
                 android:resource="@xml/short_command_widget_info" />
         </receiver>
 
-        <!-- Khai báo AdMob App ID -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3612191981543807~8639804669" /> <!-- Sample AdMob App ID -->
+        <!-- =============================================================== -->
+        <!-- Main Activities -->
+        <!-- =============================================================== -->
 
-        <activity
-            android:name=".act.MainAct"
-            android:exported="true"
-            android:label="MAINACTIVITY"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+        <!-- Splash Screen (LAUNCHER) -->
         <activity
             android:name=".act.SplashAct"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".act.MainAct"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- =============================================================== -->
+        <!-- Element & Table Activities -->
+        <!-- =============================================================== -->
+
         <activity
             android:name=".act.ElementInfoAct"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:label="ELEMENTINFOACTIVITY"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".act.SettingsAct"
-            android:exported="true"
-            android:label="SETTINGS"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.setting.FavoritePageAct"
-            android:exported="true"
-            android:label="FAVORITEPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.setting.OrderAct"
-            android:exported="true"
-            android:label="ORDERPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.table.IonAct"
-            android:exported="true"
-            android:label="IONPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".setting.ExperimentalAct"
-            android:exported="true"
-            android:label="EXPERIMENTAL_PAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.SolubilityAct"
-            android:exported="true"
-            android:label="SOLUBILITYPAGE"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.CalculatorAct"
-            android:exported="true"
-            android:label="CALCULATORPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.table.DictionaryAct"
-            android:exported="true"
-            android:label="DICTIONARYPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.IsotopesActExperimental"
-            android:exported="true"
-            android:label="ISOTPOESPAGEEXP"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.setting.AboutAct"
-            android:exported="true"
-            android:label="ABOUTPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".act.TableAct"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:label="TABLEPAGE"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".act.IsotopesActExperimental"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- =============================================================== -->
+        <!-- Chemistry Tools -->
+        <!-- =============================================================== -->
+
+        <activity
+            android:name=".act.CalculatorAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.SolubilityAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.table.IonAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".act.table.ElectrodeAct"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:label="ELECTRODEPAGE"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".act.setting.SubmitAct"
-            android:exported="true"
-            android:label="SUBMITPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".act.setting.LicensesAct"
-            android:exported="true"
-            android:label="LICENSESPAGE"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".act.table.EquationsAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:exported="true"
-            android:label="EQUATIONSACTIVITY"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".act.table.PHAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:exported="true"
-            android:label="PHACTIVITY"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".act.setting.UnitAct"
-            android:exported="true"
-            android:label="activity_unit"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".act.table.NuclideAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:exported="true"
-            android:label="activity_nuclide"
+            android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".act.table.DictionaryAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- =============================================================== -->
+        <!-- Settings Activities -->
+        <!-- =============================================================== -->
+
+        <activity
+            android:name=".act.SettingsAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.FavoritePageAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.OrderAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.AboutAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.UnitAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.SubmitAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".act.setting.LicensesAct"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- =============================================================== -->
+        <!-- Experimental Features -->
+        <!-- =============================================================== -->
+
+        <activity
+            android:name=".setting.ExperimentalAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".act.SettingsAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
