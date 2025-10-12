@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 // Now using Kotlin 2.0.21 with full ViewBinding support
 
 android {
-    compileSdk 36
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId "com.mckimquyen.atomicPeriodicTable"
@@ -65,14 +65,14 @@ android {
             debuggable false
             minifyEnabled true
             //used android.enableR8=true in gradle.properties
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 //            applicationIdSuffix ".release"
         }
         debug {
             minifyEnabled false
             //used android.enableR8=true in gradle.properties
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //            applicationIdSuffix ".debug"
         }
     }
@@ -118,39 +118,42 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // Kotlin stdlib - updated to 2.0.21 after ViewBinding migration completed
+    // Kotlin stdlib - updated to 2.2.0 (Jan 2025)
     // All activities and extension classes migrated from kotlin-android-extensions to ViewBinding
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
-    // AndroidX AppCompat - updated từ 1.6.1 lên 1.7.0 (stable, tương thích Android 14+)
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    // AndroidX Core KTX - updated từ 1.3.2 (2020) lên 1.12.0 (2024) - QUAN TRỌNG cho performance
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.0"
+    // AndroidX AppCompat - updated to 1.7.1 (latest stable, tương thích Android 15+)
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    // AndroidX Core KTX - updated to 1.17.0 (Jan 2025) - QUAN TRỌNG cho performance
+    implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'com.github.ultimate-deej:twowaynestedscrollview:0.1'
 //    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.code.gson:gson:2.13.1'
+    // Gson - updated to 2.13.2 (Dec 2024)
+    implementation 'com.google.code.gson:gson:2.13.2'
 //    implementation 'com.jakewharton:butterknife:10.1.0'
 //    implementation 'androidx.cardview:cardview:1.0.0'
-    // OkHttp - downgrade từ 5.0.0-alpha.11 về 4.12.0 (stable) - KHÔNG nên dùng alpha trong production
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    // OkHttp - updated to 5.2.1 (Jan 2025, stable) - Requires minSdk 21+, project uses 23 ✓
+    // Note: OkHttp 5.x has breaking changes, test thoroughly after update
+    implementation 'com.squareup.okhttp3:okhttp:5.2.1'
 //    implementation 'com.github.ar-android:AndroidSvgLoader:1.0.2'
 //    implementation 'com.chauthai.overscroll:overscroll-bouncy:0.1.1'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 //    implementation 'com.beust:klaxon:5.0.1'
 //    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
-    // Material Components - updated từ 1.9.0 lên 1.12.0 (hỗ trợ Material3, performance improvements)
-    implementation 'com.google.android.material:material:1.12.0'
-    // Coroutines cho async file I/O và background tasks - uncommented và updated từ 1.6.4 lên 1.8.1
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1"
+    // Material Components - updated to 1.13.0 (Dec 2024, hỗ trợ Material3, performance improvements)
+    implementation 'com.google.android.material:material:1.13.0'
+    // Coroutines - updated to 1.10.2 (Jan 2025) cho async file I/O và background tasks
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 //    implementation 'androidx.browser:browser:1.8.0'
-    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
+    // DragDropSwipeRecyclerView - updated to 1.2.0 (Dec 2024)
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.2.0'
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
 //    implementation 'com.applovin:applovin-sdk:13.2.0'
-    // Google Play Services Ads - updated từ 22.3.0 lên 24.7.0 (latest stable 2024)
+    // Google Play Services Ads - 24.7.0 (latest stable 2024)
     // QUAN TRỌNG: Test kỹ AdMob sau khi update, đặc biệt banner và interstitial ads
     implementation("com.google.android.gms:play-services-ads:24.7.0")
-    // AppLovin Mediation Adapter - updated từ 11.11.1.0 lên 13.4.0.0 (tương thích với play-services-ads:24.7.0)
+    // AppLovin Mediation Adapter - 13.4.0.0 (tương thích với play-services-ads:24.7.0)
     implementation("com.google.ads.mediation:applovin:13.4.0.0")
 
 //    testImplementation 'junit:junit:4.13.2'
@@ -160,8 +163,9 @@ dependencies {
 
     // debugImplementation because LeakCanary should only run in debug builds.
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
-    implementation("com.google.android.play:review:2.0.1")
-    implementation("com.google.android.play:review-ktx:2.0.1")
-    // Lifecycle Runtime KTX - updated từ 2.5.1 lên 2.8.7 (hỗ trợ repeatOnLifecycle, performance tốt hơn)
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
+    // Google Play In-App Review - updated to 2.0.2 (Dec 2024)
+    implementation("com.google.android.play:review:2.0.2")
+    implementation("com.google.android.play:review-ktx:2.0.2")
+    // Lifecycle Runtime KTX - updated to 2.9.4 (Jan 2025, hỗ trợ repeatOnLifecycle, performance tốt hơn)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4"
 }
