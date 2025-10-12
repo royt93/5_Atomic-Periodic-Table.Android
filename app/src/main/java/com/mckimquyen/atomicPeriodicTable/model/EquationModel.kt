@@ -28,7 +28,8 @@ object EquationModel {
                 "Efficiency",
                 "General",
                 R.drawable.e_efficiency,
-                "n: Energy conversion efficiency \nE(in): Energy (in) \nE(out): Energy (out) \n" + "P(in): Power (in) \n" + "P(out): Power (out)"
+                // Optimized: Use multiline string instead of concatenation
+                "n: Energy conversion efficiency \nE(in): Energy (in) \nE(out): Energy (out) \nP(in): Power (in) \nP(out): Power (out)"
             )
         )
         equation.add(Equation("Frequency", "General", R.drawable.e_frequency, "f: Frequency \nT: Period"))
