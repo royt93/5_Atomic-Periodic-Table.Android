@@ -99,6 +99,9 @@
     <string name="calculator_instructions">1. Enter the element symbol (e.g., H, O, C)\n2. Enter the quantity (subscript number)\n3. Press Enter to calculate the molar mass</string>
     <string name="element_hint_h">H</string>
     <string name="back_button">Back</string>
+    <string name="wikipedia_button">Wikipedia</string>
+    <string name="previous_button">Previous element</string>
+    <string name="next_button">Next element</string>
     <string name="no_results">No results</string>
     <string name="try_searching_for_another_word_or_check_your_spelling">Try searching for another word or check your spelling.</string>
     <string name="dictionary">Dictionary</string>

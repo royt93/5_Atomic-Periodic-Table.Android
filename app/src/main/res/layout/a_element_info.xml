@@ -57,7 +57,7 @@
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical|end"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/wikipedia_button"
                     android:padding="16dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_wikipedia_logo"
@@ -138,11 +138,11 @@
                     <!-- Previous Button -->
                     <ImageButton
                         android:id="@+id/previousBtn"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_margin="16dp"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/previous_button"
                         android:rotation="180"
                         android:background="@drawable/shape_toast"
                         android:backgroundTint="?attr/colorSurface"
@@ -155,11 +155,11 @@
                     <!-- Next Button -->
                     <ImageButton
                         android:id="@+id/nextBtn"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="end|center_vertical"
                         android:layout_margin="16dp"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/next_button"
                         android:background="@drawable/shape_toast"
                         android:backgroundTint="?attr/colorSurface"
                         android:elevation="4dp"
