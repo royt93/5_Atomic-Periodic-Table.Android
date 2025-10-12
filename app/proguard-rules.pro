@@ -1,199 +1,237 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in E:\Installation\Ung_Dung_Lap_Trinh\Java\IDE\AndroidStudio\SDK/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# ===============================================================
+# ProGuard Rules for Atomic Periodic Table
+# Last Updated: 2025.10.13
+# ===============================================================
 
-# Add any project specific keep options here:
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
+# ===============================================================
+# General Configuration
+# ===============================================================
 -ignorewarnings
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+-keepattributes Exceptions
+-keepattributes SourceFile,LineNumberTable
 
-#google
--keep public class com.google.** {*;}
+# Keep all enums
+-keepclassmembers enum * { *; }
 
-#in-app billing
--keep class com.android.vending.billing.**
-
-#butterknife
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
+# ===============================================================
+# Kotlin & Coroutines
+# ===============================================================
+# Kotlin metadata
+-keep class kotlin.Metadata { *; }
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
 }
 
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
+# Coroutines
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembers class kotlinx.** {
+    volatile <fields>;
 }
+-dontwarn kotlinx.coroutines.**
 
-#retrofit
--keep class com.squareup.okhttp.** { *; }
--keep class retrofit.** { *; }
--keep interface com.squareup.okhttp.** { *; }
+# ===============================================================
+# AndroidX & Lifecycle
+# ===============================================================
+-keep class androidx.lifecycle.** { *; }
+-keep class androidx.core.** { *; }
+-dontwarn androidx.lifecycle.**
 
--dontwarn com.squareup.okhttp.**
--dontwarn okio.**
--dontwarn retrofit.**
--dontwarn rx.**
-
--keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
-}
-
-#facebook
--keep class com.facebook.** {
-   *;
-}
-
-# Google Clound message
+# ===============================================================
+# Google Services (AdMob, Play Services)
+# ===============================================================
+# Google Mobile Ads SDK (24.7.0)
 -keep class com.google.android.gms.** { *; }
--dontwarn com.google.android.gms.
+-keep class com.google.ads.** { *; }
+-keep interface com.google.android.gms.ads.** { *; }
+-keep public class com.google.android.gms.ads.** { public *; }
+-keep public class com.google.ads.** { public *; }
 
-#Progress button
--keep class com.dd.** { *; }
+# Keep advertising ID classes
+-keep class com.google.android.gms.ads.identifier.** { *; }
 
-#Gson
-# Gson uses generic type information stored in a class file when working with fields. Proguard
-# removes such information by default, so configure it to keep all of it.
+# Keep ad listeners and callbacks
+-keep class * extends com.google.android.gms.ads.AdListener { *; }
+-keep class * extends com.google.android.gms.ads.FullScreenContentCallback { *; }
+
+# Keep application ID from manifest
+-keep class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+# Google Play Services base
+-dontwarn com.google.android.gms.**
+-dontwarn com.google.common.**
+
+# Google Play In-App Review
+-keep class com.google.android.play.** { *; }
+-dontwarn com.google.android.play.**
+
+# AppLovin Mediation Adapter (13.4.0.0)
+-keep class com.applovin.** { *; }
+-keep interface com.applovin.** { *; }
+-dontwarn com.applovin.**
+
+# ===============================================================
+# Gson (2.13.1)
+# ===============================================================
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.** { *; }
+
+# Keep generic signatures for Gson
 -keepattributes Signature
 
-# For using GSON @Expose annotation
--keepattributes *Annotation*
-
-# Gson specific classes
--keep class sun.misc.Unsafe { *; }
-#-keep class com.google.gson.stream.** { *; }
-
-# Application classes that will be serialized/deserialized over Gson
--keep class com.google.gson.examples.android.model.** { *; }
-
-# Prevent proguard from stripping interface information from TypeAdapterFactory,
-# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+# Keep all model classes for serialization/deserialization
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
--keepclassmembers enum * { *; }
+# Keep your model classes (adjust package name if needed)
+-keep class com.mckimquyen.atomicPeriodicTable.model.** { *; }
+-keep class com.mckimquyen.atomicPeriodicTable.data.** { *; }
 
-#rx
--dontwarn sun.misc.**
-
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
-
-#for eventbus
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-#end for eventbus
-
-#for realm
--keep class io.realm.annotations.RealmModule
--keep @io.realm.annotations.RealmModule class *
--dontwarn javax.**
--dontwarn io.realm.**
-#for realm
-
-##for loading view
--keep class com.wang.avi.** { *; }
--keep class com.wang.avi.indicators.** { *; }
-##for loading view
-
-# Basic ProGuard rules for Firebase Android SDK 2.0.0+
--keep class com.firebase.** { *; }
--keep class org.apache.** { *; }
--keepnames class com.fasterxml.jackson.** { *; }
--keepnames class javax.servlet.** { *; }
--keepnames class org.ietf.jgss.** { *; }
--dontwarn org.apache.**
--dontwarn org.w3c.dom.**
-
-##pdf view
--keep class com.shockwave.**
-
-#renderscript
--dontwarn androidx.renderscript.*
--keepclassmembers class androidx.renderscript.RenderScript {
-  native *** rsn*(...);
-  native *** n*(...);
-}
-
-#https://github.com/mmin18/RealtimeBlurView
--keep class android.support.v8.renderscript.** { *; }
--keep class androidx.renderscript.** { *; }
-
-#-keep class com.veyo.** { *; }
-#-keep interface com.veyo.** { *; }
-
--keep class com.huxq17.download.** { *; }
+# ===============================================================
+# OkHttp (4.12.0)
+# ===============================================================
 -dontwarn okhttp3.**
 -dontwarn okio.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
--keepclassmembers class com.dd.StrokeGradientDrawable {
-    public void setStrokeColor(int);
+# ===============================================================
+# Picasso (2.71828)
+# ===============================================================
+-keep class com.squareup.picasso.** { *; }
+-dontwarn com.squareup.picasso.**
+-keepclasseswithmembernames class * {
+    @com.squareup.picasso.* <methods>;
 }
 
--keep class com.google.android.gms.ads.identifier.** { *; }
-
-
-##glide
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
-
-# Retrofit 2.X
-## https://square.github.io/retrofit/ ##
+# ===============================================================
+# Retrofit 2.x (nếu có sử dụng)
+# ===============================================================
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions
-
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
 
-##jsoup
--keep public class org.jsoup.** {
-public *;
+# ===============================================================
+# Material Components
+# ===============================================================
+-keep class com.google.android.material.** { *; }
+-dontwarn com.google.android.material.**
+
+# ===============================================================
+# Third-party UI Libraries
+# ===============================================================
+# SlidingUpPanel (3.4.0)
+-keep class com.sothree.slidinguppanel.** { *; }
+-dontwarn com.sothree.slidinguppanel.**
+
+# ZoomLayout (1.9.0)
+-keep class com.otaliastudios.** { *; }
+-dontwarn com.otaliastudios.**
+
+# DragDropSwipeRecyclerView (1.1.1)
+-keep class com.ernestoyaquello.dragdropswiperecyclerview.** { *; }
+-dontwarn com.ernestoyaquello.dragdropswiperecyclerview.**
+
+# TwoWayNestedScrollView
+-keep class com.github.ultimate.deej.twowaynestedscrollview.** { *; }
+-dontwarn com.github.ultimate.deej.twowaynestedscrollview.**
+
+# ===============================================================
+# RenderScript (for blur effects, image processing)
+# ===============================================================
+-dontwarn androidx.renderscript.**
+-keep class androidx.renderscript.** { *; }
+-keepclassmembers class androidx.renderscript.RenderScript {
+    native *** rsn*(...);
+    native *** n*(...);
 }
 
-# Preserve all Dexter classes and method names
+# ===============================================================
+# ViewBinding
+# ===============================================================
+-keep class * extends androidx.viewbinding.ViewBinding {
+    public static *** bind(android.view.View);
+    public static *** inflate(android.view.LayoutInflater);
+}
 
-#-keepattributes InnerClasses, Signature, *Annotation*
-#-keep class com.karumi.dexter.** { *; }
-#-keep interface com.karumi.dexter.** { *; }
-#-keepclasseswithmembernames class com.karumi.dexter.** { *; }
-#-keepclasseswithmembernames interface com.karumi.dexter.** { *; }
+# ===============================================================
+# Keep Application-specific classes
+# ===============================================================
+# Keep your AdMobManager
+-keep class com.mckimquyen.atomicPeriodicTable.sdkadbmob.** { *; }
 
-# uCrop
--dontwarn com.yalantis.ucrop**
--keep class com.yalantis.ucrop** { *; }
--keep interface com.yalantis.ucrop** { *; }
+# Keep your Application class
+-keep class com.mckimquyen.atomicPeriodicTable.RoyApp { *; }
 
--keep class android.support.v8.renderscript.** { *; }
--keep class androidx.renderscript.** { *; }
+# Keep all Activities, Fragments, Services
+-keep public class * extends android.app.Activity
+-keep public class * extends androidx.fragment.app.Fragment
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+
+# ===============================================================
+# Keep custom views
+# ===============================================================
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+}
+
+# ===============================================================
+# Keep native methods
+# ===============================================================
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# ===============================================================
+# Keep Parcelable implementations
+# ===============================================================
+-keepclassmembers class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# ===============================================================
+# Keep Serializable classes
+# ===============================================================
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# ===============================================================
+# R8 Optimization Settings
+# ===============================================================
+# Allow optimization
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-optimizationpasses 5
+-allowaccessmodification
+-dontpreverify
+
+# Remove logging in release builds (optional, comment out if you need logs)
+# -assumenosideeffects class android.util.Log {
+#     public static *** d(...);
+#     public static *** v(...);
+#     public static *** i(...);
+# }
+
+# ===============================================================
+# End of ProGuard Rules
+# ===============================================================
