@@ -28,6 +28,7 @@
     <string name="send_issue_form">Send issue form</string>
     <string name="loading">Loading...</string>
     <string name="filter">Filter</string>
+    <string name="ads_notice">Please note: this action may show ads</string>
     <string name="submit_title">Report Issue</string>
     <string name="submit_text">Report bugs and data errors</string>
     <string name="licenses_title">Licenses</string>

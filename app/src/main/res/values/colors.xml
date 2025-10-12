@@ -23,4 +23,13 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
 
+    <!-- Theme-adaptive colors (light theme) -->
+    <color name="colorThemePrimary">#FEFEFE</color>
+    <color name="colorThemePrimaryDark">#F5F5F5</color>
+    <color name="colorThemeText">#202125</color>
+    <color name="colorThemeTextSecondary">#666666</color>
+    <color name="colorThemeSurface">#FFFFFF</color>
+    <color name="colorThemeSurfaceVariant">#F5F5F5</color>
+    <color name="colorThemeAccent">#FF039BE5</color>
+
 </resources>

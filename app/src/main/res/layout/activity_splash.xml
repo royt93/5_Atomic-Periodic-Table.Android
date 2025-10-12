@@ -4,7 +4,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightPrimary">
+    android:background="@color/colorThemePrimary">
 
     <!-- Background Decorative Circle 1 -->
     <View
@@ -16,7 +16,7 @@
         android:layout_marginEnd="-100dp"
         android:alpha="0.05"
         android:background="@drawable/shape_circle"
-        android:backgroundTint="@color/light_blue_600" />
+        android:backgroundTint="@color/colorThemeAccent" />
 
     <!-- Background Decorative Circle 2 -->
     <View
@@ -28,7 +28,7 @@
         android:layout_marginBottom="-80dp"
         android:alpha="0.04"
         android:background="@drawable/shape_circle"
-        android:backgroundTint="@color/light_blue_600" />
+        android:backgroundTint="@color/colorThemeAccent" />
 
     <!-- Main Content -->
     <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="8dp"
-            app:cardBackgroundColor="@color/colorLightPrimaryDark"
+            app:cardBackgroundColor="@color/colorThemeSurface"
             app:cardCornerRadius="180dp"
             app:cardElevation="8dp">
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/app_name"
-            android:textColor="@color/colorLightText"
+            android:textColor="@color/colorThemeText"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
             android:layout_marginTop="48dp"
             android:alpha="0.87"
             android:text="@string/loading"
-            android:textColor="@color/colorLightText"
+            android:textColor="@color/colorThemeText"
             android:textSize="15sp" />
 
         <!-- Progress Indicator -->
@@ -94,8 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:indeterminate="true"
-            app:indicatorColor="@color/colorLightError"
-            app:trackColor="@color/colorLightPrimaryDark"
+            app:indicatorColor="@color/colorThemeAccent"
+            app:trackColor="@color/colorThemeSurfaceVariant"
             app:trackCornerRadius="8dp"
             app:trackThickness="6dp" />
 
@@ -111,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:alpha="0.70"
-            android:text="Please note: this action may show ads"
-            android:textColor="@color/colorLightText"
+            android:text="@string/ads_notice"
+            android:textColor="@color/colorThemeTextSecondary"
             android:textSize="13sp"
             android:textStyle="italic" />
 
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:alpha="0.50"
-            android:textColor="@color/colorLightText"
+            android:textColor="@color/colorThemeTextSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark theme colors override -->
+    <color name="colorThemePrimary">#313235</color>
+    <color name="colorThemePrimaryDark">#1F1F1F</color>
+    <color name="colorThemeText">#E9EAEE</color>
+    <color name="colorThemeTextSecondary">#B3B3B3</color>
+    <color name="colorThemeSurface">#2C2C2C</color>
+    <color name="colorThemeSurfaceVariant">#3C3C3C</color>
+    <color name="colorThemeAccent">#81D4FA</color>
+</resources>
