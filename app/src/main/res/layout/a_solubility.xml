@@ -27,7 +27,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.11"
+            android:alpha="0.08"
             android:background="?attr/colorPrimary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -47,7 +47,7 @@
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/back_button"
                     android:rotation="180"
                     android:src="@drawable/ic_arrow_back_whit"
                     app:tint="?attr/colorOnSecondaryContainer"
@@ -58,16 +58,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
-                    android:alpha="0.9"
-                    android:gravity="center"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
+                    android:gravity="center_vertical"
                     android:text="@string/solubility_table"
-                    android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools2:ignore="PrivateResource" />
+                    android:textStyle="bold" />
 
                 <ImageButton
                     android:id="@+id/infoBtn"
@@ -75,7 +70,7 @@
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical|end"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/info_title"
                     android:src="@drawable/ic_info"
                     app:tint="?attr/colorOnSecondaryContainer"
                     tools2:ignore="PrivateResource" />

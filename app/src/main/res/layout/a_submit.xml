@@ -7,178 +7,230 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor">
 
+    <!-- Background Overlay -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:importantForAccessibility="no" />
 
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/submitScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingTop="56dp"
+        android:paddingBottom="16dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:animateLayoutChanges="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
+            <!-- Title Section -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/submitTitleDownstate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="0dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="28dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp"
                 android:text="@string/submit_activity_title"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="32sp"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
+
+            <!-- Subtitle/Helper Text -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:paddingBottom="24dp"
+                android:text="@string/submit_data_i"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
+                <!-- Issue Type Dropdown -->
                 <include
                     android:id="@+id/dropIssue"
                     layout="@layout/view_drop_issue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
                     android:visibility="gone" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <!-- Submission Card -->
+                <androidx.cardview.widget.CardView
                     android:id="@+id/iBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="@dimen/margin_space"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/shape_toast"
-                    android:backgroundTint="?attr/colorSurfaceVariant"
-                    android:elevation="2dp"
-                    android:orientation="vertical"
-                    tools:ignore="PrivateResource">
+                    android:layout_margin="2dp"
+                    android:animateLayoutChanges="true"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="?attr/colorSurface">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_marginTop="@dimen/margin"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/dropBtn"
+                        <!-- Issue Type Selector -->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/dropBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:clickable="true"
+                                android:contentDescription="@string/select_issue_type"
+                                android:drawableStart="@drawable/ic_arrow"
+                                android:drawablePadding="8dp"
+                                android:drawableTint="?attr/colorPrimary"
+                                android:focusable="true"
+                                android:foreground="@drawable/ripple_bkg"
+                                android:gravity="center_vertical"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:text="@string/submit_data_i"
+                                android:textColor="?attr/colorPrimary"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <!-- Issue Title Input -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:hint="@string/submit_issue"
+                            app:boxBackgroundColor="?attr/colorSurfaceVariant"
+                            app:boxBackgroundMode="filled"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:hintTextColor="?attr/colorOnSurfaceVariant">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/iTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:minHeight="48dp"
+                                android:textColor="?attr/colorOnSurface"
+                                android:textSize="14sp"
+                                tools:ignore="Autofill" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Issue Description Input -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:hint="@string/description"
+                            app:boxBackgroundColor="?attr/colorSurfaceVariant"
+                            app:boxBackgroundMode="filled"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:hintTextColor="?attr/colorOnSurfaceVariant">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/iContent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="top"
+                                android:imeOptions="actionDone"
+                                android:inputType="textMultiLine"
+                                android:minHeight="120dp"
+                                android:minLines="4"
+                                android:textColor="?attr/colorOnSurface"
+                                android:textSize="14sp"
+                                tools:ignore="Autofill" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Send Button -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/iBtn"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/margin"
+                            android:layout_height="48dp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/shape_toast"
+                            android:backgroundTint="?attr/colorPrimary"
                             android:clickable="true"
-                            android:drawableStart="@drawable/ic_arrow"
+                            android:contentDescription="@string/send_issue_form"
+                            android:drawableEnd="@drawable/ic_send"
                             android:drawablePadding="8dp"
-                            android:drawableTint="?attr/colorOnSurfaceVariant"
-                            android:elevation="1dp"
+                            android:drawableTint="?attr/colorOnPrimary"
                             android:focusable="true"
                             android:foreground="@drawable/ripple_bkg"
-                            android:gravity="center_vertical"
-                            android:text="@string/submit_data_i"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:minWidth="120dp"
+                            android:minHeight="48dp"
+                            android:paddingStart="24dp"
+                            android:paddingEnd="16dp"
+                            android:text="@string/submit_send"
+                            android:textAllCaps="false"
+                            android:textColor="?attr/colorOnPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/iTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="@dimen/margin"
-                            android:layout_marginEnd="@dimen/margin"
-                            android:autofillHints=""
-                            android:background="@drawable/shape_toast"
-                            android:backgroundTint="?attr/colorSurface"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:hint="@string/submit_issue"
-                            android:imeOptions="actionSearch"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingStart="18dp"
-                            android:paddingEnd="18dp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:textColorHint="?attr/colorOnSurface"
-                            android:textSize="14sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <EditText
-                        android:id="@+id/iContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:layout_marginStart="@dimen/margin"
-                        android:layout_marginTop="@dimen/margin"
-                        android:layout_marginEnd="@dimen/margin"
-                        android:autofillHints=""
-                        android:background="@drawable/shape_toast"
-                        android:backgroundTint="?attr/colorSurface"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:gravity="top"
-                        android:hint="@string/description"
-                        android:imeOptions="actionSearch"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingStart="18dp"
-                        android:paddingTop="18dp"
-                        android:paddingEnd="18dp"
-                        android:paddingBottom="18dp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textColorHint="?attr/colorOnSurface"
-                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/iBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="@dimen/margin"
-                        android:layout_marginTop="@dimen/margin"
-                        android:layout_marginEnd="@dimen/margin"
-                        android:layout_marginBottom="@dimen/margin"
-                        android:background="@drawable/shape_toast"
-                        android:backgroundTint="?attr/colorPrimary"
-                        android:clickable="true"
-                        android:drawableEnd="@drawable/ic_send"
-                        android:drawablePadding="8dp"
-                        android:drawableTint="?attr/colorOnPrimary"
-                        android:elevation="2dp"
-                        android:focusable="true"
-                        android:foreground="@drawable/ripple_bkg"
-                        android:gravity="center_vertical"
-                        android:paddingStart="24dp"
-                        android:paddingEnd="16dp"
-                        android:text="@string/submit_send"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
             </FrameLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
+
     </ScrollView>
 
+    <!-- Top App Bar -->
     <FrameLayout
         android:id="@+id/commonTitleBackSub"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="?attr/colorSurface"
-        android:elevation="1dp"
-        android:gravity="center|center_vertical"
-        android:orientation="horizontal">
+        android:elevation="4dp">
 
+        <!-- Subtle tint overlay -->
         <FrameLayout
             android:id="@+id/commonTitleBackSubColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.11"
+            android:alpha="0.08"
             android:background="?attr/colorPrimary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -192,34 +244,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
 
+                <!-- Back Button -->
                 <ImageButton
                     android:id="@+id/backBtn"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/description"
+                    android:contentDescription="@string/back_button"
                     android:rotation="180"
                     android:src="@drawable/ic_arrow_back_whit"
                     app:tint="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
+                <!-- Title -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/submitTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
-                    android:alpha="0.9"
-                    android:gravity="center"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
+                    android:gravity="center_vertical"
                     android:text="@string/submit_activity_title"
-                    android:textAlignment="center"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:ignore="PrivateResource" />
+                    android:textStyle="bold" />
+
             </FrameLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
+
     </FrameLayout>
+
 </FrameLayout>

@@ -27,7 +27,7 @@
                 android:id="@+id/commonTitlePhColor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.11"
+                android:alpha="0.08"
                 android:background="?attr/colorPrimary" />
 
             <include
@@ -56,22 +56,19 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/back_button"
                         android:rotation="180"
-                        android:src="@drawable/ic_arrow_back_whit" />
+                        android:src="@drawable/ic_arrow_back_whit"
+                        app:tint="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/phTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/title_bar"
                         android:layout_marginStart="70dp"
-                        android:alpha="0.9"
-                        android:gravity="center"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
+                        android:gravity="center_vertical"
                         android:text="@string/activity_ph_title"
-                        android:textAlignment="center"
-                        android:textColor="?attr/actionMenuTextColor"
+                        android:textColor="?attr/colorOnSecondaryContainer"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 

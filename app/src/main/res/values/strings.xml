@@ -24,6 +24,8 @@
     <string name="submit_issue">Issue</string>
     <string name="description">Description</string>
     <string name="submit_send">Submit issue</string>
+    <string name="select_issue_type">Select issue type dropdown</string>
+    <string name="send_issue_form">Send issue form</string>
     <string name="submit_title">Report Issue</string>
     <string name="submit_text">Report bugs and data errors</string>
     <string name="licenses_title">Licenses</string>
