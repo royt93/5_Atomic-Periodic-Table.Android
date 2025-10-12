@@ -668,6 +668,14 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         val searchEmptyImgPrm = binding.searchMenuInclude.emptySearchBox.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
         binding.searchMenuInclude.emptySearchBox.layoutParams = searchEmptyImgPrm
+
+        // Fix: Add bottom padding to scrollLin to prevent content being hidden behind bottom nav bar
+        binding.scrollLin.setPadding(
+            binding.scrollLin.paddingLeft,
+            binding.scrollLin.paddingTop,
+            binding.scrollLin.paddingRight,
+            bottom + resources.getDimensionPixelSize(R.dimen.nav_bar) + resources.getDimensionPixelSize(R.dimen.title_bar_elevation)
+        )
     }
 
 //    private fun createAdInter() {
