@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
+import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -51,15 +51,19 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
         right: Int,
     ) = Unit
 
-    override fun onApplyWindowInsets(v: View, insets: WindowInsets): WindowInsets {
-        Pasteur.info(TAG, "height: ${insets.systemWindowInsetBottom}")
+    override fun onApplyWindowInsets(v: View, insets: android.view.WindowInsets): android.view.WindowInsets {
+        // Modern API: Use WindowInsetsCompat instead of deprecated WindowInsets methods
+        val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets, v)
+        val systemBars = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+
+        Pasteur.info(TAG, "height: ${systemBars.bottom}")
         onApplySystemInsets(
-            insets.systemWindowInsetTop,
-            insets.systemWindowInsetBottom,
-            insets.systemWindowInsetLeft,
-            insets.systemWindowInsetRight
+            systemBars.top,
+            systemBars.bottom,
+            systemBars.left,
+            systemBars.right
         )
-        return insets.consumeSystemWindowInsets()
+        return insets
     }
 
     private var elementList = ArrayList<Element>()

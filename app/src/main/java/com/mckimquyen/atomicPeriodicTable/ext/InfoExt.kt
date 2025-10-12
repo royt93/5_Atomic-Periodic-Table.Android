@@ -11,7 +11,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Display
 import android.view.View
-import android.view.WindowInsets
+import androidx.core.view.WindowInsetsCompat
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -83,15 +83,19 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
         right: Int,
     ) = Unit
 
-    override fun onApplyWindowInsets(v: View, insets: WindowInsets): WindowInsets {
-        Pasteur.info(TAG, "height: ${insets.systemWindowInsetBottom}")
+    override fun onApplyWindowInsets(v: View, insets: android.view.WindowInsets): android.view.WindowInsets {
+        // Modern API: Use WindowInsetsCompat instead of deprecated WindowInsets methods
+        val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets, v)
+        val systemBars = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+
+        Pasteur.info(TAG, "height: ${systemBars.bottom}")
         onApplySystemInsets(
-            insets.systemWindowInsetTop,
-            insets.systemWindowInsetBottom,
-            insets.systemWindowInsetLeft,
-            insets.systemWindowInsetRight
+            systemBars.top,
+            systemBars.bottom,
+            systemBars.left,
+            systemBars.right
         )
-        return insets.consumeSystemWindowInsets()
+        return insets
     }
 
     @SuppressLint("SetTextI18n")
@@ -263,14 +267,17 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
             binding.electromagneticInc.elementMagneticType.text = magneticType
             binding.electromagneticInc.elementSuperconductingPoint.text = "$superconductingPoint (K)"
 
-            if (phaseText.toString() == "Solid") {
-                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_solid))
-            }
-            if (phaseText.toString() == "Gas") {
-                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_vector_gas))
-            }
-            if (phaseText.toString() == "Liquid") {
-                binding.additionPhysics.phaseIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_liquid))
+            // Optimized: Use when expression for mutually exclusive conditions
+            when (phaseText.toString()) {
+                "Solid" -> binding.additionPhysics.phaseIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_vector_solid)
+                )
+                "Gas" -> binding.additionPhysics.phaseIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_vector_gas)
+                )
+                "Liquid" -> binding.additionPhysics.phaseIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(this, R.drawable.ic_liquid)
+                )
             }
 
             if (oxidationNeg1.contains(0.toString())) {
@@ -427,18 +434,12 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
             val pkgName = "com.android.chrome"
             val customTabBuilder = CustomTabsIntent.Builder()
 
-            customTabBuilder.setToolbarColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorLightPrimary
-                )
-            )
-            customTabBuilder.setSecondaryToolbarColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorLightPrimary
-                )
-            )
+            // Modern API: Use setDefaultColorSchemeParams instead of deprecated setToolbarColor/setSecondaryToolbarColor
+            val colorParams = androidx.browser.customtabs.CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
+                .build()
+            customTabBuilder.setDefaultColorSchemeParams(colorParams)
             customTabBuilder.setShowTitle(true)
 
             val customTab = customTabBuilder.build()

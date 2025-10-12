@@ -158,7 +158,8 @@ fun Activity.rateAppInApp(forceRateInApp: Boolean = false) {
 //                    Log.d("roy93~", "requestReview isComplete ${task.isComplete}")
 //                    Log.d("roy93~", "requestReview exception ${task.exception}")
                 } else {
-                    @ReviewErrorCode val reviewErrorCode = (task.exception as ReviewException?)?.errorCode
+                    // Optimized: Remove unused variable - only needed if logging is enabled
+                    // @ReviewErrorCode val reviewErrorCode = (task.exception as ReviewException?)?.errorCode
 //                    Log.e("roy93~", "requestReview error $reviewErrorCode")
                 }
             } catch (e: Exception) {
@@ -205,8 +206,8 @@ fun Activity.shareApp(
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.app_name))
-        var sAux = "\nỨng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm\n\n"
-        sAux = sAux + "https://play.google.com/store/apps/details?id=" + this.packageName
+        // Optimized: Use string template instead of concatenation
+        val sAux = "\nỨng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
         intent.putExtra(Intent.EXTRA_TEXT, sAux)
         this.startActivity(Intent.createChooser(intent, "Vui lòng chọn"))
     } catch (e: Exception) {
