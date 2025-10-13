@@ -142,12 +142,12 @@
                         android:layout_height="48dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_margin="16dp"
-                        android:contentDescription="@string/previous_button"
-                        android:rotation="180"
                         android:background="@drawable/shape_toast"
                         android:backgroundTint="?attr/colorSurface"
+                        android:contentDescription="@string/previous_button"
                         android:elevation="4dp"
                         android:padding="8dp"
+                        android:rotation="180"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_arrow_back_whit"
                         app:tint="?attr/colorPrimary" />
@@ -159,9 +159,9 @@
                         android:layout_height="48dp"
                         android:layout_gravity="end|center_vertical"
                         android:layout_margin="16dp"
-                        android:contentDescription="@string/next_button"
                         android:background="@drawable/shape_toast"
                         android:backgroundTint="?attr/colorSurface"
+                        android:contentDescription="@string/next_button"
                         android:elevation="4dp"
                         android:padding="8dp"
                         android:scaleType="fitCenter"
@@ -203,85 +203,71 @@
                 android:layout_marginEnd="16dp" />
 
             <!-- Detail Sections -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
             <include
                 android:id="@+id/overviewInc"
                 layout="@layout/v_d_overview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/propertiesInc"
                 layout="@layout/v_d_properties"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/temperaturesInc"
                 layout="@layout/v_d_temperatures"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/atomicInc"
                 layout="@layout/v_d_atomic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/electromagneticInc"
                 layout="@layout/v_d_electromagnetic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/additionPhysics"
                 layout="@layout/v_d_thermodynamic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/nuclearInc"
                 layout="@layout/v_d_nuclear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_height="wrap_content" />
 
             <!-- Submit Data Issue Button -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/iBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:minHeight="48dp"
-                android:text="@string/submit_data_issue"
-                android:textAllCaps="false"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/shape_toast"
                 android:backgroundTint="?attr/colorSurfaceVariant"
-                android:textColor="?attr/colorOnSurface"
                 android:drawableStart="@drawable/ic_info"
                 android:drawablePadding="8dp"
+                android:minHeight="48dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:text="@string/submit_data_issue"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorOnSurface"
                 tools:ignore="PrivateResource" />
 
             <!-- Bottom Padding -->
