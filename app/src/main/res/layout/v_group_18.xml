@@ -21,43 +21,47 @@
             android:layout_height="78dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/helium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="2"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/helium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="He"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/helium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Helium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -75,43 +79,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neon_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="10"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neon_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Ne"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neon_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Neon"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -129,43 +137,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/argon_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="18"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/argon_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Ar"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/argon_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Argon"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -183,43 +195,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/krypton_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="36"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/krypton_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Kr"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/krypton_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Krypton"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -237,43 +253,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/xenon_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="54"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/xenon_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Xe"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/xenon_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Xenon"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -291,43 +311,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/radon_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="86"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/radon_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Rn"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/radon_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Radon"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -345,43 +369,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/oganesson_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="118"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/oganesson_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Og"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/oganesson_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Oganesson"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -400,43 +428,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lutetium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="71"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lutetium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Lu"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lutetium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Lutetium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -454,43 +486,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lawrencium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="103"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lawrencium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Lr"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lawrencium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Lawrencium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

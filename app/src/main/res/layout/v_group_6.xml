@@ -23,43 +23,47 @@
             android:layout_height="78dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="6dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/chromium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="24"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/chromium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Cr"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/chromium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Chromium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -78,43 +82,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/molybdenum_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="42"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/molybdenum_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Mo"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/molybdenum_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Molybdenum"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -133,43 +141,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tungsten_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="74"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tungsten_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="W"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tungsten_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Tungsten"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -188,43 +200,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/seaborgium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="106"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/seaborgium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Sg"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/seaborgium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Seaborgium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -242,43 +258,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/praseodymium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="59"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/praseodymium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Pr"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/praseodymium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Praseodymium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -297,43 +317,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/protactinium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="91"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/protactinium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Pa"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/protactinium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Protactinium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

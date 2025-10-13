@@ -23,43 +23,47 @@
             android:layout_height="78dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="6dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/manganese_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="25"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/manganese_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Mn"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/manganese_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Manganese"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -78,43 +82,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/technetium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="43"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/technetium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Tc"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/technetium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Technetium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -133,43 +141,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rhenium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="75"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rhenium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Re"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rhenium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Rhenium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -188,43 +200,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/bohrium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="107"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/bohrium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Bh"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/bohrium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Bohrium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -242,43 +258,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neodymium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="60"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neodymium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Nd"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/neodymium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Neodymium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
     <FrameLayout
@@ -297,43 +317,47 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:background="@drawable/shape_element_nodetail"
-            android:elevation="1dp" />
+            android:elevation="2dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/uranium_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="14dp"
-            android:alpha="0.9"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.85"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="top|end"
             android:text="92"
             android:textAlignment="gravity"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/uranium_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="U"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="24sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/uranium_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.9"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75"
             android:elevation="24dp"
+            android:fontFamily="sans-serif"
             android:gravity="bottom|center_horizontal"
             android:text="Uranium"
             android:textColor="?attr/actionMenuTextColor"
-            android:textSize="10sp" />
+            android:textSize="9sp" />
     </FrameLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

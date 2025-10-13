@@ -1,16 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:mvnrepository.com)",
-      "WebFetch(domain:developers.google.com)",
-      "Bash(find:*)",
-      "Bash(git log:*)",
-      "mcp__ide__getDiagnostics",
-      "Bash(./gradlew:*)",
-      "Bash(tee:*)",
-      "Bash(lsof:*)"
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
