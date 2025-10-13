@@ -1,166 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:ignore="PrivateResource">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    tools:ignore="PrivateResource,HardcodedText">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Section Header with Colored Background -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="9dp"
-            android:drawableStart="@drawable/ic_vector_fav_electronegativity"
-            android:drawablePadding="9dp"
-            android:drawableTint="?attr/colorPrimary"
-            android:text="@string/electromagnetic_properties"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:background="?attr/colorPrimaryContainer"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:alpha="0.75"
-            android:background="?attr/colorOnSecondaryContainer" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/headerIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_vector_fav_electronegativity"
+                app:tint="?attr/colorPrimary" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementElectricalTypeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/electrical_type"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/headerIcon"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/electromagnetic_properties"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementElectricalType"
+        <!-- Content Container -->
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/element_name"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+            <!-- Electrical Type Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementResistivityTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/resistivity"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementResistivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/element_name"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementElectricalTypeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_experimental"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/electrical_type"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementElectricalType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/element_name"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementMagneticTypeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/magnetic_type"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.3"
+                android:background="?attr/colorOutline" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementMagneticType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/element_name"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            <!-- Resistivity Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementSuperconductingPointTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/superconducting_point"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementResistivityTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_data"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorSecondary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/resistivity"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/elementSuperconductingPoint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/element_name"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementResistivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/element_name"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.3"
+                android:background="?attr/colorOutline" />
+
+            <!-- Magnetic Type Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementMagneticTypeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_nucleari"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorTertiary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/magnetic_type"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementMagneticType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/element_name"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.3"
+                android:background="?attr/colorOutline" />
+
+            <!-- Superconducting Point Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementSuperconductingPointTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_temperature"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/superconducting_point"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/elementSuperconductingPoint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/element_name"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>
