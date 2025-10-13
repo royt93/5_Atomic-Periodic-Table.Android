@@ -9,253 +9,460 @@
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="8dp"
     app:cardBackgroundColor="?attr/colorSurface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
     tools:ignore="PrivateResource,HardcodedText">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/physicsProperties"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Section Header -->
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Section Header with Gradient Background -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:drawableStart="@drawable/ic_overview_icon"
-            android:drawablePadding="12dp"
-            android:drawableTint="?attr/colorPrimary"
-            android:text="@string/atomic_properties"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:background="?attr/colorPrimaryContainer"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="16dp">
 
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/headerIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_overview_icon"
+                app:tint="?attr/colorPrimary" />
 
-        <!-- Oxidation States -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/electron_Config_title2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/oxidation_states"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/headerIcon"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/atomic_properties"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-        <include
-            android:id="@+id/oxView"
-            layout="@layout/view_oxidiation_states"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Electron Configuration -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/electronConfigTitle"
+        <!-- Content Container -->
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/electron_configuration"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/electronConfigText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/electron_config_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            <!-- Oxidation States Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <!-- Subtle Divider -->
-        <View
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <!-- Ion Charge -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ionChargeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/ion_charge"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/electron_Config_title2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:drawableStart="@drawable/ic_data"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/oxidation_states"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ionChargeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/ion_charge_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                    <include
+                        android:id="@+id/oxView"
+                        layout="@layout/view_oxidiation_states"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <!-- Subtle Divider -->
-        <View
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+            <!-- Electron Configuration Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <!-- Ionization Energies -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ionization_energies_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/ionization_energies"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ionizationEnergiesText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/ionization_energies_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/electronConfigTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_nucleari"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorSecondary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/electron_configuration"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <!-- Subtle Divider -->
-        <View
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/electronConfigText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/electron_config_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <!-- Atomic Radius (Empirical) -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/atomicRadiusETitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/atomic_radius_empirical"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <!-- Divider -->
+            <View
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/atomicRadiusEText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/atomic_radius_e_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            <!-- Ion Charge Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <!-- Subtle Divider -->
-        <View
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <!-- Atomic Radius (Calculated) -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/atomicRadiusTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/atomic_radius_calculated"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ionChargeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_experimental"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorTertiary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/ion_charge"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/atomicRadiusText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/atomic_radius_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ionChargeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/ion_charge_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <!-- Subtle Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+            <!-- Divider -->
+            <View
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
 
-        <!-- Covalent Radius -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/covalentRadiusTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/covalent_radius"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <!-- Ionization Energies Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/covalentRadiusText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:alpha="0.87"
-            android:text="@string/covalent_radius_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <!-- Subtle Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutline" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ionization_energies_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_heat"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/ionization_energies"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <!-- Van der Waals Radius -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/vanDerWaalsRadiusTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/van_der_waals_radius"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ionizationEnergiesText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/ionization_energies_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/vanDerWaalsRadiusText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.87"
-            android:text="@string/van_der_waals_radius_text"
-            android:textColor="?attr/colorOnSurface"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+            <!-- Divider -->
+            <View
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
 
+            <!-- Radius Properties Section Header -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:drawableStart="@drawable/ic_radius"
+                android:drawablePadding="10dp"
+                android:drawableTint="?attr/colorSecondary"
+                android:fontFamily="sans-serif-medium"
+                android:text="Radius Properties"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Atomic Radius (Empirical) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atomicRadiusETitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/atomic_radius_empirical"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atomicRadiusEText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/atomic_radius_e_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
+
+            <!-- Atomic Radius (Calculated) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atomicRadiusTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/atomic_radius_calculated"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atomicRadiusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/atomic_radius_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
+
+            <!-- Covalent Radius -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/covalentRadiusTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/covalent_radius"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/covalentRadiusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/covalent_radius_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.3" />
+
+            <!-- Van der Waals Radius -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/vanDerWaalsRadiusTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/van_der_waals_radius"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/vanDerWaalsRadiusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/van_der_waals_radius_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>
