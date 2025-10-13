@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Ion Charge -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Ionization Energies -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -146,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Atomic Radius (Empirical) -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -176,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Atomic Radius (Calculated) -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -205,7 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Covalent Radius -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -234,7 +234,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="16dp"
-            android:background="?attr/colorOutlineVariant" />
+            android:background="?attr/colorOutline" />
 
         <!-- Van der Waals Radius -->
         <androidx.appcompat.widget.AppCompatTextView
