@@ -1,158 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:ignore="PrivateResource">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    tools:ignore="PrivateResource,HardcodedText">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/physicsProperties"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!-- Section Header with Colored Background -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="9dp"
-            android:drawableStart="@drawable/ic_nucleari"
-            android:drawablePadding="9dp"
-            android:drawableTint="?attr/colorPrimary"
-            android:text="@string/nuclear_properties"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:alpha="0.75"
-            android:background="?attr/colorOnSecondaryContainer" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/radioactiveTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/radioactive"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/radioactiveText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/radioactive_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
-
-        <FrameLayout
-            android:id="@+id/isotopesFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true">
+            android:background="?attr/colorPrimaryContainer"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="16dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/isotopesIcon"
-                android:layout_width="64dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:padding="18dp"
-                android:rotation="270"
-                app:srcCompat="@drawable/ic_arrow"
-                app:tint="?attr/colorTertiary" />
+                android:id="@+id/headerIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_nucleari"
+                app:tint="?attr/colorPrimary" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/headerIcon"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/nuclear_properties"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Content Container -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Radioactive Card -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="64dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/isotopesTitle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="18dp"
-                    android:layout_marginBottom="2dp"
-                    android:text="@string/isotopes"
-                    android:textColor="?attr/colorOnSecondaryContainer"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/isotopesText"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/radioactiveTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_experimental"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/radioactive"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/radioactiveText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/radioactive_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.3"
+                android:background="?attr/colorOutline" />
+
+            <!-- Isotopes Card (Clickable) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:id="@+id/isotopesFrame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="18dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/view_all_isotopes"
-                    android:textColor="?attr/colorOnSecondaryContainer"
-                    android:textSize="14sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </FrameLayout>
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
-            android:alpha="0.25"
-            android:background="?attr/colorOnSecondaryContainer" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:layout_marginEnd="48dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/neutronCrossSectionalTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/neutron_cross_sectional"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/isotopesTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:drawableStart="@drawable/ic_isotopes"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="?attr/colorSecondary"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/isotopes"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/neutronCrossSectionalText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/neutron_cross_sectional_text"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            android:textIsSelectable="true"
-            android:textSize="14sp" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/isotopesText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.87"
+                            android:fontFamily="sans-serif"
+                            android:lineSpacingExtra="4dp"
+                            android:text="@string/view_all_isotopes"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <!-- Arrow Icon -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/isotopesIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:padding="12dp"
+                        android:rotation="270"
+                        app:srcCompat="@drawable/ic_arrow"
+                        app:tint="?attr/colorTertiary" />
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.3"
+                android:background="?attr/colorOutline" />
+
+            <!-- Neutron Cross Sectional Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/neutronCrossSectionalTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:drawableStart="@drawable/ic_data"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="?attr/colorTertiary"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/neutron_cross_sectional"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/neutronCrossSectionalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.87"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:text="@string/neutron_cross_sectional_text"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>
