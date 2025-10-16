@@ -12,8 +12,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mckimquyen.atomicPeriodicTable.R
@@ -73,19 +71,14 @@ class ElectrodeAct : BaseAct() {
         // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
         // ===============================================================
         // Thay thế: systemUiVisibility (deprecated)
-        // Sử dụng: WindowInsetsControllerCompat (modern, backward compatible)
-
-        // Bật chế độ edge-to-edge: content vẽ dưới status bar & navigation bar
+        // Sử dụng: WindowCompat.setDecorFitsSystemWindows (modern, backward compatible)
+        //
+        // Logic gốc: SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        // - Content vẽ DƯỚI system bars (status bar & navigation bar)
+        // - Navigation bar KHÔNG bị ẩn, vẫn hiển thị bình thường
+        //
+        // Modern equivalent: chỉ cần setDecorFitsSystemWindows(false)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // Lấy WindowInsetsController để điều khiển system bars
-        val windowInsetsController = WindowCompat.getInsetsController(window, binding.viewEle)
-
-        // Ẩn navigation bar, giữ status bar
-        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
-
-        // Set behavior: khi user swipe, navigation bar hiện tạm thời rồi tự ẩn
-        windowInsetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         // ===============================================================
         // Back Button Handler (Modern API)
@@ -114,18 +107,22 @@ class ElectrodeAct : BaseAct() {
         left: Int,
         right: Int,
     ) {
-        binding.eView.setPadding(/* left = */ 0,/* top = */
-            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,/* right = */
-            0,/* bottom = */
+        // Set padding for RecyclerView to account for title bar (same as EquationsAct, IonAct)
+        binding.eView.setPadding(
+            0,
+            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
+            0,
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
+        // Adjust title bar height to include status bar
         val params2 = binding.commonTitleBackElo.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.commonTitleBackElo.layoutParams = params2
 
+        // Adjust empty search box margin
         val searchEmptyImgPrm = binding.emptySearchBoxEle.layoutParams as ViewGroup.MarginLayoutParams
-        searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
+        searchEmptyImgPrm.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.emptySearchBoxEle.layoutParams = searchEmptyImgPrm
     }
 
