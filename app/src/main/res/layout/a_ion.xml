@@ -186,7 +186,6 @@
             android:id="@+id/ionView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
             android:clipToPadding="false"
             android:paddingTop="12dp"
             android:paddingBottom="80dp"

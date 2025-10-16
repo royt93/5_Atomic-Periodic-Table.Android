@@ -58,7 +58,6 @@
             android:id="@+id/rvElement"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="64dp"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="60dp"

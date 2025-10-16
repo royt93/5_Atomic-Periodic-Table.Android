@@ -3,7 +3,9 @@
     "allow": [
       "Bash(done)",
       "Bash(./gradlew:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(while read file)",
+      "Bash(do echo \"=== $file ===\")"
     ],
     "deny": [],
     "ask": []
