@@ -1,128 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground">
+    android:layout_height="match_parent">
 
-    <!-- Modern elevated container -->
-    <com.google.android.material.card.MaterialCardView
+    <HorizontalScrollView
+        android:id="@+id/chipBarPh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="44dp"
+        android:layout_gravity="bottom"
+        tools:ignore="MissingConstraints">
 
-        <HorizontalScrollView
-            android:id="@+id/chipBarPh"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_gravity="bottom"
-            android:fadingEdge="horizontal"
-            android:fadingEdgeLength="24dp"
-            android:overScrollMode="never"
-            android:scrollbars="none">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <Button
+                android:id="@+id/bromothymolBlueBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_chip_outline"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/riple_chip_ripple"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/activity_ph_bromothymol_blue"
+                android:textAllCaps="false"
+                android:textColor="?attr/actionMenuTextColor" />
 
-                <Button
-                    android:id="@+id/bromothymolBlueBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/shape_chip_outline"
-                    android:clickable="true"
-                    android:elevation="1dp"
-                    android:focusable="true"
-                    android:foreground="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/activity_ph_bromothymol_blue"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/actionMenuTextColor"
-                    android:textSize="14sp"
-                    android:translationZ="0dp" />
+            <Button
+                android:id="@+id/methylOrangeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/shape_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/riple_chip_ripple"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/activity_ph_methyl_orange"
+                android:textAllCaps="false"
+                android:textColor="?attr/actionMenuTextColor" />
 
-                <Button
-                    android:id="@+id/methylOrangeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/shape_chip"
-                    android:clickable="true"
-                    android:elevation="1dp"
-                    android:focusable="true"
-                    android:foreground="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/activity_ph_methyl_orange"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/actionMenuTextColor"
-                    android:textSize="14sp"
-                    android:translationZ="0dp" />
+            <Button
+                android:id="@+id/congoRedBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/riple_chip_ripple"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/activity_ph_congo_red"
+                android:textAllCaps="false"
+                android:textColor="?attr/actionMenuTextColor" />
 
-                <Button
-                    android:id="@+id/congoRedBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_chip"
-                    android:clickable="true"
-                    android:elevation="1dp"
-                    android:focusable="true"
-                    android:foreground="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/activity_ph_congo_red"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/actionMenuTextColor"
-                    android:textSize="14sp"
-                    android:translationZ="0dp" />
+            <Button
+                android:id="@+id/phenolphthaleinBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/riple_chip_ripple"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/activity_ph_phenolphthalein"
+                android:textAllCaps="false"
+                android:textColor="?attr/actionMenuTextColor" />
 
-                <Button
-                    android:id="@+id/phenolphthaleinBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_chip"
-                    android:clickable="true"
-                    android:elevation="1dp"
-                    android:focusable="true"
-                    android:foreground="@drawable/riple_chip_ripple"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/activity_ph_phenolphthalein"
-                    android:textAllCaps="false"
-                    android:textColor="?attr/actionMenuTextColor"
-                    android:textSize="14sp"
-                    android:translationZ="0dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </HorizontalScrollView>
-
-    </com.google.android.material.card.MaterialCardView>
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
