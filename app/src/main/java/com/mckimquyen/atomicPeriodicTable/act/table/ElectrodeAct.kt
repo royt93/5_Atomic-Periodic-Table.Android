@@ -35,6 +35,7 @@ class ElectrodeAct : BaseAct() {
     // Handler instances for memory leak prevention
     private var filterHandler: Handler? = null
     private var delayCloseHandler: Handler? = null
+    private var textWatcher: TextWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,7 +144,7 @@ class ElectrodeAct : BaseAct() {
 
         adapter.notifyDataSetChanged()
 
-        binding.editEle.addTextChangedListener(object : TextWatcher {
+        textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -163,7 +164,8 @@ class ElectrodeAct : BaseAct() {
             override fun afterTextChanged(s: Editable) {
                 filter(text = s.toString(), list = series, recyclerView = recyclerView)
             }
-        })
+        }
+        binding.editEle.addTextChangedListener(textWatcher)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -222,6 +224,13 @@ class ElectrodeAct : BaseAct() {
         filterHandler = null
         delayCloseHandler?.removeCallbacksAndMessages(null)
         delayCloseHandler = null
+
+        // Clean up text watcher to prevent memory leaks
+        textWatcher?.let {
+            binding.editEle.removeTextChangedListener(it)
+        }
+        textWatcher = null
+
         super.onDestroy()
     }
 

@@ -47,6 +47,7 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
     private var updateButtonHandler: Handler? = null
     private var filterHandler: Handler? = null
     private var delayCloseHandler: Handler? = null
+    private var textWatcher: TextWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -211,13 +212,14 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         }
 
         adapter.notifyDataSetChanged()
-        binding.editIso.addTextChangedListener(object : TextWatcher {
+        textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString(), dictionaryList, recyclerView)
             }
-        })
+        }
+        binding.editIso.addTextChangedListener(textWatcher)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -329,6 +331,13 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         filterHandler = null
         delayCloseHandler?.removeCallbacksAndMessages(null)
         delayCloseHandler = null
+
+        // Clean up text watcher to prevent memory leaks
+        textWatcher?.let {
+            binding.editIso.removeTextChangedListener(it)
+        }
+        textWatcher = null
+
         super.onDestroy()
     }
 }

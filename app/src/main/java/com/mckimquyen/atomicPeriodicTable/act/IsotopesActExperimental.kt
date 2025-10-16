@@ -43,6 +43,10 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
     // Handler instance for memory leak prevention
     private var filterHandler: android.os.Handler? = null
 
+    // Listener instances for memory leak prevention
+    private var textWatcher: TextWatcher? = null
+    private var panelSlideListener: SlidingUpPanelLayout.PanelSlideListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -79,15 +83,16 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         val adapter = IsotopeAdt(elementList = elements, clickListener = this, context = this)
         binding.rView.adapter = adapter
 
-        binding.editIso.addTextChangedListener(object : TextWatcher {
+        textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString(), elements, binding.rView)
             }
-        })
+        }
+        binding.editIso.addTextChangedListener(textWatcher)
 
-        binding.slidPanel.slidingLayoutI.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+        panelSlideListener = object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {}
             override fun onPanelStateChanged(
                 panel: View?,
@@ -99,7 +104,8 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                     Utils.fadeOutAnim(binding.slidPanel.root, 300)
                 }
             }
-        })
+        }
+        binding.slidPanel.slidingLayoutI.addPanelSlideListener(panelSlideListener)
 
         binding.backgroundI2.setOnClickListener {
             if (binding.panelInfo.root.isVisible) {
@@ -396,6 +402,18 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         // Clean up handler to prevent memory leaks
         filterHandler?.removeCallbacksAndMessages(null)
         filterHandler = null
+
+        // Clean up listeners to prevent memory leaks
+        textWatcher?.let {
+            binding.editIso.removeTextChangedListener(it)
+        }
+        textWatcher = null
+
+        panelSlideListener?.let {
+            binding.slidPanel.slidingLayoutI.removePanelSlideListener(it)
+        }
+        panelSlideListener = null
+
         super.onDestroy()
     }
 }

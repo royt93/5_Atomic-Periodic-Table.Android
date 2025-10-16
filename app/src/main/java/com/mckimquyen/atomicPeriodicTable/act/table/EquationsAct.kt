@@ -37,6 +37,7 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     // Handler instances for memory leak prevention
     private var filterHandler: Handler? = null
     private var delayCloseHandler: Handler? = null
+    private var textWatcher: TextWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,7 +159,7 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
 
         adapter.notifyDataSetChanged()
 
-        binding.editEqu.addTextChangedListener(object : TextWatcher {
+        textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
                 start: Int,
@@ -178,7 +179,8 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString(), equation, binding.equRecycler)
             }
-        })
+        }
+        binding.editEqu.addTextChangedListener(textWatcher)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -264,6 +266,13 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
         filterHandler = null
         delayCloseHandler?.removeCallbacksAndMessages(null)
         delayCloseHandler = null
+
+        // Clean up text watcher to prevent memory leaks
+        textWatcher?.let {
+            binding.editEqu.removeTextChangedListener(it)
+        }
+        textWatcher = null
+
         super.onDestroy()
     }
 }

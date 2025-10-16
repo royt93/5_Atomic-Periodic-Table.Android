@@ -72,6 +72,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     private var panelSlideListener: SlidingUpPanelLayout.PanelSlideListener? = null
     private var initNameHandler: android.os.Handler? = null
     private var filterHandler: android.os.Handler? = null
+    private var textWatcher: TextWatcher? = null
 
     override fun attachBaseContext(context: Context) {
         val override = Configuration(context.resources.configuration)
@@ -119,13 +120,14 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         ElementModel.getList(elements)
         val adapter = ElementAdt(elementList = elements, clickListener = this, con = this)
         recyclerView.adapter = adapter
-        binding.searchMenuInclude.editElement.addTextChangedListener(object : TextWatcher {
+        textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 filter(s.toString(), elements, recyclerView)
             }
-        })
+        }
+        binding.searchMenuInclude.editElement.addTextChangedListener(textWatcher)
 
         setOnCLickListenerSetups(elements)
         scrollAdapter()
@@ -823,6 +825,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             binding.navMenuInclude.slidingLayout.removePanelSlideListener(it)
         }
         panelSlideListener = null
+
+        textWatcher?.let {
+            binding.searchMenuInclude.editElement.removeTextChangedListener(it)
+        }
+        textWatcher = null
 
         super.onDestroy()
     }
