@@ -4,13 +4,13 @@
     <color name="colorLightPrimaryDark">#F5F5F5</color>
     <color name="colorLightError">#B00020</color>
     <color name="colorLightText">#202125</color>
-    <color name="colorLightRipple">#40202125</color>
+    <color name="colorLightRipple">#300856CF</color>
     <color name="colorLightRippleItem">#A81B94E4</color>
     <color name="element_box_light">#D9E2FF</color>
     <color name="element_box_dark">#404659</color>
     <color name="colorDarkPrimary">#313235</color>
     <color name="colorDarkText">#E9EAEE</color>
-    <color name="colorDarkRipple">#40E9EAEE</color>
+    <color name="colorDarkRipple">#30b0c5ff</color>
     <color name="colorDarkRippleItem">#A81B94E4</color>
     <color name="wikipediaColor">#FFFFFF</color>
     <color name="non_metals">#81c784</color>

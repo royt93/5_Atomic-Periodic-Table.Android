@@ -29,6 +29,7 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="actionMenuTextColor">@color/colorLightText</item>>
+        <item name="colorControlHighlight">@color/colorLightRipple</item>
         <item name="rippleColor">@color/colorLightRipple</item>
     </style>
 
@@ -58,6 +59,7 @@
         <item name="actionMenuTextColor">@color/colorDarkText</item>
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="android:statusBarColor">@color/transparent</item>
+        <item name="colorControlHighlight">@color/colorDarkRipple</item>
         <item name="rippleColor">@color/colorDarkRipple</item>
     </style>
 
