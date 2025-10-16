@@ -297,12 +297,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Emission Background Overlay -->
+    <!-- Emission Background Overlay - dim disabled -->
     <LinearLayout
         android:id="@+id/detailEmissionBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A8000000"
+        android:background="@android:color/transparent"
         android:clickable="true"
         android:elevation="12dp"
         android:focusable="true"
@@ -335,11 +335,9 @@
         android:id="@+id/detailEmission"
         layout="@layout/view_detail_emission"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="100dp"
         android:elevation="112dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

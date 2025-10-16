@@ -2,25 +2,17 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="1"
+    android:layout_height="wrap_content"
     android:clickable="true"
-    android:elevation="100dp"
     android:focusable="true"
-    android:orientation="vertical"
-    app:cardBackgroundColor="#54818181"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="16dp"
-    app:cardElevation="100dp">
+    app:cardElevation="8dp">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:background="@color/colorDarkPrimary" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/closeEmissionBtn"
@@ -32,11 +24,12 @@
             android:rotation="180"
             android:src="@drawable/ic_close"
             app:backgroundTint="?attr/colorPrimary"
-            app:fabSize="mini" />
+            app:fabSize="mini"
+            app:tint="?attr/colorOnPrimary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -49,112 +42,119 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <View
                         android:id="@+id/textView30"
                         android:layout_width="2dp"
                         android:layout_height="36dp"
-                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="4dp"
-                        android:alpha="0.66"
-                        android:background="@color/colorLightPrimary" />
+                        android:alpha="0.7"
+                        android:background="?attr/colorOnSurface" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nm4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="@string/_400_nm"
                         android:textAlignment="center"
-                        android:textColor="@color/colorLightPrimary" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <View
                         android:id="@+id/textView31"
                         android:layout_width="2dp"
                         android:layout_height="36dp"
-                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="4dp"
-                        android:alpha="0.66"
-                        android:background="@color/colorLightPrimary" />
+                        android:alpha="0.7"
+                        android:background="?attr/colorOnSurface" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nm5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="@string/_500_nm"
                         android:textAlignment="center"
-                        android:textColor="@color/colorLightPrimary" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <View
                         android:id="@+id/textView34"
                         android:layout_width="2dp"
                         android:layout_height="36dp"
-                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="4dp"
-                        android:alpha="0.66"
-                        android:background="@color/colorLightPrimary" />
+                        android:alpha="0.7"
+                        android:background="?attr/colorOnSurface" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nm6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="@string/_600_nm"
                         android:textAlignment="center"
-                        android:textColor="@color/colorLightPrimary" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <View
                         android:id="@+id/textView35"
                         android:layout_width="2dp"
                         android:layout_height="36dp"
-                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="4dp"
-                        android:alpha="0.66"
-                        android:background="@color/colorLightPrimary" />
+                        android:alpha="0.7"
+                        android:background="?attr/colorOnSurface" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/nm7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="@string/_700_nm"
                         android:textAlignment="center"
-                        android:textColor="@color/colorLightPrimary" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

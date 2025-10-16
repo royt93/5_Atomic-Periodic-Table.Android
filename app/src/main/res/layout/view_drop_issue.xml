@@ -36,11 +36,13 @@
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple"
                 android:gravity="center_vertical"
-                android:padding="9dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
                 android:paddingEnd="36dp"
                 android:text="Data Issue"
                 android:textColor="?attr/colorOnPrimaryContainer"
-                tools:ignore="RtlSymmetry" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
         </FrameLayout>
 
         <FrameLayout
@@ -63,11 +65,13 @@
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple"
                 android:gravity="center_vertical"
-                android:padding="9dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
                 android:paddingEnd="36dp"
                 android:text="Bug"
                 android:textColor="?attr/colorOnPrimaryContainer"
-                tools:ignore="RtlSymmetry" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
 
         </FrameLayout>
 
@@ -93,11 +97,13 @@
                 android:focusable="true"
                 android:foreground="@drawable/ripple_d_ripple"
                 android:gravity="center_vertical"
-                android:padding="9dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
                 android:paddingEnd="36dp"
                 android:text="Question"
                 android:textColor="?attr/colorOnPrimaryContainer"
-                tools:ignore="RtlSymmetry" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
 
         </FrameLayout>
 
