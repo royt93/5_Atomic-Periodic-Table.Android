@@ -66,9 +66,10 @@ android {
 
     // Split APKs by ABI for smaller individual APK sizes
     // Google Play will automatically serve the right APK for each device
+    // DISABLED: Conflicts with App Bundle builds (AAB handles splitting automatically)
     splits {
         abi {
-            enable true
+            enable false
             reset()
             include 'armeabi-v7a', 'arm64-v8a', 'x86_64'
             universalApk false // Set true if you need a universal APK
