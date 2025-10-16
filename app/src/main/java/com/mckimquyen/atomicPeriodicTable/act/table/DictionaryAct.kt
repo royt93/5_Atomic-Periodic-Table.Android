@@ -291,36 +291,34 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         url: String,
         position: Int,
     ) {
-        wiki.setOnClickListener {
-            val packageNameString = "com.android.chrome"
+        val packageNameString = "com.android.chrome"
 
-            // Modern Custom Tabs API - sử dụng CustomTabColorSchemeParams
-            val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-                .setToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
-                .setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
-                .build()
+        // Modern Custom Tabs API - sử dụng CustomTabColorSchemeParams
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
+            .setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.wikipediaColor))
+            .build()
 
-            val customTabBuilder = CustomTabsIntent.Builder()
-                .setDefaultColorSchemeParams(colorSchemeParams)
-                .setShowTitle(true)
+        val customTabBuilder = CustomTabsIntent.Builder()
+            .setDefaultColorSchemeParams(colorSchemeParams)
+            .setShowTitle(true)
 
-            val customTab = customTabBuilder.build()
-            val intent = customTab.intent
-            // Sử dụng toUri() extension thay vì Uri.parse()
-            intent.data = url.toUri()
+        val customTab = customTabBuilder.build()
+        val intent = customTab.intent
+        // Sử dụng toUri() extension thay vì Uri.parse()
+        intent.data = url.toUri()
 
-            val packageManager = packageManager
-            val resolveInfoList = packageManager.queryIntentActivities(
-                customTab.intent,
-                PackageManager.MATCH_DEFAULT_ONLY
-            )
-            for (resolveInfo in resolveInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                if (TextUtils.equals(packageName, packageNameString))
-                    customTab.intent.setPackage(packageNameString)
-            }
-            customTab.intent.data?.let { it1 -> customTab.launchUrl(this, it1) }
+        val packageManager = packageManager
+        val resolveInfoList = packageManager.queryIntentActivities(
+            customTab.intent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        )
+        for (resolveInfo in resolveInfoList) {
+            val packageName = resolveInfo.activityInfo.packageName
+            if (TextUtils.equals(packageName, packageNameString))
+                customTab.intent.setPackage(packageNameString)
         }
+        customTab.intent.data?.let { it1 -> customTab.launchUrl(this, it1) }
     }
 
     override fun onDestroy() {
