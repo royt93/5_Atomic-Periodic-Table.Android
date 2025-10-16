@@ -242,6 +242,7 @@
                     android:foreground="@drawable/ripple_d_ripple">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/offlineSettingsIcon"
                         android:layout_width="56dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
@@ -250,43 +251,47 @@
                         app:srcCompat="@drawable/ic_data"
                         app:tint="?attr/colorOnBackground" />
 
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/offlineInternetSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:thumb="@drawable/selector_switch_thumb"
+                        app:track="@drawable/selector_switch_track" />
+
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="72dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_toStartOf="@id/offlineInternetSwitch"
+                        android:layout_toEndOf="@id/offlineSettingsIcon"
+                        android:gravity="start"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="start"
                             android:text="@string/offline_mode"
                             android:textColor="?attr/colorOnBackground"
                             android:textSize="16sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:alpha="0.7"
+                            android:gravity="start"
                             android:text="@string/disables_loading_of_images"
                             android:textColor="?attr/colorOnBackground"
                             android:textSize="12sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/offlineInternetSwitch"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="16dp"
-                        android:gravity="center"
-                        android:scaleX="1.2"
-                        android:scaleY="1.2"
-                        android:thumb="@drawable/selector_switch_thumb"
-                        app:track="@drawable/selector_switch_track" />
                 </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
