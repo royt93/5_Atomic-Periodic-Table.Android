@@ -34,6 +34,19 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     private var systemUiConfigured = false
 
+    // Handler instances stored as protected members for memory leak prevention
+    // Subclasses can access these if needed, and they will be cleaned up in onDestroy()
+    protected var boilingHandler: Handler? = null
+    protected var meltingHandler: Handler? = null
+    protected var phaseHandler: Handler? = null
+    protected var yearHandler: Handler? = null
+    protected var electroHandler: Handler? = null
+    protected var groupsHandler: Handler? = null
+    protected var weightHandler: Handler? = null
+    protected var heatHandler: Handler? = null
+    protected var specificHandler: Handler? = null
+    protected var vapeHandler: Handler? = null
+
     override fun onStart() {
         super.onStart()
         val content = findViewById<View>(android.R.id.content)
@@ -132,10 +145,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initBoiling(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        boilingHandler = Handler(Looper.getMainLooper())
         initName(elementList)
         closeHover()
-        delay.postDelayed({
+        boilingHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -166,10 +179,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initMelting(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        meltingHandler = Handler(Looper.getMainLooper())
         initName(elementList)
         closeHover()
-        delay.postDelayed({
+        meltingHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -198,10 +211,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initPhase(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        phaseHandler = Handler(Looper.getMainLooper())
         initName(elementList)
         closeHover()
-        delay.postDelayed({
+        phaseHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -227,10 +240,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initYear(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        yearHandler = Handler(Looper.getMainLooper())
         initName(elementList)
         closeHover()
-        delay.postDelayed({
+        yearHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -256,10 +269,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initElectro(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        electroHandler = Handler(Looper.getMainLooper())
         initName(elementList)
         closeHover()
-        delay.postDelayed({
+        electroHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -327,9 +340,9 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initGroups(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        groupsHandler = Handler(Looper.getMainLooper())
         initName(list)
-        delay.postDelayed({
+        groupsHandler?.postDelayed({
             for (item in list) {
                 closeHover()
                 val name = item.element
@@ -391,10 +404,10 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
 
     @SuppressLint("DiscouragedApi")
     fun initWeight(list: ArrayList<Element>) {
-        val delay = Handler(Looper.getMainLooper())
+        weightHandler = Handler(Looper.getMainLooper())
         initName(list)
         closeHover()
-        delay.postDelayed({
+        weightHandler?.postDelayed({
             for (item in list) {
                 val namee = item.element
                 val extText = "_text"
@@ -425,8 +438,8 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
     fun initHeat(list: ArrayList<Element>) {
         initName(list)
         closeHover()
-        val delay = Handler(Looper.getMainLooper())
-        delay.postDelayed({
+        heatHandler = Handler(Looper.getMainLooper())
+        heatHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -459,8 +472,8 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
     fun initSpecific(list: ArrayList<Element>) {
         initName(list)
         closeHover()
-        val delay = Handler(Looper.getMainLooper())
-        delay.postDelayed({
+        specificHandler = Handler(Looper.getMainLooper())
+        specificHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -492,8 +505,8 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
     fun initVape(list: ArrayList<Element>) {
         initName(list)
         closeHover()
-        val delay = Handler(Looper.getMainLooper())
-        delay.postDelayed({
+        vapeHandler = Handler(Looper.getMainLooper())
+        vapeHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
                 val extText = "_text"
@@ -518,6 +531,35 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
                 }
             }
         }, 10)
+    }
+
+    /**
+     * Protected cleanup method for Handler instances.
+     * Subclasses should call super.onDestroy() to ensure proper cleanup.
+     */
+    override fun onDestroy() {
+        // Clean up all handlers to prevent memory leaks
+        boilingHandler?.removeCallbacksAndMessages(null)
+        boilingHandler = null
+        meltingHandler?.removeCallbacksAndMessages(null)
+        meltingHandler = null
+        phaseHandler?.removeCallbacksAndMessages(null)
+        phaseHandler = null
+        yearHandler?.removeCallbacksAndMessages(null)
+        yearHandler = null
+        electroHandler?.removeCallbacksAndMessages(null)
+        electroHandler = null
+        groupsHandler?.removeCallbacksAndMessages(null)
+        groupsHandler = null
+        weightHandler?.removeCallbacksAndMessages(null)
+        weightHandler = null
+        heatHandler?.removeCallbacksAndMessages(null)
+        heatHandler = null
+        specificHandler?.removeCallbacksAndMessages(null)
+        specificHandler = null
+        vapeHandler?.removeCallbacksAndMessages(null)
+        vapeHandler = null
+        super.onDestroy()
     }
 
 }

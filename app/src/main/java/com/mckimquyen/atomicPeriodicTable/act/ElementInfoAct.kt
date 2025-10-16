@@ -218,8 +218,9 @@ class ElementInfoAct : InfoExt() {
         view.alpha = 0.0f
         view.animate().duration = 150
         view.animate().alpha(1.0f)
-        val delay = Handler(Looper.getMainLooper())
-        delay.postDelayed({
+        // Memory leak fix: Use View.postDelayed instead of Handler
+        // This ties the callback to the View's lifecycle
+        view.postDelayed({
             view2.alpha = 0.0f
             view2.animate().duration = 150
             view2.animate().alpha(1.0f)

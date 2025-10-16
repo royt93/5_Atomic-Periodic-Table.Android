@@ -21,6 +21,9 @@ class SubmitAct : BaseAct() {
     // ViewBinding - thay thế Kotlin Synthetics (deprecated)
     private lateinit var binding: ASubmitBinding
 
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -76,28 +79,30 @@ class SubmitAct : BaseAct() {
         binding.commonTitleBackSubColor.visibility = View.INVISIBLE
         binding.submitTitle.visibility = View.INVISIBLE
         binding.commonTitleBackSub.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.submitScroll.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 200f
-                override fun onScrollChanged() {
-                    if (binding.submitScroll.scrollY > 150f) {
-                        // Đã scroll xuống -> hiện title bar compact
-                        binding.commonTitleBackSubColor.visibility = View.VISIBLE
-                        binding.submitTitle.visibility = View.VISIBLE
-                        binding.submitTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackSub.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        // Ở đầu trang → hiện title bar expanded
-                        binding.commonTitleBackSubColor.visibility = View.INVISIBLE
-                        binding.submitTitle.visibility = View.INVISIBLE
-                        binding.submitTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackSub.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.submitScroll.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 200f
+            override fun onScrollChanged() {
+                if (binding.submitScroll.scrollY > 150f) {
+                    // Đã scroll xuống -> hiện title bar compact
+                    binding.commonTitleBackSubColor.visibility = View.VISIBLE
+                    binding.submitTitle.visibility = View.VISIBLE
+                    binding.submitTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackSub.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    // Ở đầu trang → hiện title bar expanded
+                    binding.commonTitleBackSubColor.visibility = View.INVISIBLE
+                    binding.submitTitle.visibility = View.INVISIBLE
+                    binding.submitTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackSub.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.submitScroll.scrollY.toFloat()
+            }
+        }
+        binding.submitScroll.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         // ===============================================================
         // Back Button Handler (Modern API)
@@ -205,5 +210,14 @@ class SubmitAct : BaseAct() {
                 .toString().toUri()
             startActivity(request)
         }
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.submitScroll.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+        super.onDestroy()
     }
 }

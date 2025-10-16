@@ -67,6 +67,12 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     private lateinit var mScaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
 
+    // Memory leak prevention: Store listeners for cleanup
+    private var scrollChangedListener: OnScrollChangedListener? = null
+    private var panelSlideListener: SlidingUpPanelLayout.PanelSlideListener? = null
+    private var initNameHandler: android.os.Handler? = null
+    private var filterHandler: android.os.Handler? = null
+
     override fun attachBaseContext(context: Context) {
         val override = Configuration(context.resources.configuration)
         override.fontScale = 1.0f
@@ -148,8 +154,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         // Modern equivalent: chỉ cần setDecorFitsSystemWindows(false)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val handler = android.os.Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        // Memory leak fix: Store handler for cleanup
+        initNameHandler = android.os.Handler(Looper.getMainLooper())
+        initNameHandler?.postDelayed({
             initName(elements)
         }, 250)
 
@@ -184,7 +191,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 }
             })
 
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(object : OnScrollChangedListener {
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : OnScrollChangedListener {
             var y = 0f
             override fun onScrollChanged() {
                 if (binding.scrollView.scrollY > y) {
@@ -196,9 +204,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 }
                 y = binding.scrollView.scrollY.toFloat()
             }
-        })
+        }
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
-        binding.navMenuInclude.slidingLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
+        // Memory leak fix: Store listener for cleanup
+        panelSlideListener = object : SlidingUpPanelLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View?, slideOffset: Float) {}
             override fun onPanelStateChanged(
                 panel: View?,
@@ -210,7 +220,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                     Utils.fadeOutAnim(view = binding.navBackground, time = 100)
                 }
             }
-        })
+        }
+        binding.navMenuInclude.slidingLayout.addPanelSlideListener(panelSlideListener)
 
 //        createAdInter()
         AdMobManager.setCurrentActivity(this)
@@ -330,8 +341,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         }
         mAdapter.filterList(filteredList)
         mAdapter.notifyDataSetChanged()
-        val handler = android.os.Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        filterHandler = android.os.Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.searchMenuInclude.emptySearchBox, 300)
             } else {
@@ -793,6 +804,27 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 println("Adaptive refresh rate applied: ${highestRefreshRateMode.refreshRate} Hz")
             }
         }
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Clean up handlers and listeners
+        initNameHandler?.removeCallbacksAndMessages(null)
+        initNameHandler = null
+
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = null
+
+        scrollChangedListener?.let {
+            binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+
+        panelSlideListener?.let {
+            binding.navMenuInclude.slidingLayout.removePanelSlideListener(it)
+        }
+        panelSlideListener = null
+
+        super.onDestroy()
     }
 
     override fun onAdLoaded() {

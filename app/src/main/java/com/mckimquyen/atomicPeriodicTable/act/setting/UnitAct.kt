@@ -19,6 +19,9 @@ class UnitAct : BaseAct() {
     // Khai báo binding cho ViewBinding
     private lateinit var binding: AUnitBinding
 
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -68,26 +71,28 @@ class UnitAct : BaseAct() {
         binding.commonTitleBackUnitColor.visibility = View.INVISIBLE
         binding.unitTitle.visibility = View.INVISIBLE
         binding.commonTitleBackunit.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.unitScroll.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 300f
-                override fun onScrollChanged() {
-                    if (binding.unitScroll.scrollY > 150) {
-                        binding.commonTitleBackUnitColor.visibility = View.VISIBLE
-                        binding.unitTitle.visibility = View.VISIBLE
-                        binding.unitTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackunit.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        binding.commonTitleBackUnitColor.visibility = View.INVISIBLE
-                        binding.unitTitle.visibility = View.INVISIBLE
-                        binding.unitTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackunit.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.unitScroll.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 300f
+            override fun onScrollChanged() {
+                if (binding.unitScroll.scrollY > 150) {
+                    binding.commonTitleBackUnitColor.visibility = View.VISIBLE
+                    binding.unitTitle.visibility = View.VISIBLE
+                    binding.unitTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackunit.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    binding.commonTitleBackUnitColor.visibility = View.INVISIBLE
+                    binding.unitTitle.visibility = View.INVISIBLE
+                    binding.unitTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackunit.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.unitScroll.scrollY.toFloat()
+            }
+        }
+        binding.unitScroll.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         // Setup temperature unit selection
         tempUnits()
@@ -170,5 +175,14 @@ class UnitAct : BaseAct() {
                 R.dimen.header_down_margin
             )
         binding.unitTitleDownstate.layoutParams = paramsLin
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.unitScroll.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+        super.onDestroy()
     }
 }

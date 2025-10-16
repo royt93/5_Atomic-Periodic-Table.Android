@@ -35,6 +35,10 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
     private var ionList = ArrayList<Ion>()
     private var mAdapter = IonAdapter(list = ionList, clickListener = this, context = this)
 
+    // Handler instances for memory leak prevention
+    private var filterHandler: Handler? = null
+    private var delayCloseHandler: Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -206,8 +210,8 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
                 filteredList.add(item)
             }
         }
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
             if (recyclerView.adapter!!.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxIon, 300)
             } else {
@@ -230,8 +234,8 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
         }
         binding.closeEleSearchIon.setOnClickListener {
             Utils.fadeOutAnim(binding.searchBarIon, 1)
-            val delayClose = Handler(Looper.getMainLooper())
-            delayClose.postDelayed({
+            delayCloseHandler = Handler(Looper.getMainLooper())
+            delayCloseHandler?.postDelayed({
                 Utils.fadeInAnim(binding.titleBox, 150)
             }, 151)
 
@@ -241,6 +245,15 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
+    }
+
+    override fun onDestroy() {
+        // Clean up handlers to prevent memory leaks
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = null
+        delayCloseHandler?.removeCallbacksAndMessages(null)
+        delayCloseHandler = null
+        super.onDestroy()
     }
 
 }

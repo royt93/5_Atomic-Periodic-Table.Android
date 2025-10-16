@@ -15,6 +15,15 @@ import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 @SuppressLint("CustomSplashScreen")
 class SplashAct : AppCompatActivity() {
 
+    // Memory leak prevention: Store view references and animators for cleanup
+    private var logoCard: android.view.View? = null
+    private var appNameText: android.view.View? = null
+    private var loadingText: android.view.View? = null
+    private var progressBar: android.view.View? = null
+    private var versionText: android.view.View? = null
+    private var decorCircle1: android.view.View? = null
+    private var decorCircle2: android.view.View? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -32,14 +41,14 @@ class SplashAct : AppCompatActivity() {
     }
 
     private fun animateSplashScreen() {
-        // Get views
-        val logoCard = findViewById<android.view.View>(R.id.logoCard)
-        val appNameText = findViewById<android.view.View>(R.id.appNameText)
-        val loadingText = findViewById<android.view.View>(R.id.loadingText)
-        val progressBar = findViewById<android.view.View>(R.id.progressBar)
-        val versionText = findViewById<android.view.View>(R.id.versionText)
-        val decorCircle1 = findViewById<android.view.View>(R.id.decorCircle1)
-        val decorCircle2 = findViewById<android.view.View>(R.id.decorCircle2)
+        // Get views and store in member variables for cleanup
+        logoCard = findViewById(R.id.logoCard)
+        appNameText = findViewById(R.id.appNameText)
+        loadingText = findViewById(R.id.loadingText)
+        progressBar = findViewById(R.id.progressBar)
+        versionText = findViewById(R.id.versionText)
+        decorCircle1 = findViewById(R.id.decorCircle1)
+        decorCircle2 = findViewById(R.id.decorCircle2)
 
         // Initial state - all invisible
         logoCard?.alpha = 0f
@@ -84,18 +93,21 @@ class SplashAct : AppCompatActivity() {
             ?.start()
 
         // Animate decorative circles - continuous subtle rotation
+        // Memory leak fix: Check if activity is finishing before restarting animation
         decorCircle1?.animate()
             ?.rotation(360f)
             ?.setDuration(20000)
             ?.setInterpolator(android.view.animation.LinearInterpolator())
             ?.withEndAction {
-                // Repeat animation
-                decorCircle1.rotation = 0f
-                decorCircle1.animate()
-                    .rotation(360f)
-                    .setDuration(20000)
-                    .setInterpolator(android.view.animation.LinearInterpolator())
-                    .start()
+                // Only repeat if activity is not finishing
+                if (!isFinishing && decorCircle1 != null) {
+                    decorCircle1?.rotation = 0f
+                    decorCircle1?.animate()
+                        ?.rotation(360f)
+                        ?.setDuration(20000)
+                        ?.setInterpolator(android.view.animation.LinearInterpolator())
+                        ?.start()
+                }
             }
             ?.start()
 
@@ -104,13 +116,15 @@ class SplashAct : AppCompatActivity() {
             ?.setDuration(25000)
             ?.setInterpolator(android.view.animation.LinearInterpolator())
             ?.withEndAction {
-                // Repeat animation
-                decorCircle2.rotation = 0f
-                decorCircle2.animate()
-                    .rotation(-360f)
-                    .setDuration(25000)
-                    .setInterpolator(android.view.animation.LinearInterpolator())
-                    .start()
+                // Only repeat if activity is not finishing
+                if (!isFinishing && decorCircle2 != null) {
+                    decorCircle2?.rotation = 0f
+                    decorCircle2?.animate()
+                        ?.rotation(-360f)
+                        ?.setDuration(25000)
+                        ?.setInterpolator(android.view.animation.LinearInterpolator())
+                        ?.start()
+                }
             }
             ?.start()
 
@@ -169,5 +183,27 @@ class SplashAct : AppCompatActivity() {
                 println("Adaptive refresh rate applied: ${highestRefreshRateMode.refreshRate} Hz")
             }
         }
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Cancel all animations to prevent holding Activity reference
+        logoCard?.animate()?.cancel()
+        appNameText?.animate()?.cancel()
+        loadingText?.animate()?.cancel()
+        progressBar?.animate()?.cancel()
+        versionText?.animate()?.cancel()
+        decorCircle1?.animate()?.cancel()
+        decorCircle2?.animate()?.cancel()
+
+        // Clear references
+        logoCard = null
+        appNameText = null
+        loadingText = null
+        progressBar = null
+        versionText = null
+        decorCircle1 = null
+        decorCircle2 = null
+
+        super.onDestroy()
     }
 }

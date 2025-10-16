@@ -34,6 +34,10 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     private var equationList = ArrayList<Equation>()
     private var mAdapter = EquationsAdt(list = equationList, clickListener = this, context = this)
 
+    // Handler instances for memory leak prevention
+    private var filterHandler: Handler? = null
+    private var delayCloseHandler: Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -185,8 +189,8 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
                 filteredList.add(item)
             }
         }
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxEqu, 300)
             } else {
@@ -210,8 +214,8 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
         binding.closeEquSearch.setOnClickListener {
             Utils.fadeOutAnim(binding.searchBarEqu, 1)
 
-            val delayClose = Handler(Looper.getMainLooper())
-            delayClose.postDelayed({
+            delayCloseHandler = Handler(Looper.getMainLooper())
+            delayCloseHandler?.postDelayed({
                 Utils.fadeInAnim(binding.titleBoxEqu, 150)
             }, 151)
 
@@ -253,4 +257,13 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     private val negative = floatArrayOf(
         -1.0f, 0f, 0f, 0f, 255f, 0f, -1.0f, 0f, 0f, 255f, 0f, 0f, -1.0f, 0f, 255f, 0f, 0f, 0f, 1.0f, 0f
     )
+
+    override fun onDestroy() {
+        // Clean up handlers to prevent memory leaks
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = null
+        delayCloseHandler?.removeCallbacksAndMessages(null)
+        delayCloseHandler = null
+        super.onDestroy()
+    }
 }

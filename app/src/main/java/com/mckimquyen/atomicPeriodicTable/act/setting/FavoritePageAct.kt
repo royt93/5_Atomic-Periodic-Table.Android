@@ -43,6 +43,9 @@ class FavoritePageAct : BaseAct() {
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
 
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -59,6 +62,12 @@ class FavoritePageAct : BaseAct() {
     }
 
     override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.favSetScroll.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+
 //        flAd.destroyAdBanner(adView)
         adView?.destroy()
         super.onDestroy()
@@ -262,26 +271,28 @@ class FavoritePageAct : BaseAct() {
         binding.commonTitleBackFavColor.visibility = View.INVISIBLE
         binding.favoriteSetTitle.visibility = View.INVISIBLE
         binding.commonTitleBackFav.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.favSetScroll.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 300f
-                override fun onScrollChanged() {
-                    if (binding.favSetScroll.scrollY > 150) {
-                        binding.commonTitleBackFavColor.visibility = View.VISIBLE
-                        binding.favoriteSetTitle.visibility = View.VISIBLE
-                        binding.favoriteSetTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackFav.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        binding.commonTitleBackFavColor.visibility = View.INVISIBLE
-                        binding.favoriteSetTitle.visibility = View.INVISIBLE
-                        binding.favoriteSetTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackFav.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.favSetScroll.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 300f
+            override fun onScrollChanged() {
+                if (binding.favSetScroll.scrollY > 150) {
+                    binding.commonTitleBackFavColor.visibility = View.VISIBLE
+                    binding.favoriteSetTitle.visibility = View.VISIBLE
+                    binding.favoriteSetTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackFav.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    binding.commonTitleBackFavColor.visibility = View.INVISIBLE
+                    binding.favoriteSetTitle.visibility = View.INVISIBLE
+                    binding.favoriteSetTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackFav.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.favSetScroll.scrollY.toFloat()
+            }
+        }
+        binding.favSetScroll.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         // ===============================================================
         // Back Button Handler (Modern API)

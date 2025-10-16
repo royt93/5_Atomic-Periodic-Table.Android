@@ -20,6 +20,9 @@ import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 class PHAct : BaseAct() {
     private lateinit var binding: APhBinding
 
+    // Handler instance for memory leak prevention
+    private var updateButtonHandler: Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -165,8 +168,8 @@ class PHAct : BaseAct() {
         binding.phChipBar.congoRedBtn.background = getDrawable(R.drawable.shape_chip)
         binding.phChipBar.phenolphthaleinBtn.background = getDrawable(R.drawable.shape_chip)
 
-        val delay = Handler(Looper.getMainLooper())
-        delay.postDelayed({
+        updateButtonHandler = Handler(Looper.getMainLooper())
+        updateButtonHandler?.postDelayed({
             val resIDB = resources.getIdentifier(btn, "id", packageName)
             val button = findViewById<Button>(resIDB)
             button?.background = getDrawable(R.drawable.shape_chip_active)
@@ -186,5 +189,12 @@ class PHAct : BaseAct() {
         val pScroll = binding.phScroll.layoutParams as ViewGroup.MarginLayoutParams
         pScroll.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_ph)
         binding.phScroll.layoutParams = pScroll
+    }
+
+    override fun onDestroy() {
+        // Clean up handler to prevent memory leaks
+        updateButtonHandler?.removeCallbacksAndMessages(null)
+        updateButtonHandler = null
+        super.onDestroy()
     }
 }

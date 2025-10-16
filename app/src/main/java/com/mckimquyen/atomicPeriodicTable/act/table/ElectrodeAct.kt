@@ -32,6 +32,10 @@ class ElectrodeAct : BaseAct() {
     private var seriesList = ArrayList<Series>()
     private var mAdapter = ElectrodeAdt(list = seriesList, clickListener = this, context = this)
 
+    // Handler instances for memory leak prevention
+    private var filterHandler: Handler? = null
+    private var delayCloseHandler: Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -174,8 +178,8 @@ class ElectrodeAct : BaseAct() {
                 filteredList.add(item)
             }
         }
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxEle, 300)
             } else {
@@ -199,8 +203,8 @@ class ElectrodeAct : BaseAct() {
         binding.closeEleSearch.setOnClickListener {
             Utils.fadeOutAnim(binding.searchBarEle, 1)
 
-            val delayClose = Handler(Looper.getMainLooper())
-            delayClose.postDelayed({
+            delayCloseHandler = Handler(Looper.getMainLooper())
+            delayCloseHandler?.postDelayed({
                 Utils.fadeInAnim(binding.titleBox, 150)
             }, 151)
 
@@ -212,5 +216,13 @@ class ElectrodeAct : BaseAct() {
         }
     }
 
+    override fun onDestroy() {
+        // Clean up handlers to prevent memory leaks
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = null
+        delayCloseHandler?.removeCallbacksAndMessages(null)
+        delayCloseHandler = null
+        super.onDestroy()
+    }
 
 }

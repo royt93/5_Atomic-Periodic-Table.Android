@@ -18,6 +18,10 @@ class LicensesAct : BaseAct() {
 
     // ViewBinding - thay thế Kotlin Synthetics (deprecated)
     private lateinit var binding: ASettingsLicensesBinding
+
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -70,28 +74,30 @@ class LicensesAct : BaseAct() {
         binding.commonTitleBackLicColor.visibility = View.INVISIBLE
         binding.licenseTitle.visibility = View.INVISIBLE
         binding.commonTitleBackLic.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.licenseScroll.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 300f
-                override fun onScrollChanged() {
-                    if (binding.licenseScroll.scrollY > 150) {
-                        // Đã scroll xuống -> hiện title bar compact
-                        binding.commonTitleBackLicColor.visibility = View.VISIBLE
-                        binding.licenseTitle.visibility = View.VISIBLE
-                        binding.licenseTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackLic.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        // Ở đầu trang → hiện title bar expanded
-                        binding.commonTitleBackLicColor.visibility = View.INVISIBLE
-                        binding.licenseTitle.visibility = View.INVISIBLE
-                        binding.licenseTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackLic.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.licenseScroll.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 300f
+            override fun onScrollChanged() {
+                if (binding.licenseScroll.scrollY > 150) {
+                    // Đã scroll xuống -> hiện title bar compact
+                    binding.commonTitleBackLicColor.visibility = View.VISIBLE
+                    binding.licenseTitle.visibility = View.VISIBLE
+                    binding.licenseTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackLic.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    // Ở đầu trang → hiện title bar expanded
+                    binding.commonTitleBackLicColor.visibility = View.INVISIBLE
+                    binding.licenseTitle.visibility = View.INVISIBLE
+                    binding.licenseTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackLic.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.licenseScroll.scrollY.toFloat()
+            }
+        }
+        binding.licenseScroll.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         listeners()
 
@@ -170,5 +176,14 @@ class LicensesAct : BaseAct() {
     private fun hideInfoPanel() {
         // Ẩn license info panel với animation fade out
         Anim.fadeOutAnim(view = binding.lInc.root, time = 150)
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.licenseScroll.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+        super.onDestroy()
     }
 }

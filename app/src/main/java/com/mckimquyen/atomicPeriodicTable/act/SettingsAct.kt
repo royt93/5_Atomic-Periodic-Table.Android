@@ -45,6 +45,11 @@ class SettingsAct : BaseAct() {
     //    private var adView: MaxAdView? = null
     private var adView: AdView? = null
 
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+    // Memory leak prevention: Store handler for theme change delay
+    private var themeChangeHandler: Handler? = null
+
     // ===============================================================
     // Helper function: Modern Activity Transition API
     // ===============================================================
@@ -78,6 +83,16 @@ class SettingsAct : BaseAct() {
     }
 
     override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.scrollSettings.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+
+        // Memory leak fix: Clean up theme change handler
+        themeChangeHandler?.removeCallbacksAndMessages(null)
+        themeChangeHandler = null
+
 //        flAd.destroyAdBanner(adView)
         adView?.destroy()
         super.onDestroy()
@@ -177,26 +192,28 @@ class SettingsAct : BaseAct() {
         binding.commonTitleSettingsColor.visibility = View.INVISIBLE
         binding.elementTitle.visibility = View.INVISIBLE
         binding.commonTitleBackSet.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.scrollSettings.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 300f
-                override fun onScrollChanged() {
-                    if (binding.scrollSettings.scrollY > 150) {
-                        binding.commonTitleSettingsColor.visibility = View.VISIBLE
-                        binding.elementTitle.visibility = View.VISIBLE
-                        binding.elementTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackSet.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        binding.commonTitleSettingsColor.visibility = View.INVISIBLE
-                        binding.elementTitle.visibility = View.INVISIBLE
-                        binding.elementTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackSet.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.scrollSettings.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 300f
+            override fun onScrollChanged() {
+                if (binding.scrollSettings.scrollY > 150) {
+                    binding.commonTitleSettingsColor.visibility = View.VISIBLE
+                    binding.elementTitle.visibility = View.VISIBLE
+                    binding.elementTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackSet.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    binding.commonTitleSettingsColor.visibility = View.INVISIBLE
+                    binding.elementTitle.visibility = View.INVISIBLE
+                    binding.elementTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackSet.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.scrollSettings.scrollY.toFloat()
+            }
+        }
+        binding.scrollSettings.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         binding.aboutSettings.setOnClickListener {
             val intent = Intent(this, AboutAct::class.java)
@@ -373,12 +390,14 @@ class SettingsAct : BaseAct() {
                 } // Night mode is active, we're using dark theme
             }
             Utils.fadeOutAnim(binding.themePanel.root, 300)
-            val delayChange = Handler(Looper.getMainLooper())
-            delayChange.postDelayed({
+            // Memory leak fix: Reuse handler and clean up previous callbacks
+            themeChangeHandler?.removeCallbacksAndMessages(null)
+            themeChangeHandler = Handler(Looper.getMainLooper())
+            themeChangeHandler?.postDelayed({
                 finish()
                 overrideTransition(0, 0)
                 startActivity(intent)
-                SettingsAct().finish()
+                // Note: SettingsAct().finish() removed - it creates unnecessary instance
                 exitProcess(0)
                 overrideTransition(0, 0)
             }, 302)
@@ -389,12 +408,14 @@ class SettingsAct : BaseAct() {
             setTheme(R.style.AppTheme)
             Utils.fadeOutAnim(binding.themePanel.root, 300)
 
-            val delayChange = Handler(Looper.getMainLooper())
-            delayChange.postDelayed({
+            // Memory leak fix: Reuse handler and clean up previous callbacks
+            themeChangeHandler?.removeCallbacksAndMessages(null)
+            themeChangeHandler = Handler(Looper.getMainLooper())
+            themeChangeHandler?.postDelayed({
                 finish()
                 overrideTransition(0, 0)
                 startActivity(intent)
-                SettingsAct().finish()
+                // Note: SettingsAct().finish() removed - it creates unnecessary instance
                 exitProcess(0)
                 overrideTransition(0, 0)
             }, 302)
@@ -405,12 +426,14 @@ class SettingsAct : BaseAct() {
             setTheme(R.style.AppThemeDark)
             Utils.fadeOutAnim(binding.themePanel.root, 300)
 
-            val delayChange = Handler(Looper.getMainLooper())
-            delayChange.postDelayed({
+            // Memory leak fix: Reuse handler and clean up previous callbacks
+            themeChangeHandler?.removeCallbacksAndMessages(null)
+            themeChangeHandler = Handler(Looper.getMainLooper())
+            themeChangeHandler?.postDelayed({
                 finish()
                 overrideTransition(0, 0)
                 startActivity(intent)
-                SettingsAct().finish()
+                // Note: SettingsAct().finish() removed - it creates unnecessary instance
                 exitProcess(0)
                 overrideTransition(0, 0)
             }, 302)

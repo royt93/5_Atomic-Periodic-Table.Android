@@ -40,6 +40,9 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
     private var elementList = ArrayList<Element>()
     var mAdapter = IsotopeAdt(elementList = elementList, clickListener = this, context = this)
 
+    // Handler instance for memory leak prevention
+    private var filterHandler: android.os.Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -248,8 +251,8 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                 if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
         }
-        val handler = android.os.Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        filterHandler = android.os.Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxIso, 300)
             } else {
@@ -387,5 +390,12 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         val searchEmptyImgPrm = binding.emptySearchBoxIso.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
         binding.emptySearchBoxIso.layoutParams = searchEmptyImgPrm
+    }
+
+    override fun onDestroy() {
+        // Clean up handler to prevent memory leaks
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = null
+        super.onDestroy()
     }
 }

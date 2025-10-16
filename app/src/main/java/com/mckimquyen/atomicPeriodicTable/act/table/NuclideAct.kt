@@ -39,6 +39,9 @@ class NuclideAct : BaseAct() {
     private lateinit var mScaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
 
+    // Handler instance for memory leak prevention
+    private var addViewsHandler: Handler? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -73,8 +76,8 @@ class NuclideAct : BaseAct() {
             binding.ldnPlace.root.visibility = View.VISIBLE
         }
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        addViewsHandler = Handler(Looper.getMainLooper())
+        addViewsHandler?.postDelayed({
             addViews(elementLists)
         }, 100)
 
@@ -323,6 +326,13 @@ class NuclideAct : BaseAct() {
         val params2 = binding.commonTitleBackNuc.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.commonTitleBackNuc.layoutParams = params2
+    }
+
+    override fun onDestroy() {
+        // Clean up handler to prevent memory leaks
+        addViewsHandler?.removeCallbacksAndMessages(null)
+        addViewsHandler = null
+        super.onDestroy()
     }
 
 }

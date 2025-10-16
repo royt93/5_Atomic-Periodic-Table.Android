@@ -22,6 +22,9 @@ class TableAct : BaseAct() {
     // Khai báo binding cho ViewBinding
     private lateinit var binding: ATablesBinding
 
+    // Memory leak prevention: Store listener for cleanup
+    private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,26 +73,28 @@ class TableAct : BaseAct() {
         binding.commonTitleTableColor.visibility = View.INVISIBLE
         binding.tablesTitle.visibility = View.INVISIBLE
         binding.commonTitleBackTab.elevation = (resources.getDimension(R.dimen.zero_elevation))
-        binding.tableScroll.viewTreeObserver
-            .addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
-                var y = 300f
-                override fun onScrollChanged() {
-                    if (binding.tableScroll.scrollY > 150) {
-                        binding.commonTitleTableColor.visibility = View.VISIBLE
-                        binding.tablesTitle.visibility = View.VISIBLE
-                        binding.tablesTitleDownstate.visibility = View.INVISIBLE
-                        binding.commonTitleBackTab.elevation =
-                            (resources.getDimension(R.dimen.one_elevation))
-                    } else {
-                        binding.commonTitleTableColor.visibility = View.INVISIBLE
-                        binding.tablesTitle.visibility = View.INVISIBLE
-                        binding.tablesTitleDownstate.visibility = View.VISIBLE
-                        binding.commonTitleBackTab.elevation =
-                            (resources.getDimension(R.dimen.zero_elevation))
-                    }
-                    y = binding.tableScroll.scrollY.toFloat()
+
+        // Memory leak fix: Store listener for cleanup
+        scrollChangedListener = object : ViewTreeObserver.OnScrollChangedListener {
+            var y = 300f
+            override fun onScrollChanged() {
+                if (binding.tableScroll.scrollY > 150) {
+                    binding.commonTitleTableColor.visibility = View.VISIBLE
+                    binding.tablesTitle.visibility = View.VISIBLE
+                    binding.tablesTitleDownstate.visibility = View.INVISIBLE
+                    binding.commonTitleBackTab.elevation =
+                        (resources.getDimension(R.dimen.one_elevation))
+                } else {
+                    binding.commonTitleTableColor.visibility = View.INVISIBLE
+                    binding.tablesTitle.visibility = View.INVISIBLE
+                    binding.tablesTitleDownstate.visibility = View.VISIBLE
+                    binding.commonTitleBackTab.elevation =
+                        (resources.getDimension(R.dimen.zero_elevation))
                 }
-            })
+                y = binding.tableScroll.scrollY.toFloat()
+            }
+        }
+        binding.tableScroll.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
 
         tableListeners()
 
@@ -182,6 +187,15 @@ class TableAct : BaseAct() {
             val intent = Intent(this, PHAct::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroy() {
+        // Memory leak fix: Clean up listener
+        scrollChangedListener?.let {
+            binding.tableScroll.viewTreeObserver.removeOnScrollChangedListener(it)
+        }
+        scrollChangedListener = null
+        super.onDestroy()
     }
 
 }
