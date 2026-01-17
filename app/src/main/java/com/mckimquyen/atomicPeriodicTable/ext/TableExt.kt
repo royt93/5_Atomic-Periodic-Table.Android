@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.pref.TemperatureUnits
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
@@ -25,7 +25,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
 
-abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
+abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     protected lateinit var binding: AMainBinding
 
     companion object {
@@ -57,7 +57,7 @@ abstract class TableExt : AppCompatActivity(), View.OnApplyWindowInsetsListener 
         }
     }
 
-    open fun onApplySystemInsets(
+    override fun onApplySystemInsets(
         top: Int,
         bottom: Int,
         left: Int,

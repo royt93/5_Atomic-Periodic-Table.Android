@@ -39,6 +39,7 @@ object LocaleHelper {
             config.locale = locale
         }
         config.setLayoutDirection(locale)
+        config.fontScale = 1.0f
 
         return context.createConfigurationContext(config)
     }

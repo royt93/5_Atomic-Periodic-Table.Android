@@ -26,7 +26,7 @@ class LanguagePref(context: Context) {
     }
 
     fun setValue(languageCode: String) {
-        preference.edit {
+        preference.edit(commit = true) {
             putString(prefKey, languageCode)
         }
     }

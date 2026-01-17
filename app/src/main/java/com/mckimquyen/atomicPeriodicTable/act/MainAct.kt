@@ -74,13 +74,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
     private var filterHandler: android.os.Handler? = null
     private var textWatcher: TextWatcher? = null
 
-    override fun attachBaseContext(context: Context) {
-        val override = Configuration(context.resources.configuration)
-        override.fontScale = 1.0f
-        applyOverrideConfiguration(override)
-        super.attachBaseContext(context)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
