@@ -1,8 +1,8 @@
 # Multi-Language Implementation
 
-## ✅ Implementation Status: COMPLETE
+## ✅ Implementation Status: COMPLETE (v1.0)
 
-Ứng dụng đã được tích hợp chức năng đa ngôn ngữ với 3 ngôn ngữ:
+Ứng dụng đã được tích hợp chức năng đa ngôn ngữ toàn diện (UI + Element Descriptions) với 3 ngôn ngữ:
 
 - **English** (mặc định)
 - **Tiếng Việt**
@@ -10,133 +10,78 @@
 
 ---
 
+## Architecture Overview
+
+### 1. Localization Context (`BaseAct`, `LocaleHelper`)
+
+- **Cơ chế**: Tất cả Activity (bao gồm `InfoExt`) kế thừa từ `BaseAct`. `BaseAct` sử dụng `LocaleHelper` để đè (override) cấu hình `Locale` trong `attachBaseContext`.
+- **Lưu trữ**: Ngôn ngữ được chọn lưu trong `SharedPreferences` (key: `LanguagePref`).
+- **Thay đổi**: Khi đổi ngôn ngữ, app restart lại bằng `ProcessPhoenix` để apply toàn bộ resource mới.
+
+### 2. Element Description Override (JSON Fallback)
+
+Mô tả nguyên tố (Description) vốn nằm trong file JSON (assets). Để đa ngôn ngữ hóa mà không sửa JSON, chúng ta dùng cơ chế **Resource Override**:
+
+1. **Ưu tiên**: Code tìm key `desc_[element_name]` (ví dụ: `desc_hydrogen`) trong file `strings_desc.xml` của ngôn ngữ hiện tại.
+2. **Fallback**: Nếu không tìm thấy resource string (hoặc key rỗng), code sẽ lấy giá trị `description` gốc từ file JSON (tiếng Anh).
+
+---
+
 ## Files Created/Modified
 
 ### New Files
 
-| File | Description |
-|------|-------------|
-| `pref/LanguagePref.kt` | SharedPreferences để lưu ngôn ngữ đã chọn |
-| `util/LocaleHelper.kt` | Utility để apply locale cho app |
-| `drawable/ic_language.xml` | Icon ngôn ngữ (translate icon) |
-| `layout/view_language_panel.xml` | Panel chọn ngôn ngữ (3 options) |
-| `layout/view_confirm_dialog.xml` | Dialog xác nhận đổi ngôn ngữ |
-| `values-vi/strings.xml` | Bản dịch tiếng Việt (~285 strings) |
-| `values-zh/strings.xml` | Bản dịch tiếng Trung (~285 strings) |
+| File | Type | Description |
+|------|------|-------------|
+| `pref/LanguagePref.kt` | Logic | SharedPreferences quản lý ngôn ngữ |
+| `util/LocaleHelper.kt` | Logic | Utility apply locale |
+| `layout/view_language_panel.xml` | UI | Panel chọn ngôn ngữ trong Settings |
+| `values/strings_desc.xml` | Res | **Chứa 118 descriptions tiếng Anh** (trích xuất từ JSON) |
+| `values-vi/strings_desc.xml` | Res | **Chứa 118 descriptions tiếng Việt** |
+| `values-zh/strings_desc.xml` | Res | **Chứa 118 descriptions tiếng Trung** |
+| `values-vi/strings.xml` | Res | UI Strings tiếng Việt |
+| `values-zh/strings.xml` | Res | UI Strings tiếng Trung |
 
 ### Modified Files
 
 | File | Changes |
 |------|---------|
-| `build.gradle` | Thêm ProcessPhoenix dependency |
-| `values/strings.xml` | Thêm 10 language picker strings |
-| `layout/a_settings.xml` | Thêm language item + panels |
-| `SettingsAct.kt` | Thêm language settings logic |
-| `BaseAct.kt` | Apply locale trong attachBaseContext() |
+| `BaseAct.kt` | Thêm `attachBaseContext` để inject LocaleHelper |
+| `InfoExt.kt` | **Quan trọng**: Đổi kế thừa `AppCompatActivity` -> `BaseAct` để nhận context đa ngôn ngữ. Thêm logic fallback Resource/JSON. |
+| `SettingsAct.kt` | Thêm logic hiển thị Language Panel |
 
 ---
 
-## How It Works
+## FAQ - Hướng dẫn mở rộng (Cho Dev kế tiếp)
 
-1. User mở **Settings** → Language là item đầu tiên trong Personalization
-2. Click **Language** → Hiện Language Panel với 3 options
-3. Chọn ngôn ngữ khác → Hiện Confirm Dialog
-4. Click **Confirm** → App restart bằng ProcessPhoenix với ngôn ngữ mới
+### Q1: Làm thế nào để thêm ngôn ngữ mới (ví dụ: tiếng Thái - `th`)?
 
----
+**Step 1: Tạo thư mục resource**
+Tạo thư mục: `app/src/main/res/values-th/`
 
-## FAQ - Hướng dẫn mở rộng
+**Step 2: Copy và dịch UI Strings**
+Copy `values/strings.xml` -> `values-th/strings.xml`. Dịch toàn bộ nội dung.
 
-### Q1: Làm thế nào để thêm ngôn ngữ mới (ví dụ: tiếng Thái)?
+**Step 3: Copy và dịch Element Descriptions (Quan trọng)**
+Copy `values/strings_desc.xml` -> `values-th/strings_desc.xml`.
+- File này chứa 118 key (từ `desc_actinium` đến `desc_zirconium`).
+- Dịch nội dung sang tiếng Thái.
+- **Lưu ý**: Nếu không tạo file này, app sẽ hiển thị mô tả tiếng Anh (fallback).
 
-**Step 1**: Tạo thư mục ngôn ngữ mới
+**Step 4: Đăng ký trong Code**
 
-```
-app/src/main/res/values-th/
-```
-
-**Step 2**: Copy file `values/strings.xml` vào thư mục mới và dịch
-
-```xml
-<!-- values-th/strings.xml -->
-<string name="settings">การตั้งค่า</string>
-<string name="language_thai">ภาษาไทย</string>
-<!-- ... dịch tất cả strings còn lại ... -->
-```
-
-**Step 3**: Thêm constant trong `LanguagePref.kt`
-
-```kotlin
-const val LANG_THAI = "th"
-```
-
-**Step 4**: Thêm button trong `view_language_panel.xml`
-
-```xml
-<AppCompatTextView
-    android:id="@+id/thaiBtn"
-    android:text="@string/language_thai" />
-```
-
-**Step 5**: Thêm click listener trong `SettingsAct.kt`
-
-```kotlin
-binding.languagePanel.thaiBtn.setOnClickListener {
-    showLanguageConfirmDialog(LanguagePref.LANG_THAI)
-}
-```
-
-**Step 6**: Update `updateLanguageRadioButtons()` function
-
-```kotlin
-LanguagePref.LANG_THAI -> {
-    binding.languagePanel.thaiBtn.setCompoundDrawablesWithIntrinsicBounds(
-        R.drawable.ic_radio_checked, 0, 0, 0
-    )
-}
-```
-
-**Step 7**: Thêm string key `language_thai` vào **TẤT CẢ** file strings.xml
+1. **`LanguagePref.kt`**: Thêm hằng số `const val LANG_THAI = "th"`
+2. **`view_language_panel.xml`**: Thêm Button cho tiếng Thái.
+3. **`SettingsAct.kt`**: Thêm sự kiện `setOnClickListener` cho button mới -> gọi `showLanguageConfirmDialog(LanguagePref.LANG_THAI)`.
 
 ---
 
-### Q2: Làm thế nào để thêm string mới cho tất cả ngôn ngữ?
+### Q2: Tại sao sửa `InfoExt` lại quan trọng?
 
-**Step 1**: Thêm string vào `values/strings.xml` (English - source of truth)
+Trước đây `InfoExt` kế thừa trực tiếp `AppCompatActivity` nên nó bỏ qua lớp `LocaleHelper` trong `BaseAct`.
+-> **Hậu quả**: Dù chọn tiếng Việt, màn hình chi tiết nguyên tố vẫn hiện tiếng Anh (System default).
+-> **Fix**: `InfoExt : BaseAct()`. Luôn nhớ kế thừa `BaseAct` cho các Activity mới.
 
-```xml
-<string name="new_feature_title">New Feature</string>
-```
+### Q3: Batch Translation Scripts nằm ở đâu?
 
-**Step 2**: Thêm bản dịch vào các file ngôn ngữ khác:
-
-| File | Content |
-|------|---------|
-| `values-vi/strings.xml` | `<string name="new_feature_title">Tính năng mới</string>` |
-| `values-zh/strings.xml` | `<string name="new_feature_title">新功能</string>` |
-
-**Step 3**: Sử dụng trong code/layout
-
-```xml
-android:text="@string/new_feature_title"
-```
-
-```kotlin
-getString(R.string.new_feature_title)
-```
-
-> **Tip**: Sử dụng Android Studio Translations Editor để quản lý:
-> Right-click strings.xml → Open Translations Editor
-
----
-
-## Testing Checklist
-
-- [ ] Build & Install: `./gradlew installDevDebug`
-- [ ] Settings → Language item hiển thị đầu tiên trong Personalization
-- [ ] Click Language → Panel hiện với radio buttons đúng trạng thái
-- [ ] Chọn ngôn ngữ khác → Confirm dialog hiện
-- [ ] Confirm → App restart với ngôn ngữ mới
-- [ ] Toàn bộ UI strings đã dịch sang ngôn ngữ mới
-- [ ] Tắt app và mở lại → Ngôn ngữ được giữ nguyên
-- [ ] Test tất cả 3 ngôn ngữ: EN → VI → ZH → EN
+Nếu cần dịch số lượng lớn (như 118 nguyên tố), hãy tham khảo các script Python đã dùng (đã xóa sau khi chạy, nhưng logic là: read XML -> replace content -> write XML). Đừng dịch tay từng dòng một nếu có thể dùng tool.
