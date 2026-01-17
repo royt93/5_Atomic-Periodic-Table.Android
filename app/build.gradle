@@ -12,8 +12,8 @@ android {
         minSdkVersion 23
         //noinspection EditedTargetSdkVersion
         targetSdkVersion 36
-        versionCode 20251016
-        versionName "2025.10.16"
+        versionCode 20260117
+        versionName "2026.01.17"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // Vector drawable support for API < 21
