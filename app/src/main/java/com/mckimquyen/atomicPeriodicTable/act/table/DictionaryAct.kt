@@ -81,7 +81,7 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         val recyclerView = binding.rcView
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val itemse = ArrayList<Dictionary>()
-        DictionaryModel.getList(itemse)
+        DictionaryModel.getList(this, itemse)
 
         recyclerView()
         clickSearch()
@@ -202,7 +202,7 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
     private fun recyclerView() {
         val recyclerView = binding.rcView
         val dictionaryList = ArrayList<Dictionary>()
-        DictionaryModel.getList(dictionaryList)
+        DictionaryModel.getList(this, dictionaryList)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = DictionaryAdt(dictionaryList = dictionaryList, clickListener = this, con = this)
         recyclerView.adapter = adapter

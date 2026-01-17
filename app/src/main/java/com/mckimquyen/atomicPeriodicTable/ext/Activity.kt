@@ -205,9 +205,9 @@ fun Activity.shareApp(
         intent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.app_name))
         // Optimized: Use string template instead of concatenation
         val sAux =
-            "\nỨng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
+            "\n${this.getString(R.string.share_msg)}\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
         intent.putExtra(Intent.EXTRA_TEXT, sAux)
-        this.startActivity(Intent.createChooser(intent, "Vui lòng chọn"))
+        this.startActivity(Intent.createChooser(intent, this.getString(R.string.chooser_title)))
     } catch (e: Exception) {
         e.printStackTrace()
     }
