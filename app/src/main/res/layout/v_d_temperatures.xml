@@ -81,7 +81,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="?attr/colorPrimary"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Boiling Point"
+                        android:text="@string/boiling_point"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -193,7 +193,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="?attr/colorSecondary"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Melting Point"
+                        android:text="@string/melting_point"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="17sp"
                         android:textStyle="bold" />

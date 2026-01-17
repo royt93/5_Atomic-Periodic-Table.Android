@@ -1,5 +1,15 @@
 <resources>
     <string name="personalization_settings">Personalization</string>
+    <!-- Language Settings -->
+    <string name="language">Language</string>
+    <string name="select_language">Select Language</string>
+    <string name="select_your_preferred_language">Select your preferred language</string>
+    <string name="language_english">English</string>
+    <string name="language_vietnamese">Tiếng Việt</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_change_confirm_title">Change Language</string>
+    <string name="language_change_confirm_message">The app will restart to apply the new language. Continue?</string>
+    <string name="confirm">Confirm</string>
     <string name="open_table_button">Open table</string>
     <!-- Activity Element Info-->
     <!-- Activity Favorite Settings -->
@@ -273,5 +283,34 @@
     <string name="get_original_source_code"><u>Get original Source code</u></string>
     <string name="_20_tester_for_closed_testing">20 tester for closed testing</string>
     <string name="become_a_tester">Become a tester</string>
+
+    <!-- Hardcoded strings fix -->
+    <string name="stp_phase_label">STP Phase:</string>
+    <string name="density_label">Density:</string>
+    <string name="electronegativity_label">Electronegativity:</string>
+    <string name="boiling_point_label">Boiling Point:</string>
+    <string name="melting_point_label">Melting Point:</string>
+    <string name="atomic_radius_empirical_label">Atomic Radius (Empirical):</string>
+    <string name="atomic_radius_calculated_label">Atomic Radius (Calculated):</string>
+    <string name="covalent_radius_label">Covalent Radius:</string>
+    <string name="van_der_waals_radius_label">Van Der Waals Radius:</string>
+    <string name="fusion_heat_label">Fusion Heat:</string>
+    <string name="specific_heat_capacity_label">Specific Heat Capacity:</string>
+    <string name="vaporization_heat_label">Vaporization Heat:</string>
+    <string name="search_elements">Search Elements</string>
+    <string name="read_more">Read more</string>
+    <string name="phase_stp_short">Phase (STP)</string>
+    <string name="year_discovered_short">Year Discovered</string>
+    <string name="fusion_heat_short">Fusion Heat</string>
+    <string name="specific_heat_capacity_short">Specific Heat Capacity</string>
+    <string name="vaporization_heat_short">Vaporization Heat</string>
+    <string name="radius_properties">Radius Properties</string>
+    <string name="description_label">Description:</string>
+    <string name="nucleons_label">Nucleons:</string>
+    <string name="protons_label">Protons:</string>
+    <string name="neutrons_label">Neutrons:</string>
+    <string name="electrons_short">Electrons</string>
+    <string name="protons_short">Protons</string>
+    <string name="neutrons_short">Neutrons</string>
 
 </resources>

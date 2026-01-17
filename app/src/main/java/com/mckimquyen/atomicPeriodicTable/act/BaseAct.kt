@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
+import com.mckimquyen.atomicPeriodicTable.util.LocaleHelper
 
 abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     companion object {
@@ -18,10 +19,15 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     private var systemUiConfigured = false
 
     override fun attachBaseContext(context: Context) {
-        val override = Configuration(context.resources.configuration)
+        // First apply the saved language locale
+        val localizedContext = LocaleHelper.applyLanguage(context)
+        
+        // Then apply font scale override
+        val override = Configuration(localizedContext.resources.configuration)
         override.fontScale = 1.0f
         applyOverrideConfiguration(override)
-        super.attachBaseContext(context)
+        
+        super.attachBaseContext(localizedContext)
     }
 
     override fun onStart() {

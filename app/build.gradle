@@ -220,4 +220,6 @@ dependencies {
     implementation("com.google.android.play:review-ktx:2.0.2")
     // Lifecycle Runtime KTX - updated to 2.9.4 (Jan 2025, hỗ trợ repeatOnLifecycle, performance tốt hơn)
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.9.4"
+    // ProcessPhoenix - for clean app restart when changing language
+    implementation 'com.jakewharton:process-phoenix:3.0.0'
 }

@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="STP Phase:"
+                        android:text="@string/stp_phase_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -101,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Density:"
+                        android:text="@string/density_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Electronegativity:"
+                        android:text="@string/electronegativity_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Boiling Point:"
+                        android:text="@string/boiling_point_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -185,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Melting Point:"
+                        android:text="@string/melting_point_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -212,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Atomic Radius (Empirical):"
+                        android:text="@string/atomic_radius_empirical_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -239,7 +239,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Atomic Radius (Calculated):"
+                        android:text="@string/atomic_radius_calculated_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -266,7 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Covalent Radius:"
+                        android:text="@string/covalent_radius_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -293,7 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Van Der Waals Radius:"
+                        android:text="@string/van_der_waals_radius_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -320,7 +320,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Fusion Heat:"
+                        android:text="@string/fusion_heat_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -348,7 +348,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Specific Heat Capacity:"
+                        android:text="@string/specific_heat_capacity_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 
@@ -376,7 +376,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="52dp"
                         android:gravity="center_vertical"
-                        android:text="Vaporization Heat:"
+                        android:text="@string/vaporization_heat_label"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textStyle="bold" />
 

@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Protons:"
+                        android:text="@string/protons_label"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textIsSelectable="true" />
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Neutrons:"
+                        android:text="@string/neutrons_label"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textIsSelectable="true" />
@@ -151,7 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Nucleons:"
+                        android:text="@string/nucleons_label"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondaryContainer"
                         android:textIsSelectable="true" />

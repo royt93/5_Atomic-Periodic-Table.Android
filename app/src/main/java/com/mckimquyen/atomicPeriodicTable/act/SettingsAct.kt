@@ -30,6 +30,9 @@ import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
+import com.mckimquyen.atomicPeriodicTable.pref.LanguagePref
+import com.mckimquyen.atomicPeriodicTable.util.LocaleHelper
+import com.jakewharton.processphoenix.ProcessPhoenix
 import java.io.File
 import java.text.DecimalFormat
 import kotlin.math.log10
@@ -49,6 +52,8 @@ class SettingsAct : BaseAct() {
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     // Memory leak prevention: Store handler for theme change delay
     private var themeChangeHandler: Handler? = null
+    // Language change: Store pending language code
+    private var pendingLanguageCode: String? = null
 
     // ===============================================================
     // Helper function: Modern Activity Transition API
@@ -167,6 +172,7 @@ class SettingsAct : BaseAct() {
 
         openPages()
         themeSettings()
+        languageSettings()
         initializeCache()
         cacheSettings()
         initOfflineSwitches()
@@ -233,9 +239,17 @@ class SettingsAct : BaseAct() {
         // Đăng ký callback để xử lý back button press với logic đóng theme panel trước
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Nếu theme panel đang hiển thị, đóng nó lại
+                // Close dialogs/panels in order of z-index (highest first)
+                if (binding.confirmDialog.root.isVisible) {
+                    Utils.fadeOutAnim(binding.confirmDialog.root, 300)
+                    return
+                }
+                if (binding.languagePanel.root.isVisible) {
+                    Utils.fadeOutAnim(binding.languagePanel.root, 300)
+                    return
+                }
                 if (binding.themePanel.root.isVisible) {
-                    Utils.fadeOutAnim(binding.themePanel.root, 300) //Start Close Animation
+                    Utils.fadeOutAnim(binding.themePanel.root, 300)
                     return
                 }
                 // Không có panel nào mở, kết thúc activity
@@ -446,6 +460,107 @@ class SettingsAct : BaseAct() {
         }
         binding.themePanel.cancelBtn.setOnClickListener {
             Utils.fadeOutAnim(binding.themePanel.root, 300)
+        }
+    }
+
+    private fun languageSettings() {
+        val languagePref = LanguagePref(this)
+        val currentLanguage = languagePref.getValue()
+
+        // Update radio button states based on current language
+        updateLanguageRadioButtons(currentLanguage)
+
+        // Open language panel when clicking language settings
+        binding.languageSettings.setOnClickListener {
+            updateLanguageRadioButtons(languagePref.getValue())
+            Utils.fadeInAnim(binding.languagePanel.root, 300)
+        }
+
+        // Language panel background click to close
+        binding.languagePanel.languageBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.languagePanel.root, 300)
+        }
+
+        // Cancel button
+        binding.languagePanel.languageCancelBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.languagePanel.root, 300)
+        }
+
+        // Language selection buttons
+        binding.languagePanel.englishBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_ENGLISH)
+        }
+        binding.languagePanel.vietnameseBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_VIETNAMESE)
+        }
+        binding.languagePanel.chineseBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_CHINESE)
+        }
+
+        // Confirm dialog buttons
+        binding.confirmDialog.confirmDialogBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.confirmDialog.root, 300)
+        }
+        binding.confirmDialog.confirmDialogCancelBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.confirmDialog.root, 300)
+        }
+        binding.confirmDialog.confirmDialogConfirmBtn.setOnClickListener {
+            pendingLanguageCode?.let { languageCode ->
+                // Save the new language
+                languagePref.setValue(languageCode)
+                // Restart app using ProcessPhoenix
+                ProcessPhoenix.triggerRebirth(this)
+            }
+        }
+    }
+
+    private fun showLanguageConfirmDialog(languageCode: String) {
+        val languagePref = LanguagePref(this)
+        
+        // Don't show dialog if selecting the same language
+        if (languageCode == languagePref.getValue()) {
+            Utils.fadeOutAnim(binding.languagePanel.root, 300)
+            return
+        }
+
+        pendingLanguageCode = languageCode
+        Utils.fadeOutAnim(binding.languagePanel.root, 300)
+        
+        // Show confirm dialog after a short delay
+        Handler(Looper.getMainLooper()).postDelayed({
+            Utils.fadeInAnim(binding.confirmDialog.root, 300)
+        }, 320)
+    }
+
+    private fun updateLanguageRadioButtons(currentLanguage: String) {
+        // Reset all to unchecked
+        binding.languagePanel.englishBtn.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_radio_unchecked, 0, 0, 0
+        )
+        binding.languagePanel.vietnameseBtn.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_radio_unchecked, 0, 0, 0
+        )
+        binding.languagePanel.chineseBtn.setCompoundDrawablesWithIntrinsicBounds(
+            R.drawable.ic_radio_unchecked, 0, 0, 0
+        )
+
+        // Set the current language as checked
+        when (currentLanguage) {
+            LanguagePref.LANG_ENGLISH -> {
+                binding.languagePanel.englishBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_VIETNAMESE -> {
+                binding.languagePanel.vietnameseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_CHINESE -> {
+                binding.languagePanel.chineseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
         }
     }
 }

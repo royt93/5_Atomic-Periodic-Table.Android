@@ -119,7 +119,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Electronegativity"
+                        android:text="@string/electronegativity"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -191,7 +191,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Phase (STP)"
+                        android:text="@string/phase_stp_short"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -209,7 +209,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Year Discovered"
+                        android:text="@string/year_discovered_short"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -227,7 +227,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Fusion Heat"
+                        android:text="@string/fusion_heat_short"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -245,7 +245,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Specific Heat Capacity"
+                        android:text="@string/specific_heat_capacity_short"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -263,7 +263,7 @@
                         android:paddingTop="9dp"
                         android:paddingEnd="9dp"
                         android:paddingBottom="9dp"
-                        android:text="Vaporization Heat"
+                        android:text="@string/vaporization_heat_short"
                         android:textColor="?attr/colorOnSecondaryContainer" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

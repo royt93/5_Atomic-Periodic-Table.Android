@@ -39,7 +39,7 @@
                 android:minHeight="48dp"
                 android:padding="12dp"
                 android:paddingEnd="36dp"
-                android:text="Data Issue"
+                android:text="@string/data_issue"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText,RtlSymmetry" />
@@ -68,7 +68,7 @@
                 android:minHeight="48dp"
                 android:padding="12dp"
                 android:paddingEnd="36dp"
-                android:text="Bug"
+                android:text="@string/bug"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText,RtlSymmetry" />
@@ -100,7 +100,7 @@
                 android:minHeight="48dp"
                 android:padding="12dp"
                 android:paddingEnd="36dp"
-                android:text="Question"
+                android:text="@string/question"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText,RtlSymmetry" />

@@ -87,7 +87,7 @@
                             android:drawablePadding="10dp"
                             android:drawableTint="?attr/colorPrimary"
                             android:fontFamily="sans-serif-medium"
-                            android:text="Description:"
+                            android:text="@string/description_label"
                             android:textColor="?attr/colorOnSurface"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -418,7 +418,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:fontFamily="sans-serif"
                                 android:gravity="center"
-                                android:text="Electrons"
+                                android:text="@string/electrons_short"
                                 android:textAlignment="center"
                                 android:textColor="?attr/colorOnSecondaryContainer"
                                 android:textSize="13sp" />
@@ -464,7 +464,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="Protons"
+                                android:text="@string/protons_short"
                                 android:textAlignment="center"
                                 android:textColor="?attr/colorOnSecondaryContainer"
                                 android:textIsSelectable="true"
@@ -488,7 +488,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:fontFamily="sans-serif"
                                 android:gravity="center"
-                                android:text="Neutrons"
+                                android:text="@string/neutrons_short"
                                 android:textAlignment="center"
                                 android:textColor="?attr/colorOnSecondaryContainer"
                                 android:textSize="13sp" />

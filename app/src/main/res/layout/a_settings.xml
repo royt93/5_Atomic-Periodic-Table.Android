@@ -48,6 +48,53 @@
                     android:textColor="?attr/colorPrimary"
                     tools:ignore="RtlSymmetry" />
 
+                <!-- Language Settings - First item in Personalization -->
+                <RelativeLayout
+                    android:id="@+id/languageSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_d_ripple">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/languageSettingsIcon"
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_language"
+                        app:tint="?attr/colorOnBackground" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="72dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/languageSettingsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/language"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/languageSettingsContent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:alpha="0.7"
+                            android:text="@string/select_your_preferred_language"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="12sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/themesSettings"
                     android:layout_width="match_parent"
@@ -690,4 +737,23 @@
         android:elevation="100dp"
         android:visibility="gone"
         tools:visibility="visible" />
+
+    <include
+        android:id="@+id/languagePanel"
+        layout="@layout/view_language_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:elevation="100dp"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/confirmDialog"
+        layout="@layout/view_confirm_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:elevation="110dp"
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

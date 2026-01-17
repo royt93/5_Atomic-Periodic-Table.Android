@@ -263,7 +263,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="?attr/colorSecondary"
                 android:fontFamily="sans-serif-medium"
-                android:text="Radius Properties"
+                android:text="@string/radius_properties"
                 android:textColor="?attr/colorSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -58,7 +58,7 @@
             android:layout_marginTop="284dp"
             android:alpha="0.8"
             android:gravity="center_horizontal"
-            android:text="Electron Shell Configuration"
+            android:text="@string/electron_shell_configuration"
             android:textColor="#FEFEFE"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="320dp"
             android:gravity="center_horizontal"
-            android:text="Electron Configuration"
+            android:text="@string/electron_configuration"
             android:textColor="#FEFEFE"
             android:textSize="14sp"
             android:textStyle="bold" />
