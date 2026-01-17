@@ -20,6 +20,7 @@ object LocaleHelper {
     fun applyLanguage(context: Context): Context {
         val languagePref = LanguagePref(context)
         val languageCode = languagePref.getValue()
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LocaleHelper", "applyLanguage: fetching lang=$languageCode")
         return setLocale(context, languageCode)
     }
 
@@ -28,6 +29,7 @@ object LocaleHelper {
      * Returns a new context with the applied locale configuration.
      */
     fun setLocale(context: Context, languageCode: String): Context {
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LocaleHelper", "setLocale: setting to $languageCode")
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
 

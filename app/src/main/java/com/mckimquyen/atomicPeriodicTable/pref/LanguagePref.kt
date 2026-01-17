@@ -13,6 +13,22 @@ class LanguagePref(context: Context) {
         const val LANG_ENGLISH = "en"
         const val LANG_VIETNAMESE = "vi"
         const val LANG_CHINESE = "zh"
+        // Phase 3
+        const val LANG_FRENCH = "fr"
+        const val LANG_GERMAN = "de"
+        const val LANG_JAPANESE = "ja"
+        const val LANG_KOREAN = "ko"
+        const val LANG_SPANISH = "es"
+        const val LANG_RUSSIAN = "ru"
+        const val LANG_THAI = "th"
+        // Phase 4
+        const val LANG_ARABIC = "ar"
+        const val LANG_PORTUGUESE = "pt"
+        const val LANG_PORTUGUESE_BRAZIL = "pt-rBR"
+        const val LANG_HINDI = "hi"
+        const val LANG_CHINESE_TRADITIONAL = "zh-rTW"
+        const val LANG_ITALIAN = "it"
+        const val LANG_INDONESIAN = "in"
     }
 
     private val prefName = "Language_Preference"
@@ -22,10 +38,13 @@ class LanguagePref(context: Context) {
         context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
     fun getValue(): String {
-        return preference.getString(prefKey, LANG_ENGLISH) ?: LANG_ENGLISH
+        val value = preference.getString(prefKey, LANG_ENGLISH) ?: LANG_ENGLISH
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LanguagePref", "getValue: $value")
+        return value
     }
 
     fun setValue(languageCode: String) {
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LanguagePref", "setValue: saving $languageCode")
         preference.edit(commit = true) {
             putString(prefKey, languageCode)
         }

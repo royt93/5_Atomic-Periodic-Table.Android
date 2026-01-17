@@ -4,9 +4,23 @@
 
 Ứng dụng đã được tích hợp chức năng đa ngôn ngữ toàn diện (UI + Element Descriptions) với 3 ngôn ngữ:
 
-- **English** (mặc định)
-- **Tiếng Việt**
+- **English** (Mặc định)
+- **Tiếng Việt** (Vietnamese)
 - **中文** (Chinese Simplified)
+- **中文 (繁體)** (Chinese Traditional - Taiwan)
+- **Français** (French)
+- **Deutsch** (German)
+- **日本語** (Japanese)
+- **한국어** (Korean)
+- **Русский** (Russian)
+- **Español** (Spanish)
+- **ไทย** (Thai)
+- **العربية** (Arabic)
+- **Português** (Portuguese)
+- **Português (Brasil)** (Portuguese - Brazil)
+- **हिन्दी** (Hindi)
+- **Italiano** (Italian)
+- **Bahasa Indonesia** (Indonesian)
 
 ---
 
@@ -64,6 +78,7 @@ Copy `values/strings.xml` -> `values-th/strings.xml`. Dịch toàn bộ nội du
 
 **Step 3: Copy và dịch Element Descriptions (Quan trọng)**
 Copy `values/strings_desc.xml` -> `values-th/strings_desc.xml`.
+
 - File này chứa 118 key (từ `desc_actinium` đến `desc_zirconium`).
 - Dịch nội dung sang tiếng Thái.
 - **Lưu ý**: Nếu không tạo file này, app sẽ hiển thị mô tả tiếng Anh (fallback).

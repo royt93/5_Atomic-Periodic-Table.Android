@@ -19,14 +19,8 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     private var systemUiConfigured = false
 
     override fun attachBaseContext(context: Context) {
-        // First apply the saved language locale
+        // Apply the saved language and font scale via LocaleHelper
         val localizedContext = LocaleHelper.applyLanguage(context)
-        
-        // Then apply font scale override
-        val override = Configuration(localizedContext.resources.configuration)
-        override.fontScale = 1.0f
-        applyOverrideConfiguration(override)
-        
         super.attachBaseContext(localizedContext)
     }
 

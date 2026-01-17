@@ -318,5 +318,20 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">-</string>
+    <string name="language_french">Français (French)</string>
+    <string name="language_german">Deutsch (German)</string>
+    <string name="language_japanese">日本語 (Japanese)</string>
+    <string name="language_korean">한국어 (Korean)</string>
+    <string name="language_spanish">Español (Spanish)</string>
+    <string name="language_russian">Русский (Russian)</string>
+    <string name="language_thai">ไทย (Thai)</string>
+
+    <string name="language_arabic">العربية (Arabic)</string>
+    <string name="language_portuguese">Português (Portuguese)</string>
+    <string name="language_portuguese_brazil">Português (Brazil)</string>
+    <string name="language_hindi">हिन्दी (Hindi)</string>
+    <string name="language_chinese_traditional">中文 (Traditional)</string>
+    <string name="language_italian">Italiano (Italian)</string>
+    <string name="language_indonesian">Bahasa Indonesia</string>
 </resources>
 

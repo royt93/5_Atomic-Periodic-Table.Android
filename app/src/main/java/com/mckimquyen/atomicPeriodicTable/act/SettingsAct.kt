@@ -468,11 +468,11 @@ class SettingsAct : BaseAct() {
         val currentLanguage = languagePref.getValue()
 
         // Update radio button states based on current language
-        updateLanguageRadioButtons(currentLanguage)
+        updateLanguageRadioButtons()
 
         // Open language panel when clicking language settings
         binding.languageSettings.setOnClickListener {
-            updateLanguageRadioButtons(languagePref.getValue())
+            updateLanguageRadioButtons()
             Utils.fadeInAnim(binding.languagePanel.root, 300)
         }
 
@@ -496,6 +496,48 @@ class SettingsAct : BaseAct() {
         binding.languagePanel.chineseBtn.setOnClickListener {
             showLanguageConfirmDialog(LanguagePref.LANG_CHINESE)
         }
+        binding.languagePanel.frenchBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_FRENCH)
+        }
+        binding.languagePanel.germanBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_GERMAN)
+        }
+        binding.languagePanel.japaneseBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_JAPANESE)
+        }
+        binding.languagePanel.koreanBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_KOREAN)
+        }
+        binding.languagePanel.spanishBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_SPANISH)
+        }
+        binding.languagePanel.russianBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_RUSSIAN)
+        }
+        binding.languagePanel.thaiBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_THAI)
+        }
+        binding.languagePanel.arabicBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_ARABIC)
+        }
+        binding.languagePanel.portugueseBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_PORTUGUESE)
+        }
+        binding.languagePanel.portugueseBrazilBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_PORTUGUESE_BRAZIL)
+        }
+        binding.languagePanel.hindiBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_HINDI)
+        }
+        binding.languagePanel.chineseTraditionalBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_CHINESE_TRADITIONAL)
+        }
+        binding.languagePanel.italianBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_ITALIAN)
+        }
+        binding.languagePanel.indonesianBtn.setOnClickListener {
+            showLanguageConfirmDialog(LanguagePref.LANG_INDONESIAN)
+        }
 
         // Confirm dialog buttons
         binding.confirmDialog.confirmDialogBackground.setOnClickListener {
@@ -515,6 +557,7 @@ class SettingsAct : BaseAct() {
     }
 
     private fun showLanguageConfirmDialog(languageCode: String) {
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("SettingsAct", "showLanguageConfirmDialog requested for: $languageCode")
         val languagePref = LanguagePref(this)
         
         // Don't show dialog if selecting the same language
@@ -532,20 +575,32 @@ class SettingsAct : BaseAct() {
         }, 320)
     }
 
-    private fun updateLanguageRadioButtons(currentLanguage: String) {
-        // Reset all to unchecked
-        binding.languagePanel.englishBtn.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_radio_unchecked, 0, 0, 0
-        )
-        binding.languagePanel.vietnameseBtn.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_radio_unchecked, 0, 0, 0
-        )
-        binding.languagePanel.chineseBtn.setCompoundDrawablesWithIntrinsicBounds(
-            R.drawable.ic_radio_unchecked, 0, 0, 0
-        )
+    private fun updateLanguageRadioButtons() {
+        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("SettingsAct", "updateLanguageRadioButtons called. Current lang: ${LanguagePref(this).getValue()}")
 
-        // Set the current language as checked
-        when (currentLanguage) {
+        // Reset all icons to UNCHECKED state
+        val unchecked = R.drawable.ic_radio_unchecked
+        binding.languagePanel.englishBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.vietnameseBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.chineseBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.frenchBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.germanBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.japaneseBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.koreanBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.spanishBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.russianBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.thaiBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.arabicBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.portugueseBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.portugueseBrazilBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.hindiBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.chineseTraditionalBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.italianBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+        binding.languagePanel.indonesianBtn.setCompoundDrawablesWithIntrinsicBounds(unchecked, 0, 0, 0)
+
+        val currentLang = LanguagePref(this).getValue()
+
+        when (currentLang) {
             LanguagePref.LANG_ENGLISH -> {
                 binding.languagePanel.englishBtn.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_radio_checked, 0, 0, 0
@@ -558,6 +613,76 @@ class SettingsAct : BaseAct() {
             }
             LanguagePref.LANG_CHINESE -> {
                 binding.languagePanel.chineseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_FRENCH -> {
+                binding.languagePanel.frenchBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_GERMAN -> {
+                binding.languagePanel.germanBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_JAPANESE -> {
+                binding.languagePanel.japaneseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_KOREAN -> {
+                binding.languagePanel.koreanBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_SPANISH -> {
+                binding.languagePanel.spanishBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_RUSSIAN -> {
+                binding.languagePanel.russianBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_THAI -> {
+                binding.languagePanel.thaiBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_ARABIC -> {
+                binding.languagePanel.arabicBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_PORTUGUESE -> {
+                binding.languagePanel.portugueseBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_PORTUGUESE_BRAZIL -> {
+                binding.languagePanel.portugueseBrazilBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_HINDI -> {
+                binding.languagePanel.hindiBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_CHINESE_TRADITIONAL -> {
+                binding.languagePanel.chineseTraditionalBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_ITALIAN -> {
+                binding.languagePanel.italianBtn.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_radio_checked, 0, 0, 0
+                )
+            }
+            LanguagePref.LANG_INDONESIAN -> {
+                binding.languagePanel.indonesianBtn.setCompoundDrawablesWithIntrinsicBounds(
                     R.drawable.ic_radio_checked, 0, 0, 0
                 )
             }
