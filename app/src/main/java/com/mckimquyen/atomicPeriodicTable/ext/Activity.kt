@@ -134,11 +134,11 @@ fun Activity.rateAppInApp(forceRateInApp: Boolean = false) {
 
     val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     val lastReviewTime = sharedPreferences.getLong("last_review_time", 0L)
-//    Log.d("roy93~", "requestReview lastReviewTime $lastReviewTime")
+//    Logger.i("requestReview lastReviewTime $lastReviewTime")
     val currentTime = Calendar.getInstance().timeInMillis
     val daysSinceLastReview = (currentTime - lastReviewTime) / (1000 * 60 * 60 * 24)
-//    Log.d("roy93~", "requestReview forceRateInApp $forceRateInApp")
-//    Log.d("roy93~", "requestReview daysSinceLastReview $daysSinceLastReview")
+//    Logger.i("requestReview forceRateInApp $forceRateInApp")
+//    Logger.i("requestReview daysSinceLastReview $daysSinceLastReview")
     if (daysSinceLastReview >= 30 || forceRateInApp) {
 //    if (daysSinceLastReview >= 30) {
         val reviewManager = ReviewManagerFactory.create(this)
@@ -149,18 +149,18 @@ fun Activity.rateAppInApp(forceRateInApp: Boolean = false) {
                     val reviewInfo: ReviewInfo = task.result
                     reviewManager.launchReviewFlow(this, reviewInfo)
                     sharedPreferences.edit().putLong("last_review_time", currentTime).apply()
-//                    Log.d("roy93~", "requestReview result ${task.result}")
-//                    Log.d("roy93~", "requestReview isSuccessful ${task.isSuccessful}")
-//                    Log.d("roy93~", "requestReview isCanceled ${task.isCanceled}")
-//                    Log.d("roy93~", "requestReview isComplete ${task.isComplete}")
-//                    Log.d("roy93~", "requestReview exception ${task.exception}")
+//                    Logger.i("requestReview result ${task.result}")
+//                    Logger.i("requestReview isSuccessful ${task.isSuccessful}")
+//                    Logger.i("requestReview isCanceled ${task.isCanceled}")
+//                    Logger.i("requestReview isComplete ${task.isComplete}")
+//                    Logger.i("requestReview exception ${task.exception}")
                 } else {
                     // Optimized: Remove unused variable - only needed if logging is enabled
                     // @ReviewErrorCode val reviewErrorCode = (task.exception as ReviewException?)?.errorCode
-//                    Log.e("roy93~", "requestReview error $reviewErrorCode")
+//                    Logger.e("requestReview error $reviewErrorCode")
                 }
             } catch (e: Exception) {
-//                Log.e("roy93~", "catch e $e")
+//                Logger.e("catch e $e")
             }
         }
     }

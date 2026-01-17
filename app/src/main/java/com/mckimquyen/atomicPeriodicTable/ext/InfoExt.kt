@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.text.TextUtils
-import android.util.Log
 import android.view.Display
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
@@ -36,6 +35,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.SendIso
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
 import com.mckimquyen.atomicPeriodicTable.util.Pasteur
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
@@ -403,10 +403,10 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
 
     private fun loadImage(url: String?) {
         try {
-            Log.d(TAG, "roy93 loadImage url $url")
+            Logger.i("roy93 loadImage url $url")
             // Optimized: Validate URL before loading to prevent errors
             if (url.isNullOrEmpty() || url == "---") {
-                Log.w(TAG, "Invalid image URL: $url")
+                Logger.w("Invalid image URL: $url")
                 binding.offlineDiv.visibility = View.VISIBLE
                 binding.frame.visibility = View.GONE
                 return
@@ -434,20 +434,20 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
                 .error(R.drawable.ic_launcher_background)
                 .into(binding.elementImage, object : com.squareup.picasso.Callback {
                     override fun onSuccess() {
-                        Log.d(TAG, "roy93 loadImage SUCCESS: Image loaded for $url")
+                        Logger.i("roy93 loadImage SUCCESS: Image loaded for $url")
                         binding.offlineDiv.visibility = View.GONE
                         binding.frame.visibility = View.VISIBLE
                     }
 
                     override fun onError(e: Exception?) {
-                        Log.e(TAG, "roy93 loadImage ERROR: Failed to load image", e)
+                        e?.let { Logger.e("roy93 loadImage ERROR: Failed to load image", it) } ?: Logger.e("roy93 loadImage ERROR: Failed to load image")
                         binding.offlineDiv.visibility = View.VISIBLE
                         binding.frame.visibility = View.GONE
                     }
                 })
         } catch (e: Exception) {
             // Optimized: Catch all exceptions, not just ConnectException
-            Log.e(TAG, "Failed to load image: ${e.message}", e)
+            Logger.e("Failed to load image: ${e.message}", e)
             binding.offlineDiv.visibility = View.VISIBLE
             binding.frame.visibility = View.GONE
         }

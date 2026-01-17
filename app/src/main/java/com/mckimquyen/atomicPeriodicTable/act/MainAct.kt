@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Display
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -51,6 +50,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.SearchPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
 import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
@@ -330,7 +330,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         for (item in list) {
             if (item.element.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT))) {
                 filteredList.add(item)
-                Log.v("SSDD2", filteredList.toString())
+                Logger.v(filteredList.toString())
             }
         }
         val searchPreference = SearchPref(this)
@@ -510,9 +510,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             btn.setOnClickListener {
                 AdMobManager.showInterstitial(this) { success ->
                     if (success) {
-                        Log.d("roy93~", "Ad đã hiển thị và đóng thành công")
+                        Logger.i("Ad đã hiển thị và đóng thành công")
                     } else {
-                        Log.d("roy93~", "Ad không hiển thị được hoặc có lỗi")
+                        Logger.i("Ad không hiển thị được hoặc có lỗi")
                     }
                     val intent = Intent(this, ElementInfoAct::class.java)
                     val elementSend = ElementSendAndLoad(this)

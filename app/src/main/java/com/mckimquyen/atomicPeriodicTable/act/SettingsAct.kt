@@ -300,7 +300,7 @@ class SettingsAct : BaseAct() {
     }
 
 //    private fun finishScreen() {
-//        Log.d("roy93~", "onBackPressed")
+//        Logger.i("roy93~", "onBackPressed")
 //        if (themePanel.visibility == View.VISIBLE) {
 //            Utils.fadeOutAnim(themePanel, 300) //Start Close Animation
 //            return

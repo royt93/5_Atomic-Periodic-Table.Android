@@ -10,7 +10,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+// import android.util.Log // Replaced with Logger
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -93,12 +93,12 @@ object AdMobManager {
         appPreferences?.getGAIDList()?.let {
             listGAIDVipMember.addAll(it)
         }
-        Log.d(TAG, "###init listGAIDVipMember $listGAIDVipMember")
+        Logger.i("###init listGAIDVipMember $listGAIDVipMember")
         getGAID(app) { gaidCurrent ->
             this.application = app
             this.currentDeviceGAID = gaidCurrent
             isVIPMember = listGAIDVipMember.contains(gaidCurrent)
-            Log.d(TAG, "###init Current device GAID: $gaidCurrent, isWhitelistedDevice: $isVIPMember")
+            Logger.i("###init Current device GAID: $gaidCurrent, isWhitelistedDevice: $isVIPMember")
 
             //set test devices for all Roy's devices
             setTestDeviceIds(
@@ -159,7 +159,7 @@ object AdMobManager {
                 callback(id)
             } catch (e: Exception) {
                 callback("")
-                Log.d("AdMobManager", "getGAID error $e")
+                Logger.i("getGAID error $e")
             }
         }.start()
     }
@@ -172,12 +172,12 @@ object AdMobManager {
     fun setTestDeviceIds(vararg deviceIds: String) {
         val configuration = RequestConfiguration.Builder().setTestDeviceIds(deviceIds.toList()).build()
         MobileAds.setRequestConfiguration(configuration)
-        Log.d(TAG, "setTestDeviceIds deviceIds ${deviceIds.toList()}")
+        Logger.i("setTestDeviceIds deviceIds ${deviceIds.toList()}")
     }
 
     fun getTestDeviceIds(): List<String> {
         val testDeviceIds = MobileAds.getRequestConfiguration().testDeviceIds
-        Log.d(TAG, "getTestDeviceIds testDeviceIds: $testDeviceIds")
+        Logger.i("getTestDeviceIds testDeviceIds: $testDeviceIds")
         return testDeviceIds
     }
 
@@ -189,39 +189,39 @@ object AdMobManager {
         adSize: AdSize = AdSize.BANNER,
     ): AdView? {
         if (isVIPMember) {
-            Log.d(TAG, "Banner Ad skipped due to whitelist device")
+            Logger.i("Banner Ad skipped due to whitelist device")
             container.isVisible = false
             tvLabelAd.isVisible = false
             return null
         }
         if (!NetworkUtils.isDeviceConnected(context)) {
-            Log.d(TAG, "loadBanner no internet")
+            Logger.i("loadBanner no internet")
             container.isVisible = false
             tvLabelAd.isVisible = false
             return null
         }
-        Log.d(TAG, "loadBanner~~~")
+        Logger.i("loadBanner~~~")
         container.isVisible = true
         tvLabelAd.isVisible = true
         val adView = AdView(context).apply {
             setAdSize(adSize)
             setAdUnitId(adUnitId)
-            Log.d(TAG, "adListener init~~~")
+            Logger.i("adListener init~~~")
             adListener = object : AdListener() {
                 override fun onAdLoaded() {
-                    Log.d(TAG, "Banner Ad Loaded - Revenue +1 impression")
+                    Logger.i("Banner Ad Loaded - Revenue +1 impression")
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
-                    Log.d(TAG, "Banner Ad Failed to load: ${error.message}")
+                    Logger.i("Banner Ad Failed to load: ${error.message}")
                 }
 
                 override fun onAdOpened() {
-                    Log.d(TAG, "Banner Ad Clicked - Revenue +1 click")
+                    Logger.i("Banner Ad Clicked - Revenue +1 click")
                 }
 
                 override fun onAdClosed() {
-                    Log.d(TAG, "Banner Ad Closed")
+                    Logger.i("Banner Ad Closed")
                 }
             }
         }
@@ -240,16 +240,16 @@ object AdMobManager {
         adUnitId: String,
     ) {
         if (isVIPMember) {
-            Log.d(TAG, "Interstitial Ad skipped due to whitelist device")
+            Logger.i("Interstitial Ad skipped due to whitelist device")
             return
         }
         if (!NetworkUtils.isDeviceConnected(context)) {
-            Log.d(TAG, "loadInterstitial no internet")
+            Logger.i("loadInterstitial no internet")
             return
         }
         // Kiểm tra thời gian cooldown cho Interstitial
         if (System.currentTimeMillis() - lastInterstitialErrorTime < ERROR_COOLDOWN) {
-            Log.d(TAG, "Interstitial Ad skipped due to recent error")
+            Logger.i("Interstitial Ad skipped due to recent error")
             interstitialListener?.onAdFailedToLoad(
                 LoadAdError(
                     /* code = */ 0,
@@ -263,7 +263,7 @@ object AdMobManager {
         }
         InterstitialAd.load(context, adUnitId, AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
             override fun onAdLoaded(ad: InterstitialAd) {
-                Log.d(TAG, "Interstitial Ad Loaded")
+                Logger.i("Interstitial Ad Loaded")
                 interstitialAd = ad
                 setInterstitialCallback()
                 interstitialListener?.onAdLoaded()
@@ -271,7 +271,7 @@ object AdMobManager {
 
             override fun onAdFailedToLoad(error: LoadAdError) {
                 lastInterstitialErrorTime = System.currentTimeMillis() // Cập nhật thời điểm lỗi
-                Log.d(TAG, "Interstitial Ad Failed to load: ${error.message}. Cooldown started.")
+                Logger.i("Interstitial Ad Failed to load: ${error.message}. Cooldown started.")
                 interstitialAd = null
                 interstitialListener?.onAdFailedToLoad(error)
             }
@@ -281,12 +281,12 @@ object AdMobManager {
     private fun setInterstitialCallback() {
         interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdShowedFullScreenContent() {
-                Log.d(TAG, "#1 Interstitial Ad Shown - Revenue +1 impression")
+                Logger.i("#1 Interstitial Ad Shown - Revenue +1 impression")
                 interstitialListener?.onAdShowed()
             }
 
             override fun onAdDismissedFullScreenContent() {
-                Log.d(TAG, "#1 Interstitial Ad Dismissed")
+                Logger.i("#1 Interstitial Ad Dismissed")
                 interstitialAd = null
 //                currentActivity?.get()?.let {
 //                    loadInterstitial(it, BuildConfig.ADMOB_INTERSTITIAL_ID)
@@ -295,13 +295,13 @@ object AdMobManager {
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                Log.d(TAG, "#1 Interstitial Ad Failed to Show: ${adError.message}")
+                Logger.i("#1 Interstitial Ad Failed to Show: ${adError.message}")
                 interstitialAd = null
                 interstitialListener?.onAdFailedToShow(adError)
             }
 
             override fun onAdClicked() {
-                Log.d(TAG, "#1 Interstitial Ad Clicked - Revenue +1 click")
+                Logger.i("#1 Interstitial Ad Clicked - Revenue +1 click")
                 interstitialListener?.onAdClicked()
             }
         }
@@ -309,16 +309,16 @@ object AdMobManager {
 
     fun showInterstitial(activity: Activity, onDoneFlow: (result: Boolean) -> Unit) {
         if (isVIPMember) {
-            Log.d(TAG, "Interstitial Show Skipped - Device in whitelist")
+            Logger.i("Interstitial Show Skipped - Device in whitelist")
             interstitialListener?.onAdNotAvailable()
             onDoneFlow(false)
             return
         }
 
 //        val randomChance = Random.nextInt(1, 101)
-//        Log.d(TAG, "Random chance: $randomChance")
+//        Logger.i("Random chance: $randomChance")
 //        if (randomChance > SHOW_INTERSTITIAL_CHANCE) {
-//            Log.d(TAG, "Skipped showing interstitial because random > $SHOW_INTERSTITIAL_CHANCE")
+//            Logger.i("Skipped showing interstitial because random > $SHOW_INTERSTITIAL_CHANCE")
 //            interstitialListener?.onAdNotAvailable()
 //            return
 //        }
@@ -329,30 +329,30 @@ object AdMobManager {
             // Tạo callback mới có xử lý onDoneFlow
             interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "#2 Interstitial Ad Shown - Revenue +1 impression")
+                    Logger.i("#2 Interstitial Ad Shown - Revenue +1 impression")
                     originalCallback?.onAdShowedFullScreenContent()
                 }
 
                 override fun onAdDismissedFullScreenContent() {
-                    Log.d(TAG, "#2 Interstitial Ad Dismissed #2")
+                    Logger.i("#2 Interstitial Ad Dismissed #2")
                     originalCallback?.onAdDismissedFullScreenContent()
                     onDoneFlow(true) // Ad đóng thành công
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    Log.d(TAG, "#2 Interstitial Ad Failed to Show: ${adError.message}")
+                    Logger.i("#2 Interstitial Ad Failed to Show: ${adError.message}")
                     originalCallback?.onAdFailedToShowFullScreenContent(adError)
                     onDoneFlow(false) // Hiển thị thất bại
                 }
 
                 override fun onAdClicked() {
-                    Log.d(TAG, "#2 Interstitial Ad Clicked - Revenue +1 click")
+                    Logger.i("#2 Interstitial Ad Clicked - Revenue +1 click")
                     originalCallback?.onAdClicked()
                 }
             }
             interstitialAd?.show(activity)
         } else {
-            Log.d(TAG, "Interstitial Ad not ready")
+            Logger.i("Interstitial Ad not ready")
             interstitialListener?.onAdNotAvailable()
             onDoneFlow(false)
         }
@@ -363,16 +363,16 @@ object AdMobManager {
         adUnitId: String,
         onAdLoaded: (Boolean) -> Unit,
     ) {
-        Log.d(TAG, "~~~~~ loadAppOpenAd isVIPMember $isVIPMember")
+        Logger.i("~~~~~ loadAppOpenAd isVIPMember $isVIPMember")
         if (isVIPMember) {
-            Log.d(TAG, "App Open Ad skipped due to whitelist device")
+            Logger.i("App Open Ad skipped due to whitelist device")
             Handler(Looper.getMainLooper()).postDelayed({
                 onAdLoaded.invoke(false)
             }, 1_000)
             return
         }
         if (!NetworkUtils.isDeviceConnected(context)) {
-            Log.d(TAG, "loadAppOpenAd no internet")
+            Logger.i("loadAppOpenAd no internet")
             Handler(Looper.getMainLooper()).postDelayed({
                 onAdLoaded.invoke(false)
             }, 1_000)
@@ -380,7 +380,7 @@ object AdMobManager {
         }
         // Kiểm tra thời gian cooldown cho App Open
         if (System.currentTimeMillis() - lastAppOpenErrorTime < ERROR_COOLDOWN) {
-            Log.d(TAG, "App Open Ad skipped due to recent error")
+            Logger.i("App Open Ad skipped due to recent error")
             Handler(Looper.getMainLooper()).postDelayed({
                 onAdLoaded(false)
             }, 1_000)
@@ -391,7 +391,7 @@ object AdMobManager {
                 //do nothing
             } else {
                 if ((System.currentTimeMillis() - lastAppOpenLoadTime) < APP_OPEN_AD_TIME_OUT) {
-                    Log.d(TAG, "App Open Ad is still valid or loading")
+                    Logger.i("App Open Ad is still valid or loading")
                     Handler(Looper.getMainLooper()).postDelayed({
                         onAdLoaded.invoke(false)
                     }, 1_000)
@@ -405,7 +405,7 @@ object AdMobManager {
             context, adUnitId, AdRequest.Builder().build(),
             object : AppOpenAd.AppOpenAdLoadCallback() {
                 override fun onAdLoaded(ad: AppOpenAd) {
-                    Log.d(TAG, "App Open Ad Loaded")
+                    Logger.i("App Open Ad Loaded")
                     appOpenAd = ad
                     lastAppOpenLoadTime = System.currentTimeMillis()
                     isAppOpenLoading = false
@@ -416,7 +416,7 @@ object AdMobManager {
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     lastAppOpenErrorTime = System.currentTimeMillis() // Cập nhật thời điểm lỗi
-                    Log.d(TAG, "App Open Ad Failed to load: ${error.message}. Cooldown started.")
+                    Logger.i("App Open Ad Failed to load: ${error.message}. Cooldown started.")
                     isAppOpenLoading = false
                     Handler(Looper.getMainLooper()).postDelayed({
                         onAdLoaded.invoke(false)
@@ -431,43 +431,43 @@ object AdMobManager {
         onAdDismiss: (Boolean) -> Unit,
     ) {
         if (isVIPMember) {
-            Log.d(TAG, "App Open Ad Show Skipped - Device in whitelist")
+            Logger.i("App Open Ad Show Skipped - Device in whitelist")
             onAdDismiss.invoke(true)
             return
         }
         if (isAppOpenShowing) {
-            Log.d(TAG, "Already showing App Open Ad")
+            Logger.i("Already showing App Open Ad")
             onAdDismiss.invoke(true)
             return
         }
         if (appOpenAd != null) {
             appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "App Open Ad Shown - Revenue +1 impression")
+                    Logger.i("App Open Ad Shown - Revenue +1 impression")
                     isAppOpenShowing = true
                 }
 
                 override fun onAdDismissedFullScreenContent() {
-                    Log.d(TAG, "App Open Ad Dismissed")
+                    Logger.i("App Open Ad Dismissed")
                     appOpenAd = null
                     isAppOpenShowing = false
                     onAdDismiss.invoke(true)
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    Log.d(TAG, "App Open Ad Failed to Show: ${adError.message}")
+                    Logger.i("App Open Ad Failed to Show: ${adError.message}")
                     appOpenAd = null
                     isAppOpenShowing = false
                     onAdDismiss.invoke(true)
                 }
 
                 override fun onAdClicked() {
-                    Log.d(TAG, "App Open Ad Clicked - Revenue +1 click")
+                    Logger.i("App Open Ad Clicked - Revenue +1 click")
                 }
             }
             appOpenAd?.show(activity)
         } else {
-            Log.d(TAG, "App Open Ad not ready")
+            Logger.i("App Open Ad not ready")
             onAdDismiss.invoke(true)
         }
     }
@@ -482,7 +482,7 @@ object AdMobManager {
         }
         appPreferences?.saveGAIDList(listGAIDVipMember)
         isVIPMember = listGAIDVipMember.contains(currentDeviceGAID)
-        Log.d(TAG, "setVIPMember listGaidDevice $listGaidDevice => isVIPMember $isVIPMember")
+        Logger.i("setVIPMember listGaidDevice $listGaidDevice => isVIPMember $isVIPMember")
     }
 
     fun deleteVIPMember(listGaidDevice: List<String>) {
@@ -491,27 +491,27 @@ object AdMobManager {
         }
         appPreferences?.saveGAIDList(listGAIDVipMember)
         isVIPMember = listGAIDVipMember.contains(currentDeviceGAID)
-        Log.d(TAG, "deleteVIPMember listGaidDevice $listGaidDevice => isVIPMember $isVIPMember")
+        Logger.i("deleteVIPMember listGaidDevice $listGaidDevice => isVIPMember $isVIPMember")
     }
 
     var countInitSplashScreen = 0
 
     fun initSplashScreen(activity: Activity, onAdLoaded: () -> Unit) {
         countInitSplashScreen++
-        Log.d(TAG, "~~~initSplashScreen countInitSplashScreen $countInitSplashScreen")
+        Logger.i("~~~initSplashScreen countInitSplashScreen $countInitSplashScreen")
         if (countInitSplashScreen > 1) {
             onAdLoaded.invoke()
         } else {
             CoroutineScope(Dispatchers.Default).launch {
-                Log.d(TAG, "~~~initSplashScreen launch")
+                Logger.i("~~~initSplashScreen launch")
                 EventBus.eventFlow.collectLatest { value ->
-                    Log.d(TAG, "initSplashScreen collectLatest: $value")
+                    Logger.i("initSplashScreen collectLatest: $value")
                     CoroutineScope(Dispatchers.Main).launch {
                         loadAppOpenAd(
                             context = activity,
                             adUnitId = BuildConfig.ADMOB_APP_OPEN_ID,
                             onAdLoaded = { result ->
-                                Log.d(TAG, "onAdLoaded result $result")
+                                Logger.i("onAdLoaded result $result")
                                 if (result) {
                                     showAppOpenAd(activity) {
                                         onAdLoaded.invoke()

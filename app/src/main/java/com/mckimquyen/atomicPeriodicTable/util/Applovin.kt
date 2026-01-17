@@ -3,8 +3,8 @@
 //import android.app.Activity
 //import android.content.Context
 //import android.graphics.Color
-//import android.util.Log.e
-//import android.util.Log.i
+//import Logger
+//use Logger.i instead
 //import android.view.ViewGroup
 //import android.widget.FrameLayout
 //import android.widget.Toast
