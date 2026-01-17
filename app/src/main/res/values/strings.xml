@@ -316,4 +316,8 @@
     <string name="protons_short">Protons</string>
     <string name="neutrons_short">Neutrons</string>
 
+
+    <string name="element_group_placeholder">-</string>
+    <string name="element_appearance_placeholder">-</string>
+    <string name="element_electrons_placeholder">-</string>
 </resources>

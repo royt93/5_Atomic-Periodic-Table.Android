@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Element Descriptions (Chinese) -->
+    <string name="desc_hydrogen">氢是化学元素，符号为 H，原子序数为 1。氢的标准原子量为 1.008，是周期表中最轻的元素。氢是宇宙中极其丰富的化学物质，约占所有重子质量的 75%。非残余恒星主要由等离子态的氢组成。氢最常见的同位素被称为氕（名称很少使用，符号 1H），有一个质子且没有中子。</string>
+</resources>

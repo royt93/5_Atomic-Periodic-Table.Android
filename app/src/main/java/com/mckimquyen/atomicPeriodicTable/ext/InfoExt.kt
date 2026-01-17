@@ -52,7 +52,9 @@ import java.net.ConnectException
 import java.util.Locale
 import kotlin.math.pow
 
-abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
+import com.mckimquyen.atomicPeriodicTable.act.BaseAct
+
+abstract class InfoExt : BaseAct() {
     protected lateinit var binding: AElementInfoBinding
 
     companion object {
@@ -60,46 +62,6 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     }
 
     private var systemUiConfigured = false
-
-    override fun attachBaseContext(context: Context) {
-        val override = Configuration(context.resources.configuration)
-        override.fontScale = 1.0f
-        applyOverrideConfiguration(override)
-        super.attachBaseContext(context)
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        val content = findViewById<View>(android.R.id.content)
-        content.setOnApplyWindowInsetsListener(this)
-
-        if (!systemUiConfigured) {
-            systemUiConfigured = true
-        }
-    }
-
-    open fun onApplySystemInsets(
-        top: Int,
-        bottom: Int,
-        left: Int,
-        right: Int,
-    ) = Unit
-
-    override fun onApplyWindowInsets(v: View, insets: android.view.WindowInsets): android.view.WindowInsets {
-        // Modern API: Use WindowInsetsCompat instead of deprecated WindowInsets methods
-        val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets, v)
-        val systemBars = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-
-        Pasteur.info(TAG, "height: ${systemBars.bottom}")
-        onApplySystemInsets(
-            systemBars.top,
-            systemBars.bottom,
-            systemBars.left,
-            systemBars.right
-        )
-        return insets
-    }
 
     @SuppressLint("SetTextI18n")
     fun readJson() {
@@ -132,7 +94,12 @@ abstract class InfoExt : AppCompatActivity(), View.OnApplyWindowInsetsListener {
 
             //optStrings from jsonObject or fallback
             val element = jsonObject.optString("element", "---")
-            val description = jsonObject.optString("description", "---")
+            
+            // Generate resource key from element name (e.g., "Hydrogen" -> "desc_hydrogen")
+            // This allows us to use localized strings.xml for descriptions instead of hardcoded JSON
+            val descKey = "desc_${element.lowercase(Locale.US)}"
+            val descResId = resources.getIdentifier(descKey, "string", packageName)
+            val description = if (descResId != 0) getString(descResId) else jsonObject.optString("description", "---")
             val url = jsonObject.optString("link", "---")
             val short = jsonObject.optString("short", "---")
             val sElementElectrons = jsonObject.optString("element_electrons", "---")

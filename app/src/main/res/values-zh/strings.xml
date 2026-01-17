@@ -314,5 +314,9 @@
     <string name="electrons_short">电子</string>
     <string name="protons_short">质子</string>
     <string name="neutrons_short">中子</string>
+
+    <string name="element_group_placeholder">-</string>
+    <string name="element_appearance_placeholder">-</string>
+    <string name="element_electrons_placeholder">-</string>
 </resources>
 
