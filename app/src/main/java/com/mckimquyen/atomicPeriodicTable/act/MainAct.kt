@@ -824,6 +824,12 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         }
         textWatcher = null
 
+        // Memory leak fix: Clear AdMobManager singleton reference to prevent Activity leak
+        // AdMobManager.interstitialListener holds a strong reference to this Activity
+        if (AdMobManager.interstitialListener === this) {
+            AdMobManager.interstitialListener = null
+        }
+
         super.onDestroy()
     }
 

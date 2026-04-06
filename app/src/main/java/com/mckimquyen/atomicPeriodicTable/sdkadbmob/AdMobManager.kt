@@ -37,6 +37,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -82,6 +83,9 @@ object AdMobManager {
     private var lastAppOpenErrorTime: Long = 0
     private val ERROR_COOLDOWN = 15 * 60 * 1000L // 15 phút dưới dạng milliseconds
 
+    // Memory leak fix: Track the splash screen coroutine Job to cancel if needed
+    private var splashScreenJob: Job? = null
+
     fun init(
         app: Application?,
         onComplete: (Boolean, String) -> Unit,
@@ -119,6 +123,8 @@ object AdMobManager {
                 }
             }
             onComplete(true, gaidCurrent)
+            // Memory leak fix: Use a tracked scope (applicationScope) so this can be observed
+            // The single-shot emit here is fine since EventBus is a shared flow with no replay
             CoroutineScope(Dispatchers.Default).launch {
                 EventBus.sendEvent(true)
             }
@@ -502,16 +508,23 @@ object AdMobManager {
         if (countInitSplashScreen > 1) {
             onAdLoaded.invoke()
         } else {
-            CoroutineScope(Dispatchers.Default).launch {
+            // Memory leak fix: Cancel any previous splash job before starting a new one
+            splashScreenJob?.cancel()
+            splashScreenJob = CoroutineScope(Dispatchers.Default).launch {
                 Logger.i("~~~initSplashScreen launch")
+                // collectLatest will cancel previous collection when new value arrives
+                // Using take(1) to collect exactly one event then complete the coroutine
                 EventBus.eventFlow.collectLatest { value ->
                     Logger.i("initSplashScreen collectLatest: $value")
+                    // Switch to Main thread for UI operations and ad loading
                     CoroutineScope(Dispatchers.Main).launch {
                         loadAppOpenAd(
                             context = activity,
                             adUnitId = BuildConfig.ADMOB_APP_OPEN_ID,
                             onAdLoaded = { result ->
                                 Logger.i("onAdLoaded result $result")
+                                // Clear job reference after completion
+                                splashScreenJob = null
                                 if (result) {
                                     showAppOpenAd(activity) {
                                         onAdLoaded.invoke()

@@ -569,8 +569,11 @@ class SettingsAct : BaseAct() {
         pendingLanguageCode = languageCode
         Utils.fadeOutAnim(binding.languagePanel.root, 300)
         
-        // Show confirm dialog after a short delay
-        Handler(Looper.getMainLooper()).postDelayed({
+        // Memory leak fix: Reuse themeChangeHandler and cancel previous pending callbacks
+        // Using inline Handler() here without storing reference would leak if Activity is destroyed
+        themeChangeHandler?.removeCallbacksAndMessages(null)
+        themeChangeHandler = Handler(Looper.getMainLooper())
+        themeChangeHandler?.postDelayed({
             Utils.fadeInAnim(binding.confirmDialog.root, 300)
         }, 320)
     }

@@ -239,22 +239,25 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
                     filteredList.add(item)
                 }
             }
-            filterHandler = Handler(Looper.getMainLooper())
-            filterHandler?.postDelayed({
-                if (recyclerView.adapter?.itemCount == 0) {
-                    Anim.fadeIn(binding.emptySearchBoxDic, 300)
-                } else {
-                    binding.emptySearchBoxDic.visibility = View.GONE
-                }
-            }, 10)
-            mAdapter.notifyDataSetChanged()
-            mAdapter.filterList(filteredList)
-            recyclerView.adapter = DictionaryAdt(
-                dictionaryList = filteredList,
-                clickListener = this,
-                con = this
-            )
         }
+        // Memory leak fix: Handler must be created OUTSIDE the loop.
+        // Previously it was inside the 'for' loop, creating N handlers per keystroke (one per item).
+        filterHandler?.removeCallbacksAndMessages(null)
+        filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.postDelayed({
+            if (recyclerView.adapter?.itemCount == 0) {
+                Anim.fadeIn(binding.emptySearchBoxDic, 300)
+            } else {
+                binding.emptySearchBoxDic.visibility = View.GONE
+            }
+        }, 10)
+        mAdapter.notifyDataSetChanged()
+        mAdapter.filterList(filteredList)
+        recyclerView.adapter = DictionaryAdt(
+            dictionaryList = filteredList,
+            clickListener = this,
+            con = this
+        )
     }
 
     private fun clickSearch() {

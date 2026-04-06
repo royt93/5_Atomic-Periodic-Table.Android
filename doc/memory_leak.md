@@ -1,272 +1,271 @@
-# Memory Leak Analysis Report
+# Memory Leak Audit - Atomic Periodic Table Android
 
-**Project:** Atomic Periodic Table Android  
-**Date:** 2026-01-17  
-**Status:** ✅ Clean (Most issues already fixed)
-
----
-
-## Executive Summary
-
-Sau khi scan toàn bộ source code, **hầu hết các memory leak tiềm ẩn đã được fix**. Code đã được refactor với best practices để tránh memory leak. Dưới đây là phân tích chi tiết.
+> Cập nhật lần cuối: 2026-04-06 | Phiên 2 (Full Audit)
+> Build Status: ✅ BUILD SUCCESSFUL (Debug + Release, 3 rounds)
 
 ---
 
-## 1. Handler Memory Leaks
+## Tóm tắt Trạng thái
 
-### Trạng thái: ✅ ĐÃ FIX
-
-Tất cả các Handler đều được cleanup đúng cách trong `onDestroy()`.
-
-| File | Handler | Cleanup trong `onDestroy()` |
-|------|---------|----------------------------|
-| `MainAct.kt` | `initNameHandler`, `filterHandler` | ✅ Line 813-817 |
-| `TableExt.kt` | `boilingHandler`, `meltingHandler`, `phaseHandler`, `yearHandler`, `electroHandler`, `groupsHandler`, `weightHandler`, `heatHandler`, `specificHandler`, `vapeHandler` | ✅ Line 542-561 |
-| `SettingsAct.kt` | `themeChangeHandler` | ✅ Line 93 |
-| `DictionaryAct.kt` | `updateButtonHandler`, `filterHandler`, `delayCloseHandler` | ✅ Line 326-330 |
-| `ElectrodeAct.kt` | `filterHandler`, `delayCloseHandler` | ✅ Line 220-222 |
-| `NuclideAct.kt` | `addViewsHandler` | ✅ Line 333 |
-| `PHAct.kt` | `updateButtonHandler` | ✅ Line 196 |
-| `EquationsAct.kt` | `filterHandler`, `delayCloseHandler` | ✅ Line 265-267 |
-| `IonAct.kt` | `filterHandler`, `delayCloseHandler` | ✅ Line 254-256 |
-| `IsotopesActExperimental.kt` | `filterHandler` | ✅ Line 403 |
+| Khu vực | Trạng thái | Ghi chú |
+|---|---|---|
+| Handlers (Activities) | ✅ Đã xử lý | Tất cả Handler đều được lưu trữ và cleanup trong onDestroy() |
+| TextWatchers | ✅ Đã xử lý | Remove listener trong onDestroy() |
+| ViewTreeObserver Listeners | ✅ Đã xử lý | Remove listener trong onDestroy() |
+| SlidingPanel Listeners | ✅ Đã xử lý | Remove listener trong onDestroy() |
+| AdMob Banner (AdView) | ✅ Đã xử lý | destroy() gọi trong onDestroy() |
+| Activity reference in Singleton | ✅ Đã FIX (Phiên 2) | MainAct clear AdMobManager.interstitialListener trong onDestroy() |
+| Handler trong for-loop | ✅ Đã FIX (Phiên 2) | DictionaryAct: Handler tạo N lần/keystroke → di chuyển ra ngoài loop |
+| SettingsAct inline Handler | ✅ Đã FIX (Phiên 2) | showLanguageConfirmDialog dùng themeChangeHandler thay vì tạo mới |
+| AdMobManager CoroutineScope | ✅ Đã FIX (Phiên 2) | splashScreenJob được track và có thể cancel |
+| AdMobManager.initSplashScreen | ✅ Đã FIX (Phiên 2) | Job được cancel trước khi tạo Job mới |
+| SplashAct animations | ✅ Đã FIX (Phiên 1) | Cancel animation trong onDestroy() |
+| Context leaks (WeakReference) | ✅ OK | AdMobManager dùng WeakReference<Activity> |
 
 ---
 
-## 2. ViewTreeObserver Listeners
+## Bug Đã Tìm Thấy Và Fix (Phiên 2)
 
-### Trạng thái: ✅ ĐÃ FIX
+### 🔴 Bug Nghiêm Trọng 1: Activity Reference Leak trong Singleton
 
-Tất cả `OnScrollChangedListener` được register và unregister đúng cách.
-
-| File | Register | Unregister |
-|------|----------|------------|
-| `MainAct.kt` | Line 210 | ✅ Line 820 |
-| `SettingsAct.kt` | Line 216 | ✅ Line 88 |
-| `LicensesAct.kt` | Line 100 | ✅ Line 184 |
-| `SubmitAct.kt` | Line 105 | ✅ Line 218 |
-| `UnitAct.kt` | Line 95 | ✅ Line 183 |
-| `FavoritePageAct.kt` | Line 295 | ✅ Line 67 |
-| `TableAct.kt` | Line 97 | ✅ Line 195 |
-
----
-
-## 3. TextWatcher Listeners
-
-### Trạng thái: ✅ ĐÃ FIX
-
-Tất cả TextWatcher được store và cleanup đúng cách.
-
-| File | Register | Unregister |
-|------|----------|------------|
-| `MainAct.kt` | Line 130 | ✅ Line 830 |
-| `IsotopesActExperimental.kt` | Line 93 | ✅ Line 408 |
-| `DictionaryAct.kt` | Line 222 | ✅ Line 335 |
-| `EquationsAct.kt` | Line 183 | ✅ Line 272 |
-| `ElectrodeAct.kt` | Line 165 | ✅ Line 227 |
-| `IonAct.kt` | Line 204 | ✅ Line 261 |
-
----
-
-## 4. SlidingUpPanelLayout Listeners
-
-### Trạng thái: ✅ ĐÃ FIX
-
-| File | Register | Unregister |
-|------|----------|------------|
-| `MainAct.kt` | Line 226 | ✅ Line 825 |
-| `IsotopesActExperimental.kt` | Line 108 | ✅ Line 413 |
-
----
-
-## 5. AdMobManager - Potential Memory Leaks
-
-### Trạng thái: ⚠️ CẦN XEM XÉT
-
-File: `AdMobManager.kt`
-
-#### 5.1 CoroutineScope không có lifecycle management
-
+**File:** `MainAct.kt`  
+**Vấn đề:**
 ```kotlin
-// Line 122, 505
-CoroutineScope(Dispatchers.Default).launch { ... }
+// onCreate() - Set listener của singleton trỏ vào Activity
+AdMobManager.interstitialListener = this  // this = Activity
+
+// onDestroy() trước khi fix - KHÔNG clear listener
+override fun onDestroy() {
+    // ... handlers cleanup
+    // ❌ THIẾU: Không clear AdMobManager.interstitialListener
+    super.onDestroy()
+}
 ```
+AdMobManager là **singleton** (object). Nếu Activity bị destroy (xoay màn hình, back stack), singleton vẫn giữ strong reference tới Activity đã bị destroy → **Memory Leak**.
 
-**Vấn đề:** CoroutineScope được tạo mà không được cancel, có thể gây leak nếu Activity bị destroy.
-
-**Đề xuất:** Sử dụng `lifecycleScope` hoặc `viewModelScope` thay vì tạo CoroutineScope mới.
-
-#### 5.2 Handler trong AdMobManager
-
+**Fix:**
 ```kotlin
-// Line 369, 376, 384, 395, 412, 421
-Handler(Looper.getMainLooper()).postDelayed({ ... }, 1_000)
-```
+override fun onDestroy() {
+    // ... handlers cleanup
 
-**Vấn đề:** Handler được tạo inline mà không lưu reference để cancel.
-
-**Rủi ro:** Thấp trong trường hợp này vì AdMobManager là object singleton và các delay ngắn (1 giây).
-
-#### 5.3 WeakReference đã được sử dụng đúng
-
-```kotlin
-// Line 77
-private var currentActivity: WeakReference<Activity>? = null
-
-// Line 167-168
-fun setCurrentActivity(activity: Activity) {
-    this.currentActivity = WeakReference(activity)
+    // ✅ FIX: Clear singleton reference để tránh Activity leak
+    if (AdMobManager.interstitialListener === this) {
+        AdMobManager.interstitialListener = null
+    }
+    super.onDestroy()
 }
 ```
 
-✅ Đây là best practice để tránh leak Activity reference.
+---
+
+### 🔴 Bug Nghiêm Trọng 2: Handler Tạo Trong For-Loop (N Handlers/Keystroke)
+
+**File:** `DictionaryAct.kt` - hàm `filter()`  
+**Vấn đề:** Mỗi lần user gõ 1 ký tự, hàm `filter()` được gọi, và bên trong có vòng `for` lặp qua từng item. Với danh sách 800+ items, mỗi keystroke tạo ra **800+ Handler objects** và post **800+ callbacks**:
+
+```kotlin
+// ❌ BUG: Handler TẠO TRONG FOR LOOP → N handlers/keystroke
+for (item in list) {
+    // check filter ...
+    filterHandler = Handler(Looper.getMainLooper())  // ← Tạo Handler N lần!
+    filterHandler?.postDelayed({
+        // update UI...
+    }, 10)
+    // update adapter...
+}
+```
+
+Điều này gây ra:
+- **Memory pressure**: 800+ Handler instances được tạo/huỷ mỗi keystroke
+- **UI flicker**: Adapter reset 800+ lần thay vì 1 lần
+- **Potential leak**: filterHandler chỉ giữ reference tới handler CUỐI CÙNG, 799 handlers trước không được cancel
+
+**Fix:**
+```kotlin
+// ✅ FIX: Chỉ tạo 1 Handler, NGOÀI for-loop
+for (item in list) {
+    // check filter, add to filteredList...
+}
+// Handler tạo SAU khi lọc xong toàn bộ
+filterHandler?.removeCallbacksAndMessages(null)
+filterHandler = Handler(Looper.getMainLooper())
+filterHandler?.postDelayed({
+    // update UI...
+}, 10)
+// Update adapter 1 lần duy nhất
+mAdapter.filterList(filteredList)
+recyclerView.adapter = ...
+```
 
 ---
 
-## 6. Anonymous Object Classes (Inner Classes)
+### 🟡 Bug Trung Bình 3: Inline Handler Không Được Storage/Cancel
 
-### Trạng thái: ⚠️ TIỀM ẨN RỦI RO NHỎ
+**File:** `SettingsAct.kt` - hàm `showLanguageConfirmDialog()`  
+**Vấn đề:**
+```kotlin
+// ❌ Tạo Handler inline, không save reference → không cancel được
+Handler(Looper.getMainLooper()).postDelayed({
+    Utils.fadeInAnim(binding.confirmDialog.root, 300)
+}, 320)
+```
+Nếu Activity bị destroy trong 320ms delay, callback vẫn chạy → NPE hoặc leak.
 
-Các anonymous object class giữ implicit reference đến outer class (Activity/Fragment).
-
-| File | Line | Type | Rủi ro |
-|------|------|------|--------|
-| `NuclideAct.kt` | 116 | `SeekBar.OnSeekBarChangeListener` | Thấp - không có long-running task |
-| `AdMobManager.kt` | 210, 264, 282, 406, 444 | Ad callbacks | Thấp - managed by SDK |
-| `InfoExt.kt` | 435 | Picasso Callback | Thấp - short-lived |
-
-**Ghi chú:** Các listener này có lifecycle ngắn hoặc được quản lý bởi framework/SDK, nên rủi ro thấp.
+**Fix:**
+```kotlin
+// ✅ Reuse themeChangeHandler đã có sẵn trong class
+themeChangeHandler?.removeCallbacksAndMessages(null)  // cancel previous
+themeChangeHandler = Handler(Looper.getMainLooper())
+themeChangeHandler?.postDelayed({
+    Utils.fadeInAnim(binding.confirmDialog.root, 300)
+}, 320)
+```
+themeChangeHandler đã được cleanup trong `onDestroy()` của SettingsAct.
 
 ---
 
-## 7. Picasso Image Loading
+### 🟡 Bug Trung Bình 4: Coroutine Không Được Track/Cancel
 
-### Trạng thái: ✅ AN TOÀN
-
-File: `InfoExt.kt`
-
-Picasso được sử dụng đúng cách với:
-- Placeholder và error images
-- Callback để handle success/error
-- OkHttp3Downloader với custom client
-
+**File:** `AdMobManager.kt` - hàm `initSplashScreen()`  
+**Vấn đề:**
 ```kotlin
-// Line 426-447
-val picasso = Picasso.Builder(this)
-    .downloader(OkHttp3Downloader(client))
-    .build()
-
-picasso.load(url)
-    .placeholder(R.drawable.ic_launcher_background)
-    .error(R.drawable.ic_launcher_background)
-    .into(binding.elementImage, object : com.squareup.picasso.Callback { ... })
+// ❌ Coroutine tạo không được track
+CoroutineScope(Dispatchers.Default).launch {
+    // collect events MÃIMÃI nếu không bị cancel
+    EventBus.eventFlow.collectLatest { value ->
+        // Nested coroutine không được track
+        CoroutineScope(Dispatchers.Main).launch {
+            loadAppOpenAd(...)
+        }
+    }
+}
 ```
+Nếu `initSplashScreen()` được gọi nhiều lần (edge case), nhiều coroutine thu thập EventBus cùng lúc.
 
-Picasso tự động quản lý lifecycle và cancel requests khi View bị detached.
+**Fix:**
+```kotlin
+// ✅ Track Job để có thể cancel
+private var splashScreenJob: Job? = null  // Track tại class level
+
+// Trong hàm:
+splashScreenJob?.cancel()  // Cancel job cũ trước
+splashScreenJob = CoroutineScope(Dispatchers.Default).launch {
+    EventBus.eventFlow.collectLatest { value ->
+        CoroutineScope(Dispatchers.Main).launch {
+            loadAppOpenAd(
+                onAdLoaded = { result ->
+                    splashScreenJob = null  // Clear sau khi hoàn thành
+                    // ...
+                }
+            )
+        }
+    }
+}
+```
 
 ---
 
-## 8. RoyApp - Application Class
+## Những Gì Đã Đúng (Không Cần Fix)
 
-### Trạng thái: ⚠️ CẦN XEM XÉT
-
-File: `RoyApp.kt`
-
+### ✅ Handler Cleanup Pattern (Áp dụng đúng toàn bộ codebase)
 ```kotlin
-// Line 42
-CoroutineScope(Dispatchers.IO).launch { ... }
-```
-
-**Vấn đề:** CoroutineScope trong Application không được cancel.
-
-**Rủi ro:** Thấp vì Application tồn tại suốt lifecycle của app.
-
----
-
-## 9. Best Practices Đã Áp Dụng
-
-### 9.1 View.postDelayed thay vì Handler
-
-```kotlin
-// ElementInfoAct.kt Line 221-223
-// Memory leak fix: Use View.postDelayed instead of Handler
-view.postDelayed({ ... }, delay)
-```
-
-```kotlin
-// Utils.kt Line 41-43
-// Use View.postDelayed instead of Handler to tie the callback to the View's lifecycle
-view.postDelayed({ ... }, time)
-```
-
-```kotlin
-// Anim.kt Line 17-19
-// Use View.postDelayed instead of Handler to tie the callback to the View's lifecycle
-view.postDelayed({ ... }, time)
-```
-
-### 9.2 Nullable Handler References
-
-Tất cả Handler được khai báo nullable và cleanup:
-
-```kotlin
+// Pattern đúng, áp dụng trong: MainAct, NuclideAct, PHAct, IonAct, EquationsAct, ElectrodeAct, IsotopesActExperimental, TableExt
 private var handler: Handler? = null
 
-// In onDestroy
+// Khởi tạo:
+handler = Handler(Looper.getMainLooper())
+handler?.postDelayed({ ... }, delay)
+
+// Cleanup onDestroy():
 handler?.removeCallbacksAndMessages(null)
 handler = null
 ```
 
-### 9.3 Listener References Stored
-
-Tất cả listeners được lưu reference để cleanup:
-
+### ✅ TextWatcher Cleanup (Đúng trong tất cả Activity có search)
 ```kotlin
-private var scrollChangedListener: OnScrollChangedListener? = null
+// Lưu reference:
+private var textWatcher: TextWatcher? = null
+textWatcher = object : TextWatcher { ... }
+binding.editText.addTextChangedListener(textWatcher)
 
-// Register
-scrollChangedListener = object : OnScrollChangedListener { ... }
-binding.scrollView.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
+// Cleanup:
+textWatcher?.let { binding.editText.removeTextChangedListener(it) }
+textWatcher = null
+```
 
-// Unregister in onDestroy
+### ✅ ViewTreeObserver.OnScrollChangedListener (Đúng)
+```kotlin
+// Pattern trong: SettingsAct, FavoritePageAct, LicensesAct, SubmitAct, UnitAct
+private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
+
+// Cleanup:
 scrollChangedListener?.let {
     binding.scrollView.viewTreeObserver.removeOnScrollChangedListener(it)
 }
 scrollChangedListener = null
 ```
 
+### ✅ SlidingUpPanel Listener
+```kotlin
+// Pattern trong: MainAct, IsotopesActExperimental
+private var panelSlideListener: SlidingUpPanelLayout.PanelSlideListener? = null
+
+// Cleanup:
+panelSlideListener?.let {
+    binding.slidingLayout.removePanelSlideListener(it)
+}
+panelSlideListener = null
+```
+
+### ✅ AdView (Banner) Lifecycle
+```kotlin
+// onResume: adView?.resume()
+// onPause: adView?.pause()
+// onDestroy: adView?.destroy()
+```
+
+### ✅ WeakReference cho Activity trong Singleton
+AdMobManager dùng `WeakReference<Activity>` cho `currentActivity`, ngăn singleton giữ strong reference.
+
+### ✅ OnBackPressedCallback
+Tất cả Activity dùng `OnBackPressedDispatcher` thay vì deprecated `onBackPressed()`. Callback tự động cleanup khi Activity bị destroy.
+
 ---
 
-## Recommendations
+## Các Cảnh Báo Deprecation (Không Phải Memory Leak)
 
-### Priority 1: Không cần hành động ngay
+Những cảnh báo này xuất hiện trong build logs nhưng KHÔNG phải memory leak — chỉ là deprecated API:
 
-Code hiện tại đã được implement đúng best practices. Các potential issues có rủi ro thấp.
-
-### Priority 2: Improvements (Optional)
-
-1. **AdMobManager CoroutineScope**
-   - Xem xét sử dụng `ProcessLifecycleOwner.get().lifecycleScope` thay vì tạo CoroutineScope mới
-
-2. **SeekBar Listener trong NuclideAct**
-   - Có thể store listener và set null trong onDestroy (minor improvement)
-
-### Priority 3: Monitoring
-
-- Sử dụng LeakCanary trong debug builds để phát hiện memory leak sớm
-- Monitor memory usage trong Android Profiler
+| File | API Deprecated | Tác động |
+|---|---|---|
+| `CalculatorAct.kt:51` | `onBackPressed()` | Functional nhưng nên migrate |
+| `SplashAct.kt:144` | `overridePendingTransition()` | Functional nhưng nên migrate |
+| `AdMobManager.kt:658-659` | `activeNetworkInfo`, `isConnected` | Functional trên API < 23 |
+| `LocaleHelper.kt:33` | `Locale(String)` constructor | Functional |
 
 ---
 
-## Conclusion
+## Khuyến Nghị Tương Lai (Priority 3 - Không Khẩn Cấp)
 
-**Đánh giá tổng thể: 🟢 TỐT**
+1. **LeakCanary**: Thêm vào `build.gradle` (debug only):
+   ```kotlin
+   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+   ```
 
-Source code đã được refactor với memory leak prevention best practices:
-- ✅ Handler được cleanup đúng cách
-- ✅ Listeners được unregister trong onDestroy
-- ✅ WeakReference được sử dụng cho Activity references
-- ✅ View.postDelayed thay vì Handler ở một số nơi
-- ⚠️ Một vài CoroutineScope cần xem xét (rủi ro thấp)
+2. **CalculatorAct**: Migrate từ `onBackPressed()` sang `OnBackPressedDispatcher`
 
-Không phát hiện memory leak nghiêm trọng nào.
+3. **AdMobManager CoroutineScopes**: Cân nhắc dùng `ProcessLifecycleOwner.get().lifecycleScope` thay vì `CoroutineScope(Dispatchers.Default)` để lifecycle-aware hơn
+
+4. **DictionaryPref trong loop**: `DictionaryPref(this)` được tạo cho mỗi item trong `DictionaryAct.filter()`. Tối ưu: tạo 1 lần bên ngoài loop.
+
+---
+
+## Kết Quả Kiểm Tra Build
+
+| Round | Loại Build | Kết Quả |
+|---|---|---|
+| 1 | `assembleDebug` (incremental) | ✅ BUILD SUCCESSFUL (1m 1s) |
+| 2 | `assembleDebug` (cached) | ✅ BUILD SUCCESSFUL (4s) |
+| 3 | `clean assembleRelease` | ✅ BUILD SUCCESSFUL (3m 16s) |
+
+Không có lỗi biên dịch. Chỉ có cảnh báo deprecation không ảnh hưởng đến runtime.
