@@ -43,6 +43,7 @@ class ElementInfoAct : InfoExt() {
         setupViews()
     }
 
+
     override fun onDestroy() {
 //        flAdRoy.destroyAdBanner(adView)
         adView?.destroy()
@@ -50,28 +51,6 @@ class ElementInfoAct : InfoExt() {
     }
 
     private fun setupViews() {
-        val themePref = ThemePref(this)
-        val themePrefValue = themePref.getValue()
-
-        if (themePrefValue == 100) {
-            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_NO -> {
-                    setTheme(R.style.AppTheme)
-                }
-
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    setTheme(R.style.AppThemeDark)
-                }
-            }
-        }
-        if (themePrefValue == 0) {
-            setTheme(R.style.AppTheme)
-        }
-        if (themePrefValue == 1) {
-            setTheme(R.style.AppThemeDark)
-        }
-//        val elementSendAndLoadPreference = ElementSendAndLoad(this)
-//        var elementSendAndLoadValue = elementSendAndLoadPreference.getValue()
         binding = AElementInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Utils.fadeInAnim(binding.scrView, 300)
@@ -246,7 +225,9 @@ class ElementInfoAct : InfoExt() {
                 val elementSendAndLoad = ElementSendAndLoad(this)
                 elementSendAndLoad.setValue(item.element)
                 readJson()
-            } catch (e: IOException) {
+            } catch (e: Exception) {
+                // Catch Exception (not just IOException): JSONArray/getJSONObject
+                // also throw JSONException which is not a subclass of IOException
                 e.printStackTrace()
             }
         }
@@ -268,7 +249,9 @@ class ElementInfoAct : InfoExt() {
                 val elementSendAndLoad = ElementSendAndLoad(this)
                 elementSendAndLoad.setValue(item.element)
                 readJson()
-            } catch (e: IOException) {
+            } catch (e: Exception) {
+                // Catch Exception (not just IOException): JSONArray/getJSONObject
+                // also throw JSONException which is not a subclass of IOException
                 e.printStackTrace()
             }
         }

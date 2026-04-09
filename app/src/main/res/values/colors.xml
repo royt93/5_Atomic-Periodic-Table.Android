@@ -31,5 +31,8 @@
     <color name="colorThemeSurface">#FFFFFF</color>
     <color name="colorThemeSurfaceVariant">#F5F5F5</color>
     <color name="colorThemeAccent">#FF039BE5</color>
+    <!-- Compare feature colors -->
+    <color name="compare_higher">#2E7D32</color>
+    <color name="compare_lower">#C62828</color>
 
 </resources>

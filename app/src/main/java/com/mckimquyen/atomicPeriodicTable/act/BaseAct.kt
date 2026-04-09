@@ -18,6 +18,23 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
 
     private var systemUiConfigured = false
 
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        applyTheme()
+        super.onCreate(savedInstanceState)
+    }
+
+    private fun applyTheme() {
+        val themePref = com.mckimquyen.atomicPeriodicTable.pref.ThemePref(this)
+        when (themePref.getValue()) {
+            100 -> when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_NO -> setTheme(com.mckimquyen.atomicPeriodicTable.R.style.AppTheme)
+                Configuration.UI_MODE_NIGHT_YES -> setTheme(com.mckimquyen.atomicPeriodicTable.R.style.AppThemeDark)
+            }
+            0 -> setTheme(com.mckimquyen.atomicPeriodicTable.R.style.AppTheme)
+            1 -> setTheme(com.mckimquyen.atomicPeriodicTable.R.style.AppThemeDark)
+        }
+    }
+
     override fun attachBaseContext(context: Context) {
         // Apply the saved language and font scale via LocaleHelper
         val localizedContext = LocaleHelper.applyLanguage(context)

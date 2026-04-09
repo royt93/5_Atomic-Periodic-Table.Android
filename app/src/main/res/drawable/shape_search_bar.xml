@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shape_search_bar.xml
+     NOTE: Theme attrs (?attr/xxx) are NOT supported in XML drawables before API 29.
+     Using hardcoded colors here for compatibility with Theme.AppCompat on API 21+.
+     Light theme: light grey background, medium grey border.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#E2E2EC" />
+    <corners android:radius="8dp" />
+    <stroke
+        android:width="1dp"
+        android:color="#75767F" />
+</shape>

@@ -72,7 +72,7 @@ class IonAdapter(
                 textViewVoltage.text = ionization1
 
 
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
             // Fixed: Remove redundant first assignment - only use the capitalized version

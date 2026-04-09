@@ -1,0 +1,390 @@
+package com.mckimquyen.atomicPeriodicTable.act
+
+import android.annotation.SuppressLint
+import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.databinding.ACompareBinding
+import com.mckimquyen.atomicPeriodicTable.model.Element
+import com.mckimquyen.atomicPeriodicTable.model.ElementModel
+import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.InputStream
+import java.util.Locale
+
+class CompareAct : BaseAct() {
+
+    private lateinit var binding: ACompareBinding
+
+    // Current selections
+    private var element1Name: String = "hydrogen"
+    private var element2Name: String = "helium"
+
+    // Memory leak prevention: store TextWatcher references for cleanup
+    private var textWatcher1: TextWatcher? = null
+    private var textWatcher2: TextWatcher? = null
+
+    // Memory leak prevention: store the delayed-hide handler for focus-loss dropdowns
+    // postDelayed on a View is NOT auto-cancelled when Activity is destroyed → must cancel manually
+    private var focusHideHandler: android.os.Handler? = null
+
+    // Memory leak prevention: store the filtered list for search
+    private var allElements: ArrayList<Element> = ArrayList()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupViews()
+    }
+
+
+    private fun setupViews() {
+        binding = ACompareBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Load element list once
+        ElementModel.getList(allElements)
+
+        // Read elements passed via Intent extras (from ElementInfoAct "Compare" button)
+        element1Name = intent.getStringExtra(EXTRA_ELEMENT_1) ?: "hydrogen"
+        element2Name = intent.getStringExtra(EXTRA_ELEMENT_2) ?: "helium"
+
+        setupSearchPickers()
+        updateComparisonTable()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
+        binding.compareBackBtn.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    // ================================================================
+    // Search Pickers for Element 1 and Element 2
+    // ================================================================
+    private fun setupSearchPickers() {
+        // Set initial labels
+        updatePickerLabel(binding.tvElement1Label, element1Name)
+        updatePickerLabel(binding.tvElement2Label, element2Name)
+
+        // TextWatcher for element 1 search input
+        textWatcher1 = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                filterPickerDropdown(
+                    query = s.toString(),
+                    dropdownView = binding.dropdownElement1,
+                    onSelect = { name ->
+                        element1Name = name
+                        updatePickerLabel(binding.tvElement1Label, name)
+                        binding.searchElement1.setText("")
+                        binding.dropdownElement1.visibility = View.GONE
+                        updateComparisonTable()
+                    }
+                )
+            }
+        }
+        binding.searchElement1.addTextChangedListener(textWatcher1)
+
+        // TextWatcher for element 2 search input
+        textWatcher2 = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                filterPickerDropdown(
+                    query = s.toString(),
+                    dropdownView = binding.dropdownElement2,
+                    onSelect = { name ->
+                        element2Name = name
+                        updatePickerLabel(binding.tvElement2Label, name)
+                        binding.searchElement2.setText("")
+                        binding.dropdownElement2.visibility = View.GONE
+                        updateComparisonTable()
+                    }
+                )
+            }
+        }
+        binding.searchElement2.addTextChangedListener(textWatcher2)
+
+        // Race condition fix: Hide dropdown on focus loss with a small delay.
+        // Without delay, focus leaves EditText BEFORE the dropdown item click is processed,
+        // causing the dropdown to disappear and the click to be lost (items become unclickable).
+        // Memory leak fix: use focusHideHandler (cancelled in onDestroy) instead of View.postDelayed
+        // which is NOT auto-cancelled when Activity is destroyed and could run on a dead view.
+        focusHideHandler = android.os.Handler(android.os.Looper.getMainLooper())
+        binding.searchElement1.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                focusHideHandler?.postDelayed({
+                    if (!isDestroyed) binding.dropdownElement1.visibility = View.GONE
+                }, 150)
+            }
+        }
+        binding.searchElement2.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                focusHideHandler?.postDelayed({
+                    if (!isDestroyed) binding.dropdownElement2.visibility = View.GONE
+                }, 150)
+            }
+        }
+    }
+
+    // ================================================================
+    // Dynamic dropdown: inflates TextViews dynamically for matched elements
+    // ================================================================
+    private fun filterPickerDropdown(
+        query: String,
+        dropdownView: ViewGroup,
+        onSelect: (String) -> Unit,
+    ) {
+        dropdownView.removeAllViews()
+
+        if (query.isBlank()) {
+            dropdownView.visibility = View.GONE
+            return
+        }
+
+        val filtered = allElements.filter {
+            it.element.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT)) ||
+                    it.short.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT))
+        }.take(6) // Limit to 6 suggestions to avoid long list
+
+        if (filtered.isEmpty()) {
+            dropdownView.visibility = View.GONE
+            return
+        }
+
+        dropdownView.visibility = View.VISIBLE
+
+        filtered.forEach { element ->
+            val tv = TextView(this).apply {
+                val displayName = element.element.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                }
+                text = "${element.short}  –  $displayName"
+                textSize = 14f
+                setPadding(
+                    resources.getDimensionPixelSize(R.dimen.margin),
+                    resources.getDimensionPixelSize(R.dimen.margin_space_card),
+                    resources.getDimensionPixelSize(R.dimen.margin),
+                    resources.getDimensionPixelSize(R.dimen.margin_space_card)
+                )
+                val textColor = com.google.android.material.color.MaterialColors.getColor(
+                    this@CompareAct,
+                    com.google.android.material.R.attr.colorOnSurface,
+                    Color.BLACK
+                )
+                setTextColor(textColor)
+                isClickable = true
+                isFocusable = true
+                setOnClickListener {
+                    onSelect(element.element)
+                }
+            }
+            dropdownView.addView(tv)
+
+            // Divider view between items (except last) — theme-aware for light/dark mode
+            if (element != filtered.last()) {
+                // Bug fix: use this@CompareAct (Activity context) not 'this' (View context)
+                // MaterialColors.getColor() requires a View or Context — passing View 'this' inside apply{}
+                // would resolve to the View itself which has no theme attrs, causing wrong color fallback.
+                val activityContext = this@CompareAct
+                val divider = View(activityContext).apply {
+                    layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1)
+                    val outlineColor = com.google.android.material.color.MaterialColors.getColor(
+                        activityContext,
+                        com.google.android.material.R.attr.colorOutline,
+                        Color.GRAY
+                    )
+                    setBackgroundColor(outlineColor)
+                    alpha = 0.4f
+                }
+                dropdownView.addView(divider)
+            }
+        }
+    }
+
+    private fun updatePickerLabel(tv: TextView, elementName: String) {
+        val display = elementName.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+        }
+        val shortSymbol = allElements.find { it.element == elementName }?.short ?: "?"
+        tv.text = "$shortSymbol\n$display"
+    }
+
+    // ================================================================
+    // Main comparison logic: reads both JSONs and populates the table
+    // ================================================================
+    @SuppressLint("SetTextI18n")
+    private fun updateComparisonTable() {
+        val json1 = loadElementJson(element1Name) ?: return
+        val json2 = loadElementJson(element2Name) ?: return
+
+        Logger.i("CompareAct", "Comparing $element1Name vs $element2Name")
+
+        // Convenience lambda for binding a row
+        fun bind(label: String, key1: String, key2: String) {
+            val v1 = json1.optString(key1, "---")
+            val v2 = json2.optString(key2, "---")
+            bindCompareRow(label, v1, v2)
+        }
+
+        // Clear previous rows (keep header rows which are static)
+        binding.compareTableBody.removeAllViews()
+
+        // Populate rows — using all available JSON keys
+        bind("Atomic Number", "element_atomic_number", "element_atomic_number")
+        bind("Atomic Mass (u)", "element_atomicmass", "element_atomicmass")
+        bind("Group", "element_group", "element_group")
+        bind("Block", "element_block", "element_block")
+        bind("Phase (STP)", "element_phase", "element_phase")
+        bind("Electronegativity", "element_electronegativty", "element_electronegativty")
+        bind("Boiling Pt (K)", "element_boiling_kelvin", "element_boiling_kelvin")
+        bind("Melting Pt (K)", "element_melting_kelvin", "element_melting_kelvin")
+        bind("Density (g/cm³)", "element_density", "element_density")
+        bind("Ionization E (eV)", "element_ionization_energy1", "element_ionization_energy1")
+        bind("Atomic Radius (pm)", "element_atomic_radius_e", "element_atomic_radius_e")
+        bind("Covalent Radius", "element_covalent_radius", "element_covalent_radius")
+        bind("Electron Config", "element_electron_config", "element_electron_config")
+        bind("Shells", "element_shells_electrons", "element_shells_electrons")
+        bind("Year Discovered", "element_year", "element_year")
+        bind("Radioactive", "radioactive", "radioactive")
+        bind("Magnetic Type", "element_magnetic_type", "element_magnetic_type")
+        bind("Electrical Type", "electrical_type", "electrical_type")
+        bind("Fusion Heat (kJ/mol)", "element_fusion_heat", "element_fusion_heat")
+        bind("Specific Heat (J/g·K)", "element_specific_heat_capacity", "element_specific_heat_capacity")
+        bind("Vaporization Heat", "element_vaporization_heat", "element_vaporization_heat")
+    }
+
+    // ================================================================
+    // Inflate a single comparison row with color-coded indicators
+    // ================================================================
+    @SuppressLint("SetTextI18n")
+    private fun bindCompareRow(label: String, val1: String, val2: String) {
+        // Inflate row from layout
+        val row = layoutInflater.inflate(R.layout.view_compare_row, binding.compareTableBody, false)
+        val tvLabel = row.findViewById<TextView>(R.id.tvCompareLabel)
+        val tvVal1 = row.findViewById<TextView>(R.id.tvCompareVal1)
+        val tvVal2 = row.findViewById<TextView>(R.id.tvCompareVal2)
+        val tvIndicator = row.findViewById<TextView>(R.id.tvCompareIndicator)
+
+        tvLabel.text = label
+        tvVal1.text = val1
+        tvVal2.text = val2
+
+        // Numeric comparison: highlight which is larger/smaller
+        val n1 = val1.toDoubleOrNull()
+        val n2 = val2.toDoubleOrNull()
+
+        val colorHighlight = ContextCompat.getColor(this, R.color.compare_higher)
+        val colorLower = ContextCompat.getColor(this, R.color.compare_lower)
+        val colorNeutral = com.google.android.material.color.MaterialColors.getColor(
+            this,
+            com.google.android.material.R.attr.colorOnSurface,
+            Color.BLACK
+        )
+
+        when {
+            n1 != null && n2 != null -> {
+                when {
+                    n1 > n2 -> {
+                        tvVal1.setTextColor(colorHighlight)
+                        tvVal2.setTextColor(colorLower)
+                        tvIndicator.text = "▲"
+                        tvIndicator.setTextColor(colorHighlight)
+                    }
+                    n1 < n2 -> {
+                        tvVal1.setTextColor(colorLower)
+                        tvVal2.setTextColor(colorHighlight)
+                        tvIndicator.text = "▼"
+                        tvIndicator.setTextColor(colorLower)
+                    }
+                    else -> {
+                        tvVal1.setTextColor(colorNeutral)
+                        tvVal2.setTextColor(colorNeutral)
+                        tvIndicator.text = "="
+                        tvIndicator.setTextColor(colorNeutral)
+                    }
+                }
+            }
+            val1 == val2 && val1 != "---" -> {
+                // Only show "=" if both values are real equal text (not both missing)
+                tvIndicator.text = "="
+                tvIndicator.setTextColor(colorNeutral)
+            }
+            else -> {
+                // Text differs, or one/both values are missing — no indicator
+                tvIndicator.text = ""
+            }
+        }
+
+        binding.compareTableBody.addView(row)
+    }
+
+    // ================================================================
+    // Load JSON for a given element name from assets
+    // ================================================================
+    private fun loadElementJson(elementName: String): JSONObject? {
+        return try {
+            val inputStream: InputStream = assets.open("$elementName.json")
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(jsonString)
+            jsonArray.getJSONObject(0)
+        } catch (e: Exception) {
+            // Catch Exception (not just IOException) because:
+            // - JSONArray() and getJSONObject() throw JSONException (unchecked by catch IOException)
+            // - If JSON is malformed or empty array → JSONException → app crash without this fix
+            Logger.e("CompareAct: Failed to load JSON for $elementName: ${e.message}")
+            null
+        }
+    }
+
+    override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
+        // Set title bar height to accommodate status bar
+        val params = binding.compareTitleBar.layoutParams as ViewGroup.LayoutParams
+        params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
+        binding.compareTitleBar.layoutParams = params
+
+        // NestedScrollView is already constrained BELOW the title bar in ConstraintLayout.
+        // Only add bottom padding so content is not hidden behind the navigation bar.
+        binding.compareScrollView.setPadding(0, 0, 0, bottom)
+    }
+
+    override fun onDestroy() {
+        // Memory leak prevention: remove TextWatcher references before super.onDestroy()
+        textWatcher1?.let { binding.searchElement1.removeTextChangedListener(it) }
+        textWatcher1 = null
+
+        textWatcher2?.let { binding.searchElement2.removeTextChangedListener(it) }
+        textWatcher2 = null
+
+        // Memory leak prevention: cancel any pending postDelayed callbacks from focus listeners
+        focusHideHandler?.removeCallbacksAndMessages(null)
+        focusHideHandler = null
+
+        // Clear element list to help GC
+        allElements.clear()
+
+        super.onDestroy()
+    }
+
+    companion object {
+        const val EXTRA_ELEMENT_1 = "extra_element_1"
+        const val EXTRA_ELEMENT_2 = "extra_element_2"
+    }
+}

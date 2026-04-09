@@ -105,6 +105,22 @@
             </intent-filter>
         </activity>
 
+        <!-- Compare Elements Activity -->
+        <activity
+            android:name=".act.CompareAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="package.OtherActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".act.TableAct"
             android:configChanges="orientation|screenSize"

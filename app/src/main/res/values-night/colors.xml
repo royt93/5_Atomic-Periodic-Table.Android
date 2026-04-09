@@ -8,4 +8,7 @@
     <color name="colorThemeSurface">#2C2C2C</color>
     <color name="colorThemeSurfaceVariant">#3C3C3C</color>
     <color name="colorThemeAccent">#81D4FA</color>
+    <!-- Compare feature colors - lighter for dark background -->
+    <color name="compare_higher">#66BB6A</color>
+    <color name="compare_lower">#EF5350</color>
 </resources>

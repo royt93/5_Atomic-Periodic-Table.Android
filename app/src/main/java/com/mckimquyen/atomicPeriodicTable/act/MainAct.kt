@@ -21,7 +21,6 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.ScaleAnimation
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -81,26 +80,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         Utils.fadeOutAnim(binding.moreBtn, 150)
     }
 
-    private fun setupViews() {
-        val themePref = ThemePref(this)
-        val themePrefValue = themePref.getValue()
-        if (themePrefValue == 100) {
-            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_NO -> {
-                    setTheme(R.style.AppTheme)
-                }
 
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    setTheme(R.style.AppThemeDark)
-                }
-            }
-        }
-        if (themePrefValue == 0) {
-            setTheme(R.style.AppTheme)
-        }
-        if (themePrefValue == 1) {
-            setTheme(R.style.AppThemeDark)
-        }
+    private fun setupViews() {
         binding = AMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -161,7 +142,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
                     val scale = 1 - detector.scaleFactor
                     val pScale = mScale
-                    mScale += scale
                     mScale += scale
                     if (mScale < 1f) mScale = 1f
                     if (mScale > 12.5f) mScale = 12.5f
@@ -336,7 +316,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         }
         mAdapter.filterList(filteredList)
         mAdapter.notifyDataSetChanged()
-        filterHandler = android.os.Handler(Looper.getMainLooper())
+        // Reuse filterHandler — cancel any pending callback before posting new one
+        if (filterHandler == null) {
+            filterHandler = android.os.Handler(Looper.getMainLooper())
+        }
+        filterHandler?.removeCallbacksAndMessages(null)
         filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.searchMenuInclude.emptySearchBox, 300)
@@ -344,6 +328,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
                 binding.searchMenuInclude.emptySearchBox.visibility = View.GONE
             }
         }, 10)
+
         recyclerView.adapter = ElementAdt(
             elementList = filteredList, clickListener = this, con = this
         )
@@ -440,6 +425,14 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         }
         binding.navMenuInclude.dictionaryBtn.setOnClickListener {
             val intent = Intent(this, DictionaryAct::class.java)
+            startActivity(intent)
+        }
+        binding.navMenuInclude.compareBtn.setOnClickListener {
+            binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
+            val intent = Intent(this, CompareAct::class.java).apply {
+                putExtra(CompareAct.EXTRA_ELEMENT_1, "hydrogen")
+                putExtra(CompareAct.EXTRA_ELEMENT_2, "helium")
+            }
             startActivity(intent)
         }
     }
@@ -595,10 +588,13 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         left: Int,
         right: Int,
     ) {
-        binding.navMenuInclude.navLin.setPadding(/* left = */ left, /* top = */
-            0, /* right = */
-            right, /* bottom = */
-            0
+        // Nav panel: do NOT override height (it is wrap_content in XML so it sizes to content).
+        // Only apply bottom padding on navLin so content clears the system navigation bar.
+        binding.navMenuInclude.navLin.setPadding(
+            left,
+            0,
+            right,
+            bottom
         )
 
         val params = binding.commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
@@ -620,9 +616,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         params4.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.searchMenuInclude.commonTitleBackSearch.layoutParams = params4
 
-        binding.searchMenuInclude.rvElement.setPadding(/* left = */ 0,/* top = */
-            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,/* right = */
-            0,/* bottom = */
+        binding.searchMenuInclude.rvElement.setPadding(
+            0,
+            resources.getDimensionPixelSize(R.dimen.title_bar) + resources.getDimensionPixelSize(R.dimen.margin_space) + top,
+            0,
             resources.getDimensionPixelSize(R.dimen.title_bar)
         )
 
@@ -667,9 +664,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         params6.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
         binding.scrollView.layoutParams = params6
 
-        val params7 = binding.navMenuInclude.slidingLayout.layoutParams as ViewGroup.LayoutParams
-        params7.height = bottom + resources.getDimensionPixelSize(R.dimen.nav_view)
-        binding.navMenuInclude.slidingLayout.layoutParams = params7
+        // Note: slidingLayout height is intentionally NOT overridden here.
+        // The XML uses wrap_content so the panel sizes to its content automatically.
+        // Bottom inset is already applied via navLin padding above.
 
         val searchEmptyImgPrm = binding.searchMenuInclude.emptySearchBox.layoutParams as ViewGroup.MarginLayoutParams
         searchEmptyImgPrm.topMargin = top + (resources.getDimensionPixelSize(R.dimen.title_bar))
@@ -684,7 +681,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         )
     }
 
-//    private fun createAdInter() {
+
 //        val enableAdInter = getString(R.string.EnableAdInter) == "true"
 //        if (enableAdInter) {
 //            interstitialAd = MaxInterstitialAd(getString(R.string.INTER), this)

@@ -334,4 +334,15 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">-</string>
+
+    <!-- Compare Elements Activity -->
+    <string name="compare_elements_title">Compare Elements</string>
+    <string name="compare_element_a">Element A</string>
+    <string name="compare_element_b">Element B</string>
+    <string name="compare_search_hint">Search…</string>
+    <string name="compare_property">Property</string>
+    <string name="compare_legend_higher">Higher</string>
+    <string name="compare_legend_lower">Lower</string>
 </resources>
+
+

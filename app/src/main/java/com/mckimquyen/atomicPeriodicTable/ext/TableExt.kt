@@ -170,7 +170,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val elementAtomicWeight =
                         jsonObject.optString("element_boiling_$tempPrefValue", "---")
                     iText.text = elementAtomicWeight
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -202,7 +202,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val elementAtomicWeight =
                         jsonObject.optString("element_melting_$tempPrefValue", "---")
                     iText.text = elementAtomicWeight
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -231,7 +231,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = jsonArray.getJSONObject(0)
                     val elementAtomicWeight = jsonObject.optString("element_phase", "---")
                     iText.text = elementAtomicWeight
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -260,7 +260,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = jsonArray.getJSONObject(0)
                     val elementAtomicWeight = jsonObject.optString("element_year", "---")
                     iText.text = elementAtomicWeight
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -372,7 +372,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     iText.layoutParams = params
                     iText.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                     iText.requestLayout()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -427,7 +427,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = jsonArray.getJSONObject(0)
                     val elementAtomicWeight = jsonObject.optString("element_atomicmass", "---")
                     iText.text = elementAtomicWeight
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -459,7 +459,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = jsonArray.getJSONObject(0)
                     val elementFusionHeat = jsonObject.optString("element_fusion_heat", "---")
                     iText.text = elementFusionHeat
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -494,7 +494,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val elementSpecificHeat =
                         jsonObject.optString("element_specific_heat_capacity", "---")
                     iText.text = elementSpecificHeat
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -526,7 +526,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = jsonArray.getJSONObject(0)
                     val elementVapeHeat = jsonObject.optString("element_vaporization_heat", "---")
                     iText.text = elementVapeHeat
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }

@@ -308,7 +308,7 @@ class NuclideAct : BaseAct() {
                         nuclideContainer.addView(myLayout, params)
                     }
                 }
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }

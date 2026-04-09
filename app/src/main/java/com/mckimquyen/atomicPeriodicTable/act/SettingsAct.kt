@@ -77,6 +77,7 @@ class SettingsAct : BaseAct() {
         setupViews()
     }
 
+
     override fun onResume() {
         super.onResume()
         adView?.resume()
@@ -107,25 +108,6 @@ class SettingsAct : BaseAct() {
         val themePref = ThemePref(this)
         val themePrefValue = themePref.getValue()
 
-        if (themePrefValue == 100) {
-            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_NO -> {
-                    setTheme(R.style.AppTheme)
-                }
-
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    setTheme(R.style.AppThemeDark)
-                }
-            }
-        }
-        if (themePrefValue == 0) {
-            setTheme(R.style.AppTheme)
-        }
-        if (themePrefValue == 1) {
-            setTheme(R.style.AppThemeDark)
-        }
-
-        // Khởi tạo ViewBinding
         binding = ASettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -408,12 +390,9 @@ class SettingsAct : BaseAct() {
             themeChangeHandler?.removeCallbacksAndMessages(null)
             themeChangeHandler = Handler(Looper.getMainLooper())
             themeChangeHandler?.postDelayed({
+                overrideTransition(0, 0)
                 finish()
-                overrideTransition(0, 0)
                 startActivity(intent)
-                // Note: SettingsAct().finish() removed - it creates unnecessary instance
-                exitProcess(0)
-                overrideTransition(0, 0)
             }, 302)
         }
         binding.themePanel.lightBtn.setOnClickListener {
@@ -426,12 +405,9 @@ class SettingsAct : BaseAct() {
             themeChangeHandler?.removeCallbacksAndMessages(null)
             themeChangeHandler = Handler(Looper.getMainLooper())
             themeChangeHandler?.postDelayed({
+                overrideTransition(0, 0)
                 finish()
-                overrideTransition(0, 0)
                 startActivity(intent)
-                // Note: SettingsAct().finish() removed - it creates unnecessary instance
-                exitProcess(0)
-                overrideTransition(0, 0)
             }, 302)
         }
         binding.themePanel.darkBtn.setOnClickListener {
@@ -444,12 +420,9 @@ class SettingsAct : BaseAct() {
             themeChangeHandler?.removeCallbacksAndMessages(null)
             themeChangeHandler = Handler(Looper.getMainLooper())
             themeChangeHandler?.postDelayed({
+                overrideTransition(0, 0)
                 finish()
-                overrideTransition(0, 0)
                 startActivity(intent)
-                // Note: SettingsAct().finish() removed - it creates unnecessary instance
-                exitProcess(0)
-                overrideTransition(0, 0)
             }, 302)
         }
         binding.themesSettings.setOnClickListener {
