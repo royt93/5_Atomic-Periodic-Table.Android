@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">Электроны:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Атомный номер</string>
+    <string name="compare_atomic_mass">Атомная масса (u)</string>
+    <string name="compare_group">Группа</string>
+    <string name="compare_block">Блок</string>
+    <string name="compare_phase">Фаза (STP)</string>
+    <string name="compare_electronegativity">Электроотрицательность</string>
+    <string name="compare_boiling_pt">Темп. кипения (K)</string>
+    <string name="compare_melting_pt">Темп. плавления (K)</string>
+    <string name="compare_density">Плотность (г/см³)</string>
+    <string name="compare_ionization_e">Энергия ионизации (eV)</string>
+    <string name="compare_atomic_radius">Атомный радиус (pm)</string>
+    <string name="compare_covalent_radius">Ковалентный радиус</string>
+    <string name="compare_electron_config">Электронная конф.</string>
+    <string name="compare_shells">Оболочки</string>
+    <string name="compare_year_discovered">Год открытия</string>
+    <string name="compare_radioactive">Радиоактивность</string>
+    <string name="compare_magnetic_type">Магнитный тип</string>
+    <string name="compare_electrical_type">Электрический тип</string>
+    <string name="compare_fusion_heat">Теплота плавления (кДж/моль)</string>
+    <string name="compare_specific_heat">Удельная теплоемкость (Дж/г·К)</string>
+    <string name="compare_vaporization_heat">Теплота испарения</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">Сравнить элементы</string>
+    <string name="compare_element_a">Элемент A</string>
+    <string name="compare_element_b">Элемент B</string>
+    <string name="compare_search_hint">Поиск…</string>
+    <string name="compare_property">Свойство</string>
+    <string name="compare_legend_higher">Выше</string>
+    <string name="compare_legend_lower">Ниже</string>
 </resources>

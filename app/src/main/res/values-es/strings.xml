@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">Electrones:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Número atómico</string>
+    <string name="compare_atomic_mass">Masa atómica (u)</string>
+    <string name="compare_group">Grupo</string>
+    <string name="compare_block">Bloque</string>
+    <string name="compare_phase">Fase (STP)</string>
+    <string name="compare_electronegativity">Electronegatividad</string>
+    <string name="compare_boiling_pt">Punto de ebullición (K)</string>
+    <string name="compare_melting_pt">Punto de fusión (K)</string>
+    <string name="compare_density">Densidad (g/cm³)</string>
+    <string name="compare_ionization_e">Energía de ionización (eV)</string>
+    <string name="compare_atomic_radius">Radio atómico (pm)</string>
+    <string name="compare_covalent_radius">Radio covalente</string>
+    <string name="compare_electron_config">Configuración electrónica</string>
+    <string name="compare_shells">Capas</string>
+    <string name="compare_year_discovered">Año de descubrimiento</string>
+    <string name="compare_radioactive">Radiactivo</string>
+    <string name="compare_magnetic_type">Tipo magnético</string>
+    <string name="compare_electrical_type">Tipo eléctrico</string>
+    <string name="compare_fusion_heat">Calor de fusión (kJ/mol)</string>
+    <string name="compare_specific_heat">Calor específico (J/g·K)</string>
+    <string name="compare_vaporization_heat">Calor de vaporización</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">Comparar elementos</string>
+    <string name="compare_element_a">Elemento A</string>
+    <string name="compare_element_b">Elemento B</string>
+    <string name="compare_search_hint">Buscar…</string>
+    <string name="compare_property">Propiedad</string>
+    <string name="compare_legend_higher">Mayor</string>
+    <string name="compare_legend_lower">Menor</string>
 </resources>

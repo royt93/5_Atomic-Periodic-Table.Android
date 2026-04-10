@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">전자:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">원자 번호</string>
+    <string name="compare_atomic_mass">원자량 (u)</string>
+    <string name="compare_group">족</string>
+    <string name="compare_block">블록</string>
+    <string name="compare_phase">상태 (STP)</string>
+    <string name="compare_electronegativity">전기 음성도</string>
+    <string name="compare_boiling_pt">비점 (K)</string>
+    <string name="compare_melting_pt">융점 (K)</string>
+    <string name="compare_density">밀도 (g/cm³)</string>
+    <string name="compare_ionization_e">이온화 에너지 (eV)</string>
+    <string name="compare_atomic_radius">원자 반지름 (pm)</string>
+    <string name="compare_covalent_radius">공유 반지름</string>
+    <string name="compare_electron_config">전자 배치</string>
+    <string name="compare_shells">전자 껍질</string>
+    <string name="compare_year_discovered">발견 연도</string>
+    <string name="compare_radioactive">방사성</string>
+    <string name="compare_magnetic_type">자기 성질</string>
+    <string name="compare_electrical_type">전기적 성질</string>
+    <string name="compare_fusion_heat">융해열 (kJ/mol)</string>
+    <string name="compare_specific_heat">비열 (J/g·K)</string>
+    <string name="compare_vaporization_heat">기화열</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">요소 비교</string>
+    <string name="compare_element_a">요소 A</string>
+    <string name="compare_element_b">요소 B</string>
+    <string name="compare_search_hint">검색…</string>
+    <string name="compare_property">속성</string>
+    <string name="compare_legend_higher">높음</string>
+    <string name="compare_legend_lower">낮음</string>
 </resources>

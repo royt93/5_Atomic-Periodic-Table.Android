@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">इलेक्ट्रॉन:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">परमाणु क्रमांक</string>
+    <string name="compare_atomic_mass">परमाणु द्रव्यमान (u)</string>
+    <string name="compare_group">समूह</string>
+    <string name="compare_block">ब्लॉक</string>
+    <string name="compare_phase">अवस्था (STP)</string>
+    <string name="compare_electronegativity">विद्युतीय ऋणात्मकता</string>
+    <string name="compare_boiling_pt">क्वथनांक (K)</string>
+    <string name="compare_melting_pt">गलनांक (K)</string>
+    <string name="compare_density">घनत्व (g/cm³)</string>
+    <string name="compare_ionization_e">आयनीकरण ऊर्जा (eV)</string>
+    <string name="compare_atomic_radius">परमाणु त्रिज्या (pm)</string>
+    <string name="compare_covalent_radius">सहसंयोजक त्रिज्या</string>
+    <string name="compare_electron_config">इलेक्ट्रॉनिक विन्यास</string>
+    <string name="compare_shells">कक्ष</string>
+    <string name="compare_year_discovered">खोज का वर्ष</string>
+    <string name="compare_radioactive">रेडियोधर्मी</string>
+    <string name="compare_magnetic_type">चुंबकीय प्रकार</string>
+    <string name="compare_electrical_type">विद्युत प्रकार</string>
+    <string name="compare_fusion_heat">फ्यूजन ताप (kJ/mol)</string>
+    <string name="compare_specific_heat">विशिष्ट ऊष्मा (J/g·K)</string>
+    <string name="compare_vaporization_heat">वाष्पीकरण ताप</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">तत्वों की तुलना करें</string>
+    <string name="compare_element_a">तत्व A</string>
+    <string name="compare_element_b">तत्व B</string>
+    <string name="compare_search_hint">खोजें…</string>
+    <string name="compare_property">संपत्ति</string>
+    <string name="compare_legend_higher">उच्च</string>
+    <string name="compare_legend_lower">निम्न</string>
 </resources>

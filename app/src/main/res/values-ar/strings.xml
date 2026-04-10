@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">إلكترونات:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">العدد الذري</string>
+    <string name="compare_atomic_mass">الكتلة الذرية (u)</string>
+    <string name="compare_group">المجموعة</string>
+    <string name="compare_block">المستوى الفرعي</string>
+    <string name="compare_phase">الطور (STP)</string>
+    <string name="compare_electronegativity">السالبية الكهربية</string>
+    <string name="compare_boiling_pt">نقطة الغليان (K)</string>
+    <string name="compare_melting_pt">نقطة الانصهار (K)</string>
+    <string name="compare_density">الكثافة (g/cm³)</string>
+    <string name="compare_ionization_e">طاقة التأين (eV)</string>
+    <string name="compare_atomic_radius">نصف القطر الذري (pm)</string>
+    <string name="compare_covalent_radius">نصف القطر التساهمي</string>
+    <string name="compare_electron_config">التوزيع الإلكتروني</string>
+    <string name="compare_shells">الأغلفة</string>
+    <string name="compare_year_discovered">سنة الاكتشاف</string>
+    <string name="compare_radioactive">مشع</string>
+    <string name="compare_magnetic_type">النوع المغناطيسي</string>
+    <string name="compare_electrical_type">النوع الكهربائي</string>
+    <string name="compare_fusion_heat">حرارة الانصهار (kJ/mol)</string>
+    <string name="compare_specific_heat">الحرارة النوعية (J/g·K)</string>
+    <string name="compare_vaporization_heat">حرارة التبخر</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">مقارنة العناصر</string>
+    <string name="compare_element_a">العنصر A</string>
+    <string name="compare_element_b">العنصر B</string>
+    <string name="compare_search_hint">بحث…</string>
+    <string name="compare_property">خاصية</string>
+    <string name="compare_legend_higher">أعلى</string>
+    <string name="compare_legend_lower">أدنى</string>
 </resources>

@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">Électrons:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Numéro atomique</string>
+    <string name="compare_atomic_mass">Masse atomique (u)</string>
+    <string name="compare_group">Groupe</string>
+    <string name="compare_block">Bloc</string>
+    <string name="compare_phase">Phase (STP)</string>
+    <string name="compare_electronegativity">Électronégativité</string>
+    <string name="compare_boiling_pt">Point d\'ébullition (K)</string>
+    <string name="compare_melting_pt">Point de fusion (K)</string>
+    <string name="compare_density">Densité (g/cm³)</string>
+    <string name="compare_ionization_e">Énergie d\'ionisation (eV)</string>
+    <string name="compare_atomic_radius">Rayon atomique (pm)</string>
+    <string name="compare_covalent_radius">Rayon covalent</string>
+    <string name="compare_electron_config">Config. électronique</string>
+    <string name="compare_shells">Couches</string>
+    <string name="compare_year_discovered">Année de découverte</string>
+    <string name="compare_radioactive">Radioactif</string>
+    <string name="compare_magnetic_type">Type magnétique</string>
+    <string name="compare_electrical_type">Type électrique</string>
+    <string name="compare_fusion_heat">Chaleur de fusion (kJ/mol)</string>
+    <string name="compare_specific_heat">Chaleur spécifique (J/g·K)</string>
+    <string name="compare_vaporization_heat">Chaleur de vaporisation</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">Comparer les éléments</string>
+    <string name="compare_element_a">Élément A</string>
+    <string name="compare_element_b">Élément B</string>
+    <string name="compare_search_hint">Rechercher…</string>
+    <string name="compare_property">Propriété</string>
+    <string name="compare_legend_higher">Plus élevé</string>
+    <string name="compare_legend_lower">Plus bas</string>
 </resources>

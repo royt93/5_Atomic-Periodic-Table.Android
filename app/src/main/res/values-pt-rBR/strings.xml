@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">Elétrons:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Número Atômico</string>
+    <string name="compare_atomic_mass">Massa Atômica (u)</string>
+    <string name="compare_group">Grupo</string>
+    <string name="compare_block">Bloco</string>
+    <string name="compare_phase">Fase (STP)</string>
+    <string name="compare_electronegativity">Eletronegatividade</string>
+    <string name="compare_boiling_pt">Ponto de Ebulição (K)</string>
+    <string name="compare_melting_pt">Ponto de Fusão (K)</string>
+    <string name="compare_density">Densidade (g/cm³)</string>
+    <string name="compare_ionization_e">Energia de Ionização (eV)</string>
+    <string name="compare_atomic_radius">Raio Atômico (pm)</string>
+    <string name="compare_covalent_radius">Raio Covalente</string>
+    <string name="compare_electron_config">Config. Eletrônica</string>
+    <string name="compare_shells">Camadas</string>
+    <string name="compare_year_discovered">Ano de Descoberta</string>
+    <string name="compare_radioactive">Radioativo</string>
+    <string name="compare_magnetic_type">Tipo Magnético</string>
+    <string name="compare_electrical_type">Tipo Elétrico</string>
+    <string name="compare_fusion_heat">Calor de Fusão (kJ/mol)</string>
+    <string name="compare_specific_heat">Calor Específico (J/g·K)</string>
+    <string name="compare_vaporization_heat">Calor de Vaporização</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">Comparar Elementos</string>
+    <string name="compare_element_a">Elemento A</string>
+    <string name="compare_element_b">Elemento B</string>
+    <string name="compare_search_hint">Buscar…</string>
+    <string name="compare_property">Propriedade</string>
+    <string name="compare_legend_higher">Maior</string>
+    <string name="compare_legend_lower">Menor</string>
 </resources>

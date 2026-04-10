@@ -333,5 +333,38 @@
     <string name="language_chinese_traditional">中文 (Traditional)</string>
     <string name="language_italian">Italiano (Italian)</string>
     <string name="language_indonesian">Bahasa Indonesia</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">原子序数</string>
+    <string name="compare_atomic_mass">原子质量 (u)</string>
+    <string name="compare_group">族</string>
+    <string name="compare_block">区</string>
+    <string name="compare_phase">相 (STP)</string>
+    <string name="compare_electronegativity">电负性</string>
+    <string name="compare_boiling_pt">沸点 (K)</string>
+    <string name="compare_melting_pt">熔点 (K)</string>
+    <string name="compare_density">密度 (g/cm³)</string>
+    <string name="compare_ionization_e">电离能 (eV)</string>
+    <string name="compare_atomic_radius">原子半径 (pm)</string>
+    <string name="compare_covalent_radius">共价半径</string>
+    <string name="compare_electron_config">电子排布</string>
+    <string name="compare_shells">电子层</string>
+    <string name="compare_year_discovered">发现年份</string>
+    <string name="compare_radioactive">放射性</string>
+    <string name="compare_magnetic_type">磁性</string>
+    <string name="compare_electrical_type">电学性质</string>
+    <string name="compare_fusion_heat">熔化热 (kJ/mol)</string>
+    <string name="compare_specific_heat">比热容 (J/g·K)</string>
+    <string name="compare_vaporization_heat">汽化热</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">比较元素</string>
+    <string name="compare_element_a">元素 A</string>
+    <string name="compare_element_b">元素 B</string>
+    <string name="compare_search_hint">搜索…</string>
+    <string name="compare_property">属性</string>
+    <string name="compare_legend_higher">更高</string>
+    <string name="compare_legend_lower">更低</string>
 </resources>
 

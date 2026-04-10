@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">อิเล็กตรอน:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">เลขอะตอม</string>
+    <string name="compare_atomic_mass">มวลอะตอม (u)</string>
+    <string name="compare_group">หมู่</string>
+    <string name="compare_block">ทรานซิชัน</string>
+    <string name="compare_phase">สถานะ (STP)</string>
+    <string name="compare_electronegativity">อิเล็กโทรเนกาติวิตี</string>
+    <string name="compare_boiling_pt">จุดเดือด (K)</string>
+    <string name="compare_melting_pt">จุดหลอมเหลว (K)</string>
+    <string name="compare_density">ความหนาแน่น (g/cm³)</string>
+    <string name="compare_ionization_e">พลังงานไอออไนเซชัน (eV)</string>
+    <string name="compare_atomic_radius">รัศมีอะตอม (pm)</string>
+    <string name="compare_covalent_radius">รัศมีโคเวเลนต์</string>
+    <string name="compare_electron_config">การจัดเรียงอิเล็กตรอน</string>
+    <string name="compare_shells">ชั้นอิเล็กตรอน</string>
+    <string name="compare_year_discovered">ปีที่ค้นพบ</string>
+    <string name="compare_radioactive">กัมมันตรังสี</string>
+    <string name="compare_magnetic_type">ประเภทแม่เหล็ก</string>
+    <string name="compare_electrical_type">ประเภทไฟฟ้า</string>
+    <string name="compare_fusion_heat">ความร้อนหลอมเหลว (kJ/mol)</string>
+    <string name="compare_specific_heat">ความร้อนจำเพาะ (J/g·K)</string>
+    <string name="compare_vaporization_heat">ความร้อนจากการกลายเป็นไอ</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">เปรียบเทียบองค์ประกอบ</string>
+    <string name="compare_element_a">องค์ประกอบ A</string>
+    <string name="compare_element_b">องค์ประกอบ B</string>
+    <string name="compare_search_hint">ค้นหา…</string>
+    <string name="compare_property">คุณสมบัติ</string>
+    <string name="compare_legend_higher">สูงกว่า</string>
+    <string name="compare_legend_lower">ต่ำกว่า</string>
 </resources>

@@ -333,5 +333,38 @@
     <string name="language_chinese_traditional">中文 (Traditional)</string>
     <string name="language_italian">Italiano (Italian)</string>
     <string name="language_indonesian">Bahasa Indonesia</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Số hiệu nguyên tử</string>
+    <string name="compare_atomic_mass">Khối lượng NT (u)</string>
+    <string name="compare_group">Nhóm</string>
+    <string name="compare_block">Khối</string>
+    <string name="compare_phase">Trạng thái (STP)</string>
+    <string name="compare_electronegativity">Độ âm điện</string>
+    <string name="compare_boiling_pt">Nhiệt độ sôi (K)</string>
+    <string name="compare_melting_pt">Nhiệt độ nóng chảy (K)</string>
+    <string name="compare_density">Mật độ (g/cm³)</string>
+    <string name="compare_ionization_e">Năng lượng ion hóa (eV)</string>
+    <string name="compare_atomic_radius">Bán kính nguyên tử (pm)</string>
+    <string name="compare_covalent_radius">Bán kính cộng hóa trị</string>
+    <string name="compare_electron_config">Cấu hình electron</string>
+    <string name="compare_shells">Các lớp vỏ</string>
+    <string name="compare_year_discovered">Năm phát hiện</string>
+    <string name="compare_radioactive">Phóng xạ</string>
+    <string name="compare_magnetic_type">Từ tính</string>
+    <string name="compare_electrical_type">Tính dẫn điện</string>
+    <string name="compare_fusion_heat">Nhiệt dung chảy (kJ/mol)</string>
+    <string name="compare_specific_heat">Nhiệt dung riêng (J/g·K)</string>
+    <string name="compare_vaporization_heat">Nhiệt hóa hơi</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">So sánh các nguyên tố</string>
+    <string name="compare_element_a">Nguyên tố A</string>
+    <string name="compare_element_b">Nguyên tố B</string>
+    <string name="compare_search_hint">Tìm kiếm…</string>
+    <string name="compare_property">Thuộc tính</string>
+    <string name="compare_legend_higher">Cao hơn</string>
+    <string name="compare_legend_lower">Thấp hơn</string>
 </resources>
 

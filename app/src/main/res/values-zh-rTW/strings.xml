@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">電子:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">原子序數</string>
+    <string name="compare_atomic_mass">原子質量 (u)</string>
+    <string name="compare_group">族</string>
+    <string name="compare_block">區</string>
+    <string name="compare_phase">相 (STP)</string>
+    <string name="compare_electronegativity">電負性</string>
+    <string name="compare_boiling_pt">沸點 (K)</string>
+    <string name="compare_melting_pt">熔點 (K)</string>
+    <string name="compare_density">密度 (g/cm³)</string>
+    <string name="compare_ionization_e">電離能 (eV)</string>
+    <string name="compare_atomic_radius">原子半徑 (pm)</string>
+    <string name="compare_covalent_radius">共價半徑</string>
+    <string name="compare_electron_config">電子排布</string>
+    <string name="compare_shells">電子層</string>
+    <string name="compare_year_discovered">發現年份</string>
+    <string name="compare_radioactive">放射性</string>
+    <string name="compare_magnetic_type">磁性</string>
+    <string name="compare_electrical_type">電學性質</string>
+    <string name="compare_fusion_heat">熔化熱 (kJ/mol)</string>
+    <string name="compare_specific_heat">比熱容 (J/g·K)</string>
+    <string name="compare_vaporization_heat">汽化熱</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">比較元素</string>
+    <string name="compare_element_a">元素 A</string>
+    <string name="compare_element_b">元素 B</string>
+    <string name="compare_search_hint">搜尋…</string>
+    <string name="compare_property">屬性</string>
+    <string name="compare_legend_higher">更高</string>
+    <string name="compare_legend_lower">更低</string>
 </resources>

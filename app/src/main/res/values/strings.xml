@@ -343,6 +343,30 @@
     <string name="compare_property">Property</string>
     <string name="compare_legend_higher">Higher</string>
     <string name="compare_legend_lower">Lower</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Atomic Number</string>
+    <string name="compare_atomic_mass">Atomic Mass (u)</string>
+    <string name="compare_group">Group</string>
+    <string name="compare_block">Block</string>
+    <string name="compare_phase">Phase (STP)</string>
+    <string name="compare_electronegativity">Electronegativity</string>
+    <string name="compare_boiling_pt">Boiling Pt (K)</string>
+    <string name="compare_melting_pt">Melting Pt (K)</string>
+    <string name="compare_density">Density (g/cm³)</string>
+    <string name="compare_ionization_e">Ionization E (eV)</string>
+    <string name="compare_atomic_radius">Atomic Radius (pm)</string>
+    <string name="compare_covalent_radius">Covalent Radius</string>
+    <string name="compare_electron_config">Electron Config</string>
+    <string name="compare_shells">Shells</string>
+    <string name="compare_year_discovered">Year Discovered</string>
+    <string name="compare_radioactive">Radioactive</string>
+    <string name="compare_magnetic_type">Magnetic Type</string>
+    <string name="compare_electrical_type">Electrical Type</string>
+    <string name="compare_fusion_heat">Fusion Heat (kJ/mol)</string>
+    <string name="compare_specific_heat">Specific Heat (J/g·K)</string>
+    <string name="compare_vaporization_heat">Vaporization Heat</string>
+    <string name="compare_vs">VS</string>
 </resources>
 
 

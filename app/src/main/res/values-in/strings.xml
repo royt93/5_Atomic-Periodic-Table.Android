@@ -315,4 +315,37 @@
     <string name="element_group_placeholder">-</string>
     <string name="element_appearance_placeholder">-</string>
     <string name="element_electrons_placeholder">Elektron:</string>
+
+    <!-- Compare Elements Strings -->
+    <string name="compare_atomic_number">Nomor Atom</string>
+    <string name="compare_atomic_mass">Massa Atom (u)</string>
+    <string name="compare_group">Golongan</string>
+    <string name="compare_block">Blok</string>
+    <string name="compare_phase">Fase (STP)</string>
+    <string name="compare_electronegativity">Keelektronegatifan</string>
+    <string name="compare_boiling_pt">Titik Didih (K)</string>
+    <string name="compare_melting_pt">Titik Leleh (K)</string>
+    <string name="compare_density">Massa Jenis (g/cm³)</string>
+    <string name="compare_ionization_e">Energi Ionisasi (eV)</string>
+    <string name="compare_atomic_radius">Jari-jari Atom (pm)</string>
+    <string name="compare_covalent_radius">Jari-jari Kovalen</string>
+    <string name="compare_electron_config">Konfigurasi Elektron</string>
+    <string name="compare_shells">Kulit</string>
+    <string name="compare_year_discovered">Tahun Ditemukan</string>
+    <string name="compare_radioactive">Radioaktif</string>
+    <string name="compare_magnetic_type">Tipe Magnetik</string>
+    <string name="compare_electrical_type">Tipe Elektrik</string>
+    <string name="compare_fusion_heat">Kalor Lebur (kJ/mol)</string>
+    <string name="compare_specific_heat">Kalor Jenis (J/g·K)</string>
+    <string name="compare_vaporization_heat">Kalor Uap</string>
+    <string name="compare_vs">VS</string>
+
+    <!-- Compare Elements Extras -->
+    <string name="compare_elements_title">Bandingkan Elemen</string>
+    <string name="compare_element_a">Elemen A</string>
+    <string name="compare_element_b">Elemen B</string>
+    <string name="compare_search_hint">Mencari…</string>
+    <string name="compare_property">Properti</string>
+    <string name="compare_legend_higher">Lebih Tinggi</string>
+    <string name="compare_legend_lower">Lebih Rendah</string>
 </resources>
