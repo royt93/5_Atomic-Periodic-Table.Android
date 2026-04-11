@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.setting.FavoritePageAct
@@ -24,7 +22,7 @@ import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
+import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import org.json.JSONArray
 import org.json.JSONObject
@@ -35,7 +33,7 @@ import androidx.core.view.isVisible
 class ElementInfoAct : InfoExt() {
 
     //    private var adView: MaxAdView? = null
-    private var adView: AdView? = null
+    private var adView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,7 @@ class ElementInfoAct : InfoExt() {
 
     override fun onDestroy() {
 //        flAdRoy.destroyAdBanner(adView)
-        adView?.destroy()
+        AdManager.bannerDestroy(adView)
         super.onDestroy()
     }
 
@@ -118,12 +116,10 @@ class ElementInfoAct : InfoExt() {
 
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdMobManager.loadBanner(
+        adView = AdManager.loadBanner(
             context = this,
-            adUnitId = BuildConfig.ADMOB_BANNER_ID,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd,
-            adSize = AdSize.LARGE_BANNER,
+            tvLabelAd = tvLabelAd
         )
     }
 
@@ -158,12 +154,12 @@ class ElementInfoAct : InfoExt() {
     override fun onResume() {
         super.onResume()
         favoriteBarSetup()
-        adView?.resume()
+        AdManager.bannerResume(adView)
     }
 
     override fun onPause() {
-        adView?.pause()
         super.onPause()
+        AdManager.bannerPause(adView)
     }
 
     private fun detailViews() {

@@ -3,6 +3,7 @@ package com.mckimquyen.atomicPeriodicTable.pref
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import android.util.Log
 
 /**
  * Preference class to store and retrieve the selected language.
@@ -39,12 +40,12 @@ class LanguagePref(context: Context) {
 
     fun getValue(): String {
         val value = preference.getString(prefKey, LANG_ENGLISH) ?: LANG_ENGLISH
-        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LanguagePref", "getValue: $value")
+        Log.i("LanguagePref", "getValue: $value")
         return value
     }
 
     fun setValue(languageCode: String) {
-        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("LanguagePref", "setValue: saving $languageCode")
+        Log.i("LanguagePref", "setValue: saving $languageCode")
         preference.edit(commit = true) {
             putString(prefKey, languageCode)
         }

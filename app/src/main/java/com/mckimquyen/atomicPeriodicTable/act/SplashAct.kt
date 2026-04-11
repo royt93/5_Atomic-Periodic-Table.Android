@@ -10,7 +10,7 @@ import android.view.Display
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.mckimquyen.atomicPeriodicTable.R
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
+import com.roy.sdkadbmob.AdManager
 
 @SuppressLint("CustomSplashScreen")
 class SplashAct : AppCompatActivity() {
@@ -35,9 +35,9 @@ class SplashAct : AppCompatActivity() {
         // Animate splash screen elements
         animateSplashScreen()
 
-        AdMobManager.initSplashScreen(activity = this, onAdLoaded = {
+        AdManager.initSplashScreen(this) {
             goToMain()
-        })
+        }
     }
 
     private fun animateSplashScreen() {

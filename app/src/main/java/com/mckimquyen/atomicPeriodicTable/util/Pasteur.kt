@@ -1,6 +1,6 @@
 package com.mckimquyen.atomicPeriodicTable.util
 
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
+import android.util.Log
 
 /**
  * Legacy logging utility - now delegates to Logger for consistent logging.
@@ -21,8 +21,7 @@ object Pasteur {
     }
 
     private fun debug(tag: String?, string: String) {
-        // Delegate to Logger which handles debug mode check internally
-        Logger.i(tag ?: DEFAULT_TAG, string)
+        if (debugMode) Log.d(tag ?: DEFAULT_TAG, string)
     }
 
     fun i(tag: String?, string: String) {
@@ -30,8 +29,7 @@ object Pasteur {
     }
 
     fun info(tag: String?, string: String) {
-        // Delegate to Logger which handles debug mode check internally
-        Logger.i(tag ?: DEFAULT_TAG, string)
+        if (debugMode) Log.i(tag ?: DEFAULT_TAG, string)
     }
 
     fun w(tag: String?, string: String) {
@@ -39,8 +37,7 @@ object Pasteur {
     }
 
     private fun warn(tag: String?, string: String) {
-        // Delegate to Logger which handles debug mode check internally
-        Logger.w("[$tag] $string")
+        if (debugMode) Log.w(tag ?: DEFAULT_TAG, string)
     }
 
     fun e(tag: String?, string: String) {
@@ -48,7 +45,6 @@ object Pasteur {
     }
 
     private fun error(tag: String?, string: String) {
-        // Delegate to Logger which handles debug mode check internally
-        Logger.e("[$tag] $string")
+        if (debugMode) Log.e(tag ?: DEFAULT_TAG, string)
     }
 }

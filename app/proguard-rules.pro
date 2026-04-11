@@ -167,8 +167,8 @@
 # ===============================================================
 # Keep Application-specific classes
 # ===============================================================
-# Keep your AdMobManager
--keep class com.mckimquyen.atomicPeriodicTable.sdkadbmob.** { *; }
+# Keep AdmobWrapper
+-keep class com.roy.sdkadbmob.** { *; }
 
 # Keep your Application class
 -keep class com.mckimquyen.atomicPeriodicTable.RoyApp { *; }

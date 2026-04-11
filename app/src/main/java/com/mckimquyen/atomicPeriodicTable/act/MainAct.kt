@@ -28,8 +28,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.doOnLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.LoadAdError
+import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
@@ -48,8 +47,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.SearchPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
+import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
@@ -57,7 +55,7 @@ import org.deejdev.twowaynestedscrollview.TwoWayNestedScrollView
 import java.util.Locale
 import androidx.core.view.isVisible
 
-class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.InterstitialAdListener {
+class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
     // binding inherited from TableExt
     private var elementList = ArrayList<Element>()
     private var mAdapter = ElementAdt(elementList = elementList, clickListener = this, con = this)
@@ -199,9 +197,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         binding.navMenuInclude.slidingLayout.addPanelSlideListener(panelSlideListener)
 
 //        createAdInter()
-        AdMobManager.setCurrentActivity(this)
-        AdMobManager.interstitialListener = this
-        AdMobManager.loadInterstitial(this, BuildConfig.ADMOB_INTERSTITIAL_ID)
+        AdManager.loadInterstitial(this)
 
         // ===============================================================
         // Back Button Handler (Modern API)
@@ -303,7 +299,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         for (item in list) {
             if (item.element.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT))) {
                 filteredList.add(item)
-                Logger.v(filteredList.toString())
+                Log.v("MainAct", filteredList.toString())
             }
         }
         val searchPreference = SearchPref(this)
@@ -494,11 +490,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
             btn.isClickable = true
             btn.isFocusable = true
             btn.setOnClickListener {
-                AdMobManager.showInterstitial(this) { success ->
+                AdManager.showInterstitial(this) { success ->
                     if (success) {
-                        Logger.i("Ad đã hiển thị và đóng thành công")
+                        Log.i("MainAct", "Ad đã hiển thị và đóng thành công")
                     } else {
-                        Logger.i("Ad không hiển thị được hoặc có lỗi")
+                        Log.i("MainAct", "Ad không hiển thị được hoặc có lỗi")
                     }
                     val intent = Intent(this, ElementInfoAct::class.java)
                     val elementSend = ElementSendAndLoad(this)
@@ -821,33 +817,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2, AdMobManager.Int
         }
         textWatcher = null
 
-        // Memory leak fix: Clear AdMobManager singleton reference to prevent Activity leak
-        // AdMobManager.interstitialListener holds a strong reference to this Activity
-        if (AdMobManager.interstitialListener === this) {
-            AdMobManager.interstitialListener = null
-        }
-
         super.onDestroy()
-    }
-
-    override fun onAdLoaded() {
-    }
-
-    override fun onAdFailedToLoad(error: LoadAdError) {
-    }
-
-    override fun onAdShowed() {
-    }
-
-    override fun onAdDismissed() {
-    }
-
-    override fun onAdClicked() {
-    }
-
-    override fun onAdFailedToShow(error: AdError) {
-    }
-
-    override fun onAdNotAvailable() {
     }
 }

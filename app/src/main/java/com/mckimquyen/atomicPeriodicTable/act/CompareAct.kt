@@ -17,7 +17,7 @@ import com.mckimquyen.atomicPeriodicTable.databinding.ACompareBinding
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
+import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStream
@@ -235,7 +235,7 @@ class CompareAct : BaseAct() {
         val json1 = loadElementJson(element1Name) ?: return
         val json2 = loadElementJson(element2Name) ?: return
 
-        Logger.i("CompareAct", "Comparing $element1Name vs $element2Name")
+        Log.i("CompareAct", "Comparing $element1Name vs $element2Name")
 
         // Convenience lambda for binding a row
         fun bind(label: String, key1: String, key2: String) {
@@ -349,7 +349,7 @@ class CompareAct : BaseAct() {
             // Catch Exception (not just IOException) because:
             // - JSONArray() and getJSONObject() throw JSONException (unchecked by catch IOException)
             // - If JSON is malformed or empty array → JSONException → app crash without this fix
-            Logger.e("CompareAct: Failed to load JSON for $elementName: ${e.message}")
+            Log.e("CompareAct", "Failed to load JSON for $elementName: ${e.message}")
             null
         }
     }

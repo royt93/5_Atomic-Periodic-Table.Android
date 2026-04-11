@@ -13,8 +13,6 @@ import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.setting.AboutAct
@@ -27,7 +25,7 @@ import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
+import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.mckimquyen.atomicPeriodicTable.pref.LanguagePref
@@ -46,7 +44,7 @@ class SettingsAct : BaseAct() {
     private lateinit var binding: ASettingsBinding
 
     //    private var adView: MaxAdView? = null
-    private var adView: AdView? = null
+    private var adView: View? = null
 
     // Memory leak prevention: Store listener for cleanup
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
@@ -80,12 +78,12 @@ class SettingsAct : BaseAct() {
 
     override fun onResume() {
         super.onResume()
-        adView?.resume()
+        AdManager.bannerResume(adView)
     }
 
     override fun onPause() {
-        adView?.pause()
         super.onPause()
+        AdManager.bannerPause(adView)
     }
 
     override fun onDestroy() {
@@ -100,7 +98,7 @@ class SettingsAct : BaseAct() {
         themeChangeHandler = null
 
 //        flAd.destroyAdBanner(adView)
-        adView?.destroy()
+        AdManager.bannerDestroy(adView)
         super.onDestroy()
     }
 
@@ -259,12 +257,10 @@ class SettingsAct : BaseAct() {
 
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdMobManager.loadBanner(
+        adView = AdManager.loadBanner(
             context = this,
-            adUnitId = BuildConfig.ADMOB_BANNER_ID,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd,
-            adSize = AdSize.LARGE_BANNER,
+            tvLabelAd = tvLabelAd
         )
     }
 
@@ -530,7 +526,7 @@ class SettingsAct : BaseAct() {
     }
 
     private fun showLanguageConfirmDialog(languageCode: String) {
-        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("SettingsAct", "showLanguageConfirmDialog requested for: $languageCode")
+        android.util.Log.i("SettingsAct", "showLanguageConfirmDialog requested for: $languageCode")
         val languagePref = LanguagePref(this)
         
         // Don't show dialog if selecting the same language
@@ -552,7 +548,7 @@ class SettingsAct : BaseAct() {
     }
 
     private fun updateLanguageRadioButtons() {
-        com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger.i("SettingsAct", "updateLanguageRadioButtons called. Current lang: ${LanguagePref(this).getValue()}")
+        android.util.Log.i("SettingsAct", "updateLanguageRadioButtons called. Current lang: ${LanguagePref(this).getValue()}")
 
         // Reset all icons to UNCHECKED state
         val unchecked = R.drawable.ic_radio_unchecked

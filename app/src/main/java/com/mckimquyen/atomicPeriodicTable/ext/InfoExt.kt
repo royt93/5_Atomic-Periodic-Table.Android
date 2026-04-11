@@ -35,8 +35,8 @@ import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.SendIso
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
 import com.mckimquyen.atomicPeriodicTable.util.Pasteur
+import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
@@ -370,10 +370,10 @@ abstract class InfoExt : BaseAct() {
 
     private fun loadImage(url: String?) {
         try {
-            Logger.i("roy93 loadImage url $url")
+            Log.i("InfoExt", "roy93 loadImage url $url")
             // Optimized: Validate URL before loading to prevent errors
             if (url.isNullOrEmpty() || url == "---") {
-                Logger.w("Invalid image URL: $url")
+                Log.w("InfoExt", "Invalid image URL: $url")
                 binding.offlineDiv.visibility = View.VISIBLE
                 binding.frame.visibility = View.GONE
                 return
@@ -401,20 +401,20 @@ abstract class InfoExt : BaseAct() {
                 .error(R.drawable.ic_launcher_background)
                 .into(binding.elementImage, object : com.squareup.picasso.Callback {
                     override fun onSuccess() {
-                        Logger.i("roy93 loadImage SUCCESS: Image loaded for $url")
+                        Log.i("InfoExt", "roy93 loadImage SUCCESS: Image loaded for $url")
                         binding.offlineDiv.visibility = View.GONE
                         binding.frame.visibility = View.VISIBLE
                     }
 
                     override fun onError(e: Exception?) {
-                        e?.let { Logger.e("roy93 loadImage ERROR: Failed to load image", it) } ?: Logger.e("roy93 loadImage ERROR: Failed to load image")
+                        e?.let { Log.e("InfoExt", "roy93 loadImage ERROR: Failed to load image", it) } ?: Log.e("InfoExt", "roy93 loadImage ERROR: Failed to load image")
                         binding.offlineDiv.visibility = View.VISIBLE
                         binding.frame.visibility = View.GONE
                     }
                 })
         } catch (e: Exception) {
             // Optimized: Catch all exceptions, not just ConnectException
-            Logger.e("Failed to load image: ${e.message}", e)
+            Log.e("InfoExt", "Failed to load image: ${e.message}", e)
             binding.offlineDiv.visibility = View.VISIBLE
             binding.frame.visibility = View.GONE
         }

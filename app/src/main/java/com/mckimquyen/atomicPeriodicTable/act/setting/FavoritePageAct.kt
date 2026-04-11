@@ -12,8 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
@@ -33,7 +31,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.databinding.AFavoriteSettingsPageBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.AdMobManager
+import com.roy.sdkadbmob.AdManager
 
 class FavoritePageAct : BaseAct() {
 
@@ -41,7 +39,7 @@ class FavoritePageAct : BaseAct() {
     private lateinit var binding: AFavoriteSettingsPageBinding
 
     //    private var adView: MaxAdView? = null
-    private var adView: AdView? = null
+    private var adView: View? = null
 
     // Memory leak prevention: Store listener for cleanup
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
@@ -53,12 +51,12 @@ class FavoritePageAct : BaseAct() {
 
     override fun onResume() {
         super.onResume()
-        adView?.resume()
+        AdManager.bannerResume(adView)
     }
 
     override fun onPause() {
-        adView?.pause()
         super.onPause()
+        AdManager.bannerPause(adView)
     }
 
     override fun onDestroy() {
@@ -69,7 +67,7 @@ class FavoritePageAct : BaseAct() {
         scrollChangedListener = null
 
 //        flAd.destroyAdBanner(adView)
-        adView?.destroy()
+        AdManager.bannerDestroy(adView)
         super.onDestroy()
     }
 
@@ -319,12 +317,10 @@ class FavoritePageAct : BaseAct() {
         // ===============================================================
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdMobManager.loadBanner(
+        adView = AdManager.loadBanner(
             context = this,
-            adUnitId = BuildConfig.ADMOB_BANNER_ID,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd,
-            adSize = AdSize.LARGE_BANNER,
+            tvLabelAd = tvLabelAd
         )
 //        adView = this.createAdBanner(
 //            logTag = FavoritePageAct::class.simpleName,

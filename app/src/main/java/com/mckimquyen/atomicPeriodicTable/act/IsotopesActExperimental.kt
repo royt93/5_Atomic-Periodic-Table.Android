@@ -25,7 +25,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.IsoPref
 import com.mckimquyen.atomicPeriodicTable.pref.SendIso
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.mckimquyen.atomicPeriodicTable.sdkadbmob.Logger
+import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -248,7 +248,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         for (item in list) {
             if (item.element.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT))) {
                 filteredList.add(item)
-                Logger.v(filteredList.toString())
+                Log.v("IsotopesAct", filteredList.toString())
             }
         }
         if (isoPrefValue == 0) {
