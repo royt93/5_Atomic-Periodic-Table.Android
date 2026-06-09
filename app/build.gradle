@@ -5,15 +5,15 @@ apply plugin: 'kotlin-android'
 // Now using Kotlin 2.0.21 with full ViewBinding support
 
 android {
-    compileSdkVersion 36
+    compileSdkVersion 37
 
     defaultConfig {
         applicationId "com.mckimquyen.atomicPeriodicTable"
         minSdkVersion 24
         //noinspection EditedTargetSdkVersion
-        targetSdkVersion 36
-        versionCode 20260412
-        versionName "2026.04.12"
+        targetSdkVersion 37
+        versionCode 20260609
+        versionName "2026.06.09"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // Vector drawable support for API < 21
@@ -70,6 +70,9 @@ android {
     buildFeatures {
         viewBinding true
         buildConfig true
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     // ===============================================================
@@ -217,10 +220,15 @@ dependencies {
     // AdmobWrapper SDK
     implementation("com.github.royt93:AdmobWrapper:1.1.1")
 
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test:runner:1.5.2'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.2.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 
     // debugImplementation because LeakCanary should only run in debug builds.
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'

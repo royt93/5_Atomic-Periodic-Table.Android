@@ -31,7 +31,7 @@ object LocaleHelper {
      */
     fun setLocale(context: Context, languageCode: String): Context {
         Log.i("LocaleHelper", "setLocale: setting to $languageCode")
-        val locale = Locale(languageCode)
+        val locale = Locale.forLanguageTag(languageCode.replace("-r", "-"))
         Locale.setDefault(locale)
 
         val config = Configuration(context.resources.configuration)
@@ -54,7 +54,21 @@ object LocaleHelper {
         return when (languageCode) {
             LanguagePref.LANG_ENGLISH -> "English"
             LanguagePref.LANG_VIETNAMESE -> "Tiếng Việt"
-            LanguagePref.LANG_CHINESE -> "中文"
+            LanguagePref.LANG_CHINESE -> "中文 (简体)"
+            LanguagePref.LANG_CHINESE_TRADITIONAL -> "中文 (繁體)"
+            LanguagePref.LANG_FRENCH -> "Français"
+            LanguagePref.LANG_GERMAN -> "Deutsch"
+            LanguagePref.LANG_JAPANESE -> "日本語"
+            LanguagePref.LANG_KOREAN -> "한국어"
+            LanguagePref.LANG_SPANISH -> "Español"
+            LanguagePref.LANG_RUSSIAN -> "Русский"
+            LanguagePref.LANG_THAI -> "ไทย"
+            LanguagePref.LANG_ARABIC -> "العربية"
+            LanguagePref.LANG_PORTUGUESE -> "Português"
+            LanguagePref.LANG_PORTUGUESE_BRAZIL -> "Português (Brasil)"
+            LanguagePref.LANG_HINDI -> "हिन्दी"
+            LanguagePref.LANG_ITALIAN -> "Italiano"
+            LanguagePref.LANG_INDONESIAN -> "Bahasa Indonesia"
             else -> "English"
         }
     }

@@ -48,7 +48,7 @@ class CalculatorAct : AppCompatActivity() {
         setContentView(binding.root) //Don't move down (Needs to be before we call our functions)
 
         binding.backBtn.setOnClickListener {
-            this.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         initUi()

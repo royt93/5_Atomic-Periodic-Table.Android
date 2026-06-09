@@ -21,8 +21,8 @@
     <application
         android:name=".RoyApp"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_rules"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
+        android:usesCleartextTraffic="false"
         tools:ignore="DiscouragedApi,LockedOrientationActivity">
 
         <!-- =============================================================== -->
@@ -84,16 +84,11 @@
         <activity
             android:name=".act.MainAct"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <!-- =============================================================== -->
         <!-- Element & Table Activities -->
@@ -102,15 +97,10 @@
         <activity
             android:name=".act.ElementInfoAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <!-- Compare Elements Activity -->
         <activity
@@ -120,39 +110,24 @@
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
 
 
         <activity
             android:name=".act.TableAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.IsotopesActExperimental"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <!-- =============================================================== -->
         <!-- Chemistry Tools -->
@@ -161,109 +136,69 @@
         <activity
             android:name=".act.CalculatorAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.SolubilityAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.table.IonAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.table.ElectrodeAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.table.EquationsAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".act.table.PHAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".act.table.NuclideAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".act.table.DictionaryAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <!-- =============================================================== -->
         <!-- Settings Activities -->
@@ -272,96 +207,61 @@
         <activity
             android:name=".act.SettingsAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.MainAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.setting.FavoritePageAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.setting.OrderAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.setting.AboutAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".act.setting.UnitAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".act.setting.SubmitAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".act.setting.LicensesAct"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <!-- =============================================================== -->
         <!-- Experimental Features -->
@@ -370,15 +270,10 @@
         <activity
             android:name=".setting.ExperimentalAct"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".act.SettingsAct"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="package.OtherActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
     </application>
 
