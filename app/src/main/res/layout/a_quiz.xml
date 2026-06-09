@@ -116,6 +116,16 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!-- Quiz Progress Bar -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/quizProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginBottom="20dp"
+                app:trackColor="?attr/colorSurfaceVariant"
+                app:indicatorColor="?attr/colorPrimary"
+                app:trackCornerRadius="4dp" />
+
             <!-- Question Card -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/questionCard"
@@ -131,7 +141,41 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="24dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Countdown Timer -->
+                    <FrameLayout
+                        android:id="@+id/timerContainer"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="16dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/timerProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            app:indicatorSize="60dp"
+                            app:trackThickness="4dp"
+                            app:trackColor="?attr/colorSurfaceVariant"
+                            app:indicatorColor="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/timerText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="15"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </FrameLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/questionText"
