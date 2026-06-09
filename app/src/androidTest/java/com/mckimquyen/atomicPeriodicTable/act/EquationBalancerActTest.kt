@@ -54,4 +54,28 @@ class EquationBalancerActTest {
             }
         }
     }
+
+    @Test
+    fun testBalancer_ValidEquation() {
+        ActivityScenario.launch(EquationBalancerAct::class.java).use {
+            onView(withId(R.id.balancerInput)).perform(replaceText("H2 + O2 = H2O"))
+            onView(withId(R.id.balancerBtn)).perform(click())
+
+            // Check if result is correct
+            onView(withId(R.id.balancerResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.balancerResultText)).check(matches(withText("2 H2 + O2 = 2 H2O")))
+        }
+    }
+
+    @Test
+    fun testBalancer_LowercaseEquation() {
+        ActivityScenario.launch(EquationBalancerAct::class.java).use {
+            onView(withId(R.id.balancerInput)).perform(replaceText("h2 + o2 = h2o"))
+            onView(withId(R.id.balancerBtn)).perform(click())
+
+            // Check if result is correctly capitalized and balanced
+            onView(withId(R.id.balancerResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.balancerResultText)).check(matches(withText("2 H2 + O2 = 2 H2O")))
+        }
+    }
 }

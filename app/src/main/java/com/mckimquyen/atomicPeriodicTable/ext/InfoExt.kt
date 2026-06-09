@@ -426,13 +426,24 @@ abstract class InfoExt : BaseAct() {
 
     @SuppressLint("SetTextI18n")
     private fun loadSp(url: String?) {
-        val hUrl = "http://www.jlindemann.se/atomic/emission_lines/"
+        val hUrl = "https://www.jlindemann.se/atomic/emission_lines/"
         val ext = ".gif"
         val fURL = hUrl + url + ext
         try {
-            Picasso.get().load(fURL).into(binding.propertiesInc.spImg)
+            Picasso.get().load(fURL).into(binding.propertiesInc.spImg, object : com.squareup.picasso.Callback {
+                override fun onSuccess() {
+                    binding.propertiesInc.spImg.visibility = View.VISIBLE
+                    binding.propertiesInc.spOffline.visibility = View.GONE
+                }
+
+                override fun onError(e: Exception?) {
+                    binding.propertiesInc.spImg.visibility = View.GONE
+                    binding.propertiesInc.spOffline.text = "No Data"
+                    binding.propertiesInc.spOffline.visibility = View.VISIBLE
+                }
+            })
             Picasso.get().load(fURL).into(binding.detailEmission.ivSpImgFetail)
-        } catch (_: ConnectException) {
+        } catch (e: Exception) {
             binding.propertiesInc.spImg.visibility = View.GONE
             binding.propertiesInc.spOffline.text = "No Data"
             binding.propertiesInc.spOffline.visibility = View.VISIBLE

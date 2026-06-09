@@ -394,4 +394,8 @@
     <string name="cat_metalloids">半金属</string>
     <string name="cat_halogens">ハロゲン</string>
     <string name="cat_reactive_nonmetals">反応性非金属</string>
+    <!-- Enriched Quiz Questions (JA) -->
+    <string name="quiz_question_name_from_symbol">シンボル %1$s を持つ要素はどれですか?</string>
+    <string name="quiz_question_isotopes">%1$s には同位体がいくつありますか?</string>
+    <string name="quiz_question_electronegativity">%1$s の電気陰性度はどれくらいですか?</string>
 </resources>

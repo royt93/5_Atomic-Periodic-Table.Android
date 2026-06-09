@@ -18,6 +18,15 @@ class ChemicalParserAndBalancerTest {
         val nacl = ChemicalFormulaParser.parse("NaCl")
         assertEquals(1, nacl["Na"])
         assertEquals(1, nacl["Cl"])
+
+        // Lowercase tests
+        val lowercaseH2o = ChemicalFormulaParser.parse("h2o")
+        assertEquals(2, lowercaseH2o["H"])
+        assertEquals(1, lowercaseH2o["O"])
+
+        val lowercaseNaCl = ChemicalFormulaParser.parse("nacl")
+        assertEquals(1, lowercaseNaCl["Na"])
+        assertEquals(1, lowercaseNaCl["Cl"])
     }
 
     @Test
@@ -81,6 +90,11 @@ class ChemicalParserAndBalancerTest {
         val ironResult = ChemicalEquationBalancer.balance("Fe + Cl2 = FeCl3")
         assertNotNull(ironResult)
         assertEquals("2 Fe + 3 Cl2 = 2 FeCl3", ironResult?.balancedString)
+
+        // Case-insensitive check
+        val lowercaseWaterResult = ChemicalEquationBalancer.balance("h2 + o2 = h2o")
+        assertNotNull(lowercaseWaterResult)
+        assertEquals("2 H2 + O2 = 2 H2O", lowercaseWaterResult?.balancedString)
     }
 
     @Test

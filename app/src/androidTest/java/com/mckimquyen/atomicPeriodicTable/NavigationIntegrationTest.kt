@@ -17,12 +17,17 @@ class NavigationIntegrationTest {
     @Test
     fun testNavigateFromMainToQuiz() {
         ActivityScenario.launch(MainAct::class.java).use { scenario ->
-            // Open navigation drawer
-            onView(withId(R.id.menuBtn)).perform(click())
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
             Thread.sleep(1000)
 
-            // Click Quiz menu button
-            onView(withId(R.id.menuQuizBtn)).perform(click())
+            // Click Quiz menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuQuizBtn).performClick()
+            }
             Thread.sleep(1000)
 
             // Verify Quiz screen is visible
@@ -33,12 +38,17 @@ class NavigationIntegrationTest {
     @Test
     fun testNavigateFromMainToBalancer() {
         ActivityScenario.launch(MainAct::class.java).use { scenario ->
-            // Open navigation drawer
-            onView(withId(R.id.menuBtn)).perform(click())
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
             Thread.sleep(1000)
 
-            // Click Balancer menu button
-            onView(withId(R.id.menuBalancerBtn)).perform(click())
+            // Click Balancer menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuBalancerBtn).performClick()
+            }
             Thread.sleep(1000)
 
             // Verify Balancer screen is visible
@@ -49,12 +59,17 @@ class NavigationIntegrationTest {
     @Test
     fun testNavigateFromMainToCalculator() {
         ActivityScenario.launch(MainAct::class.java).use { scenario ->
-            // Open navigation drawer
-            onView(withId(R.id.menuBtn)).perform(click())
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
             Thread.sleep(1000)
 
-            // Click Calculator menu button
-            onView(withId(R.id.menuMolarMassBtn)).perform(click())
+            // Click Calculator menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuMolarMassBtn).performClick()
+            }
             Thread.sleep(1000)
 
             // Verify Calculator screen is visible

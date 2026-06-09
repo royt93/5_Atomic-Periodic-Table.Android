@@ -75,4 +75,16 @@ class CalculatorActTest {
             onView(withId(R.id.calcResultText)).check(matches(withText(org.hamcrest.CoreMatchers.containsString("18.01"))))
         }
     }
+
+    @Test
+    fun testCalculator_LowercaseFormula() {
+        ActivityScenario.launch(CalculatorAct::class.java).use {
+            onView(withId(R.id.calcInput)).perform(replaceText("h2o"))
+            onView(withId(R.id.calcBtn)).perform(click())
+
+            // Check if result card is visible and correctly parsed as H2O (18.015 g/mol)
+            onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.calcResultText)).check(matches(withText(org.hamcrest.CoreMatchers.containsString("18.01"))))
+        }
+    }
 }

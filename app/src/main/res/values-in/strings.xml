@@ -394,4 +394,8 @@
     <string name="cat_metalloids">Metaloid</string>
     <string name="cat_halogens">Halogen</string>
     <string name="cat_reactive_nonmetals">Bukan Logam Reaktif</string>
+    <!-- Enriched Quiz Questions (ID) -->
+    <string name="quiz_question_name_from_symbol">Elemen manakah yang memiliki simbol %1$s?</string>
+    <string name="quiz_question_isotopes">Berapa banyak isotop yang dimiliki %1$s?</string>
+    <string name="quiz_question_electronegativity">Berapakah keelektronegatifan %1$s?</string>
 </resources>

@@ -394,4 +394,8 @@
     <string name="cat_metalloids">Metalloidi</string>
     <string name="cat_halogens">Alogeni</string>
     <string name="cat_reactive_nonmetals">Non metalli reattivi</string>
+    <!-- Enriched Quiz Questions (IT) -->
+    <string name="quiz_question_name_from_symbol">Quale elemento ha il simbolo %1$s?</string>
+    <string name="quiz_question_isotopes">Quanti isotopi ha %1$s?</string>
+    <string name="quiz_question_electronegativity">Qual è l\'elettronegatività di %1$s?</string>
 </resources>

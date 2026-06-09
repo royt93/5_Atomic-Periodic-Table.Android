@@ -540,5 +540,9 @@
     <string name="element_name_livermorium">Livermori</string>
     <string name="element_name_tennessine">Tenesin</string>
     <string name="element_name_oganesson">Oganexon</string>
+    <!-- Enriched Quiz Questions (VI) -->
+    <string name="quiz_question_name_from_symbol">Nguyên tố nào có ký hiệu %1$s?</string>
+    <string name="quiz_question_isotopes">%1$s có bao nhiêu đồng vị?</string>
+    <string name="quiz_question_electronegativity">Độ âm điện của %1$s là bao nhiêu?</string>
 </resources>
 

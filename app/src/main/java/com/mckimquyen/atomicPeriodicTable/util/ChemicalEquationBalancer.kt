@@ -81,15 +81,18 @@ object ChemicalEquationBalancer {
 
         if (reactants.isEmpty() || products.isEmpty()) return null
 
+        val reactantsNormalized = reactants.map { ChemicalFormulaParser.normalize(it) }
+        val productsNormalized = products.map { ChemicalFormulaParser.normalize(it) }
+
         // Parse all compounds
         val reactantParsed = mutableListOf<Map<String, Int>>()
         val productParsed = mutableListOf<Map<String, Int>>()
 
         try {
-            for (r in reactants) {
+            for (r in reactantsNormalized) {
                 reactantParsed.add(ChemicalFormulaParser.parse(r))
             }
-            for (p in products) {
+            for (p in productsNormalized) {
                 productParsed.add(ChemicalFormulaParser.parse(p))
             }
         } catch (e: Exception) {
@@ -249,26 +252,26 @@ object ChemicalEquationBalancer {
         val finalCoefficients = integerCoefficients.map { it / currentGCD }
 
         // Build result string
-        val reactantCoeffs = finalCoefficients.subList(0, reactants.size)
-        val productCoeffs = finalCoefficients.subList(reactants.size, finalCoefficients.size)
+        val reactantCoeffs = finalCoefficients.subList(0, reactantsNormalized.size)
+        val productCoeffs = finalCoefficients.subList(reactantsNormalized.size, finalCoefficients.size)
 
-        val balancedReactants = reactants.indices.joinToString(" + ") { idx ->
+        val balancedReactants = reactantsNormalized.indices.joinToString(" + ") { idx ->
             val coef = reactantCoeffs[idx]
             val coefStr = if (coef == 1L) "" else "$coef "
-            "$coefStr${reactants[idx]}"
+            "$coefStr${reactantsNormalized[idx]}"
         }
 
-        val balancedProducts = products.indices.joinToString(" + ") { idx ->
+        val balancedProducts = productsNormalized.indices.joinToString(" + ") { idx ->
             val coef = productCoeffs[idx]
             val coefStr = if (coef == 1L) "" else "$coef "
-            "$coefStr${products[idx]}"
+            "$coefStr${productsNormalized[idx]}"
         }
 
         val balancedStr = "$balancedReactants = $balancedProducts"
 
         return EquationResult(
-            reactants = reactants,
-            products = products,
+            reactants = reactantsNormalized,
+            products = productsNormalized,
             reactantCoefficients = reactantCoeffs,
             productCoefficients = productCoeffs,
             balancedString = balancedStr

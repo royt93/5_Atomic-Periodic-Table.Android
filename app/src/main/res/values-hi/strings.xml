@@ -394,4 +394,8 @@
     <string name="cat_metalloids">Metalloids</string>
     <string name="cat_halogens">हैलोजन</string>
     <string name="cat_reactive_nonmetals">प्रतिक्रियाशील अधातुएँ</string>
+    <!-- Enriched Quiz Questions (HI) -->
+    <string name="quiz_question_name_from_symbol">किस तत्व का प्रतीक %1$s है?</string>
+    <string name="quiz_question_isotopes">%1$s के पास कितने आइसोटोप हैं?</string>
+    <string name="quiz_question_electronegativity">%1$s की विद्युत ऋणात्मकता क्या है?</string>
 </resources>

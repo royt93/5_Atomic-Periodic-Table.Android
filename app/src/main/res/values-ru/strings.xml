@@ -394,4 +394,8 @@
     <string name="cat_metalloids">Металлоиды</string>
     <string name="cat_halogens">Галогены</string>
     <string name="cat_reactive_nonmetals">Реактивные неметаллы</string>
+    <!-- Enriched Quiz Questions (RU) -->
+    <string name="quiz_question_name_from_symbol">Какой элемент имеет символ %1$s?</string>
+    <string name="quiz_question_isotopes">Сколько изотопов имеет %1$s?</string>
+    <string name="quiz_question_electronegativity">Какова электроотрицательность %1$s?</string>
 </resources>

@@ -394,4 +394,8 @@
     <string name="cat_metalloids">준금속</string>
     <string name="cat_halogens">할로겐</string>
     <string name="cat_reactive_nonmetals">반응성 비금속</string>
+    <!-- Enriched Quiz Questions (KO) -->
+    <string name="quiz_question_name_from_symbol">%1$s 기호가 있는 요소는 무엇입니까?</string>
+    <string name="quiz_question_isotopes">%1$s에는 몇 개의 동위원소가 있나요?</string>
+    <string name="quiz_question_electronegativity">%1$s의 전기음성도는 얼마입니까?</string>
 </resources>

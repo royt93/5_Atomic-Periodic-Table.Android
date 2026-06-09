@@ -258,7 +258,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 android:backgroundTint="?attr/colorSurfaceVariant">
 
@@ -266,7 +266,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/notesTitle"
@@ -276,14 +276,22 @@
                         android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="12dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/notesInputLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/notes_hint">
+                        android:hint="@string/notes_hint"
+                        app:boxCornerRadiusTopStart="16dp"
+                        app:boxCornerRadiusTopEnd="16dp"
+                        app:boxCornerRadiusBottomStart="16dp"
+                        app:boxCornerRadiusBottomEnd="16dp"
+                        app:boxStrokeColor="?attr/colorPrimary"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:boxStrokeWidth="1dp"
+                        app:hintTextColor="?attr/colorPrimary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/notesInput"
@@ -293,21 +301,28 @@
                             android:inputType="textMultiLine"
                             android:minLines="3"
                             android:textColor="?attr/colorOnSurface"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:padding="16dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/notesSaveBtn"
+                        style="@style/Widget.MaterialComponents.Button.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/shape_toast"
-                        android:backgroundTint="?attr/colorPrimary"
+                        android:layout_marginTop="16dp"
                         android:text="@string/notes_save"
+                        android:textAllCaps="false"
+                        app:icon="@drawable/ic_send"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:cornerRadius="100dp"
                         android:textColor="?attr/colorOnPrimary"
-                        android:textAllCaps="false" />
+                        android:backgroundTint="?attr/colorPrimary"
+                        android:enabled="false"
+                        android:alpha="0.5" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -394,4 +394,8 @@
     <string name="cat_metalloids">เมทัลลอยด์</string>
     <string name="cat_halogens">ฮาโลเจน</string>
     <string name="cat_reactive_nonmetals">อโลหะที่ทำปฏิกิริยา</string>
+    <!-- Enriched Quiz Questions (TH) -->
+    <string name="quiz_question_name_from_symbol">องค์ประกอบใดมีสัญลักษณ์ %1$s</string>
+    <string name="quiz_question_isotopes">%1$s มีไอโซโทปจำนวนเท่าใด</string>
+    <string name="quiz_question_electronegativity">อิเลคโตรเนกาติวีตี้ของ %1$s คืออะไร?</string>
 </resources>

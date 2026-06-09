@@ -31,6 +31,7 @@ class IntegrationTest {
             scenario.onActivity { activity ->
                 activity.findViewById<View>(R.id.settingsBtn).performClick()
             }
+            Thread.sleep(1000)
 
             // Verify settings screen is opened and scrollSettings is visible
             onView(withId(R.id.scrollSettings)).check(matches(isDisplayed()))

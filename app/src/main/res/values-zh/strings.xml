@@ -412,5 +412,9 @@
     <string name="cat_metalloids">类金属</string>
     <string name="cat_halogens">卤素</string>
     <string name="cat_reactive_nonmetals">反应性非金属</string>
+    <!-- Enriched Quiz Questions (ZH-CN) -->
+    <string name="quiz_question_name_from_symbol">哪个元素具有符号 %1$s？</string>
+    <string name="quiz_question_isotopes">%1$s 有多少种同位素？</string>
+    <string name="quiz_question_electronegativity">%1$s 的电负性是多少？</string>
 </resources>
 

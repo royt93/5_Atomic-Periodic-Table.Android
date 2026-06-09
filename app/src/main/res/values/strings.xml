@@ -541,6 +541,10 @@
     <string name="element_name_livermorium">Livermorium</string>
     <string name="element_name_tennessine">Tennessine</string>
     <string name="element_name_oganesson">Oganesson</string>
+    <!-- Enriched Quiz Questions (EN) -->
+    <string name="quiz_question_name_from_symbol">Which element has the symbol %1$s?</string>
+    <string name="quiz_question_isotopes">How many isotopes does %1$s have?</string>
+    <string name="quiz_question_electronegativity">What is the electronegativity of %1$s?</string>
 </resources>
 
 
