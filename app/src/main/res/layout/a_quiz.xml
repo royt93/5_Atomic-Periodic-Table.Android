@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <!-- Top App Bar -->
     <FrameLayout
@@ -69,6 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:clipChildren="false"
         android:fillViewport="true"
         android:paddingTop="16dp"
         android:paddingBottom="24dp"
@@ -81,7 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <!-- Progress & Score Header -->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -148,7 +153,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/option1Card"
@@ -287,5 +294,16 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
+
+    <com.mckimquyen.atomicPeriodicTable.view.ConfettiView
+        android:id="@+id/confettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,8 @@ import com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator
 import com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import java.util.Random
+import android.animation.ValueAnimator
+import android.animation.ArgbEvaluator
 
 class QuizAct : BaseAct() {
 
@@ -46,6 +48,7 @@ class QuizAct : BaseAct() {
         ElementModel.getList(elementsList)
 
         setupViews()
+        startBackgroundAnimation()
         startQuiz()
     }
 
@@ -97,13 +100,39 @@ class QuizAct : BaseAct() {
     private fun startQuiz() {
         currentQuestionIndex = 0
         score = 0
-        binding.questionCard.visibility = View.VISIBLE
-        binding.optionsContainer.visibility = View.VISIBLE
-        binding.quizResultCard.visibility = View.GONE
-        binding.quizProgress.visibility = View.VISIBLE
-        binding.quizScore.visibility = View.VISIBLE
-
-        generateQuestion()
+        
+        if (binding.quizResultCard.visibility == View.VISIBLE) {
+            binding.quizResultCard.animate()
+                .alpha(0f)
+                .scaleX(0.8f)
+                .scaleY(0.8f)
+                .setDuration(250)
+                .withEndAction {
+                    binding.quizResultCard.visibility = View.GONE
+                    binding.questionCard.visibility = View.VISIBLE
+                    binding.optionsContainer.visibility = View.VISIBLE
+                    binding.quizProgress.visibility = View.VISIBLE
+                    binding.quizScore.visibility = View.VISIBLE
+                    
+                    binding.questionCard.alpha = 1f
+                    binding.questionCard.scaleX = 1f
+                    binding.questionCard.scaleY = 1f
+                    binding.optionsContainer.alpha = 1f
+                    binding.optionsContainer.scaleX = 1f
+                    binding.optionsContainer.scaleY = 1f
+                    
+                    generateQuestion()
+                }
+                .start()
+        } else {
+            binding.questionCard.visibility = View.VISIBLE
+            binding.optionsContainer.visibility = View.VISIBLE
+            binding.quizResultCard.visibility = View.GONE
+            binding.quizProgress.visibility = View.VISIBLE
+            binding.quizScore.visibility = View.VISIBLE
+            
+            generateQuestion()
+        }
     }
 
     private fun generateQuestion() {
@@ -304,6 +333,7 @@ class QuizAct : BaseAct() {
         // Spring scale up for the correct answer
         val correctCard = if (correctIndex != -1) optionCards[correctIndex] else null
         correctCard?.let { card ->
+            card.cardElevation = 8f * resources.displayMetrics.density // Lift card
             card.animate()
                 .scaleX(1.08f)
                 .scaleY(1.08f)
@@ -314,6 +344,9 @@ class QuizAct : BaseAct() {
                         .scaleX(1.04f)
                         .scaleY(1.04f)
                         .setDuration(120)
+                        .withEndAction {
+                            card.cardElevation = 0f // Reset
+                        }
                         .start()
                 }
                 .start()
@@ -322,6 +355,7 @@ class QuizAct : BaseAct() {
         // Wobble/shake animation for the incorrect selected choice
         if (selectedAnswer != currentCorrectAnswer) {
             val wrongCard = optionCards[selectedIndex]
+            wrongCard.cardElevation = 4f * resources.displayMetrics.density // Slight lift
             wrongCard.translationX = 0f
             wrongCard.animate()
                 .translationX(-15f)
@@ -342,6 +376,9 @@ class QuizAct : BaseAct() {
                                             wrongCard.animate()
                                                 .translationX(0f)
                                                 .setDuration(50)
+                                                .withEndAction {
+                                                    wrongCard.cardElevation = 0f // Reset
+                                                }
                                                 .start()
                                         }
                                         .start()
@@ -388,13 +425,54 @@ class QuizAct : BaseAct() {
     }
 
     private fun showResults() {
-        binding.questionCard.visibility = View.GONE
-        binding.optionsContainer.visibility = View.GONE
-        binding.quizProgress.visibility = View.GONE
-        binding.quizScore.visibility = View.GONE
+        // Fade out quiz components smoothly
+        binding.questionCard.animate().alpha(0f).scaleX(0.8f).scaleY(0.8f).setDuration(300).start()
+        binding.optionsContainer.animate().alpha(0f).scaleX(0.8f).scaleY(0.8f).setDuration(300).withEndAction {
+            binding.questionCard.visibility = View.GONE
+            binding.optionsContainer.visibility = View.GONE
+            binding.quizProgress.visibility = View.GONE
+            binding.quizScore.visibility = View.GONE
 
-        binding.quizResultText.text = getString(R.string.quiz_finished).format(score, totalQuestions)
-        binding.quizResultCard.visibility = View.VISIBLE
-        Utils.fadeInAnim(binding.quizResultCard, 300)
+            binding.quizResultCard.alpha = 0f
+            binding.quizResultCard.scaleX = 0.6f
+            binding.quizResultCard.scaleY = 0.6f
+            binding.quizResultCard.visibility = View.VISIBLE
+            binding.quizResultText.text = getString(R.string.quiz_finished).format(score, totalQuestions)
+
+            binding.quizResultCard.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(400)
+                .setInterpolator(android.view.animation.OvershootInterpolator(1.4f))
+                .withEndAction {
+                    binding.confettiView.startConfetti()
+                }
+                .start()
+        }.start()
+    }
+
+    private fun startBackgroundAnimation() {
+        val root = binding.root
+        val colorFrom = when (com.mckimquyen.atomicPeriodicTable.pref.ThemePref(this).getValue()) {
+            1 -> Color.parseColor("#121212") // Dark
+            0 -> Color.parseColor("#F5F5F5") // Light
+            else -> Color.parseColor("#F5F5F5")
+        }
+        val colorTo = when (com.mckimquyen.atomicPeriodicTable.pref.ThemePref(this).getValue()) {
+            1 -> Color.parseColor("#1E1B24") // Deep purple tinted dark
+            0 -> Color.parseColor("#E3F2FD") // Light blue tinted light
+            else -> Color.parseColor("#E3F2FD")
+        }
+        
+        ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo).apply {
+            duration = 5000
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            addUpdateListener { animator ->
+                root.setBackgroundColor(animator.animatedValue as Int)
+            }
+            start()
+        }
     }
 }

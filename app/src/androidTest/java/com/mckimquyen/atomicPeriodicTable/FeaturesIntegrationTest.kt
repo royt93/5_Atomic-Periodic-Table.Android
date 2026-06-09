@@ -13,11 +13,18 @@ import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.NotesPref
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class FeaturesIntegrationTest {
+
+    @Before
+    fun setUp() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache.init(appContext)
+    }
 
     @Test
     fun testElementNotes() {
