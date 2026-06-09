@@ -92,6 +92,10 @@ abstract class InfoExt : BaseAct() {
             val jsonArray = JSONArray(jsonString)
             val jsonObject: JSONObject = jsonArray.getJSONObject(0)
 
+            // Load element notes
+            val notesPref = com.mckimquyen.atomicPeriodicTable.pref.NotesPref(this)
+            binding.notesInput.setText(notesPref.getNote(elementSendAndLoadValue ?: ""))
+
             //optStrings from jsonObject or fallback
             val element = jsonObject.optString("element", "---")
             

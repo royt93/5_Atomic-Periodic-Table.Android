@@ -348,4 +348,50 @@
     <string name="compare_property">संपत्ति</string>
     <string name="compare_legend_higher">उच्च</string>
     <string name="compare_legend_lower">निम्न</string>
+
+    <!-- Implemented Feature Strings (HI) -->
+    <string name="notes_title">व्यक्तिगत टिप्पणियाँ</string>
+    <string name="notes_hint">इस तत्व के बारे में अपने नोट्स या यादें जोड़ें…</string>
+    <string name="notes_save">नोट सहेजें</string>
+    <string name="notes_saved">नोट सफलतापूर्वक सहेजा गया</string>
+    <string name="menu_balancer">समीकरण संतुलनकर्ता</string>
+    <string name="balancer_title">रासायनिक समीकरण संतुलनकर्ता</string>
+    <string name="balancer_input_hint">जैसे, H2 + O2 = H2O</string>
+    <string name="balancer_btn">संतुलन</string>
+    <string name="balancer_result">संतुलित समीकरण:</string>
+    <string name="balancer_error_invalid">अमान्य समीकरण प्रारूप. अभिकारकों और उत्पादों को अलग करने के लिए = का प्रयोग करें।</string>
+    <string name="balancer_error_unbalanced">समीकरण को संतुलित नहीं किया जा सकता या इसका कोई अद्वितीय समाधान नहीं है।</string>
+    <string name="balancer_error_elements">बाएँ और दाएँ तरफ के तत्व मेल खाने चाहिए।</string>
+    <string name="menu_quiz">आवधिक प्रश्नोत्तरी</string>
+    <string name="quiz_title">आवर्त सारणी प्रश्नोत्तरी</string>
+    <string name="quiz_score">स्कोर: %1$d/%2$d</string>
+    <string name="quiz_progress">प्रश्न: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">%1$s का परमाणु क्रमांक क्या है?</string>
+    <string name="quiz_question_symbol">तत्व %1$s का प्रतीक क्या है?</string>
+    <string name="quiz_question_group">%1$s किस समूह से संबंधित है?</string>
+    <string name="quiz_question_category">%1$s किस श्रेणी से संबंधित है?</string>
+    <string name="quiz_correct">सही!</string>
+    <string name="quiz_incorrect">ग़लत! सही उत्तर है: %1$s</string>
+    <string name="quiz_next">अगला सवाल</string>
+    <string name="quiz_finished">प्रश्नोत्तरी समाप्त! अंतिम स्कोर: %1$d/%2$d</string>
+    <string name="quiz_restart">प्रश्नोत्तरी पुनः प्रारंभ करें</string>
+    <string name="menu_molar_mass">दाढ़ द्रव्यमान कैलकुलेटर</string>
+    <string name="molar_mass_title">दाढ़ द्रव्यमान कैलकुलेटर</string>
+    <string name="molar_mass_hint">उदाहरण के लिए, Al2(SO4)3 या H2O</string>
+    <string name="molar_mass_btn">गणना</string>
+    <string name="molar_mass_result">मोलर द्रव्यमान: %1$.4f g/mol</string>
+    <string name="molar_mass_composition">तत्व संरचना का टूटना:</string>
+    <string name="molar_mass_error">अमान्य रासायनिक सूत्र प्रारूप</string>
+    <string name="molar_mass_error_unknown_element">अज्ञात तत्व: %1$s</string>
+    <string name="cat_other_nonmetals">अन्य अधातुएँ</string>
+    <string name="cat_noble_gases">नोबल गैसें</string>
+    <string name="cat_alkali_metals">क्षार धातुएँ</string>
+    <string name="cat_alkaline_earth">क्षारीय पृथ्वी धातुएँ</string>
+    <string name="cat_transition_metals">संक्रमण धातुएँ</string>
+    <string name="cat_lanthanides">लैंथेनाइड्स</string>
+    <string name="cat_actinides">एक्टिनाइड्स</string>
+    <string name="cat_post_transition">संक्रमणोत्तर धातुएँ</string>
+    <string name="cat_metalloids">Metalloids</string>
+    <string name="cat_halogens">हैलोजन</string>
+    <string name="cat_reactive_nonmetals">प्रतिक्रियाशील अधातुएँ</string>
 </resources>

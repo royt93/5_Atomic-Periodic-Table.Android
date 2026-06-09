@@ -348,4 +348,50 @@
     <string name="compare_property">プロパティ</string>
     <string name="compare_legend_higher">高い</string>
     <string name="compare_legend_lower">低い</string>
+
+    <!-- Implemented Feature Strings (JA) -->
+    <string name="notes_title">個人的なメモ</string>
+    <string name="notes_hint">この要素に関するメモや思い出を追加してください…</string>
+    <string name="notes_save">メモの保存</string>
+    <string name="notes_saved">メモは正常に保存されました</string>
+    <string name="menu_balancer">方程式バランサ</string>
+    <string name="balancer_title">化学方程式バランサー</string>
+    <string name="balancer_input_hint">例: H2 + O2 = H2O</string>
+    <string name="balancer_btn">バランス</string>
+    <string name="balancer_result">バランスの取れた方程式:</string>
+    <string name="balancer_error_invalid">無効な数式形式です。反応物と生成物を分離するには = を使用します。</string>
+    <string name="balancer_error_unbalanced">方程式のバランスが取れていないか、一意の解がありません。</string>
+    <string name="balancer_error_elements">左側と右側の要素は一致する必要があります。</string>
+    <string name="menu_quiz">定期クイズ</string>
+    <string name="quiz_title">周期表クイズ</string>
+    <string name="quiz_score">スコア: %1$d/%2$d</string>
+    <string name="quiz_progress">質問: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">%1$s の原子番号は何ですか?</string>
+    <string name="quiz_question_symbol">要素 %1$s の記号は何ですか?</string>
+    <string name="quiz_question_group">%1$s はどのグループに属していますか?</string>
+    <string name="quiz_question_category">%1$s はどのカテゴリに属しますか?</string>
+    <string name="quiz_correct">正しい！</string>
+    <string name="quiz_incorrect">正しくない！正解は: %1$s</string>
+    <string name="quiz_next">次の質問</string>
+    <string name="quiz_finished">クイズ終了！最終スコア: %1$d/%2$d</string>
+    <string name="quiz_restart">リスタートクイズ</string>
+    <string name="menu_molar_mass">モル質量計算機</string>
+    <string name="molar_mass_title">モル質量計算機</string>
+    <string name="molar_mass_hint">例: Al2(SO4)3 または H2O</string>
+    <string name="molar_mass_btn">計算する</string>
+    <string name="molar_mass_result">モル質量: %1$.4f g/mol</string>
+    <string name="molar_mass_composition">元素構成の内訳:</string>
+    <string name="molar_mass_error">化学式の形式が無効です</string>
+    <string name="molar_mass_error_unknown_element">不明な要素: %1$s</string>
+    <string name="cat_other_nonmetals">その他の非金属</string>
+    <string name="cat_noble_gases">希ガス</string>
+    <string name="cat_alkali_metals">アルカリ金属</string>
+    <string name="cat_alkaline_earth">アルカリ土類金属</string>
+    <string name="cat_transition_metals">遷移金属</string>
+    <string name="cat_lanthanides">ランタニド</string>
+    <string name="cat_actinides">アクチニド</string>
+    <string name="cat_post_transition">移行後の金属</string>
+    <string name="cat_metalloids">半金属</string>
+    <string name="cat_halogens">ハロゲン</string>
+    <string name="cat_reactive_nonmetals">反応性非金属</string>
 </resources>

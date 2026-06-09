@@ -366,5 +366,51 @@
     <string name="compare_property">属性</string>
     <string name="compare_legend_higher">更高</string>
     <string name="compare_legend_lower">更低</string>
+
+    <!-- Implemented Feature Strings (ZH-CN) -->
+    <string name="notes_title">个人笔记</string>
+    <string name="notes_hint">添加您关于此元素的笔记或回忆...</string>
+    <string name="notes_save">保存备注</string>
+    <string name="notes_saved">笔记保存成功</string>
+    <string name="menu_balancer">方程平衡器</string>
+    <string name="balancer_title">化学方程式配平器</string>
+    <string name="balancer_input_hint">例如，H2 + O2 = H2O</string>
+    <string name="balancer_btn">平衡</string>
+    <string name="balancer_result">平衡方程：</string>
+    <string name="balancer_error_invalid">方程格式无效。使用 = 来分离反应物和产物。</string>
+    <string name="balancer_error_unbalanced">方程不能配平或无唯一解。</string>
+    <string name="balancer_error_elements">左侧和右侧的元素必须匹配。</string>
+    <string name="menu_quiz">定期测验</string>
+    <string name="quiz_title">元素周期表测验</string>
+    <string name="quiz_score">得分：%1$d/%2$d</string>
+    <string name="quiz_progress">问题：%1$d/%2$d</string>
+    <string name="quiz_question_atomic">%1$s 的原子序数是多少？</string>
+    <string name="quiz_question_symbol">元素%1$s的符号是什么？</string>
+    <string name="quiz_question_group">%1$s 属于哪个组？</string>
+    <string name="quiz_question_category">%1$s 属于哪个类别？</string>
+    <string name="quiz_correct">正确的！</string>
+    <string name="quiz_incorrect">不正确！正确答案是：%1$s</string>
+    <string name="quiz_next">下一个问题</string>
+    <string name="quiz_finished">测验结束！最终得分：%1$d/%2$d</string>
+    <string name="quiz_restart">重新开始测验</string>
+    <string name="menu_molar_mass">摩尔质量计算器</string>
+    <string name="molar_mass_title">摩尔质量计算器</string>
+    <string name="molar_mass_hint">例如，Al2(SO4)3 或 H2O</string>
+    <string name="molar_mass_btn">计算</string>
+    <string name="molar_mass_result">摩尔质量：%1$.4f g/mol</string>
+    <string name="molar_mass_composition">元素组成分解：</string>
+    <string name="molar_mass_error">化学式格式无效</string>
+    <string name="molar_mass_error_unknown_element">未知元素：%1$s</string>
+    <string name="cat_other_nonmetals">其他非金属</string>
+    <string name="cat_noble_gases">稀有气体</string>
+    <string name="cat_alkali_metals">碱金属</string>
+    <string name="cat_alkaline_earth">碱土金属</string>
+    <string name="cat_transition_metals">过渡金属</string>
+    <string name="cat_lanthanides">镧系元素</string>
+    <string name="cat_actinides">锕系元素</string>
+    <string name="cat_post_transition">后过渡金属</string>
+    <string name="cat_metalloids">类金属</string>
+    <string name="cat_halogens">卤素</string>
+    <string name="cat_reactive_nonmetals">反应性非金属</string>
 </resources>
 

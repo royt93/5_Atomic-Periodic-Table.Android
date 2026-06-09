@@ -348,4 +348,50 @@
     <string name="compare_property">Свойство</string>
     <string name="compare_legend_higher">Выше</string>
     <string name="compare_legend_lower">Ниже</string>
+
+    <!-- Implemented Feature Strings (RU) -->
+    <string name="notes_title">Личные заметки</string>
+    <string name="notes_hint">Добавьте свои заметки или воспоминания об этом элементе…</string>
+    <string name="notes_save">Сохранить заметку</string>
+    <string name="notes_saved">Заметка успешно сохранена</string>
+    <string name="menu_balancer">Балансировщик уравнений</string>
+    <string name="balancer_title">Балансировщик химических уравнений</string>
+    <string name="balancer_input_hint">например, H2 + O2 = H2O</string>
+    <string name="balancer_btn">Баланс</string>
+    <string name="balancer_result">Сбалансированное уравнение:</string>
+    <string name="balancer_error_invalid">Неверный формат уравнения. Используйте = для разделения реагентов и продуктов.</string>
+    <string name="balancer_error_unbalanced">Уравнение не может быть сбалансированным или не имеет единственного решения.</string>
+    <string name="balancer_error_elements">Элементы слева и справа должны совпадать.</string>
+    <string name="menu_quiz">Периодическая викторина</string>
+    <string name="quiz_title">Викторина по периодической таблице</string>
+    <string name="quiz_score">Оценка: %1$d/%2$d</string>
+    <string name="quiz_progress">Вопрос: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">Какой атомный номер %1$s?</string>
+    <string name="quiz_question_symbol">Каков символ элемента %1$s?</string>
+    <string name="quiz_question_group">К какой группе принадлежит %1$s?</string>
+    <string name="quiz_question_category">К какой категории принадлежит %1$s?</string>
+    <string name="quiz_correct">Правильный!</string>
+    <string name="quiz_incorrect">Неверно! Правильный ответ: %1$s</string>
+    <string name="quiz_next">Следующий вопрос</string>
+    <string name="quiz_finished">Викторина завершена! Итоговый результат: %1$d/%2$d</string>
+    <string name="quiz_restart">Перезапустить тест</string>
+    <string name="menu_molar_mass">Калькулятор молярной массы</string>
+    <string name="molar_mass_title">Калькулятор молярной массы</string>
+    <string name="molar_mass_hint">например, Al2(SO4)3 или H2O</string>
+    <string name="molar_mass_btn">Рассчитать</string>
+    <string name="molar_mass_result">Молярная масса: %1$.4f г/моль</string>
+    <string name="molar_mass_composition">Распределение состава элементов:</string>
+    <string name="molar_mass_error">Неверный формат химической формулы.</string>
+    <string name="molar_mass_error_unknown_element">Неизвестный элемент: %1$s</string>
+    <string name="cat_other_nonmetals">Другие неметаллы</string>
+    <string name="cat_noble_gases">Благородные газы</string>
+    <string name="cat_alkali_metals">Щелочные металлы</string>
+    <string name="cat_alkaline_earth">Щелочноземельные металлы</string>
+    <string name="cat_transition_metals">Переходные металлы</string>
+    <string name="cat_lanthanides">Лантаниды</string>
+    <string name="cat_actinides">Актиниды</string>
+    <string name="cat_post_transition">Постпереходные металлы</string>
+    <string name="cat_metalloids">Металлоиды</string>
+    <string name="cat_halogens">Галогены</string>
+    <string name="cat_reactive_nonmetals">Реактивные неметаллы</string>
 </resources>

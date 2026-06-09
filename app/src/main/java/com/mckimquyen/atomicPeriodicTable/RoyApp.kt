@@ -11,6 +11,7 @@ class RoyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         setupAdmob()
+        com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache.init(this)
         if (BuildConfig.DEBUG) {
             Toast.makeText(this, "$packageName onCreate", Toast.LENGTH_SHORT).show()
         }

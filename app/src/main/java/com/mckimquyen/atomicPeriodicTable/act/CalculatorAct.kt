@@ -1,124 +1,117 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
-import android.content.Context
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
-import android.view.Display
-import android.view.KeyEvent
-import android.view.WindowManager
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.databinding.ACalculatorBinding
-import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.InputStream
+import com.mckimquyen.atomicPeriodicTable.databinding.ItemCompositionBreakdownBinding
+import com.mckimquyen.atomicPeriodicTable.util.ChemicalFormulaParser
+import com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache
+import com.mckimquyen.atomicPeriodicTable.util.Utils
 
-class CalculatorAct : AppCompatActivity() {
+class CalculatorAct : BaseAct() {
 
-    // Khai báo binding cho ViewBinding
     private lateinit var binding: ACalculatorBinding
-
-    override fun attachBaseContext(context: Context) {
-        val override = Configuration(context.resources.configuration)
-        override.fontScale = 1.0f
-        applyOverrideConfiguration(override)
-        super.attachBaseContext(context)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ACalculatorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setupViews()
     }
 
+    override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
+        val params = binding.commonTitleBack.layoutParams
+        params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
+        binding.commonTitleBack.layoutParams = params
+
+        val topPadding = resources.getDimensionPixelSize(R.dimen.margin)
+        val bottomPadding = bottom + resources.getDimensionPixelSize(R.dimen.margin)
+        binding.calcScrollView.setPadding(0, topPadding, 0, bottomPadding)
+    }
+
     private fun setupViews() {
-        val themePref = ThemePref(this)
-        val themePrefValue = themePref.getValue()
-        if (themePrefValue == 0) {
-            setTheme(R.style.AppTheme)
-        }
-        if (themePrefValue == 1) {
-            setTheme(R.style.AppThemeDark)
-        }
-
-        // Khởi tạo ViewBinding
-        binding = ACalculatorBinding.inflate(layoutInflater)
-        setContentView(binding.root) //Don't move down (Needs to be before we call our functions)
-
         binding.backBtn.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            finish()
         }
 
-        initUi()
-    }
+        binding.calcBtn.setOnClickListener {
+            performCalculation()
+        }
 
-    private fun initUi() {
-        binding.editElement1.setOnKeyListener { _, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                onClickSearch()
-                return@setOnKeyListener true
+        binding.calcInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_GO) {
+                performCalculation()
+                true
+            } else {
+                false
             }
-            false
         }
     }
 
-    private fun onClickSearch() {
-        val mArray = resources.getStringArray(R.array.calcArray)
-        val text = binding.editElement1.text.toString()
+    private fun performCalculation() {
+        // Clear previous state
+        binding.calcInputLayout.error = null
+        binding.calcResultCard.visibility = View.GONE
+        binding.breakdownContainer.removeAllViews()
 
-        for (i in 0 until 2) {
-            var jsonString: String?
-            if (text == mArray[i].toString()) {
+        val input = binding.calcInput.text.toString().trim()
+        if (input.isEmpty()) {
+            return
+        }
 
-                if (text == "H") {
-                    val ext = ".json"
-                    val elementJson = "1$ext"
+        try {
+            val parsedMap = ChemicalFormulaParser.parse(input)
+            
+            // Validate all elements first
+            var totalMass = 0.0
+            val elementMassList = mutableListOf<Triple<String, Int, Double>>() // Symbol, Count, ElementMass
 
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonString = inputStream.bufferedReader().use { it.readText() }
-                    val jsonArray = JSONArray(jsonString)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementAtomicWeight1 = jsonObject.optString("element_atomicmass", "---")
-
-                    val final =
-                        elementAtomicWeight1.toInt() * (binding.editNumber1.text.toString().toInt())
-
-                    Toast.makeText(this, final, Toast.LENGTH_SHORT).show()
+            for ((symbol, count) in parsedMap) {
+                val mass = ElementWeightCache.getMass(symbol)
+                if (mass == null || mass == 0.0) {
+                    binding.calcInputLayout.error = getString(R.string.molar_mass_error_unknown_element).format(symbol)
+                    return
                 }
-
+                val elementContribution = mass * count
+                totalMass += elementContribution
+                elementMassList.add(Triple(symbol, count, mass))
             }
-        }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            enableAdaptiveRefreshRate()
-        }
-    }
-
-    private fun enableAdaptiveRefreshRate() {
-        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
-        val display: Display? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            display // Sử dụng API mới
-        } else {
-            @Suppress("DEPRECATION")
-            wm.defaultDisplay // Fallback cho API thấp hơn
-        }
-
-
-        if (display != null) {
-            val supportedModes = display.supportedModes
-            val highestRefreshRateMode = supportedModes.maxByOrNull { it.refreshRate }
-
-            if (highestRefreshRateMode != null) {
-                window.attributes = window.attributes.apply {
-                    preferredDisplayModeId = highestRefreshRateMode.modeId
-                }
-                println("Adaptive refresh rate applied: ${highestRefreshRateMode.refreshRate} Hz")
+            if (totalMass <= 0.0) {
+                binding.calcInputLayout.error = getString(R.string.molar_mass_error)
+                return
             }
+
+            // Display overall results
+            binding.calcResultText.text = getString(R.string.molar_mass_result).format(totalMass)
+            binding.calcResultCard.visibility = View.VISIBLE
+            Utils.slideUpFadeIn(binding.calcResultCard, 400)
+
+            // Populate composition breakdown
+            for ((symbol, count, mass) in elementMassList) {
+                val elementContribution = mass * count
+                val percentage = (elementContribution / totalMass) * 100.0
+
+                val rowBinding = ItemCompositionBreakdownBinding.inflate(layoutInflater, binding.breakdownContainer, false)
+                
+                // Get element localized name if possible
+                val englishName = ElementWeightCache.getName(symbol) ?: ""
+                val capitalizedName = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(this, englishName)
+                
+                rowBinding.elSymbolName.text = "$symbol - $capitalizedName"
+                rowBinding.elPercentage.text = "%.2f%%".format(percentage)
+                rowBinding.elDetailFormula.text = "%d atoms × %.4f g/mol = %.4f g/mol".format(count, mass, elementContribution)
+                rowBinding.elProgressBar.progress = percentage.toInt()
+
+                binding.breakdownContainer.addView(rowBinding.root)
+            }
+
+        } catch (e: Exception) {
+            binding.calcInputLayout.error = getString(R.string.molar_mass_error)
         }
     }
 }

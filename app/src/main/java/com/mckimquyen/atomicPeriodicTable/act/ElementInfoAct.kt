@@ -61,6 +61,15 @@ class ElementInfoAct : InfoExt() {
         favoriteBarSetup()
         elementAnim(binding.overviewInc.root, binding.propertiesInc.root)
 
+        binding.notesSaveBtn.setOnClickListener {
+            val elementSendAndLoadPreference = ElementSendAndLoad(this)
+            val elementSendAndLoadValue = elementSendAndLoadPreference.getValue() ?: ""
+            val notesPref = com.mckimquyen.atomicPeriodicTable.pref.NotesPref(this)
+            val textToSave = binding.notesInput.text.toString().trim()
+            notesPref.saveNote(elementSendAndLoadValue, textToSave)
+            android.widget.Toast.makeText(this, getString(R.string.notes_saved), android.widget.Toast.LENGTH_SHORT).show()
+        }
+
         // ===============================================================
         // Setup Edge-to-Edge & System Bars (Modern API - Android 11+)
         // ===============================================================
@@ -132,6 +141,8 @@ class ElementInfoAct : InfoExt() {
         val params2 = binding.commonTitleBack.layoutParams as ViewGroup.LayoutParams
         params2.height = top + resources.getDimensionPixelSize(R.dimen.title_bar)
         binding.commonTitleBack.layoutParams = params2
+
+        binding.scrView.setPadding(0, 0, 0, bottom)
     }
 
     @SuppressLint("SetTextI18n")

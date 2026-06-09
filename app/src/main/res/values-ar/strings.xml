@@ -348,4 +348,50 @@
     <string name="compare_property">خاصية</string>
     <string name="compare_legend_higher">أعلى</string>
     <string name="compare_legend_lower">أدنى</string>
+
+    <!-- Implemented Feature Strings (AR) -->
+    <string name="notes_title">ملاحظات شخصية</string>
+    <string name="notes_hint">أضف ملاحظاتك أو ذكرياتك حول هذا العنصر...</string>
+    <string name="notes_save">حفظ الملاحظة</string>
+    <string name="notes_saved">تم حفظ الملاحظة بنجاح</string>
+    <string name="menu_balancer">موازن المعادلات</string>
+    <string name="balancer_title">موازن المعادلات الكيميائية</string>
+    <string name="balancer_input_hint">على سبيل المثال، H2 + O2 = H2O</string>
+    <string name="balancer_btn">توازن</string>
+    <string name="balancer_result">المعادلة المتوازنة:</string>
+    <string name="balancer_error_invalid">تنسيق المعادلة غير صالح. استخدم = لفصل المواد المتفاعلة والمنتجات.</string>
+    <string name="balancer_error_unbalanced">لا يمكن موازنة المعادلة أو ليس لها حل فريد.</string>
+    <string name="balancer_error_elements">يجب أن تتطابق العناصر الموجودة على الجانبين الأيسر والأيمن.</string>
+    <string name="menu_quiz">مسابقة دورية</string>
+    <string name="quiz_title">مسابقة الجدول الدوري</string>
+    <string name="quiz_score">النتيجة: %1$d/%2$d</string>
+    <string name="quiz_progress">السؤال: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">ما هو العدد الذري لـ %1$s؟</string>
+    <string name="quiz_question_symbol">ما هو رمز العنصر %1$s؟</string>
+    <string name="quiz_question_group">إلى أي مجموعة ينتمي %1$s؟</string>
+    <string name="quiz_question_category">إلى أي فئة ينتمي %1$s؟</string>
+    <string name="quiz_correct">صحيح!</string>
+    <string name="quiz_incorrect">غير صحيح! الإجابة الصحيحة هي: %1$s</string>
+    <string name="quiz_next">السؤال التالي</string>
+    <string name="quiz_finished">انتهى الاختبار! النتيجة النهائية: %1$d/%2$d</string>
+    <string name="quiz_restart">إعادة تشغيل الاختبار</string>
+    <string name="menu_molar_mass">حاسبة الكتلة المولية</string>
+    <string name="molar_mass_title">حاسبة الكتلة المولية</string>
+    <string name="molar_mass_hint">على سبيل المثال، Al2(SO4)3 أو H2O</string>
+    <string name="molar_mass_btn">احسب</string>
+    <string name="molar_mass_result">الكتلة المولية: %1$.4f جم/مول</string>
+    <string name="molar_mass_composition">انهيار تكوين العنصر:</string>
+    <string name="molar_mass_error">تنسيق الصيغة الكيميائية غير صالح</string>
+    <string name="molar_mass_error_unknown_element">عنصر غير معروف: %1$s</string>
+    <string name="cat_other_nonmetals">اللافلزات الأخرى</string>
+    <string name="cat_noble_gases">الغازات النبيلة</string>
+    <string name="cat_alkali_metals">المعادن القلوية</string>
+    <string name="cat_alkaline_earth">المعادن الأرضية القلوية</string>
+    <string name="cat_transition_metals">المعادن الانتقالية</string>
+    <string name="cat_lanthanides">اللانثانيدات</string>
+    <string name="cat_actinides">الأكتينيدات</string>
+    <string name="cat_post_transition">معادن ما بعد التحول</string>
+    <string name="cat_metalloids">أشباه الفلزات</string>
+    <string name="cat_halogens">الهالوجينات</string>
+    <string name="cat_reactive_nonmetals">اللافلزات التفاعلية</string>
 </resources>

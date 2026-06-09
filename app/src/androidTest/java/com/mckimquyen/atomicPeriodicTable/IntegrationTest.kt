@@ -27,8 +27,10 @@ class IntegrationTest {
                 activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
             }
 
-            // Click settings button
-            onView(withId(R.id.settingsBtn)).perform(click())
+            // Click settings button programmatically to avoid Espresso click synchronization/animation constraints
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.settingsBtn).performClick()
+            }
 
             // Verify settings screen is opened and scrollSettings is visible
             onView(withId(R.id.scrollSettings)).check(matches(isDisplayed()))

@@ -431,6 +431,18 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             }
             startActivity(intent)
         }
+        binding.navMenuInclude.menuMolarMassBtn.setOnClickListener {
+            val intent = Intent(this, CalculatorAct::class.java)
+            startActivity(intent)
+        }
+        binding.navMenuInclude.menuBalancerBtn.setOnClickListener {
+            val intent = Intent(this, EquationBalancerAct::class.java)
+            startActivity(intent)
+        }
+        binding.navMenuInclude.menuQuizBtn.setOnClickListener {
+            val intent = Intent(this, QuizAct::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

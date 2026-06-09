@@ -16,6 +16,18 @@ object Utils {
         view.animate().alpha(1.0f)
     }
 
+    fun slideUpFadeIn(view: View, time: Long) {
+        view.visibility = View.VISIBLE
+        view.alpha = 0.0f
+        view.translationY = 30f
+        view.animate()
+            .alpha(1.0f)
+            .translationY(0f)
+            .setDuration(time)
+            .setInterpolator(android.view.animation.DecelerateInterpolator())
+            .start()
+    }
+
     fun fadeInAnimBack(view: View, time: Long) {
         view.visibility = View.VISIBLE
         view.alpha = 0.0f

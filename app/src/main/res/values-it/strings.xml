@@ -348,4 +348,50 @@
     <string name="compare_property">Proprietà</string>
     <string name="compare_legend_higher">Più alto</string>
     <string name="compare_legend_lower">Più basso</string>
+
+    <!-- Implemented Feature Strings (IT) -->
+    <string name="notes_title">Note personali</string>
+    <string name="notes_hint">Aggiungi le tue note o ricordi su questo elemento...</string>
+    <string name="notes_save">Salva nota</string>
+    <string name="notes_saved">Nota salvata con successo</string>
+    <string name="menu_balancer">Bilanciatore di equazioni</string>
+    <string name="balancer_title">Bilanciatore di equazioni chimiche</string>
+    <string name="balancer_input_hint">ad esempio, H2 + O2 = H2O</string>
+    <string name="balancer_btn">Bilancia</string>
+    <string name="balancer_result">Equazione bilanciata:</string>
+    <string name="balancer_error_invalid">Formato dell\'equazione non valido. Utilizzare = per separare reagenti e prodotti.</string>
+    <string name="balancer_error_unbalanced">L\'equazione non può essere bilanciata o non ha una soluzione unica.</string>
+    <string name="balancer_error_elements">Gli elementi sui lati sinistro e destro devono corrispondere.</string>
+    <string name="menu_quiz">Quiz periodico</string>
+    <string name="quiz_title">Quiz sulla tavola periodica</string>
+    <string name="quiz_score">Punteggio: %1$d/%2$d</string>
+    <string name="quiz_progress">Domanda: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">Qual è il numero atomico di %1$s?</string>
+    <string name="quiz_question_symbol">Qual è il simbolo dell\'elemento %1$s?</string>
+    <string name="quiz_question_group">A quale gruppo appartiene %1$s?</string>
+    <string name="quiz_question_category">A quale categoria appartiene %1$s?</string>
+    <string name="quiz_correct">Corretto!</string>
+    <string name="quiz_incorrect">Errato! La risposta corretta è: %1$s</string>
+    <string name="quiz_next">Domanda successiva</string>
+    <string name="quiz_finished">Quiz finito! Punteggio finale: %1$d/%2$d</string>
+    <string name="quiz_restart">Riavvia il quiz</string>
+    <string name="menu_molar_mass">Calcolatore della massa molare</string>
+    <string name="molar_mass_title">Calcolatore della massa molare</string>
+    <string name="molar_mass_hint">ad esempio Al2(SO4)3 o H2O</string>
+    <string name="molar_mass_btn">Calcolare</string>
+    <string name="molar_mass_result">Massa molare: %1$.4f g/mol</string>
+    <string name="molar_mass_composition">Ripartizione della composizione degli elementi:</string>
+    <string name="molar_mass_error">Formato della formula chimica non valido</string>
+    <string name="molar_mass_error_unknown_element">Elemento sconosciuto: %1$s</string>
+    <string name="cat_other_nonmetals">Altri non metalli</string>
+    <string name="cat_noble_gases">Gas nobili</string>
+    <string name="cat_alkali_metals">Metalli alcalini</string>
+    <string name="cat_alkaline_earth">Metalli alcalino-terrosi</string>
+    <string name="cat_transition_metals">Metalli di transizione</string>
+    <string name="cat_lanthanides">Lantanidi</string>
+    <string name="cat_actinides">Attinidi</string>
+    <string name="cat_post_transition">Metalli post-transizione</string>
+    <string name="cat_metalloids">Metalloidi</string>
+    <string name="cat_halogens">Alogeni</string>
+    <string name="cat_reactive_nonmetals">Non metalli reattivi</string>
 </resources>

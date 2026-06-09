@@ -348,4 +348,50 @@
     <string name="compare_property">Properti</string>
     <string name="compare_legend_higher">Lebih Tinggi</string>
     <string name="compare_legend_lower">Lebih Rendah</string>
+
+    <!-- Implemented Feature Strings (ID) -->
+    <string name="notes_title">Catatan Pribadi</string>
+    <string name="notes_hint">Tambahkan catatan atau kenangan Anda tentang elemen ini…</string>
+    <string name="notes_save">Simpan Catatan</string>
+    <string name="notes_saved">Catatan berhasil disimpan</string>
+    <string name="menu_balancer">Penyeimbang Persamaan</string>
+    <string name="balancer_title">Penyeimbang Persamaan Kimia</string>
+    <string name="balancer_input_hint">misalnya H2 + O2 = H2O</string>
+    <string name="balancer_btn">Keseimbangan</string>
+    <string name="balancer_result">Persamaan Seimbang:</string>
+    <string name="balancer_error_invalid">Format persamaan tidak valid. Kegunaan = untuk memisahkan reaktan dan produk.</string>
+    <string name="balancer_error_unbalanced">Persamaan tidak dapat diseimbangkan atau tidak memiliki solusi unik.</string>
+    <string name="balancer_error_elements">Elemen di sisi kiri dan kanan harus cocok.</string>
+    <string name="menu_quiz">Kuis Berkala</string>
+    <string name="quiz_title">Kuis Tabel Periodik</string>
+    <string name="quiz_score">Skor: %1$d/%2$d</string>
+    <string name="quiz_progress">Pertanyaan: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">Berapa nomor atom %1$s?</string>
+    <string name="quiz_question_symbol">Apa simbol dari elemen %1$s?</string>
+    <string name="quiz_question_group">%1$s termasuk dalam grup manakah?</string>
+    <string name="quiz_question_category">Kategori manakah yang termasuk dalam %1$s?</string>
+    <string name="quiz_correct">Benar!</string>
+    <string name="quiz_incorrect">Salah! Jawaban yang benar adalah: %1$s</string>
+    <string name="quiz_next">Pertanyaan Berikutnya</string>
+    <string name="quiz_finished">Kuis Selesai! Skor Akhir: %1$d/%2$d</string>
+    <string name="quiz_restart">Mulai ulang Kuis</string>
+    <string name="menu_molar_mass">Kalkulator Massa Molar</string>
+    <string name="molar_mass_title">Kalkulator Massa Molar</string>
+    <string name="molar_mass_hint">misalnya Al2(SO4)3 atau H2O</string>
+    <string name="molar_mass_btn">Menghitung</string>
+    <string name="molar_mass_result">Massa Molar: %1$.4f g/mol</string>
+    <string name="molar_mass_composition">Rincian Komposisi Elemen:</string>
+    <string name="molar_mass_error">Format rumus kimia tidak valid</string>
+    <string name="molar_mass_error_unknown_element">Elemen tidak diketahui: %1$s</string>
+    <string name="cat_other_nonmetals">Bukan Logam Lainnya</string>
+    <string name="cat_noble_gases">Gas Mulia</string>
+    <string name="cat_alkali_metals">Logam Alkali</string>
+    <string name="cat_alkaline_earth">Logam Alkali Tanah</string>
+    <string name="cat_transition_metals">Logam Transisi</string>
+    <string name="cat_lanthanides">Lantanida</string>
+    <string name="cat_actinides">Aktinida</string>
+    <string name="cat_post_transition">Logam Pasca Transisi</string>
+    <string name="cat_metalloids">Metaloid</string>
+    <string name="cat_halogens">Halogen</string>
+    <string name="cat_reactive_nonmetals">Bukan Logam Reaktif</string>
 </resources>

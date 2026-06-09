@@ -150,6 +150,22 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".act.EquationBalancerAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".act.QuizAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".act.table.IonAct"
             android:configChanges="orientation|screenSize"
             android:exported="false"

@@ -47,12 +47,12 @@
                     tools:ignore="PrivateResource" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/elementTitle"
+                    android:id="@+id/balancerTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
                     android:gravity="center_vertical"
-                    android:text="@string/molar_mass_title"
+                    android:text="@string/balancer_title"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -65,7 +65,7 @@
 
     <!-- Scrollable Content -->
     <ScrollView
-        android:id="@+id/calcScrollView"
+        android:id="@+id/balancerScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -100,15 +100,15 @@
                     android:padding="20dp">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/calcInputLayout"
+                        android:id="@+id/balancerInputLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/molar_mass_hint"
+                        android:hint="@string/balancer_input_hint"
                         app:helperTextEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/calcInput"
+                            android:id="@+id/balancerInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -119,13 +119,13 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/calcBtn"
+                        android:id="@+id/balancerBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/shape_toast"
                         android:backgroundTint="?attr/colorPrimary"
-                        android:text="@string/molar_mass_btn"
+                        android:text="@string/balancer_btn"
                         android:textColor="?attr/colorOnPrimary"
                         android:textAllCaps="false"
                         android:textStyle="bold" />
@@ -136,7 +136,7 @@
 
             <!-- Result Card -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/calcResultCard"
+                android:id="@+id/balancerResultCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -153,31 +153,59 @@
                     android:padding="20dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/calcResultText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@string/balancer_result"
                         android:textColor="?attr/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/balancerResultText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        tools:text="Molar Mass: 18.0152 g/mol" />
+                        tools:text="2 H2 + O2 = 2 H2O" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Examples Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="?attr/colorSurfaceVariant"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/molar_mass_composition"
+                        android:text="@string/info_title"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
 
-                    <!-- Dynamic breakdown container -->
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/breakdownContainer"
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" />
+                        android:text="• H2 + O2 = H2O\n• Fe + Cl2 = FeCl3\n• C3H8 + O2 = CO2 + H2O\n• Acid-Base: NaOH + HCl = NaCl + H2O\n• Complex: KMnO4 + HCl = KCl + MnCl2 + Cl2 + H2O"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="6dp"
+                        android:alpha="0.8" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

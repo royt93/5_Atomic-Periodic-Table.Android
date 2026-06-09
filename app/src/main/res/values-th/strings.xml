@@ -348,4 +348,50 @@
     <string name="compare_property">คุณสมบัติ</string>
     <string name="compare_legend_higher">สูงกว่า</string>
     <string name="compare_legend_lower">ต่ำกว่า</string>
+
+    <!-- Implemented Feature Strings (TH) -->
+    <string name="notes_title">บันทึกส่วนตัว</string>
+    <string name="notes_hint">เพิ่มบันทึกหรือความทรงจำของคุณเกี่ยวกับองค์ประกอบนี้...</string>
+    <string name="notes_save">บันทึกหมายเหตุ</string>
+    <string name="notes_saved">บันทึกบันทึกเรียบร้อยแล้ว</string>
+    <string name="menu_balancer">บาลานเซอร์สมการ</string>
+    <string name="balancer_title">บาลานเซอร์สมการเคมี</string>
+    <string name="balancer_input_hint">เช่น H2 + O2 = H2O</string>
+    <string name="balancer_btn">สมดุล</string>
+    <string name="balancer_result">สมการสมดุล:</string>
+    <string name="balancer_error_invalid">รูปแบบสมการไม่ถูกต้อง ใช้ = เพื่อแยกสารตั้งต้นและผลิตภัณฑ์</string>
+    <string name="balancer_error_unbalanced">สมการไม่สามารถสมดุลหรือไม่มีวิธีแก้ปัญหาเฉพาะ</string>
+    <string name="balancer_error_elements">องค์ประกอบทางด้านซ้ายและด้านขวาจะต้องตรงกัน</string>
+    <string name="menu_quiz">แบบทดสอบเป็นระยะ</string>
+    <string name="quiz_title">แบบทดสอบตารางธาตุ</string>
+    <string name="quiz_score">คะแนน: %1$d/%2$d</string>
+    <string name="quiz_progress">คำถาม: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">เลขอะตอมของ %1$s คืออะไร?</string>
+    <string name="quiz_question_symbol">สัญลักษณ์ขององค์ประกอบ %1$s คืออะไร?</string>
+    <string name="quiz_question_group">%1$s อยู่ในกลุ่มใด</string>
+    <string name="quiz_question_category">%1$s อยู่ในหมวดหมู่ใด</string>
+    <string name="quiz_correct">ถูกต้อง!</string>
+    <string name="quiz_incorrect">ไม่ถูกต้อง! คำตอบที่ถูกต้องคือ: %1$s</string>
+    <string name="quiz_next">คำถามต่อไป</string>
+    <string name="quiz_finished">ตอบคำถามเสร็จแล้ว! คะแนนสุดท้าย: %1$d/%2$d</string>
+    <string name="quiz_restart">เริ่มแบบทดสอบใหม่</string>
+    <string name="menu_molar_mass">เครื่องคำนวณมวลกราม</string>
+    <string name="molar_mass_title">เครื่องคำนวณมวลกราม</string>
+    <string name="molar_mass_hint">เช่น Al2(SO4)3 หรือ H2O</string>
+    <string name="molar_mass_btn">คำนวณ</string>
+    <string name="molar_mass_result">มวลฟันกราม: %1$.4f ก./โมล</string>
+    <string name="molar_mass_composition">รายละเอียดองค์ประกอบองค์ประกอบ:</string>
+    <string name="molar_mass_error">รูปแบบสูตรเคมีไม่ถูกต้อง</string>
+    <string name="molar_mass_error_unknown_element">องค์ประกอบที่ไม่รู้จัก: %1$s</string>
+    <string name="cat_other_nonmetals">อโลหะอื่น ๆ</string>
+    <string name="cat_noble_gases">โนเบิลแก๊ส</string>
+    <string name="cat_alkali_metals">โลหะอัลคาไล</string>
+    <string name="cat_alkaline_earth">โลหะอัลคาไลน์เอิร์ธ</string>
+    <string name="cat_transition_metals">โลหะทรานซิชัน</string>
+    <string name="cat_lanthanides">แลนทาไนด์</string>
+    <string name="cat_actinides">แอกติไนด์</string>
+    <string name="cat_post_transition">โลหะหลังการเปลี่ยนแปลง</string>
+    <string name="cat_metalloids">เมทัลลอยด์</string>
+    <string name="cat_halogens">ฮาโลเจน</string>
+    <string name="cat_reactive_nonmetals">อโลหะที่ทำปฏิกิริยา</string>
 </resources>

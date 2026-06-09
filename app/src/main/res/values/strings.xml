@@ -367,6 +367,180 @@
     <string name="compare_specific_heat">Specific Heat (J/g·K)</string>
     <string name="compare_vaporization_heat">Vaporization Heat</string>
     <string name="compare_vs">VS</string>
+
+    <!-- Element Notes -->
+    <string name="notes_title">Personal Notes</string>
+    <string name="notes_hint">Add your notes or memories about this element…</string>
+    <string name="notes_save">Save Note</string>
+    <string name="notes_saved">Note saved successfully</string>
+
+    <!-- Equation Balancer -->
+    <string name="menu_balancer">Equation Balancer</string>
+    <string name="balancer_title">Chemical Equation Balancer</string>
+    <string name="balancer_input_hint">e.g., H2 + O2 = H2O</string>
+    <string name="balancer_btn">Balance</string>
+    <string name="balancer_result">Balanced Equation:</string>
+    <string name="balancer_error_invalid">Invalid equation format. Use = to separate reactants and products.</string>
+    <string name="balancer_error_unbalanced">Equation cannot be balanced or has no unique solution.</string>
+    <string name="balancer_error_elements">Elements on left and right sides must match.</string>
+
+    <!-- Quiz -->
+    <string name="menu_quiz">Periodic Quiz</string>
+    <string name="quiz_title">Periodic Table Quiz</string>
+    <string name="quiz_score">Score: %1$d/%2$d</string>
+    <string name="quiz_progress">Question: %1$d/%2$d</string>
+    <string name="quiz_question_atomic">What is the atomic number of %1$s?</string>
+    <string name="quiz_question_symbol">What is the symbol of the element %1$s?</string>
+    <string name="quiz_question_group">Which group does %1$s belong to?</string>
+    <string name="quiz_question_category">Which category does %1$s belong to?</string>
+    <string name="quiz_correct">Correct!</string>
+    <string name="quiz_incorrect">Incorrect! Correct answer is: %1$s</string>
+    <string name="quiz_next">Next Question</string>
+    <string name="quiz_finished">Quiz Finished! Final Score: %1$d/%2$d</string>
+    <string name="quiz_restart">Restart Quiz</string>
+
+    <!-- Molar Mass Calculator -->
+    <string name="menu_molar_mass">Molar Mass Calculator</string>
+    <string name="molar_mass_title">Molar Mass Calculator</string>
+    <string name="molar_mass_hint">e.g., Al2(SO4)3 or H2O</string>
+    <string name="molar_mass_btn">Calculate</string>
+    <string name="molar_mass_result">Molar Mass: %1$.4f g/mol</string>
+    <string name="molar_mass_composition">Element Composition Breakdown:</string>
+    <string name="molar_mass_error">Invalid chemical formula format</string>
+    <string name="molar_mass_error_unknown_element">Unknown element: %1$s</string>
+
+    <!-- Chemical Categories -->
+    <string name="cat_other_nonmetals">Other Nonmetals</string>
+    <string name="cat_noble_gases">Noble Gases</string>
+    <string name="cat_alkali_metals">Alkali Metals</string>
+    <string name="cat_alkaline_earth">Alkaline Earth Metals</string>
+    <string name="cat_transition_metals">Transition Metals</string>
+    <string name="cat_lanthanides">Lanthanides</string>
+    <string name="cat_actinides">Actinides</string>
+    <string name="cat_post_transition">Post-transition Metals</string>
+    <string name="cat_metalloids">Metalloids</string>
+    <string name="cat_halogens">Halogens</string>
+    <string name="cat_reactive_nonmetals">Reactive Nonmetals</string>
+
+    <!-- Element Names (English) -->
+    <string name="element_name_hydrogen">Hydrogen</string>
+    <string name="element_name_helium">Helium</string>
+    <string name="element_name_lithium">Lithium</string>
+    <string name="element_name_beryllium">Beryllium</string>
+    <string name="element_name_boron">Boron</string>
+    <string name="element_name_carbon">Carbon</string>
+    <string name="element_name_nitrogen">Nitrogen</string>
+    <string name="element_name_oxygen">Oxygen</string>
+    <string name="element_name_fluorine">Fluorine</string>
+    <string name="element_name_neon">Neon</string>
+    <string name="element_name_sodium">Sodium</string>
+    <string name="element_name_magnesium">Magnesium</string>
+    <string name="element_name_aluminium">Aluminium</string>
+    <string name="element_name_silicon">Silicon</string>
+    <string name="element_name_phosphorus">Phosphorus</string>
+    <string name="element_name_sulfur">Sulfur</string>
+    <string name="element_name_chlorine">Chlorine</string>
+    <string name="element_name_argon">Argon</string>
+    <string name="element_name_potassium">Potassium</string>
+    <string name="element_name_calcium">Calcium</string>
+    <string name="element_name_scandium">Scandium</string>
+    <string name="element_name_titanium">Titanium</string>
+    <string name="element_name_vanadium">Vanadium</string>
+    <string name="element_name_chromium">Chromium</string>
+    <string name="element_name_manganese">Manganese</string>
+    <string name="element_name_iron">Iron</string>
+    <string name="element_name_cobalt">Cobalt</string>
+    <string name="element_name_nickel">Nickel</string>
+    <string name="element_name_copper">Copper</string>
+    <string name="element_name_zinc">Zinc</string>
+    <string name="element_name_gallium">Gallium</string>
+    <string name="element_name_germanium">Germanium</string>
+    <string name="element_name_arsenic">Arsenic</string>
+    <string name="element_name_selenium">Selenium</string>
+    <string name="element_name_bromine">Bromine</string>
+    <string name="element_name_krypton">Krypton</string>
+    <string name="element_name_rubidium">Rubidium</string>
+    <string name="element_name_strontium">Strontium</string>
+    <string name="element_name_yttrium">Yttrium</string>
+    <string name="element_name_zirconium">Zirconium</string>
+    <string name="element_name_niobium">Niobium</string>
+    <string name="element_name_molybdenum">Molybdenum</string>
+    <string name="element_name_technetium">Technetium</string>
+    <string name="element_name_ruthenium">Ruthenium</string>
+    <string name="element_name_rhodium">Rhodium</string>
+    <string name="element_name_palladium">Palladium</string>
+    <string name="element_name_silver">Silver</string>
+    <string name="element_name_cadmium">Cadmium</string>
+    <string name="element_name_indium">Indium</string>
+    <string name="element_name_tin">Tin</string>
+    <string name="element_name_antimony">Antimony</string>
+    <string name="element_name_tellurium">Tellurium</string>
+    <string name="element_name_iodine">Iodine</string>
+    <string name="element_name_xenon">Xenon</string>
+    <string name="element_name_caesium">Caesium</string>
+    <string name="element_name_barium">Barium</string>
+    <string name="element_name_lanthanum">Lanthanum</string>
+    <string name="element_name_cerium">Cerium</string>
+    <string name="element_name_praseodymium">Praseodymium</string>
+    <string name="element_name_neodymium">Neodymium</string>
+    <string name="element_name_promethium">Promethium</string>
+    <string name="element_name_samarium">Samarium</string>
+    <string name="element_name_europium">Europium</string>
+    <string name="element_name_gadolinium">Gadolinium</string>
+    <string name="element_name_terbium">Terbium</string>
+    <string name="element_name_dysprosium">Dysprosium</string>
+    <string name="element_name_holmium">Holmium</string>
+    <string name="element_name_erbium">Erbium</string>
+    <string name="element_name_thulium">Thulium</string>
+    <string name="element_name_ytterbium">Ytterbium</string>
+    <string name="element_name_lutetium">Lutetium</string>
+    <string name="element_name_hafnium">Hafnium</string>
+    <string name="element_name_tantalum">Tantalum</string>
+    <string name="element_name_tungsten">Tungsten</string>
+    <string name="element_name_rhenium">Rhenium</string>
+    <string name="element_name_osmium">Osmium</string>
+    <string name="element_name_iridium">Iridium</string>
+    <string name="element_name_platinum">Platinum</string>
+    <string name="element_name_gold">Gold</string>
+    <string name="element_name_mercury">Mercury</string>
+    <string name="element_name_thallium">Thallium</string>
+    <string name="element_name_lead">Lead</string>
+    <string name="element_name_bismuth">Bismuth</string>
+    <string name="element_name_polonium">Polonium</string>
+    <string name="element_name_astatine">Astatine</string>
+    <string name="element_name_radon">Radon</string>
+    <string name="element_name_francium">Francium</string>
+    <string name="element_name_radium">Radium</string>
+    <string name="element_name_actinium">Actinium</string>
+    <string name="element_name_thorium">Thorium</string>
+    <string name="element_name_protactinium">Protactinium</string>
+    <string name="element_name_uranium">Uranium</string>
+    <string name="element_name_neptunium">Neptunium</string>
+    <string name="element_name_plutonium">Plutonium</string>
+    <string name="element_name_americium">Americium</string>
+    <string name="element_name_curium">Curium</string>
+    <string name="element_name_berkelium">Berkelium</string>
+    <string name="element_name_californium">Californium</string>
+    <string name="element_name_einsteinium">Einsteinium</string>
+    <string name="element_name_fermium">Fermium</string>
+    <string name="element_name_mendelevium">Mendelevium</string>
+    <string name="element_name_nobelium">Nobelium</string>
+    <string name="element_name_lawrencium">Lawrencium</string>
+    <string name="element_name_rutherfordium">Rutherfordium</string>
+    <string name="element_name_dubnium">Dubnium</string>
+    <string name="element_name_seaborgium">Seaborgium</string>
+    <string name="element_name_bohrium">Bohrium</string>
+    <string name="element_name_hassium">Hassium</string>
+    <string name="element_name_meitnerium">Meitnerium</string>
+    <string name="element_name_darmstadtium">Darmstadtium</string>
+    <string name="element_name_roentgenium">Roentgenium</string>
+    <string name="element_name_copernicium">Copernicium</string>
+    <string name="element_name_nihonium">Nihonium</string>
+    <string name="element_name_flerovium">Flerovium</string>
+    <string name="element_name_moscovium">Moscovium</string>
+    <string name="element_name_livermorium">Livermorium</string>
+    <string name="element_name_tennessine">Tennessine</string>
+    <string name="element_name_oganesson">Oganesson</string>
 </resources>
 
 
