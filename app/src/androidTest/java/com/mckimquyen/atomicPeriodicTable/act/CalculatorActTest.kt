@@ -8,6 +8,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
+import org.hamcrest.CoreMatchers.anyOf
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -79,7 +81,8 @@ class CalculatorActTest {
 
             // Check if result card is visible
             onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-            onView(withId(R.id.calcResultText)).check(matches(withText(org.hamcrest.CoreMatchers.containsString("18.01"))))
+            // Locale-robust: device may format decimals with '.' or ',' (e.g. vi-VN -> 18,015).
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("18.01"), containsString("18,01")))))
         }
     }
 
@@ -91,7 +94,51 @@ class CalculatorActTest {
 
             // Check if result card is visible and correctly parsed as H2O (18.015 g/mol)
             onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-            onView(withId(R.id.calcResultText)).check(matches(withText(org.hamcrest.CoreMatchers.containsString("18.01"))))
+            // Locale-robust: device may format decimals with '.' or ',' (e.g. vi-VN -> 18,015).
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("18.01"), containsString("18,01")))))
+        }
+    }
+
+    @Test
+    fun testCalculator_NestedBracketFormula() {
+        // Al2(SO4)3 -> molar mass ~342.15 g/mol
+        ActivityScenario.launch(CalculatorAct::class.java).use {
+            onView(withId(R.id.calcInput)).perform(replaceText("Al2(SO4)3"))
+            onView(withId(R.id.calcBtn)).perform(click())
+
+            onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.calcResultText)).check(matches(withText(containsString("342"))))
+        }
+    }
+
+    @Test
+    fun testCalculator_BreakdownPopulated() {
+        ActivityScenario.launch(CalculatorAct::class.java).use { scenario ->
+            onView(withId(R.id.calcInput)).perform(replaceText("H2O"))
+            onView(withId(R.id.calcBtn)).perform(click())
+
+            onView(withId(R.id.breakdownContainer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            scenario.onActivity { activity ->
+                val container = activity.findViewById<android.view.ViewGroup>(R.id.breakdownContainer)
+                // H2O has two distinct elements -> at least two breakdown rows
+                assertTrue("Breakdown should list element contributions", container.childCount >= 2)
+            }
+        }
+    }
+
+    @Test
+    fun testCalculator_RecoveryFromInvalidToValid() {
+        ActivityScenario.launch(CalculatorAct::class.java).use {
+            // Invalid first -> no result
+            onView(withId(R.id.calcInput)).perform(replaceText("XYZ"))
+            onView(withId(R.id.calcBtn)).perform(click())
+            onView(withId(R.id.calcResultCard)).check(matches(not(isDisplayed())))
+
+            // Then valid -> result appears
+            onView(withId(R.id.calcInput)).perform(replaceText("CO2"))
+            onView(withId(R.id.calcBtn)).perform(click())
+            onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("44.0"), containsString("44,0")))))
         }
     }
 }

@@ -114,7 +114,8 @@ val resId = context.resources.getIdentifier("element_name_${symbol.lowercase()}"
 Automated JUnit and Espresso test suites verify correctness:
 
 1.  **Unit Tests (JUnit)**:
-    *   [ChemicalParserAndBalancerTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/test/java/com/mckimquyen/atomicPeriodicTable/util/ChemicalParserAndBalancerTest.kt): Verifies fraction calculations, LCM coefficients, and parsing edge cases.
+    *   [ChemicalParserAndBalancerTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/test/java/com/mckimquyen/atomicPeriodicTable/util/ChemicalParserAndBalancerTest.kt): Verifies fraction calculations, LCM coefficients, parsing edge cases, `normalize()` case-recovery, braces/deeply-nested groups, arrow notation, and balancer failure/empty-side handling.
+    *   [NotesPrefTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/test/java/com/mckimquyen/atomicPeriodicTable/pref/NotesPrefTest.kt): Verifies the `notes_` key prefix and the legacy `note_` → `notes_` migration path (so existing user notes are never lost).
 2.  **UI/Widget Tests (Espresso & ActivityScenario)**:
     *   [CalculatorActTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/androidTest/java/com/mckimquyen/atomicPeriodicTable/act/CalculatorActTest.kt)
     *   [EquationBalancerActTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/androidTest/java/com/mckimquyen/atomicPeriodicTable/act/EquationBalancerActTest.kt)
@@ -122,3 +123,25 @@ Automated JUnit and Espresso test suites verify correctness:
 3.  **Integration Tests (Espresso)**:
     *   [FeaturesIntegrationTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/androidTest/java/com/mckimquyen/atomicPeriodicTable/FeaturesIntegrationTest.kt)
     *   [NavigationIntegrationTest.kt](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/androidTest/java/com/mckimquyen/atomicPeriodicTable/NavigationIntegrationTest.kt)
+
+---
+
+## 5. Ongoing & Planned Quiz Screen Animation Improvements
+
+To create a truly modern, responsive, and gamified experience that wows the user, the Periodic Table Quiz screen is undergoing a comprehensive animation overhaul.
+
+### 5.1 Completed Enhancements
+*   **Static Smooth Gradient Background**: Replaced the continuous, rapid background color cycling animation (which caused screen flickering and eye strain) with an elegant, stable, static gradient tailored for both Light Mode (ice blue to sky blue) and Dark Mode (deep dark violet to navy).
+*   **Entrance slide-up & fade-in**: Implemented a smooth, hardware-accelerated entrance transition for the entire quiz container scroll layout upon opening the screen.
+*   **Tactile Touch Feedback**: Configured scale-down touch listeners on option buttons that shrink by `0.96x` on press and spring back to `1.0x` on release.
+*   **Carousel slide transitions**: Implemented smooth horizontal sliding transitions (slide out to the left, slide in from the right with overshoot) when changing questions.
+*   **Multi-shape Confetti View**: Optimized the canvas particle emitter with a wider color palette and support for rectangles, circles, and triangles with natural swaying/fluttering side-to-side air resistance math.
+*   **Physical dampening shake**: Rewrote incorrect choice feedback using a mathematical spring-dampening formula (`ValueAnimator` on `translationX` using a sine-wave multiplier) for natural physical motion.
+*   **Time countdown gradient color**: The circular timer indicator now interpolates dynamically between Green -> Orange -> Red based on the exact percentage of time remaining.
+
+### 5.2 In-Progress & Planned Enhancements
+*   **3D Y-Axis Card Flip**: Flipping the question card 180 degrees along the Y-axis when transitioning between questions to simulate a physical flashcard.
+*   **Interactive Streak Flame Badge**: A flame indicator next to the score that scales up, glows, and releases tiny fire spark particles when players maintain a correct answer streak.
+*   **Shatter Sparks Particle Explosion**: Adding a burst of dust/spark particles around incorrect selected choices when the card shakes to simulate high mechanical stress.
+*   **Orbit Ring Head for Timer**: A small glowing dot particle rotating along the outer track of the circular progress bar to represent the current time sweep.
+*   **Vibrant Sunburst Results Page**: A spinning light ray vector behind the final results trophy coupled with falling coin showers to celebrate completion.

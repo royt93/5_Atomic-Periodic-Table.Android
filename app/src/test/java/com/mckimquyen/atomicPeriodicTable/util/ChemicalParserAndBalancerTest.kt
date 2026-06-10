@@ -111,4 +111,156 @@ class ChemicalParserAndBalancerTest {
         val unbalanceable = ChemicalEquationBalancer.balance("H2O = CO2")
         assertNull(unbalanceable)
     }
+
+    // ===================================================================
+    // Extended coverage: normalize() case handling
+    // ===================================================================
+
+    @Test
+    fun testNormalize_basicCaseRecovery() {
+        assertEquals("H2O", ChemicalFormulaParser.normalize("h2o"))
+        assertEquals("NaCl", ChemicalFormulaParser.normalize("nacl"))
+        assertEquals("HCl", ChemicalFormulaParser.normalize("hcl"))
+        assertEquals("CH4", ChemicalFormulaParser.normalize("ch4"))
+        assertEquals("CO2", ChemicalFormulaParser.normalize("co2"))
+    }
+
+    @Test
+    fun testNormalize_preservesAlreadyCorrectFormulas() {
+        assertEquals("Al2(SO4)3", ChemicalFormulaParser.normalize("Al2(SO4)3"))
+        assertEquals("Ca(OH)2", ChemicalFormulaParser.normalize("Ca(OH)2"))
+    }
+
+    @Test
+    fun testNormalize_stripsSpaces() {
+        assertEquals("H2O", ChemicalFormulaParser.normalize(" h2o "))
+    }
+
+    @Test
+    fun testNormalize_emptyReturnsEmpty() {
+        assertEquals("", ChemicalFormulaParser.normalize(""))
+        assertEquals("", ChemicalFormulaParser.normalize("   "))
+    }
+
+    // ===================================================================
+    // Extended coverage: parser brackets, braces & errors
+    // ===================================================================
+
+    @Test
+    fun testFormulaParser_BracesSupported() {
+        val mgOH2 = ChemicalFormulaParser.parse("Mg{OH}2")
+        assertEquals(1, mgOH2["Mg"])
+        assertEquals(2, mgOH2["O"])
+        assertEquals(2, mgOH2["H"])
+    }
+
+    @Test
+    fun testFormulaParser_DeeplyNestedGroups() {
+        // K4[Fe(CN)6] -> K4 Fe1 C6 N6
+        val ferrocyanide = ChemicalFormulaParser.parse("K4[Fe(CN)6]")
+        assertEquals(4, ferrocyanide["K"])
+        assertEquals(1, ferrocyanide["Fe"])
+        assertEquals(6, ferrocyanide["C"])
+        assertEquals(6, ferrocyanide["N"])
+    }
+
+    @Test
+    fun testFormulaParser_RepeatedElementsAccumulate() {
+        // CH3COOH -> C2 H4 O2
+        val aceticAcid = ChemicalFormulaParser.parse("CH3COOH")
+        assertEquals(2, aceticAcid["C"])
+        assertEquals(4, aceticAcid["H"])
+        assertEquals(2, aceticAcid["O"])
+    }
+
+    @Test
+    fun testFormulaParser_UnexpectedCharacterThrows() {
+        try {
+            ChemicalFormulaParser.parse("H2O!")
+            fail("Should throw IllegalArgumentException for unexpected character")
+        } catch (e: IllegalArgumentException) {
+            // Expected
+        }
+    }
+
+    @Test
+    fun testFormulaParser_UnclosedOpeningBracketThrows() {
+        try {
+            ChemicalFormulaParser.parse("(H2O")
+            fail("Should throw IllegalArgumentException for unclosed bracket")
+        } catch (e: IllegalArgumentException) {
+            // Expected
+        }
+    }
+
+    // ===================================================================
+    // Extended coverage: balancer notation & coefficients
+    // ===================================================================
+
+    @Test
+    fun testEquationBalancer_ArrowNotation() {
+        val result = ChemicalEquationBalancer.balance("Fe + Cl2 -> FeCl3")
+        assertNotNull(result)
+        assertEquals("2 Fe + 3 Cl2 = 2 FeCl3", result?.balancedString)
+    }
+
+    @Test
+    fun testEquationBalancer_AluminiumOxide() {
+        // Al + O2 = Al2O3 -> 4 Al + 3 O2 = 2 Al2O3
+        val result = ChemicalEquationBalancer.balance("Al + O2 = Al2O3")
+        assertNotNull(result)
+        assertEquals("4 Al + 3 O2 = 2 Al2O3", result?.balancedString)
+        assertEquals(listOf(4L, 3L), result?.reactantCoefficients)
+        assertEquals(listOf(2L), result?.productCoefficients)
+    }
+
+    @Test
+    fun testNormalize_caseAwareSymbolBoundaries() {
+        // Two uppercase letters are two separate elements: NH3 -> N + H + 3 (ammonia),
+        // NOT the single 2-letter symbol "Nh" (Nihonium).
+        assertEquals("NH3", ChemicalFormulaParser.normalize("NH3"))
+        assertEquals("CO2", ChemicalFormulaParser.normalize("CO2"))
+        // An uppercase followed by a lowercase IS a 2-letter symbol and is respected.
+        assertEquals("Nh3", ChemicalFormulaParser.normalize("Nh3")) // Nihonium
+        assertEquals("Co", ChemicalFormulaParser.normalize("Co"))   // Cobalt
+        assertEquals("CO", ChemicalFormulaParser.normalize("CO"))   // Carbon + Oxygen
+    }
+
+    @Test
+    fun testEquationBalancer_AmmoniaSynthesis() {
+        // N2 + H2 = NH3 -> N2 + 3 H2 = 2 NH3 (regression test for the case-aware fix)
+        val result = ChemicalEquationBalancer.balance("N2 + H2 = NH3")
+        assertNotNull(result)
+        assertEquals("N2 + 3 H2 = 2 NH3", result?.balancedString)
+        assertEquals(listOf(1L, 3L), result?.reactantCoefficients)
+        assertEquals(listOf(2L), result?.productCoefficients)
+    }
+
+    @Test
+    fun testEquationBalancer_AlreadyMinimal() {
+        // C + O2 = CO2 -> coefficients all 1, string unchanged
+        val result = ChemicalEquationBalancer.balance("C + O2 = CO2")
+        assertNotNull(result)
+        assertEquals("C + O2 = CO2", result?.balancedString)
+    }
+
+    @Test
+    fun testEquationBalancer_ComplexCombustion() {
+        // C2H6 + O2 = CO2 + H2O -> 2 C2H6 + 7 O2 = 4 CO2 + 6 H2O
+        val result = ChemicalEquationBalancer.balance("C2H6 + O2 = CO2 + H2O")
+        assertNotNull(result)
+        assertEquals("2 C2H6 + 7 O2 = 4 CO2 + 6 H2O", result?.balancedString)
+    }
+
+    @Test
+    fun testEquationBalancer_ThreePartsRejected() {
+        // More than one separator -> invalid
+        assertNull(ChemicalEquationBalancer.balance("H2 = O2 = H2O"))
+    }
+
+    @Test
+    fun testEquationBalancer_EmptySideRejected() {
+        assertNull(ChemicalEquationBalancer.balance("= H2O"))
+        assertNull(ChemicalEquationBalancer.balance("H2 + O2 ="))
+    }
 }

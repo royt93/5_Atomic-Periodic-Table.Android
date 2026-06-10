@@ -5,7 +5,11 @@
       "Bash(./gradlew:*)",
       "Bash(git checkout:*)",
       "Bash(while read file)",
-      "Bash(do echo \"=== $file ===\")"
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(python3 -c ' *)",
+      "Bash(find app/build -path \"*androidTest-results*\" -name \"*.xml\")",
+      "Bash(adb shell *)",
+      "Bash(echo \"EXIT=$?\")"
     ],
     "deny": [],
     "ask": []

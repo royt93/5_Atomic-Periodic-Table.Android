@@ -8,11 +8,14 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import android.content.Context
 import com.mckimquyen.atomicPeriodicTable.act.*
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.NotesPref
+import org.hamcrest.CoreMatchers.anyOf
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -53,6 +56,51 @@ class FeaturesIntegrationTest {
     }
 
     @Test
+    fun testElementNotes_LegacyMigration() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+
+        // Seed a note under the legacy "note_" prefix (pre-migration storage format).
+        val prefs = appContext.getSharedPreferences("Element_Notes_Preference", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putString("note_helium", "Legacy helium note")
+            .remove("notes_helium")
+            .apply()
+
+        val notesPref = NotesPref(appContext)
+
+        // Reading transparently migrates the value to the new "notes_" key.
+        assertEquals("Legacy helium note", notesPref.getNote("helium"))
+        assertEquals("Legacy helium note", prefs.getString("notes_helium", null))
+        assertNull("Legacy key should be removed after migration", prefs.getString("note_helium", null))
+
+        // Cleanup
+        notesPref.saveNote("helium", "")
+    }
+
+    @Test
+    fun testElementNotes_PersistAcrossRelaunch() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val sendPref = ElementSendAndLoad(appContext)
+        sendPref.setValue("hydrogen")
+
+        val notesPref = NotesPref(appContext)
+        notesPref.saveNote("hydrogen", "Persisted note")
+
+        // First launch: the saved note is loaded into the input.
+        ActivityScenario.launch(ElementInfoAct::class.java).use {
+            onView(withId(R.id.notesInput)).perform(scrollTo()).check(matches(withText("Persisted note")))
+        }
+
+        // Relaunch: the note survives because it lives in SharedPreferences.
+        ActivityScenario.launch(ElementInfoAct::class.java).use {
+            onView(withId(R.id.notesInput)).perform(scrollTo()).check(matches(withText("Persisted note")))
+        }
+
+        // Cleanup
+        notesPref.saveNote("hydrogen", "")
+    }
+
+    @Test
     fun testChemicalEquationBalancer() {
         ActivityScenario.launch(EquationBalancerAct::class.java).use {
             // Type equation
@@ -78,7 +126,7 @@ class FeaturesIntegrationTest {
 
             // Check result is displayed and correct (contains "18.01")
             onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-            onView(withId(R.id.calcResultText)).check(matches(withText(containsString("18.01"))))
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("18.01"), containsString("18,01")))))
         }
     }
 

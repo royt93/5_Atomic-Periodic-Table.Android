@@ -24,62 +24,56 @@ object ChemicalFormulaParser {
         val symbolMap = ELEMENT_SYMBOLS.associateBy { it.lowercase() }
         val exceptions = setOf("co", "no", "po", "cs", "ni", "bi", "cn")
 
+        // Recursive DFS with backtracking: returns the normalized remainder starting at
+        // [index], or null if no valid element tokenization exists from here. The caller
+        // tries the next candidate when a branch dead-ends.
         fun dfs(index: Int): String? {
             if (index == clean.length) return ""
 
             val c = clean[index]
+            // Digits and brackets are passed through unchanged.
             if (c.isDigit() || c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}') {
-                val rest = dfs(index + 1)
-                return if (rest != null) c + rest else null
+                val rest = dfs(index + 1) ?: return null
+                return c + rest
             }
+            if (!c.isLetter()) return null
 
-            // Try 2-character match first unless it's in exceptions
-            if (index + 1 < clean.length && clean[index].isLetter() && clean[index + 1].isLetter()) {
-                val twoCharLower = clean.substring(index, index + 2).lowercase()
-                if (symbolMap.containsKey(twoCharLower)) {
-                    if (exceptions.contains(twoCharLower)) {
-                        // Try 1-character first
-                        val oneCharLower = c.toString().lowercase()
-                        if (symbolMap.containsKey(oneCharLower)) {
-                            val rest = dfs(index + 1)
-                            if (rest != null) {
-                                return symbolMap[oneCharLower]!! + rest
-                            }
-                        }
-                        // Fallback to 2-character if 1-character fails
-                        val rest = dfs(index + 2)
-                        if (rest != null) {
-                            return symbolMap[twoCharLower]!! + rest
-                        }
-                    } else {
-                        // Try 2-character first
-                        val rest = dfs(index + 2)
-                        if (rest != null) {
-                            return symbolMap[twoCharLower]!! + rest
-                        }
-                        // Fallback to 1-character if 2-character fails
-                        val oneCharLower = c.toString().lowercase()
-                        if (symbolMap.containsKey(oneCharLower)) {
-                            val rest = dfs(index + 1)
-                            if (rest != null) {
-                                return symbolMap[oneCharLower]!! + rest
-                            }
-                        }
-                    }
+            val next = if (index + 1 < clean.length) clean[index + 1] else null
+            val twoLower = if (next != null && next.isLetter()) clean.substring(index, index + 2).lowercase() else null
+            val oneLower = c.lowercaseChar().toString()
+
+            // Candidate symbols to try, in priority order: Pair(canonicalSymbol, charsConsumed).
+            val candidates = ArrayList<Pair<String, Int>>()
+
+            if (c.isUpperCase()) {
+                // Proper/mixed case: an uppercase letter always begins a new symbol.
+                // Merge into a 2-char symbol ONLY when the following letter is lowercase
+                // (e.g. "Co" -> Cobalt, "Nh" -> Nihonium). Two uppercase letters like the
+                // N and H in "NH3" therefore stay as separate elements (N + H).
+                if (next != null && next.isLowerCase() && twoLower != null && symbolMap.containsKey(twoLower)) {
+                    candidates.add(symbolMap[twoLower]!! to 2)
+                }
+                if (symbolMap.containsKey(oneLower)) {
+                    candidates.add(symbolMap[oneLower]!! to 1)
+                }
+            } else {
+                // All-lowercase (ambiguous) input: keep the legacy heuristic — prefer the
+                // 2-char symbol first unless it is one of the exceptions, which prefer 1-char.
+                val twoValid = twoLower != null && symbolMap.containsKey(twoLower)
+                val oneValid = symbolMap.containsKey(oneLower)
+                if (twoValid && exceptions.contains(twoLower)) {
+                    if (oneValid) candidates.add(symbolMap[oneLower]!! to 1)
+                    candidates.add(symbolMap[twoLower]!! to 2)
+                } else {
+                    if (twoValid) candidates.add(symbolMap[twoLower]!! to 2)
+                    if (oneValid) candidates.add(symbolMap[oneLower]!! to 1)
                 }
             }
 
-            // Try 1-character match
-            if (c.isLetter()) {
-                val oneCharLower = c.toString().lowercase()
-                if (symbolMap.containsKey(oneCharLower)) {
-                    val rest = dfs(index + 1)
-                    if (rest != null) {
-                        return symbolMap[oneCharLower]!! + rest
-                    }
-                }
+            for ((symbol, consumed) in candidates) {
+                val rest = dfs(index + consumed)
+                if (rest != null) return symbol + rest
             }
-
             return null
         }
 

@@ -520,9 +520,9 @@ class QuizAct : BaseAct() {
         for (i in optionCards.indices) {
             if (i != correctIndex && (i != selectedIndex || selectedAnswer == currentCorrectAnswer)) {
                 optionCards[i].animate()
-                    .alpha(0.3f)
-                    .scaleX(0.92f)
-                    .scaleY(0.92f)
+                    .alpha(0.5f)
+                    .scaleX(0.95f)
+                    .scaleY(0.95f)
                     .setDuration(250)
                     .start()
             }
@@ -707,9 +707,9 @@ class QuizAct : BaseAct() {
         for (i in optionCards.indices) {
             if (i != correctIndex) {
                 optionCards[i].animate()
-                    .alpha(0.3f)
-                    .scaleX(0.92f)
-                    .scaleY(0.92f)
+                    .alpha(0.5f)
+                    .scaleX(0.95f)
+                    .scaleY(0.95f)
                     .setDuration(250)
                     .start()
             }
