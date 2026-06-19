@@ -12,6 +12,8 @@
       "Bash(echo \"EXIT=$?\")"
     ],
     "deny": [],
-    "ask": []
-  }
+    "ask": [],
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
 }

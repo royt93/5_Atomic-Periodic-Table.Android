@@ -22,3 +22,6 @@
 .idea/jarRepositories.xml
 .idea/misc.xml
 .idea/vcs.xml
+
+# Claude Code local settings (YOLO/bypassPermissions — không commit)
+.claude/settings.local.json
