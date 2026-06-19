@@ -6,14 +6,9 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Display
 import android.view.WindowManager
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.mckimquyen.atomicPeriodicTable.R
 import com.roy.sdkadbmob.AdManager
 
@@ -28,35 +23,17 @@ class SplashAct : AppCompatActivity() {
     private var versionText: android.view.View? = null
     private var decorCircle1: android.view.View? = null
     private var decorCircle2: android.view.View? = null
-    private var keepSystemSplashOnScreen = true
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
-        splashScreen.setKeepOnScreenCondition { keepSystemSplashOnScreen }
-        splashScreen.setOnExitAnimationListener { splashScreenView ->
-            splashScreenView.iconView
-                .animate()
-                .scaleX(1.16f)
-                .scaleY(1.16f)
-                .alpha(0f)
-                .setDuration(420)
-                .setInterpolator(DecelerateInterpolator())
-                .withEndAction {
-                    splashScreenView.remove()
-                    animateSplashScreen()
-                }
-                .start()
-        }
-        Handler(Looper.getMainLooper()).postDelayed({
-            keepSystemSplashOnScreen = false
-        }, 700)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         // Set version text dynamically
         findViewById<android.widget.TextView>(R.id.versionText)?.text =
             "Version ${com.mckimquyen.atomicPeriodicTable.BuildConfig.VERSION_NAME}"
+
+        // Animate splash screen elements
+        animateSplashScreen()
 
         AdManager.initSplashScreen(this) {
             goToMain()
@@ -75,8 +52,8 @@ class SplashAct : AppCompatActivity() {
 
         // Initial state - all invisible
         logoCard?.alpha = 0f
-        logoCard?.scaleX = 0.82f
-        logoCard?.scaleY = 0.82f
+        logoCard?.scaleX = 0.7f
+        logoCard?.scaleY = 0.7f
         appNameText?.alpha = 0f
         appNameText?.translationY = 20f
         loadingText?.alpha = 0f
@@ -88,8 +65,8 @@ class SplashAct : AppCompatActivity() {
             ?.alpha(1f)
             ?.scaleX(1f)
             ?.scaleY(1f)
-            ?.setDuration(700)
-            ?.setInterpolator(OvershootInterpolator(1.15f))
+            ?.setDuration(600)
+            ?.setInterpolator(android.view.animation.DecelerateInterpolator())
             ?.start()
 
         // Animate app name - fade in and slide up
