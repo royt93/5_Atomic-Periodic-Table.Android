@@ -44,25 +44,21 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- App Logo with Card Background -->
-        <androidx.cardview.widget.CardView
+        <!-- App Logo -->
+        <FrameLayout
             android:id="@+id/logoCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="8dp"
-            app:cardBackgroundColor="@color/colorThemeSurface"
-            app:cardCornerRadius="180dp"
-            app:cardElevation="8dp">
+            android:layout_width="280dp"
+            android:layout_height="160dp">
 
             <ImageView
                 android:id="@+id/appLogo"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/splash_logo" />
 
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
         <!-- App Name -->
         <TextView

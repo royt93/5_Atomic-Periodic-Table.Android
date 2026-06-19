@@ -192,6 +192,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     // AndroidX Core KTX - updated to 1.17.0 (Jan 2025) - QUAN TRỌNG cho performance
     implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'com.github.ultimate-deej:twowaynestedscrollview:0.1'
 //    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // Gson - updated to 2.13.2 (Dec 2024)
