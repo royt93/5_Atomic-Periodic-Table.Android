@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP активирован.</string>
     <string name="vip_failed_title">Ошибка</string>
     <string name="vip_invalid_key">Недействительный VIP-ключ.</string>
+    <string name="vip_ad_unavailable_title">Реклама недоступна</string>
+    <string name="vip_ad_unavailable_message">Реклама сейчас недоступна. Проверьте соединение и попробуйте позже.</string>
 </resources>

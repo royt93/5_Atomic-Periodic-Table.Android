@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP已成功啟用。</string>
     <string name="vip_failed_title">失敗</string>
     <string name="vip_invalid_key">VIP金鑰無效。</string>
+    <string name="vip_ad_unavailable_title">廣告不可用</string>
+    <string name="vip_ad_unavailable_message">廣告目前不可用，請檢查網路連線後重試。</string>
 </resources>

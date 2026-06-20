@@ -575,4 +575,6 @@
     <string name="vip_success_message">VIP đã được kích hoạt.</string>
     <string name="vip_failed_title">Thất bại</string>
     <string name="vip_invalid_key">Mã VIP không hợp lệ.</string>
+    <string name="vip_ad_unavailable_title">Quảng cáo không khả dụng</string>
+    <string name="vip_ad_unavailable_message">Quảng cáo hiện không có sẵn. Hãy kiểm tra kết nối và thử lại sau.</string>
 </resources>

@@ -428,4 +428,6 @@
     <string name="vip_success_message">เปิดใช้งาน VIP แล้ว</string>
     <string name="vip_failed_title">ล้มเหลว</string>
     <string name="vip_invalid_key">คีย์ VIP ไม่ถูกต้อง</string>
+    <string name="vip_ad_unavailable_title">โฆษณาไม่พร้อมใช้งาน</string>
+    <string name="vip_ad_unavailable_message">โฆษณาไม่พร้อมใช้งานในขณะนี้ กรุณาตรวจสอบการเชื่อมต่อและลองอีกครั้งในภายหลัง</string>
 </resources>

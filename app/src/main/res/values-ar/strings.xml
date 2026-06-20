@@ -428,4 +428,6 @@
     <string name="vip_success_message">تم تفعيل VIP.</string>
     <string name="vip_failed_title">فشل</string>
     <string name="vip_invalid_key">مفتاح VIP غير صالح.</string>
+    <string name="vip_ad_unavailable_title">الإعلان غير متاح</string>
+    <string name="vip_ad_unavailable_message">الإعلان غير متاح حالياً. يرجى التحقق من الاتصال والمحاولة لاحقاً.</string>
 </resources>

@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP가 활성화되었습니다.</string>
     <string name="vip_failed_title">실패</string>
     <string name="vip_invalid_key">VIP 키가 유효하지 않습니다.</string>
+    <string name="vip_ad_unavailable_title">광고를 사용할 수 없음</string>
+    <string name="vip_ad_unavailable_message">현재 광고를 사용할 수 없습니다. 연결을 확인하고 나중에 다시 시도하세요.</string>
 </resources>

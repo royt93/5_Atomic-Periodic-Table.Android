@@ -576,5 +576,7 @@
     <string name="vip_success_message">VIP has been activated.</string>
     <string name="vip_failed_title">Failed</string>
     <string name="vip_invalid_key">Invalid VIP key.</string>
+    <string name="vip_ad_unavailable_title">Ad Unavailable</string>
+    <string name="vip_ad_unavailable_message">Ad is not available right now. Please check your connection and try again later.</string>
 </resources>
 

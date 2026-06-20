@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP a été activé.</string>
     <string name="vip_failed_title">Échec</string>
     <string name="vip_invalid_key">Clé VIP invalide.</string>
+    <string name="vip_ad_unavailable_title">Publicité indisponible</string>
+    <string name="vip_ad_unavailable_message">La publicité n\'est pas disponible actuellement. Vérifiez votre connexion et réessayez plus tard.</string>
 </resources>

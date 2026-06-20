@@ -446,5 +446,7 @@
     <string name="vip_success_message">VIP已成功激活。</string>
     <string name="vip_failed_title">失败</string>
     <string name="vip_invalid_key">VIP密钥无效。</string>
+    <string name="vip_ad_unavailable_title">广告不可用</string>
+    <string name="vip_ad_unavailable_message">广告目前不可用，请检查网络连接后重试。</string>
 </resources>
 

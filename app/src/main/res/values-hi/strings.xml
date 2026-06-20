@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP सक्रिय हो गया।</string>
     <string name="vip_failed_title">विफलता</string>
     <string name="vip_invalid_key">अमान्य VIP कुंजी।</string>
+    <string name="vip_ad_unavailable_title">विज्ञापन उपलब्ध नहीं</string>
+    <string name="vip_ad_unavailable_message">विज्ञापन अभी उपलब्ध नहीं है। कनेक्शन जांचें और बाद में पुनः प्रयास करें।</string>
 </resources>

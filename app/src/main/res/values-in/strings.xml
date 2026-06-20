@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP telah diaktifkan.</string>
     <string name="vip_failed_title">Gagal</string>
     <string name="vip_invalid_key">Kunci VIP tidak valid.</string>
+    <string name="vip_ad_unavailable_title">Iklan tidak tersedia</string>
+    <string name="vip_ad_unavailable_message">Iklan tidak tersedia saat ini. Periksa koneksi Anda dan coba lagi nanti.</string>
 </resources>

@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIPが有効化されました。</string>
     <string name="vip_failed_title">失敗</string>
     <string name="vip_invalid_key">VIPキーが無効です。</string>
+    <string name="vip_ad_unavailable_title">広告が利用できません</string>
+    <string name="vip_ad_unavailable_message">現在広告が利用できません。接続を確認して後でもう一度お試しください。</string>
 </resources>

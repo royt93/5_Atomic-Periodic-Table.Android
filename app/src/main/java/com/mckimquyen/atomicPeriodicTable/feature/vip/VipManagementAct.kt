@@ -204,9 +204,7 @@ class VipManagementAct : BaseAct() {
             if (earned) {
                 grantRewardedVip()
             } else {
-                AdManager.showInterstitial(this) {
-                    if (!isFinishing && !isDestroyed) grantRewardedVip()
-                }
+                showMessage(R.string.vip_ad_unavailable_title, R.string.vip_ad_unavailable_message)
             }
         }
     }

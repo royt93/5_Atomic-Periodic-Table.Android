@@ -428,4 +428,6 @@
     <string name="vip_success_message">VIP è stato attivato.</string>
     <string name="vip_failed_title">Errore</string>
     <string name="vip_invalid_key">Chiave VIP non valida.</string>
+    <string name="vip_ad_unavailable_title">Annuncio non disponibile</string>
+    <string name="vip_ad_unavailable_message">L\'annuncio non è disponibile al momento. Controlla la connessione e riprova più tardi.</string>
 </resources>
