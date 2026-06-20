@@ -116,6 +116,9 @@ class VipManagementAct : BaseAct() {
     private fun bindUi() {
         countDownTimer?.cancel()
         val active = AdManager.isVipByKeyActive()
+        // F4: if VIP just expired (active=false) and rewarded not yet loaded (e.g. was skipped
+        // in onCreate because VIP was active at that time), preload now so the button works.
+        if (!active) AdManager.loadRewarded(this)
         val expiryMs = AdManager.getVipByKeyExpiry()
         val storedGrantedAt = vipPrefs.getGrantedAtMs()
         val grantedAtMs = when {

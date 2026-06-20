@@ -25,8 +25,10 @@ class SplashAct : BaseAct() {
     private val splashTimeoutHandler = Handler(Looper.getMainLooper())
     private var navigatedToMain = false
     private val splashTimeoutRunnable = Runnable { goToMain() }
-    // Bug 3: store Runnable as member so it can be cancelled in onDestroy
     private var finishRunnable: Runnable? = null
+    // F1: store dismiss-listener reference so onDestroy can deregister it from RoyApp,
+    // preventing the lambda from firing on a destroyed Activity.
+    private var adDismissListener: (() -> Unit)? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,12 +156,21 @@ class SplashAct : BaseAct() {
 
     private fun goToMain() {
         if (navigatedToMain) return
-        // Race guard: if ProcessLifecycle's App Open ad is currently showing, delay navigation
-        // until it's dismissed. Without this, initSplashScreen's overlay would fire goToMain()
-        // 208ms after the ad appeared, causing a jarring flash and premature dismissal.
+        // F3: don't navigate if Activity is already closing (back-press while ad is showing).
+        if (isDestroyed || isFinishing) return
         val app = application as RoyApp
         if (app.isFullscreenAdShowing) {
-            app.onFullscreenAdDismissed { goToMain() }
+            // Race guard: ProcessLifecycle's App Open is showing — defer navigation until dismissed.
+            // F1: store listener reference so onDestroy can deregister, preventing a fire on dead Activity.
+            // F6: skip if already deferred (no duplicate listeners).
+            if (adDismissListener == null) {
+                adDismissListener = { goToMain() }
+                app.onFullscreenAdDismissed(adDismissListener!!)
+            }
+            // F2: emergency escape — if the ad is somehow stuck for >30s, force-navigate anyway.
+            splashTimeoutHandler.postDelayed({
+                if (!navigatedToMain) goToMain()
+            }, 30_000L)
             return
         }
         navigatedToMain = true
@@ -167,7 +178,6 @@ class SplashAct : BaseAct() {
         val intent = Intent(this, MainAct::class.java)
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        // Bug 3: save Runnable as named member so onDestroy can cancel it
         val r = Runnable { finish() }
         finishRunnable = r
         window.decorView.postDelayed(r, 300)
@@ -190,8 +200,10 @@ class SplashAct : BaseAct() {
     // onResume inherited from BaseAct (handles enableAdaptiveRefreshRate) — no override needed
 
     override fun onDestroy() {
-        splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
-        // Bug 3: cancel delayed finish if activity is destroyed before 300ms
+        splashTimeoutHandler.removeCallbacksAndMessages(null)
+        // F1: deregister dismiss listener to prevent firing on destroyed Activity
+        adDismissListener?.let { (application as RoyApp).removeFullscreenAdDismissedListener(it) }
+        adDismissListener = null
         finishRunnable?.let { window.decorView.removeCallbacks(it) }
         finishRunnable = null
 

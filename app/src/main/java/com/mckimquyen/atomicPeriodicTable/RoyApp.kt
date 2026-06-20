@@ -25,6 +25,10 @@ class RoyApp : Application() {
         fullscreenAdDismissListeners.add(listener)
     }
 
+    fun removeFullscreenAdDismissedListener(listener: () -> Unit) {
+        fullscreenAdDismissListeners.remove(listener)
+    }
+
     override fun onCreate() {
         super.onCreate()
         configureAds()
