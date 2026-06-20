@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 2,
+  "appName": "Atomic Periodic Table",
+  "themeId": "clean-light",
+  "connectedCanvas": false,
+  "locales": [
+    "en"
+  ],
+  "locale": "en",
+  "device": "android",
+  "orientation": "portrait",
+  "appIcon": "",
+  "slidesByDevice": {
+    "iphone": [
+      {
+        "id": "s_mppgoot8_1",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Your headline\nlives here."
+        },
+        "screenshot": "",
+        "transforms": {
+          "device": {
+            "x": -450.80914890045335,
+            "y": 955.2104098119215,
+            "width": 977,
+            "height": 1991,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_mppgoot8_2",
+        "layout": "two-devices",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Show two\nscreens at once."
+        },
+        "screenshot": "",
+        "screenshotSecondary": "",
+        "transforms": {
+          "deviceSecondary": {
+            "x": 688.4726540204801,
+            "y": 1027.8020089177937,
+            "width": 871.2,
+            "height": 1774.7929549902153,
+            "rotation": 9,
+            "zIndex": 2
+          },
+          "caption": {
+            "x": 112.3403055229146,
+            "y": 87.89358401880148,
+            "width": 1108.8,
+            "height": 803.0400000000001,
+            "rotation": 0,
+            "zIndex": 4
+          },
+          "device": {
+            "x": -499.3230870111943,
+            "y": 928.1034802753068,
+            "width": 912.27195389049,
+            "height": 1858.4640000000002,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_mppgoot8_3",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 03"
+        },
+        "headline": {
+          "en": "Flip the contrast\nfor visual rhythm."
+        },
+        "screenshot": "",
+        "inverted": true,
+        "transforms": {
+          "device": {
+            "x": 741.2739047128944,
+            "y": 899.4937720329012,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_mppgoot8_4",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE"
+        },
+        "headline": {
+          "en": "And so\nmuch more."
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 190.97767332549847,
+            "y": 2159.762397179791,
+            "width": 1056,
+            "height": 860.4,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_mpptmmaa_i",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEW"
+        },
+        "headline": {
+          "en": "Edit this\nheadline."
+        },
+        "screenshot": "",
+        "transforms": {
+          "device": {
+            "x": -517.4781516913463,
+            "y": 846.7845828437136,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 103.91492361927885,
+            "y": 195.738472385429,
+            "width": 1108.8,
+            "height": 803.0400000000001,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_mpptvxsc_i",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEW"
+        },
+        "headline": {
+          "en": "Edit this\nheadline."
+        },
+        "screenshot": ""
+      }
+    ],
+    "android": [
+      {
+        "id": "apt_slide_01",
+        "layout": "hero",
+        "label": {
+          "en": "Periodic Table"
+        },
+        "headline": {
+          "en": "Every element\nat your fingertips."
+        },
+        "screenshot": "/screenshots/android/phone/en/01.png"
+      },
+      {
+        "id": "apt_slide_02",
+        "layout": "split-landscape",
+        "label": {
+          "en": "Element Detail"
+        },
+        "headline": {
+          "en": "Dive deep\ninto every element."
+        },
+        "screenshot": "/screenshots/android/phone/en/02.png"
+      },
+      {
+        "id": "apt_slide_03",
+        "layout": "device-top",
+        "label": {
+          "en": "Properties"
+        },
+        "headline": {
+          "en": "Mass, density,\nelectrons — all there."
+        },
+        "screenshot": "/screenshots/android/phone/en/03.png",
+        "inverted": true
+      },
+      {
+        "id": "apt_slide_04",
+        "layout": "device-bottom",
+        "label": {
+          "en": "Compare Elements"
+        },
+        "headline": {
+          "en": "H vs He.\nSee the difference."
+        },
+        "screenshot": "/screenshots/android/phone/en/04.png"
+      },
+      {
+        "id": "apt_slide_05",
+        "layout": "hero",
+        "label": {
+          "en": "Periodic Quiz"
+        },
+        "headline": {
+          "en": "Think you know\nyour elements?"
+        },
+        "screenshot": "/screenshots/android/phone/en/05.png",
+        "inverted": true
+      },
+      {
+        "id": "apt_slide_06",
+        "layout": "device-top",
+        "label": {
+          "en": "Molar Mass"
+        },
+        "headline": {
+          "en": "H₂SO₄ in seconds.\nNo calculator needed."
+        },
+        "screenshot": "/screenshots/android/phone/en/06.png"
+      },
+      {
+        "id": "apt_slide_07",
+        "layout": "hero",
+        "label": {
+          "en": "Equation Balancer"
+        },
+        "headline": {
+          "en": "Balance any equation.\nInstantly."
+        },
+        "screenshot": "/screenshots/android/phone/en/07.png"
+      },
+      {
+        "id": "apt_slide_08",
+        "layout": "hero",
+        "label": {
+          "en": "Isotopes"
+        },
+        "headline": {
+          "en": "Protons, neutrons,\nhalf-lives. All of it."
+        },
+        "screenshot": "/screenshots/android/phone/en/08.png",
+        "inverted": true
+      }
+    ],
+    "ipad": [
+      {
+        "id": "s_mppgoot8_a",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Made for\nthe big screen."
+        },
+        "screenshot": "",
+        "transforms": {
+          "device": {
+            "x": 68.64736263219729,
+            "y": 818.7701245593419,
+            "width": 1525.7087999999999,
+            "height": 1981.4399999999998,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_mppgoot8_b",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Built for\nfocus."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mppgoot8_c",
+        "layout": "device-top",
+        "label": {
+          "en": "FEATURE 02"
+        },
+        "headline": {
+          "en": "Always within reach."
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "android-7": [
+      {
+        "id": "s_mppgoot8_d",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Pocket-sized\npower."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mppgoot8_e",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Wide canvas,\nbigger ideas."
+        },
+        "screenshot": ""
+      }
+    ],
+    "android-10": [
+      {
+        "id": "s_mppgoot8_f",
+        "layout": "hero",
+        "label": {
+          "en": "MEET YOUR APP"
+        },
+        "headline": {
+          "en": "Made for\nthe big screen."
+        },
+        "screenshot": ""
+      },
+      {
+        "id": "s_mppgoot8_g",
+        "layout": "split-landscape",
+        "label": {
+          "en": "FEATURE 01"
+        },
+        "headline": {
+          "en": "Wide canvas,\nbigger ideas."
+        },
+        "screenshot": ""
+      }
+    ],
+    "feature-graphic": [
+      {
+        "id": "s_mppgoot8_h",
+        "layout": "feature-graphic",
+        "label": {},
+        "headline": {
+          "en": "Your tagline goes here."
+        },
+        "screenshot": ""
+      }
+    ]
+  },
+  "crossScreenMockupsByDevice": {
+    "iphone": [],
+    "ipad": [],
+    "android": [],
+    "android-7": [],
+    "android-10": [],
+    "feature-graphic": []
+  }
+}
