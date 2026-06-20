@@ -507,16 +507,13 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             btn.isClickable = true
             btn.isFocusable = true
             btn.setOnClickListener {
-                AdManager.showInterstitial(this) { success ->
-                    if (success) {
-                        Log.i("MainAct", "Ad đã hiển thị và đóng thành công")
-                    } else {
-                        Log.i("MainAct", "Ad không hiển thị được hoặc có lỗi")
-                    }
-                    val intent = Intent(this, ElementInfoAct::class.java)
-                    val elementSend = ElementSendAndLoad(this)
-                    elementSend.setValue(item.element)
+                val elementSend = ElementSendAndLoad(this)
+                elementSend.setValue(item.element)
+                val intent = Intent(this, ElementInfoAct::class.java)
+                if (AdManager.isVipByKeyActive()) {
                     startActivity(intent)
+                } else {
+                    AdManager.showInterstitial(this) { startActivity(intent) }
                 }
             }
         }

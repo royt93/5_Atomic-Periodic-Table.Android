@@ -18,8 +18,12 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
 
     private var systemUiConfigured = false
 
+    // Subclasses that manage their own window theme (e.g. SplashAct with SplashTheme)
+    // can return false to skip the app-wide theme override.
+    protected open fun shouldApplyTheme(): Boolean = true
+
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
-        applyTheme()
+        if (shouldApplyTheme()) applyTheme()
         super.onCreate(savedInstanceState)
     }
 

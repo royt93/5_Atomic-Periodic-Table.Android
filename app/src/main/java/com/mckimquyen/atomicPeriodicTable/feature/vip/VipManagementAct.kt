@@ -47,7 +47,10 @@ class VipManagementAct : BaseAct() {
         bindListeners()
         bindKeyWatcher()
         bindUi()
-        AdManager.loadRewarded(this)
+        // Bug 10: skip pre-loading rewarded ad when user is already VIP
+        if (!AdManager.isVipByKeyActive()) {
+            AdManager.loadRewarded(this)
+        }
         playEntryAnimation()
     }
 
@@ -195,7 +198,8 @@ class VipManagementAct : BaseAct() {
             showMessage(R.string.vip_failed_title, R.string.vip_invalid_key)
             return
         }
-        activateVip(if (days == 3) AdKeys.VIP_SECRET else rawKey, days)
+        // Bug 8: SDK validates against a single vipKeySecret — always pass VIP_SECRET
+        activateVip(AdKeys.VIP_SECRET, days)
     }
 
     private fun showRewardedForVip() {

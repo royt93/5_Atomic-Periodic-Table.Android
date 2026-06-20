@@ -14,7 +14,7 @@ object VipKeys {
     fun lookupDays(rawInput: String): Int? = keyToDays[rawInput.trim()]
 
     private fun decode(value: String): String =
-        String(java.util.Base64.getDecoder().decode(value))
+        String(android.util.Base64.decode(value, android.util.Base64.NO_WRAP))
 
     private const val VIP_30D_B64 = "OWZBMHE3ZU4hMjdjTHgwNEAyMTk5M1kydTBJNyNRMA=="
     private const val VIP_3D_B64 = "ZVE3QDkzTDBmITJZMjcwN3hOMDQwMjE5OTN1MEkjMmFL"

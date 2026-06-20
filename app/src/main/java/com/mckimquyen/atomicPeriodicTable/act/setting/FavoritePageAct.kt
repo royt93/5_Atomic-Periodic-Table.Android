@@ -298,17 +298,17 @@ class FavoritePageAct : BaseAct() {
         }
 
         // ===============================================================
-        // AdMob Banner Setup
-        // ===============================================================
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        AdManager.loadBanner(
-            context = this,
-            container = bannerContainer,
-            tvLabelAd = tvLabelAd,
-            adSize = AdManager.getAdaptiveBannerSize(this),
-            autoManageLifecycle = true,
-        )
+        if (!AdManager.isVipByKeyActive()) {
+            AdManager.loadBanner(
+                context = this,
+                container = bannerContainer,
+                tvLabelAd = tvLabelAd,
+                adSize = AdManager.getAdaptiveBannerSize(this),
+                autoManageLifecycle = true,
+            )
+        }
 //        adView = this.createAdBanner(
 //            logTag = FavoritePageAct::class.simpleName,
 //            viewGroup = flAd,

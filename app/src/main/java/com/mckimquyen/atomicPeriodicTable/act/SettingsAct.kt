@@ -247,13 +247,15 @@ class SettingsAct : BaseAct() {
 
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        AdManager.loadBanner(
-            context = this,
-            container = bannerContainer,
-            tvLabelAd = tvLabelAd,
-            adSize = AdManager.getAdaptiveBannerSize(this),
-            autoManageLifecycle = true,
-        )
+        if (!AdManager.isVipByKeyActive()) {
+            AdManager.loadBanner(
+                context = this,
+                container = bannerContainer,
+                tvLabelAd = tvLabelAd,
+                adSize = AdManager.getAdaptiveBannerSize(this),
+                autoManageLifecycle = true,
+            )
+        }
     }
 
     override fun onApplySystemInsets(

@@ -5,12 +5,16 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.roy.sdkadbmob.AdManager
 import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -138,5 +142,43 @@ class VipManagementWidgetTest {
         AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
         AdManager.clearVipByKey()
         assert(!AdManager.isVipByKeyActive()) { "VIP should be inactive after clear" }
+    }
+
+    // ---- Bug 10: loadRewarded skipped when VIP active ----
+    // When VIP is active: watchAd button disabled, revoke enabled, activeVipCard visible.
+    // After revoke confirmed: watchAd button re-enabled.
+
+    @Test
+    fun vipActive_watchAdButtonIsDisabled() {
+        AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            onView(withId(R.id.btnWatchAdVip)).check(matches(not(isEnabled())))
+        }
+    }
+
+    @Test
+    fun vipActive_revokeButtonIsEnabled() {
+        AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            onView(withId(R.id.btnRevokeVip)).check(matches(isEnabled()))
+        }
+    }
+
+    @Test
+    fun vipActive_activeVipCardIsVisible() {
+        AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            onView(withId(R.id.activeVipCard)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun vipActive_afterRevokeConfirmed_watchAdButtonIsEnabled() {
+        AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            onView(withId(R.id.btnRevokeVip)).perform(click())
+            onView(withText(R.string.confirm)).perform(click())
+            onView(withId(R.id.btnWatchAdVip)).check(matches(isEnabled()))
+        }
     }
 }

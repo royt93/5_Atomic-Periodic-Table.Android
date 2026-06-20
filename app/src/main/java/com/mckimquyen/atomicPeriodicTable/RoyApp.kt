@@ -1,6 +1,8 @@
 package com.mckimquyen.atomicPeriodicTable
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.mckimquyen.atomicPeriodicTable.common.const.AdKeys
@@ -13,13 +15,50 @@ class RoyApp : Application() {
     private var adsInitialized = false
     private val pendingAdInitCallbacks = mutableListOf<(Boolean, String?) -> Unit>()
 
+    // Track AppLovin fullscreen activities (App Open, Interstitial) to detect the race
+    // between ProcessLifecycle.showAppOpenAd and initSplashScreen on warm relaunch.
+    var isFullscreenAdShowing = false
+        private set
+    private val fullscreenAdDismissListeners = mutableListOf<() -> Unit>()
+
+    fun onFullscreenAdDismissed(listener: () -> Unit) {
+        fullscreenAdDismissListeners.add(listener)
+    }
+
     override fun onCreate() {
         super.onCreate()
         configureAds()
+        registerFullscreenAdTracker()
         com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache.init(this)
         if (BuildConfig.DEBUG) {
             Toast.makeText(this, "$packageName onCreate", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    // Watches for AppLovinFullscreenActivity lifecycle to detect when a fullscreen ad
+    // (App Open or Interstitial) is showing. Used by SplashAct.goToMain() to avoid
+    // navigating to MainAct while ProcessLifecycle's App Open ad is still on screen.
+    private fun registerFullscreenAdTracker() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(a: Activity, b: Bundle?) {
+                if (a.javaClass.name.contains("AppLovinFullscreen")) {
+                    isFullscreenAdShowing = true
+                }
+            }
+            override fun onActivityDestroyed(a: Activity) {
+                if (a.javaClass.name.contains("AppLovinFullscreen")) {
+                    isFullscreenAdShowing = false
+                    val listeners = fullscreenAdDismissListeners.toList()
+                    fullscreenAdDismissListeners.clear()
+                    listeners.forEach { it() }
+                }
+            }
+            override fun onActivityStarted(a: Activity) {}
+            override fun onActivityResumed(a: Activity) {}
+            override fun onActivityPaused(a: Activity) {}
+            override fun onActivityStopped(a: Activity) {}
+            override fun onActivitySaveInstanceState(a: Activity, b: Bundle) {}
+        })
     }
 
     private fun configureAds() {

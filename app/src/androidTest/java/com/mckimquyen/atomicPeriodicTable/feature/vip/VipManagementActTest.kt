@@ -184,6 +184,36 @@ class VipManagementActTest {
         }
     }
 
+    // ---- Bug 8: redeemInputKey always passes VIP_SECRET ----
+    // Even when the user types the 3D key, redeemInputKey internally passes VIP_SECRET
+    // (which equals VIP_30D_KEY) to AdManager, so activation succeeds.
+
+    @Test
+    fun valid3DKey_showsSuccessDialog() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun valid3DKey_afterDismiss_vipCardVisible() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            dismissDialog()
+            onView(withId(R.id.activeVipCard)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun valid3DKey_afterDismiss_revokeButtonEnabled() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            dismissDialog()
+            onView(withId(R.id.btnRevokeVip)).check(matches(isEnabled()))
+        }
+    }
+
     // ---- helpers ----
 
     private fun enterKeyAndActivate(key: String) {

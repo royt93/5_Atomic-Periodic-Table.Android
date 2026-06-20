@@ -4,21 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Display
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.RoyApp
 import com.roy.sdkadbmob.AdManager
 
 @SuppressLint("CustomSplashScreen")
-class SplashAct : AppCompatActivity() {
+class SplashAct : BaseAct() {
 
-    // Memory leak prevention: Store view references and animators for cleanup
     private var logoCard: android.view.View? = null
     private var appNameText: android.view.View? = null
     private var loadingText: android.view.View? = null
@@ -27,43 +22,41 @@ class SplashAct : AppCompatActivity() {
     private var decorCircle1: android.view.View? = null
     private var decorCircle2: android.view.View? = null
 
-    // Offline safety: if ad init doesn't complete within 8s (no network), proceed anyway.
     private val splashTimeoutHandler = Handler(Looper.getMainLooper())
     private var navigatedToMain = false
-    private val splashTimeoutRunnable = Runnable {
-        goToMain()
-    }
+    private val splashTimeoutRunnable = Runnable { goToMain() }
+    // Bug 3: store Runnable as member so it can be cancelled in onDestroy
+    private var finishRunnable: Runnable? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Set version text dynamically
         findViewById<android.widget.TextView>(R.id.versionText)?.text =
             "Version ${com.mckimquyen.atomicPeriodicTable.BuildConfig.VERSION_NAME}"
 
-        // Animate splash screen elements
         animateSplashScreen()
 
-        if (hasNetworkConnectivity()) {
-            // Online: consent flow với 3s fallback (UMP callback trong < 1s trên mọi thiết bị)
-            splashTimeoutHandler.postDelayed(splashTimeoutRunnable, 3_000L)
-            AdManager.requestConsentInfoUpdate(this) {
-                splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
-                (application as RoyApp).initializeAdsIfNeeded { _, _ ->
-                    AdManager.initSplashScreen(this) { goToMain() }
-                }
-            }
-        } else {
-            // Offline: bỏ qua consent, vào app ngay lập tức
+        // Bug 2: always call requestConsentInfoUpdate regardless of network.
+        // UMP SDK uses cached consent when offline and returns immediately.
+        // hasNetworkConnectivity() only adjusts the safety timeout, never skips consent.
+        //
+        // F3 — EEA consent debug: to test consent dialog on this Samsung device (SM-F731B),
+        // pass testDeviceHashedId="8FD5578900ACE41E2AFF49D2497C0A2D" via AdSdkConfig when
+        // the SDK exposes a consentTestDeviceIds field. Hash sourced from logcat UMP message.
+        val timeoutMs = if (hasNetworkConnectivity()) 3_000L else 8_000L
+        splashTimeoutHandler.postDelayed(splashTimeoutRunnable, timeoutMs)
+        AdManager.requestConsentInfoUpdate(this) {
+            splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
+            if (navigatedToMain) return@requestConsentInfoUpdate
             (application as RoyApp).initializeAdsIfNeeded { _, _ ->
+                if (navigatedToMain) return@initializeAdsIfNeeded
                 AdManager.initSplashScreen(this) { goToMain() }
             }
         }
     }
 
     private fun animateSplashScreen() {
-        // Get views and store in member variables for cleanup
         logoCard = findViewById(R.id.logoCard)
         appNameText = findViewById(R.id.appNameText)
         loadingText = findViewById(R.id.loadingText)
@@ -72,7 +65,6 @@ class SplashAct : AppCompatActivity() {
         decorCircle1 = findViewById(R.id.decorCircle1)
         decorCircle2 = findViewById(R.id.decorCircle2)
 
-        // Initial state - all invisible
         logoCard?.alpha = 0f
         logoCard?.scaleX = 0.7f
         logoCard?.scaleY = 0.7f
@@ -82,7 +74,6 @@ class SplashAct : AppCompatActivity() {
         progressBar?.alpha = 0f
         versionText?.alpha = 0f
 
-        // Animate logo card - scale and fade in
         logoCard?.animate()
             ?.alpha(1f)
             ?.scaleX(1f)
@@ -91,7 +82,6 @@ class SplashAct : AppCompatActivity() {
             ?.setInterpolator(android.view.animation.DecelerateInterpolator())
             ?.start()
 
-        // Animate app name - fade in and slide up
         appNameText?.animate()
             ?.alpha(1f)
             ?.translationY(0f)
@@ -100,28 +90,23 @@ class SplashAct : AppCompatActivity() {
             ?.setInterpolator(android.view.animation.DecelerateInterpolator())
             ?.start()
 
-        // Animate loading text - fade in
         loadingText?.animate()
             ?.alpha(0.87f)
             ?.setStartDelay(400)
             ?.setDuration(400)
             ?.start()
 
-        // Animate progress bar - fade in
         progressBar?.animate()
             ?.alpha(1f)
             ?.setStartDelay(600)
             ?.setDuration(400)
             ?.start()
 
-        // Animate decorative circles - continuous subtle rotation
-        // Memory leak fix: Check if activity is finishing before restarting animation
         decorCircle1?.animate()
             ?.rotation(360f)
             ?.setDuration(20000)
             ?.setInterpolator(android.view.animation.LinearInterpolator())
             ?.withEndAction {
-                // Only repeat if activity is not finishing
                 if (!isFinishing && decorCircle1 != null) {
                     decorCircle1?.rotation = 0f
                     decorCircle1?.animate()
@@ -138,7 +123,6 @@ class SplashAct : AppCompatActivity() {
             ?.setDuration(25000)
             ?.setInterpolator(android.view.animation.LinearInterpolator())
             ?.withEndAction {
-                // Only repeat if activity is not finishing
                 if (!isFinishing && decorCircle2 != null) {
                     decorCircle2?.rotation = 0f
                     decorCircle2?.animate()
@@ -150,7 +134,6 @@ class SplashAct : AppCompatActivity() {
             }
             ?.start()
 
-        // Animate version text - fade in
         versionText?.animate()
             ?.alpha(0.5f)
             ?.setStartDelay(800)
@@ -160,7 +143,7 @@ class SplashAct : AppCompatActivity() {
 
     private fun hasNetworkConnectivity(): Boolean {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             cm.activeNetwork?.let { cm.getNetworkCapabilities(it) }
                 ?.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
         } else {
@@ -171,19 +154,32 @@ class SplashAct : AppCompatActivity() {
 
     private fun goToMain() {
         if (navigatedToMain) return
+        // Race guard: if ProcessLifecycle's App Open ad is currently showing, delay navigation
+        // until it's dismissed. Without this, initSplashScreen's overlay would fire goToMain()
+        // 208ms after the ad appeared, causing a jarring flash and premature dismissal.
+        val app = application as RoyApp
+        if (app.isFullscreenAdShowing) {
+            app.onFullscreenAdDismissed { goToMain() }
+            return
+        }
         navigatedToMain = true
         splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
         val intent = Intent(this, MainAct::class.java)
         startActivity(intent)
-//        overridePendingTransition(0, 0)
-//        finishAffinity()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        // Trì hoãn finish để đợi animation hoàn tất
-        window.decorView.postDelayed({
-            finish() // Finish sau animation
-        }, 300) // delay khoảng 300ms (hoặc đúng thời gian của animation)
+        // Bug 3: save Runnable as named member so onDestroy can cancel it
+        val r = Runnable { finish() }
+        finishRunnable = r
+        window.decorView.postDelayed(r, 300)
     }
 
+    // Skip BaseAct.applyTheme() — SplashAct keeps its own SplashTheme from the manifest.
+    // Applying AppTheme/AppThemeDark here would overwrite windowBackground and cause a
+    // visible flash from the splash drawable to the app background color on cold start.
+    override fun shouldApplyTheme(): Boolean = false
+
+    // Bug 11: SplashAct now extends BaseAct, so attachBaseContext chains correctly:
+    // SplashAct (fontScale) → BaseAct (LocaleHelper) → AppCompatActivity
     override fun attachBaseContext(context: Context) {
         val override = Configuration(context.resources.configuration)
         override.fontScale = 1.0f
@@ -191,39 +187,14 @@ class SplashAct : AppCompatActivity() {
         super.attachBaseContext(context)
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            enableAdaptiveRefreshRate()
-        }
-    }
-
-    private fun enableAdaptiveRefreshRate() {
-        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
-        val display: Display? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            display // Sử dụng API mới
-        } else {
-            @Suppress("DEPRECATION")
-            wm.defaultDisplay // Fallback cho API thấp hơn
-        }
-
-
-        if (display != null) {
-            val supportedModes = display.supportedModes
-            val highestRefreshRateMode = supportedModes.maxByOrNull { it.refreshRate }
-
-            if (highestRefreshRateMode != null) {
-                window.attributes = window.attributes.apply {
-                    preferredDisplayModeId = highestRefreshRateMode.modeId
-                }
-                println("Adaptive refresh rate applied: ${highestRefreshRateMode.refreshRate} Hz")
-            }
-        }
-    }
+    // onResume inherited from BaseAct (handles enableAdaptiveRefreshRate) — no override needed
 
     override fun onDestroy() {
         splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
-        // Memory leak fix: Cancel all animations to prevent holding Activity reference
+        // Bug 3: cancel delayed finish if activity is destroyed before 300ms
+        finishRunnable?.let { window.decorView.removeCallbacks(it) }
+        finishRunnable = null
+
         logoCard?.animate()?.cancel()
         appNameText?.animate()?.cancel()
         loadingText?.animate()?.cancel()
@@ -232,7 +203,6 @@ class SplashAct : AppCompatActivity() {
         decorCircle1?.animate()?.cancel()
         decorCircle2?.animate()?.cancel()
 
-        // Clear references
         logoCard = null
         appNameText = null
         loadingText = null
