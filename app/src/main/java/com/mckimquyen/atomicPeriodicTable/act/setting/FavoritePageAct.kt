@@ -38,25 +38,12 @@ class FavoritePageAct : BaseAct() {
     // Khai báo binding cho ViewBinding
     private lateinit var binding: AFavoriteSettingsPageBinding
 
-    //    private var adView: MaxAdView? = null
-    private var adView: View? = null
-
     // Memory leak prevention: Store listener for cleanup
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        AdManager.bannerResume(adView)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        AdManager.bannerPause(adView)
     }
 
     override fun onDestroy() {
@@ -66,8 +53,6 @@ class FavoritePageAct : BaseAct() {
         }
         scrollChangedListener = null
 
-//        flAd.destroyAdBanner(adView)
-        AdManager.bannerDestroy(adView)
         super.onDestroy()
     }
 
@@ -317,10 +302,12 @@ class FavoritePageAct : BaseAct() {
         // ===============================================================
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdManager.loadBanner(
+        AdManager.loadBanner(
             context = this,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd
+            tvLabelAd = tvLabelAd,
+            adSize = AdManager.getAdaptiveBannerSize(this),
+            autoManageLifecycle = true,
         )
 //        adView = this.createAdBanner(
 //            logTag = FavoritePageAct::class.simpleName,

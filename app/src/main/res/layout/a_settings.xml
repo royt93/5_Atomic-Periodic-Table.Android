@@ -379,6 +379,50 @@
                     tools:ignore="RtlSymmetry" />
 
                 <RelativeLayout
+                    android:id="@+id/vipSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_d_ripple">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/vipSettingsIcon"
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_workspace_premium"
+                        app:tint="?attr/colorOnBackground" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="72dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/vip_settings_title"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:alpha="0.7"
+                            android:text="@string/vip_settings_text"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="12sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/clearCacheSettings"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
@@ -756,4 +800,3 @@
         android:elevation="110dp"
         android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-

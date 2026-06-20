@@ -41,6 +41,7 @@ import com.mckimquyen.atomicPeriodicTable.ext.openUrlInBrowser
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.ext.rateAppInApp
 import com.mckimquyen.atomicPeriodicTable.ext.shareApp
+import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
@@ -486,6 +487,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             val intent = Intent(this, SettingsAct::class.java)
             startActivity(intent)
         }
+        binding.btnVipMenu.setOnClickListener {
+            val intent = Intent(this, VipManagementAct::class.java)
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("DiscouragedApi")
@@ -636,10 +641,15 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         navSide.leftMargin = left
         binding.navContent.layoutParams = navSide
 
+        // searchBox: left inset + visual margin. Right is handled by layout_weight=1 + pill's marginEnd
         val barSide = binding.searchBox.layoutParams as ViewGroup.MarginLayoutParams
-        barSide.rightMargin = right + resources.getDimensionPixelSize(R.dimen.search_margin_side)
         barSide.leftMargin = left + resources.getDimensionPixelSize(R.dimen.search_margin_side)
         binding.searchBox.layoutParams = barSide
+
+        // pill: right inset + fixed 8dp visual margin
+        val pillParams = binding.btnVipMenu.layoutParams as ViewGroup.MarginLayoutParams
+        pillParams.rightMargin = right + resources.getDimensionPixelSize(R.dimen.margin_space_card)
+        binding.btnVipMenu.layoutParams = pillParams
 
         val leftScrollBar = binding.leftBar.layoutParams as ViewGroup.MarginLayoutParams
         leftScrollBar.topMargin =
@@ -776,12 +786,47 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
 //        }
 //    }
 
+    private var lastVipActive = false
+
     override fun onResume() {
         super.onResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             enableAdaptiveRefreshRate()
         }
         rateAppInApp(forceRateInApp = false)
+        bindToolbarVipBadge()
+    }
+
+    private fun bindToolbarVipBadge() {
+        val active = AdManager.isVipByKeyActive()
+        val stateChanged = active != lastVipActive
+        lastVipActive = active
+
+        binding.tvVipPillLabel.text = getString(
+            if (active) R.string.vip_title else R.string.vip_pill_free
+        )
+        binding.btnVipMenu.setBackgroundResource(
+            if (active) R.drawable.bg_vip_pill_active else R.drawable.bg_vip_pill_free
+        )
+        val iconTint = if (active) {
+            android.graphics.Color.parseColor("#B7791F")
+        } else {
+            androidx.core.content.ContextCompat.getColor(this, R.color.colorThemeTextSecondary)
+        }
+        binding.ivVipPillIcon.setColorFilter(iconTint)
+        binding.tvVipPillLabel.setTextColor(
+            if (active) android.graphics.Color.parseColor("#7C2D12")
+            else androidx.core.content.ContextCompat.getColor(this, R.color.colorThemeTextSecondary)
+        )
+
+        if (stateChanged) {
+            binding.btnVipMenu.animate()
+                .scaleX(1.2f).scaleY(1.2f).setDuration(120)
+                .withEndAction {
+                    binding.btnVipMenu.animate()
+                        .scaleX(1f).scaleY(1f).setDuration(180).start()
+                }.start()
+        }
     }
 
     private fun enableAdaptiveRefreshRate() {

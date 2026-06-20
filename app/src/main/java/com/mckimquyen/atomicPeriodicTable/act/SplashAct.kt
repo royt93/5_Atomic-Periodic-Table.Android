@@ -6,10 +6,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Display
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.RoyApp
 import com.roy.sdkadbmob.AdManager
 
 @SuppressLint("CustomSplashScreen")
@@ -24,6 +27,13 @@ class SplashAct : AppCompatActivity() {
     private var decorCircle1: android.view.View? = null
     private var decorCircle2: android.view.View? = null
 
+    // Offline safety: if ad init doesn't complete within 8s (no network), proceed anyway.
+    private val splashTimeoutHandler = Handler(Looper.getMainLooper())
+    private var navigatedToMain = false
+    private val splashTimeoutRunnable = Runnable {
+        goToMain()
+    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -35,8 +45,20 @@ class SplashAct : AppCompatActivity() {
         // Animate splash screen elements
         animateSplashScreen()
 
-        AdManager.initSplashScreen(this) {
-            goToMain()
+        if (hasNetworkConnectivity()) {
+            // Online: consent flow với 3s fallback (UMP callback trong < 1s trên mọi thiết bị)
+            splashTimeoutHandler.postDelayed(splashTimeoutRunnable, 3_000L)
+            AdManager.requestConsentInfoUpdate(this) {
+                splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
+                (application as RoyApp).initializeAdsIfNeeded { _, _ ->
+                    AdManager.initSplashScreen(this) { goToMain() }
+                }
+            }
+        } else {
+            // Offline: bỏ qua consent, vào app ngay lập tức
+            (application as RoyApp).initializeAdsIfNeeded { _, _ ->
+                AdManager.initSplashScreen(this) { goToMain() }
+            }
         }
     }
 
@@ -136,7 +158,21 @@ class SplashAct : AppCompatActivity() {
             ?.start()
     }
 
+    private fun hasNetworkConnectivity(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            cm.activeNetwork?.let { cm.getNetworkCapabilities(it) }
+                ?.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+        } else {
+            @Suppress("DEPRECATION")
+            cm.activeNetworkInfo?.isConnected == true
+        }
+    }
+
     private fun goToMain() {
+        if (navigatedToMain) return
+        navigatedToMain = true
+        splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
         val intent = Intent(this, MainAct::class.java)
         startActivity(intent)
 //        overridePendingTransition(0, 0)
@@ -186,6 +222,7 @@ class SplashAct : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
         // Memory leak fix: Cancel all animations to prevent holding Activity reference
         logoCard?.animate()?.cancel()
         appNameText?.animate()?.cancel()

@@ -40,12 +40,8 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3612191981543807~8639804669" />
 
-        <!-- =============================================================== -->
-        <!-- AppLovin Configuration -->
-        <!-- =============================================================== -->
-        <meta-data
-            android:name="applovin.sdk.key"
-            android:value="e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt" />
+        <!-- AppLovin SDK key is set via AdSdkConfig.applovinSdkKey (BuildConfig),
+             NOT via meta-data. AppLovin SDK 13+ rejects having both. -->
 
         <!-- =============================================================== -->
         <!-- App Widget -->
@@ -111,6 +107,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".feature.vip.VipManagementAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
 
         <activity

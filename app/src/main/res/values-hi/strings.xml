@@ -398,4 +398,34 @@
     <string name="quiz_question_name_from_symbol">किस तत्व का प्रतीक %1$s है?</string>
     <string name="quiz_question_isotopes">%1$s के पास कितने आइसोटोप हैं?</string>
     <string name="quiz_question_electronegativity">%1$s की विद्युत ऋणात्मकता क्या है?</string>
+
+    <string name="vip_pill_free">मुफ्त</string>
+    <string name="vip_title">VIP</string>
+    <string name="vip_settings_title">VIP सदस्यता</string>
+    <string name="vip_settings_text">VIP कुंजियां और विज्ञापन-रहित एक्सेस प्रबंधित करें</string>
+    <string name="vip_active">VIP सक्रिय</string>
+    <string name="vip_free_user">मुफ्त उपयोगकर्ता</string>
+    <string name="vip_free_user_desc">विज्ञापन हटाने और पुरस्कार अनलॉक करने के लिए VIP सक्रिय करें।</string>
+    <string name="vip_until">%1$s तक</string>
+    <string name="vip_activated_at">सक्रिय: %1$s</string>
+    <string name="vip_expires_at">समाप्त: %1$s</string>
+    <string name="vip_remaining">%1$dदिन %2$02dघं %3$02dमि %4$02dसे</string>
+    <string name="vip_no_active_entry">कोई सक्रिय VIP नहीं</string>
+    <string name="vip_redeem_label">VIP कुंजी दर्ज करें</string>
+    <string name="vip_redeem_button">सक्रिय करें</string>
+    <string name="vip_watch_ad_3d">विज्ञापन देखें → 3 दिन VIP</string>
+    <string name="vip_buy_30d_locked">30 दिन VIP खरीदें — जल्द आ रहा है</string>
+    <string name="vip_buy_90d_locked">90 दिन VIP खरीदें — जल्द आ रहा है</string>
+    <string name="vip_buy_1y_locked">1 साल VIP खरीदें — जल्द आ रहा है</string>
+    <string name="vip_buy_lifetime_locked">आजीवन VIP खरीदें — जल्द आ रहा है</string>
+    <string name="vip_restore_locked">खरीदारी पुनर्स्थापित करें — जल्द आ रहा है</string>
+    <string name="vip_revoke_all_button">VIP रद्द करें</string>
+    <string name="vip_revoke_all_confirm_title">रद्द करने की पुष्टि करें</string>
+    <string name="vip_revoke_all_confirm_message">VIP रद्द करके मुफ्त में वापस जाएं?</string>
+    <string name="vip_entry_first_install">🎁 नई स्थापना उपहार</string>
+    <string name="vip_entry_redeemed">VIP %1$d दिन</string>
+    <string name="vip_success_title">सफलता</string>
+    <string name="vip_success_message">VIP सक्रिय हो गया।</string>
+    <string name="vip_failed_title">विफलता</string>
+    <string name="vip_invalid_key">अमान्य VIP कुंजी।</string>
 </resources>

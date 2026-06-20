@@ -398,4 +398,34 @@
     <string name="quiz_question_name_from_symbol">ما العنصر الذي يحمل الرمز %1$s؟</string>
     <string name="quiz_question_isotopes">كم عدد النظائر الموجودة في %1$s؟</string>
     <string name="quiz_question_electronegativity">ما هي السالبية الكهربية لـ %1$s؟</string>
+
+    <string name="vip_pill_free">مجاني</string>
+    <string name="vip_title">VIP</string>
+    <string name="vip_settings_title">عضوية VIP</string>
+    <string name="vip_settings_text">إدارة مفاتيح VIP والوصول بدون إعلانات</string>
+    <string name="vip_active">VIP نشط</string>
+    <string name="vip_free_user">مستخدم مجاني</string>
+    <string name="vip_free_user_desc">فعّل VIP لإزالة الإعلانات وفتح المكافآت.</string>
+    <string name="vip_until">حتى %1$s</string>
+    <string name="vip_activated_at">تفعيل: %1$s</string>
+    <string name="vip_expires_at">ينتهي: %1$s</string>
+    <string name="vip_remaining">%1$dي %2$02dس %3$02dدق %4$02dث</string>
+    <string name="vip_no_active_entry">لا يوجد VIP نشط</string>
+    <string name="vip_redeem_label">أدخل مفتاح VIP</string>
+    <string name="vip_redeem_button">تفعيل</string>
+    <string name="vip_watch_ad_3d">مشاهدة إعلان ← 3 أيام VIP</string>
+    <string name="vip_buy_30d_locked">شراء VIP 30 يومًا — قريبًا</string>
+    <string name="vip_buy_90d_locked">شراء VIP 90 يومًا — قريبًا</string>
+    <string name="vip_buy_1y_locked">شراء VIP سنة — قريبًا</string>
+    <string name="vip_buy_lifetime_locked">شراء VIP مدى الحياة — قريبًا</string>
+    <string name="vip_restore_locked">استعادة المشتريات — قريبًا</string>
+    <string name="vip_revoke_all_button">إلغاء VIP</string>
+    <string name="vip_revoke_all_confirm_title">تأكيد الإلغاء</string>
+    <string name="vip_revoke_all_confirm_message">إلغاء VIP والعودة إلى المجاني؟</string>
+    <string name="vip_entry_first_install">🎁 هدية التثبيت الجديد</string>
+    <string name="vip_entry_redeemed">VIP %1$d أيام</string>
+    <string name="vip_success_title">نجاح</string>
+    <string name="vip_success_message">تم تفعيل VIP.</string>
+    <string name="vip_failed_title">فشل</string>
+    <string name="vip_invalid_key">مفتاح VIP غير صالح.</string>
 </resources>

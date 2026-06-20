@@ -544,5 +544,35 @@
     <string name="quiz_question_name_from_symbol">Nguyên tố nào có ký hiệu %1$s?</string>
     <string name="quiz_question_isotopes">%1$s có bao nhiêu đồng vị?</string>
     <string name="quiz_question_electronegativity">Độ âm điện của %1$s là bao nhiêu?</string>
+    <string name="ok">OK</string>
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="vip_pill_free">FREE</string>
+    <string name="vip_title">VIP</string>
+    <string name="vip_settings_title">Thành viên VIP</string>
+    <string name="vip_settings_text">Quản lý mã VIP và quyền dùng không quảng cáo</string>
+    <string name="vip_active">VIP đang kích hoạt</string>
+    <string name="vip_free_user">Người dùng miễn phí</string>
+    <string name="vip_free_user_desc">Kích hoạt VIP để tắt quảng cáo và nhận ưu đãi.</string>
+    <string name="vip_until">Đến %1$s</string>
+    <string name="vip_activated_at">Kích hoạt: %1$s</string>
+    <string name="vip_expires_at">Hết hạn: %1$s</string>
+    <string name="vip_remaining">%1$dd %2$02dh %3$02dm %4$02ds</string>
+    <string name="vip_no_active_entry">Chưa có VIP đang hoạt động</string>
+    <string name="vip_redeem_label">Nhập mã VIP</string>
+    <string name="vip_redeem_button">Kích hoạt</string>
+    <string name="vip_watch_ad_3d">Xem quảng cáo -> 3 ngày VIP</string>
+    <string name="vip_buy_30d_locked">Mua VIP 30 ngày - sắp ra mắt</string>
+    <string name="vip_buy_90d_locked">Mua VIP 90 ngày - sắp ra mắt</string>
+    <string name="vip_buy_1y_locked">Mua VIP 1 năm - sắp ra mắt</string>
+    <string name="vip_buy_lifetime_locked">Mua VIP trọn đời - sắp ra mắt</string>
+    <string name="vip_restore_locked">Khôi phục mua hàng - sắp ra mắt</string>
+    <string name="vip_revoke_all_button">Thu hồi VIP</string>
+    <string name="vip_revoke_all_confirm_title">Xác nhận thu hồi</string>
+    <string name="vip_revoke_all_confirm_message">Thu hồi VIP và quay về Free?</string>
+    <string name="vip_entry_first_install">🎁 Quà tặng cài đặt mới</string>
+    <string name="vip_entry_redeemed">VIP %1$d ngày</string>
+    <string name="vip_success_title">Thành công</string>
+    <string name="vip_success_message">VIP đã được kích hoạt.</string>
+    <string name="vip_failed_title">Thất bại</string>
+    <string name="vip_invalid_key">Mã VIP không hợp lệ.</string>
 </resources>
-

@@ -398,4 +398,34 @@
     <string name="quiz_question_name_from_symbol">องค์ประกอบใดมีสัญลักษณ์ %1$s</string>
     <string name="quiz_question_isotopes">%1$s มีไอโซโทปจำนวนเท่าใด</string>
     <string name="quiz_question_electronegativity">อิเลคโตรเนกาติวีตี้ของ %1$s คืออะไร?</string>
+
+    <string name="vip_pill_free">ฟรี</string>
+    <string name="vip_title">VIP</string>
+    <string name="vip_settings_title">สมาชิก VIP</string>
+    <string name="vip_settings_text">จัดการคีย์ VIP และการเข้าถึงแบบไม่มีโฆษณา</string>
+    <string name="vip_active">VIP ใช้งานอยู่</string>
+    <string name="vip_free_user">ผู้ใช้ฟรี</string>
+    <string name="vip_free_user_desc">เปิดใช้งาน VIP เพื่อลบโฆษณาและปลดล็อกรางวัล</string>
+    <string name="vip_until">ถึง %1$s</string>
+    <string name="vip_activated_at">เปิดใช้งาน: %1$s</string>
+    <string name="vip_expires_at">หมดอายุ: %1$s</string>
+    <string name="vip_remaining">%1$dวัน %2$02dชม %3$02dนาที %4$02dวิ</string>
+    <string name="vip_no_active_entry">ไม่มี VIP ที่ใช้งานอยู่</string>
+    <string name="vip_redeem_label">ป้อนคีย์ VIP</string>
+    <string name="vip_redeem_button">เปิดใช้งาน</string>
+    <string name="vip_watch_ad_3d">ดูโฆษณา → 3 วัน VIP</string>
+    <string name="vip_buy_30d_locked">ซื้อ VIP 30 วัน — เร็วๆ นี้</string>
+    <string name="vip_buy_90d_locked">ซื้อ VIP 90 วัน — เร็วๆ นี้</string>
+    <string name="vip_buy_1y_locked">ซื้อ VIP 1 ปี — เร็วๆ นี้</string>
+    <string name="vip_buy_lifetime_locked">ซื้อ VIP ตลอดชีพ — เร็วๆ นี้</string>
+    <string name="vip_restore_locked">คืนค่าการซื้อ — เร็วๆ นี้</string>
+    <string name="vip_revoke_all_button">ยกเลิก VIP</string>
+    <string name="vip_revoke_all_confirm_title">ยืนยันการยกเลิก</string>
+    <string name="vip_revoke_all_confirm_message">ยกเลิก VIP และกลับสู่ฟรี?</string>
+    <string name="vip_entry_first_install">🎁 ของขวัญการติดตั้งใหม่</string>
+    <string name="vip_entry_redeemed">VIP %1$d วัน</string>
+    <string name="vip_success_title">สำเร็จ</string>
+    <string name="vip_success_message">เปิดใช้งาน VIP แล้ว</string>
+    <string name="vip_failed_title">ล้มเหลว</string>
+    <string name="vip_invalid_key">คีย์ VIP ไม่ถูกต้อง</string>
 </resources>

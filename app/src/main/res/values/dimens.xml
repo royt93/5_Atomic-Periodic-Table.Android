@@ -7,6 +7,7 @@
     <dimen name="title_bar_elevation">4dp</dimen>
     <dimen name="panel_margin">6dp</dimen>
     <dimen name="search_margin_side">16dp</dimen>
+    <dimen name="vip_pill_reserved_width">84dp</dimen>
     <dimen name="zero_elevation">0dp</dimen>
     <dimen name="one_elevation">1dp</dimen>
     <dimen name="header_down_margin">48dp</dimen>

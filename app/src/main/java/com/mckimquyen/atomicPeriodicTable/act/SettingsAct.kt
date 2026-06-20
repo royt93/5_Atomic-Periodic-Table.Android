@@ -23,6 +23,7 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
+import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.roy.sdkadbmob.AdManager
@@ -42,9 +43,6 @@ class SettingsAct : BaseAct() {
 
     // Khai báo binding cho ViewBinding
     private lateinit var binding: ASettingsBinding
-
-    //    private var adView: MaxAdView? = null
-    private var adView: View? = null
 
     // Memory leak prevention: Store listener for cleanup
     private var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
@@ -76,16 +74,6 @@ class SettingsAct : BaseAct() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        AdManager.bannerResume(adView)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        AdManager.bannerPause(adView)
-    }
-
     override fun onDestroy() {
         // Memory leak fix: Clean up listener
         scrollChangedListener?.let {
@@ -97,8 +85,6 @@ class SettingsAct : BaseAct() {
         themeChangeHandler?.removeCallbacksAndMessages(null)
         themeChangeHandler = null
 
-//        flAd.destroyAdBanner(adView)
-        AdManager.bannerDestroy(adView)
         super.onDestroy()
     }
 
@@ -205,6 +191,10 @@ class SettingsAct : BaseAct() {
             val intent = Intent(this, AboutAct::class.java)
             startActivity(intent)
         }
+        binding.vipSettings.setOnClickListener {
+            val intent = Intent(this, VipManagementAct::class.java)
+            startActivity(intent)
+        }
         binding.github20TesterSettings.setOnClickListener {
             rateApp("com.mckimquyen.bemytester")
 //            openUrlInBrowser("https://github.com/gj-loitp/20-TESTER-FOR-CLOSED-TESTING/tree/main")
@@ -257,10 +247,12 @@ class SettingsAct : BaseAct() {
 
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdManager.loadBanner(
+        AdManager.loadBanner(
             context = this,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd
+            tvLabelAd = tvLabelAd,
+            adSize = AdManager.getAdaptiveBannerSize(this),
+            autoManageLifecycle = true,
         )
     }
 

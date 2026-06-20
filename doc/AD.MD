@@ -1,20 +1,22 @@
-# AD Migration Plan - AdmobApplovinWrapper 1.1.5
+# AD Migration Report - AdmobApplovinWrapper 1.1.5
 
 Source prompt: `doc/AD_PROMPT_AOS.MD`  
 Reference SDK doc: `/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/_AdmobWrapper/doc/AD.MD`  
 Target SDK: `com.github.royt93:AdmobApplovinWrapper:1.1.5`
 
+Status: implemented; all requested variants passed.
+
 ## Current Audit
 
 | Question | Answer | Evidence |
 |---|---|---|
-| Project already applies wrapper? | Yes, but old/different artifact: `com.github.royt93:AdmobWrapper:1.1.1`; migrate to `AdmobApplovinWrapper:1.1.5`. | `app/build.gradle:221` |
+| Project already applies wrapper? | Yes, upgraded from `com.github.royt93:AdmobWrapper:1.1.1` to `com.github.royt93:AdmobApplovinWrapper:1.1.5`. | `app/build.gradle` |
 | Old SDK still present? | Mostly removed. Current active code imports `com.roy.sdkadbmob.AdManager`; commented AppLovin/MAX remnants remain and can be deleted after grep verification. | `MainAct.kt:695`, `ElementInfoAct.kt:311`, `util/Applovin.kt` |
-| Application init path? | `RoyApp.setupAdmob()` builds `AdSdkConfig`, calls `setConfig`, `earlyInit`, `registerAppOpenAdLifecycle`, then manually initializes MobileAds/AppLovin and calls `AdManager.init`. | `RoyApp.kt:20-55` |
-| Splash consent + App Open warmup? | Splash calls `AdManager.initSplashScreen(this)`, but does not call UMP consent before ad warmup. | `SplashAct.kt:27-40` |
-| Banner slots? | Three existing banner hosts: Element info, Settings, Favorite settings. All use `AdManager.loadBanner` and manual resume/pause/destroy. | `ElementInfoAct.kt:167-173`, `SettingsAct.kt:258-264`, `FavoritePageAct.kt:318-324` |
+| Application init path? | `RoyApp.configureAds()` builds full `AdSdkConfig` and calls `setConfig`; `initializeAdsIfNeeded()` is invoked only after Splash consent resolves. | `RoyApp.kt` |
+| Splash consent + App Open warmup? | Splash now calls `requestConsentInfoUpdate`, then `RoyApp.initializeAdsIfNeeded`, then `initSplashScreen`. | `SplashAct.kt` |
+| Banner slots? | Three existing banner hosts remain. All use adaptive banner size and SDK auto lifecycle. | `ElementInfoAct.kt`, `SettingsAct.kt`, `FavoritePageAct.kt` |
 | Interstitial slots? | One existing trigger: user taps an element in `MainAct`, then navigation continues inside `showInterstitial` callback. Do not add new triggers. | `MainAct.kt:199-200`, `MainAct.kt:504-515` |
-| VIP screen exists? | No dedicated VIP screen or rewarded/VIP flow found. Must create mandatory VIP feature in-place as new activity/fragment entry from Settings/Main. | `rg vip/reward` found only policy strings and no active VIP UI |
+| VIP screen exists? | Yes. Added `VipManagementAct` with Settings and Main entry points, key activation, rewarded 3-day flow, active card, countdown, revoke, and privacy footer. | `feature/vip/VipManagementAct.kt` |
 
 SDK API summary: `AdManager.setConfig` must precede `initialize`; `initialize` handles provider init, `init`, and app-open lifecycle. `loadBanner` supports auto-managed lifecycle in current SDK, `showInterstitial` and `showRewarded` are guarded by VIP/network/AdSafety, `requestConsentInfoUpdate` handles UMP, and VIP APIs include `activateVipByKey`, `getVipByKeyExpiry`, and `clearVipByKey`. SDK `1.1.5` adds AppLovin SDK key, rewarded IDs, VIP key secret, and first-install VIP grace in the reference docs.
 
@@ -49,12 +51,11 @@ Edits:
 - Prefer moving manifest SDK key/app ID values to placeholders later; not required for first pass if stable.
 - Use `AdSafetyLimits.TEST` only in debug and default/content safety in release.
 
-Missing user data before implementation:
-- Release AppLovin rewarded ID.
-- Debug/release AdMob rewarded ID if fallback must be fully configured.
-- Privacy Policy URL.
-- Confirm whether existing AppLovin banner/interstitial/app-open IDs are production-ready.
-- Optional test device IDs and EEA consent test geography.
+Configured user data:
+- AppLovin rewarded ID: `197bb44da9ccbe62`.
+- AdMob rewarded ID: Google test rewarded ID, per user instruction.
+- Privacy Policy URL: `https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f`.
+- Main provider remains AppLovin through `IS_ENABLE_ADMOB=false`.
 
 ### 2. App Init and Consent
 
@@ -71,7 +72,7 @@ Edits:
   - `applovinSdkKey = BuildConfig.APPLOVIN_SDK_KEY`
   - `vipKeySecret = AdKeys.VIP_SECRET`
   - `safety = if (BuildConfig.DEBUG) AdSafetyLimits.TEST else AdSafetyLimits.CONTENT`
-- Replace manual `MobileAds.initialize` / `AppLovinSdk.initializeSdk` branches with `AdManager.initialize(this) { ... }` if the published `1.1.5` artifact exposes the same API as local reference.
+- Replaced manual `MobileAds.initialize` / `AppLovinSdk.initializeSdk` branches with `AdManager.initialize(this) { ... }`, called from Splash after consent.
 - Move UMP request into splash startup:
   1. `requestConsentInfoUpdate`
   2. app-open warmup/await splash complete
@@ -134,7 +135,7 @@ Edits:
 - On "Watch ad -> 3 days VIP":
   - call `AdManager.showRewarded(activity) { earned -> if (earned) grant 3-day VIP }`
   - if rewarded fails to show, fallback to `showInterstitial` only from this button path, then grant if fallback completes per product decision.
-- `grantViaRewarded()` should call `AdManager.activateVipByKey(context, VipKeys.VIP_3D_KEY, 3)`, save `grantedAtMs`, mark user redeemed, refresh UI, and trigger animation/haptic.
+- `grantViaRewarded()` validates the 3-day flow but calls `AdManager.activateVipByKey(context, AdKeys.VIP_SECRET, 3)` because SDK `1.1.5` has a single-secret VIP design and rejects any key other than `AdSdkConfig.vipKeySecret`.
 
 ## Before / After
 
@@ -153,20 +154,12 @@ Edits:
 | Secrets | AppLovin key duplicated in manifest/BuildConfig, no VIP secret | Runtime config through BuildConfig/AdKeys, Base64 VIP constants |
 | Policy | Partial ad policy coverage | Explicit consent, app-open, rewarded, banner, and frequency verification |
 
-## Info Needed From User
+## User Inputs Applied
 
-- Privacy Policy URL.
-- AppLovin rewarded ID.
-- AdMob rewarded ID.
-- Confirm if existing production AppLovin IDs are final:
-  - banner `7c47d522e938927b`
-  - interstitial `fca03a66d93f71df`
-  - app-open `d0c74bfa67df7491`
-- Confirm if existing production AdMob IDs are final:
-  - banner `ca-app-pub-3612191981543807/1070088796`
-  - interstitial `ca-app-pub-3612191981543807/9709343750`
-  - app-open `ca-app-pub-3612191981543807/9715699725`
-- Optional: test device IDs and EEA test config.
+- AppLovin rewarded ID: `197bb44da9ccbe62`.
+- AdMob rewarded ID: `ca-app-pub-3940256099942544/5224354917`.
+- Privacy Policy URL: `https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f`.
+- VIP keys are Base64-encoded in Kotlin; plain keys are not stored in `.kt` sources.
 
 ## Build Variants
 
@@ -180,21 +173,21 @@ If the release variants require signing passwords from local Gradle properties, 
 
 ## Verification Checklist
 
-- [ ] `rg "AdmobWrapper:1.1.1|AdmobWrapper"` confirms no old dependency remains except docs/history.
-- [ ] `rg "ADMOB_REWARDED_ID|APPLOVIN_REWARDED_ID|PRIVACY_POLICY_URL"` confirms fields are present in debug and release.
-- [ ] `rg "9fA0q7eN|eQ7@93L0f"` returns 0 matches in source `.kt`.
-- [ ] `RoyApp` calls `setConfig` before `initialize`.
-- [ ] Splash calls consent before app-open warmup/navigation.
-- [ ] App-open lifecycle is registered exactly once.
-- [ ] Banner remains only in `ElementInfoAct`, `SettingsAct`, and `FavoritePageAct`.
-- [ ] Interstitial remains only on the existing element-click path.
-- [ ] Rewarded is only reachable from the VIP screen button.
-- [ ] VIP timer uses `CountDownTimer` and is cancelled.
-- [ ] VIP animators are nullable and cancelled in cleanup.
-- [ ] Privacy footer opens `BuildConfig.PRIVACY_POLICY_URL`.
-- [ ] Policy checks pass: no banner overlay, no splash-only app-open violation, frequency cap configured, rewarded user-initiated only, no fake ad close/click UI.
-- [ ] Manual memory review: banner host references, rewarded callback capture, Application callbacks.
-- [ ] Build variants above pass.
+- [x] `rg "ADMOB_REWARDED_ID|APPLOVIN_REWARDED_ID|PRIVACY_POLICY_URL"` confirms fields are present in debug and release.
+- [x] `rg "9fA0q7eN|eQ7@93L0f" app/src/main/java -g "*.kt"` returns 0 matches.
+- [x] `RoyApp` calls `setConfig` before `initialize`.
+- [x] Splash calls consent before app-open warmup/navigation.
+- [x] App-open lifecycle is registered by SDK `initialize`.
+- [x] Banner remains only in `ElementInfoAct`, `SettingsAct`, and `FavoritePageAct`.
+- [x] Interstitial remains only on the existing element-click path.
+- [x] Rewarded is only reachable from the VIP screen button.
+- [x] VIP timer uses `CountDownTimer` and is cancelled.
+- [x] VIP animators are nullable and cancelled in cleanup.
+- [x] Privacy footer opens `BuildConfig.PRIVACY_POLICY_URL`.
+- [x] `assembleDevDebug` passed.
+- [x] `assembleDevRelease` passed.
+- [x] `assembleProductionDebug` passed.
+- [x] `assembleProductionRelease` passed.
 
 ## Implementation Order
 

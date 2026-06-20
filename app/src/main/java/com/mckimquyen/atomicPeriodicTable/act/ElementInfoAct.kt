@@ -32,21 +32,12 @@ import androidx.core.view.isVisible
 
 class ElementInfoAct : InfoExt() {
 
-    //    private var adView: MaxAdView? = null
-    private var adView: View? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createAdInter()
         setupViews()
     }
 
-
-    override fun onDestroy() {
-//        flAdRoy.destroyAdBanner(adView)
-        AdManager.bannerDestroy(adView)
-        super.onDestroy()
-    }
 
     private fun setupViews() {
         binding = AElementInfoBinding.inflate(layoutInflater)
@@ -166,10 +157,12 @@ class ElementInfoAct : InfoExt() {
 
         val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
         val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        adView = AdManager.loadBanner(
+        AdManager.loadBanner(
             context = this,
             container = bannerContainer,
-            tvLabelAd = tvLabelAd
+            tvLabelAd = tvLabelAd,
+            adSize = AdManager.getAdaptiveBannerSize(this),
+            autoManageLifecycle = true,
         )
     }
 
@@ -206,12 +199,6 @@ class ElementInfoAct : InfoExt() {
     override fun onResume() {
         super.onResume()
         favoriteBarSetup()
-        AdManager.bannerResume(adView)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        AdManager.bannerPause(adView)
     }
 
     private fun detailViews() {

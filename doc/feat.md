@@ -6,6 +6,22 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 
 ## 1. Feature Specifications & Technical Design
 
+### 1.0 Ad SDK 1.1.5 and VIP Management
+*   **Purpose**: Migrates ads to `com.github.royt93:AdmobApplovinWrapper:1.1.5` with AppLovin MAX as the active runtime provider and AdMob as configured fallback.
+*   **Integration**:
+    *   `RoyApp` builds a complete `AdSdkConfig`, including AppLovin SDK key, banner/interstitial/app-open/rewarded IDs, AdMob fallback IDs, `AdSafetyLimits`, and VIP secret.
+    *   `SplashAct` gates SDK initialization and splash ad warmup behind UMP consent via `AdManager.requestConsentInfoUpdate`.
+    *   Banner placements remain limited to `ElementInfoAct`, `SettingsAct`, and `FavoritePageAct`; all use SDK auto-managed lifecycle.
+    *   Interstitial remains limited to the existing element-click navigation path in `MainAct`.
+*   **VIP UI**:
+    *   `VipManagementAct` is reachable from both Settings and the Main bottom bar.
+    *   Supports Base64-obfuscated 30-day and 3-day key validation, rewarded 3-day activation, active VIP card, elapsed progress, countdown, revoke, disabled future purchase buttons, and Privacy Policy footer.
+    *   The SDK accepts only one configured VIP secret, so validated 3-day grants call the configured VIP secret with a 3-day duration.
+*   **Memory Safety**:
+    *   VIP countdown uses `CountDownTimer` and cancels in `onDestroy`.
+    *   Animators are nullable fields and are cancelled during lifecycle cleanup.
+    *   Rewarded callbacks guard against destroyed activity state before mutating UI.
+
 ### 1.1 Element Notes
 *   **Purpose**: Allows users to save personal notes, observations, or studies for each chemical element on the element details screen.
 *   **Integration**: Embedded inside [ElementInfoAct](file:///Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/@ad/260411_Atomic-Periodic-Table.Android/app/src/main/java/com/mckimquyen/atomicPeriodicTable/act/ElementInfoAct.kt).

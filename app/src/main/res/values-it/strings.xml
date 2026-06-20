@@ -398,4 +398,34 @@
     <string name="quiz_question_name_from_symbol">Quale elemento ha il simbolo %1$s?</string>
     <string name="quiz_question_isotopes">Quanti isotopi ha %1$s?</string>
     <string name="quiz_question_electronegativity">Qual è l\'elettronegatività di %1$s?</string>
+
+    <string name="vip_pill_free">GRATIS</string>
+    <string name="vip_title">VIP</string>
+    <string name="vip_settings_title">Abbonamento VIP</string>
+    <string name="vip_settings_text">Gestisci chiavi VIP e accesso senza pubblicità</string>
+    <string name="vip_active">VIP attivo</string>
+    <string name="vip_free_user">Utente gratuito</string>
+    <string name="vip_free_user_desc">Attiva VIP per rimuovere gli annunci e sbloccare premi.</string>
+    <string name="vip_until">Fino al %1$s</string>
+    <string name="vip_activated_at">Attivato: %1$s</string>
+    <string name="vip_expires_at">Scade: %1$s</string>
+    <string name="vip_remaining">%1$dg %2$02dh %3$02dm %4$02ds</string>
+    <string name="vip_no_active_entry">Nessun VIP attivo</string>
+    <string name="vip_redeem_label">Inserisci chiave VIP</string>
+    <string name="vip_redeem_button">Attiva</string>
+    <string name="vip_watch_ad_3d">Guarda annuncio → 3 giorni VIP</string>
+    <string name="vip_buy_30d_locked">Acquista VIP 30 giorni — Prossimamente</string>
+    <string name="vip_buy_90d_locked">Acquista VIP 90 giorni — Prossimamente</string>
+    <string name="vip_buy_1y_locked">Acquista VIP 1 anno — Prossimamente</string>
+    <string name="vip_buy_lifetime_locked">Acquista VIP a vita — Prossimamente</string>
+    <string name="vip_restore_locked">Ripristina acquisti — Prossimamente</string>
+    <string name="vip_revoke_all_button">Revoca VIP</string>
+    <string name="vip_revoke_all_confirm_title">Conferma revoca</string>
+    <string name="vip_revoke_all_confirm_message">Revocare VIP e tornare a Gratuito?</string>
+    <string name="vip_entry_first_install">🎁 Regalo nuova installazione</string>
+    <string name="vip_entry_redeemed">VIP %1$d giorni</string>
+    <string name="vip_success_title">Successo</string>
+    <string name="vip_success_message">VIP è stato attivato.</string>
+    <string name="vip_failed_title">Errore</string>
+    <string name="vip_invalid_key">Chiave VIP non valida.</string>
 </resources>
