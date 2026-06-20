@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.RoyApp
 import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
 import com.mckimquyen.atomicPeriodicTable.adt.ElementAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
@@ -197,8 +198,12 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         }
         binding.navMenuInclude.slidingLayout.addPanelSlideListener(panelSlideListener)
 
-//        createAdInter()
-        AdManager.loadInterstitial(this)
+        // Ensure SDK is fully initialized before loading interstitial.
+        // MainAct can be restored by Android before SplashAct completes init,
+        // causing loadInterstitial to fire before ###init completed.
+        (application as RoyApp).initializeAdsIfNeeded { _, _ ->
+            AdManager.loadInterstitial(this)
+        }
 
         // ===============================================================
         // Back Button Handler (Modern API)
