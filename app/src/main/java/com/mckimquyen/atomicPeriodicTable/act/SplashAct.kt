@@ -166,11 +166,12 @@ class SplashAct : BaseAct() {
             if (adDismissListener == null) {
                 adDismissListener = { goToMain() }
                 app.onFullscreenAdDismissed(adDismissListener!!)
+                // F2: emergency escape — only post once. If ad is somehow stuck for >30s,
+                // force-navigate regardless so user is never permanently stuck on splash.
+                splashTimeoutHandler.postDelayed({
+                    if (!navigatedToMain) goToMain()
+                }, 30_000L)
             }
-            // F2: emergency escape — if the ad is somehow stuck for >30s, force-navigate anyway.
-            splashTimeoutHandler.postDelayed({
-                if (!navigatedToMain) goToMain()
-            }, 30_000L)
             return
         }
         navigatedToMain = true

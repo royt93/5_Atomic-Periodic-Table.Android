@@ -46,11 +46,7 @@ class VipManagementAct : BaseAct() {
         vipPrefs = VipPrefs(this)
         bindListeners()
         bindKeyWatcher()
-        bindUi()
-        // Bug 10: skip pre-loading rewarded ad when user is already VIP
-        if (!AdManager.isVipByKeyActive()) {
-            AdManager.loadRewarded(this)
-        }
+        bindUi()  // bindUi() already calls loadRewarded when !active (see F4 fix)
         playEntryAnimation()
     }
 
