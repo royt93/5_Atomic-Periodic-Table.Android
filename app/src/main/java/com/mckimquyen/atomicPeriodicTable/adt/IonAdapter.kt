@@ -75,15 +75,9 @@ class IonAdapter(
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            // Fixed: Remove redundant first assignment - only use the capitalized version
-            textViewName.text = item.name.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()
-                ) else it.toString()
-            }
+            textViewName.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(context, item.name)
             textViewShort.text = item.short
-            // Optimized: Use string template instead of concatenation
-            textViewCharge.text = "View all ${item.count}"
+            textViewCharge.text = context.getString(R.string.ion_view_all, item.count)
 
             cardView.foreground = ContextCompat.getDrawable(context, R.drawable.shape_toast_card_ripple)
             cardView.isClickable = true

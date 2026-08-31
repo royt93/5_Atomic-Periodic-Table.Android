@@ -189,12 +189,8 @@ class SplashAct : BaseAct() {
     // visible flash from the splash drawable to the app background color on cold start.
     override fun shouldApplyTheme(): Boolean = false
 
-    // Bug 11: SplashAct now extends BaseAct, so attachBaseContext chains correctly:
-    // SplashAct (fontScale) → BaseAct (LocaleHelper) → AppCompatActivity
+    // SplashAct extends BaseAct, so attachBaseContext chains directly to BaseAct (LocaleHelper)
     override fun attachBaseContext(context: Context) {
-        val override = Configuration(context.resources.configuration)
-        override.fontScale = 1.0f
-        applyOverrideConfiguration(override)
         super.attachBaseContext(context)
     }
 

@@ -99,8 +99,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
             val resIDB = resources.getIdentifier(eViewBtn, "id", packageName)
 
             val text = findViewById<TextView>(resID)
-            text.text =
-                item.element.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            text.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(this, item.element)
             val btn = findViewById<TextView>(resIDB)
             val themePref = ThemePref(this)
             val themePrefValue = themePref.getValue()

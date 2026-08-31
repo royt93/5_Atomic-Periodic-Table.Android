@@ -102,7 +102,7 @@
     <string name="facebook">https://www.facebook.com/jlindemanndev</string>
     <string name="homepage">https://www.jlindemann.se/homepage</string>
     <string name="solubility_info_t">Solubility Help</string>
-    <string name="solubility_info_c">"S: Soluble\nSs: Slightly Soluble\nI: Insoluble"</string>
+    <string name="solubility_info_c">\"S: Soluble\nSs: Slightly Soluble\nI: Insoluble\"</string>
     <string name="electrochemical_series">Electrochemical Series</string>
     <string name="electrochemical_series_search">Search for Element</string>
     <string name="data_issue">Data Issue</string>
@@ -115,12 +115,12 @@
     <string name="chip_reactions">Reactions</string>
     <string name="wikipedia_license">Wikipedia Commons</string>
     <string name="wikipedia_license_text">CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL SERVICES.
-        DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM ITS USE.\n\nTHE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE").
+        DISTRIBUTION OF THIS LICENSE DOES NOT CREATE AN ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS INFORMATION ON AN \"AS-IS\" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES REGARDING THE INFORMATION PROVIDED, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM ITS USE.\n\nTHE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE (\"CCPL\" OR \"LICENSE\").
         THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
         BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.</string>
     <string name="sothree_license">Android Sliding Up Panel</string>
-    <string name="sothree_license_text">Copyright 2015 Anton Lopyrev\n\nLicensed under the Apache License, Version 2.0 (the "License");you may not use this file except in compliance with the License.You may obtain a copy of the License at
-    \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for the specific language governing permissions andlimitations under the License.</string>
+    <string name="sothree_license_text">Copyright 2015 Anton Lopyrev\n\nLicensed under the Apache License, Version 2.0 (the \"License\");you may not use this file except in compliance with the License.You may obtain a copy of the License at
+    \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\n   Unless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for the specific language governing permissions andlimitations under the License.</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="calculator">Calculator</string>
     <string name="element">Element</string>
@@ -293,8 +293,8 @@
     <string name="github">Github</string>
     <string name="source_code">Source Code</string>
     <string name="specific_heat_text">-</string>
-    <string name="get_forked_source_code"><u>Get forked Source code</u></string>
-    <string name="get_original_source_code"><u>Get original Source code</u></string>
+    <string name="get_forked_source_code">&lt;u>Get forked Source code&lt;/u></string>
+    <string name="get_original_source_code">&lt;u>Get original Source code&lt;/u></string>
     <string name="_20_tester_for_closed_testing">20 tester for closed testing</string>
     <string name="become_a_tester">Become a tester</string>
     <string name="share_msg">This application is very useful, please download and install to experience</string>
@@ -404,7 +404,7 @@
     <string name="molar_mass_title">Molar Mass Calculator</string>
     <string name="molar_mass_hint">e.g., Al2(SO4)3 or H2O</string>
     <string name="molar_mass_btn">Calculate</string>
-    <string name="molar_mass_result">Molar Mass: %1$.4f g/mol</string>
+    <string name="molar_mass_result" formatted="false">Molar Mass: %1$.4f g/mol</string>
     <string name="molar_mass_composition">Element Composition Breakdown:</string>
     <string name="molar_mass_error">Invalid chemical formula format</string>
     <string name="molar_mass_error_unknown_element">Unknown element: %1$s</string>
@@ -578,5 +578,6 @@
     <string name="vip_invalid_key">Invalid VIP key.</string>
     <string name="vip_ad_unavailable_title">Ad Unavailable</string>
     <string name="vip_ad_unavailable_message">Ad is not available right now. Please check your connection and try again later.</string>
+    <string name="ion_view_all">View all %1$d</string>
 </resources>
 

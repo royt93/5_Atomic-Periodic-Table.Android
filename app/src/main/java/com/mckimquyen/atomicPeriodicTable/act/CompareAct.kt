@@ -173,9 +173,10 @@ class CompareAct : BaseAct() {
 
         filtered.forEach { element ->
             val tv = TextView(this).apply {
-                val displayName = element.element.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                }
+                val displayName = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(
+                    this@CompareAct,
+                    element.element
+                )
                 text = "${element.short}  –  $displayName"
                 textSize = 14f
                 setPadding(
@@ -220,9 +221,7 @@ class CompareAct : BaseAct() {
     }
 
     private fun updatePickerLabel(tv: TextView, elementName: String) {
-        val display = elementName.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-        }
+        val display = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(this, elementName)
         val shortSymbol = allElements.find { it.element == elementName }?.short ?: "?"
         tv.text = "$shortSymbol\n$display"
     }
@@ -238,9 +237,13 @@ class CompareAct : BaseAct() {
         Log.i("CompareAct", "Comparing $element1Name vs $element2Name")
 
         // Convenience lambda for binding a row
-        fun bind(label: String, key1: String, key2: String) {
-            val v1 = json1.optString(key1, "---")
-            val v2 = json2.optString(key2, "---")
+        fun bind(label: String, key1: String, key2: String, isCategory: Boolean = false) {
+            var v1 = json1.optString(key1, "---")
+            var v2 = json2.optString(key2, "---")
+            if (isCategory) {
+                v1 = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, v1)
+                v2 = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, v2)
+            }
             bindCompareRow(label, v1, v2)
         }
 
@@ -250,7 +253,7 @@ class CompareAct : BaseAct() {
         // Populate rows — using all available JSON keys
         bind(getString(R.string.compare_atomic_number), "element_atomic_number", "element_atomic_number")
         bind(getString(R.string.compare_atomic_mass), "element_atomicmass", "element_atomicmass")
-        bind(getString(R.string.compare_group), "element_group", "element_group")
+        bind(getString(R.string.compare_group), "element_group", "element_group", isCategory = true)
         bind(getString(R.string.compare_block), "element_block", "element_block")
         bind(getString(R.string.compare_phase), "element_phase", "element_phase")
         bind(getString(R.string.compare_electronegativity), "element_electronegativty", "element_electronegativty")

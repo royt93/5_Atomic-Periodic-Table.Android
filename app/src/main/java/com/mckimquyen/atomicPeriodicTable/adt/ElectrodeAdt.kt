@@ -47,8 +47,7 @@ class ElectrodeAdt(
             item: Series,
             context: Context,
         ) {
-            // Fixed: Remove redundant first assignment - only use the capitalized version
-            textViewName.text = item.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+            textViewName.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(context, item.name)
             textViewShort.text = item.short
             // Optimized: Use string template instead of concatenation
             textViewVoltage.text = "${item.voltage} (Volt)"

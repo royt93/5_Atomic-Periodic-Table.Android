@@ -183,9 +183,10 @@ abstract class InfoExt : BaseAct() {
             }
 
             //set elements
-            binding.elementTitle.text = element
+            val localizedElementName = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(this, element)
+            binding.elementTitle.text = localizedElementName
             binding.overviewInc.descriptionName.text = description
-            binding.overviewInc.elementName.text = element
+            binding.overviewInc.elementName.text = localizedElementName
             binding.overviewInc.electronsEl.text = sElementElectrons
             binding.overviewInc.elementYear.text = sElementYear
             binding.propertiesInc.elementShellsElectrons.text = elementShellElectrons
@@ -193,7 +194,7 @@ abstract class InfoExt : BaseAct() {
             binding.overviewInc.elementElectrons.text = sElementElectrons
             binding.overviewInc.elementProtons.text = sElementProtons
             binding.overviewInc.elementNeutronsCommon.text = sElementNeutronsCommon
-            binding.overviewInc.elementGroup.text = sElementGroup
+            binding.overviewInc.elementGroup.text = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, sElementGroup)
             binding.temperaturesInc.elementBoilingKelvin.text = sElementBoilingKelvin
             binding.temperaturesInc.elementBoilingCelsius.text = sElementBoilingCelsius
             binding.temperaturesInc.elementBoilingFahrenheit.text = sElementBoilingFahrenheit

@@ -87,7 +87,7 @@
     <string name="facebook">https://www.facebook.com/jlindemanndev</string>
     <string name="homepage">https://www.jlindemann.se/homepage</string>
     <string name="solubility_info_t">Trợ giúp độ tan</string>
-    <string name="solubility_info_c">"S: Tan\nSs: Tan ít\nI: Không tan"</string>
+    <string name="solubility_info_c">\"S: Tan\nSs: Tan ít\nI: Không tan\"</string>
     <string name="electrochemical_series">Dãy điện hoá</string>
     <string name="electrochemical_series_search">Tìm kiếm nguyên tố</string>
     <string name="data_issue">Lỗi dữ liệu</string>
@@ -104,7 +104,7 @@
         TÁC PHẨM ĐƯỢC BẢO VỆ BỞI QUYỀN TÁC GIẢ VÀ/HOẶC LUẬT ÁP DỤNG KHÁC. BẤT KỲ VIỆC SỬ DỤNG TÁC PHẨM NÀO KHÁC VỚI ĐƯỢC ỦY QUYỀN THEO GIẤY PHÉP NÀY HOẶC LUẬT BẢN QUYỀN ĐỀU BỊ CẤM.
         BẰNG VIỆC THỰC HIỆN BẤT KỲ QUYỀN NÀO ĐỐI VỚI TÁC PHẨM ĐƯỢC CUNG CẤP TẠI ĐÂY, BẠN CHẤP NHẬN VÀ ĐỒNG Ý BỊ RÀNG BUỘC BỞI CÁC ĐIỀU KHOẢN CỦA GIẤY PHÉP NÀY.</string>
     <string name="sothree_license">Android Sliding Up Panel</string>
-    <string name="sothree_license_text">Bản quyền 2015 Anton Lopyrev\n\nĐược cấp phép theo Giấy phép Apache, Phiên bản 2.0 ("Giấy phép"); bạn không được sử dụng tệp này trừ khi tuân thủ Giấy phép. Bạn có thể lấy bản sao Giấy phép tại
+    <string name="sothree_license_text">Bản quyền 2015 Anton Lopyrev\n\nĐược cấp phép theo Giấy phép Apache, Phiên bản 2.0 (\"Giấy phép\"); bạn không được sử dụng tệp này trừ khi tuân thủ Giấy phép. Bạn có thể lấy bản sao Giấy phép tại
     \n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\n   Trừ khi luật áp dụng yêu cầu hoặc được đồng ý bằng văn bản, phần mềm được phân phối theo Giấy phép được phân phối trên CƠ SỞ \"NHƯ HIỆN CÓ\", KHÔNG CÓ BẢO ĐẢM HOẶC ĐIỀU KIỆN DƯỚI BẤT KỲ HÌNH THỨC NÀO, dù rõ ràng hay ngụ ý.</string>
     <string name="appwidget_text">VÍ DỤ</string>
     <string name="calculator">Máy tính</string>
@@ -278,8 +278,8 @@
     <string name="github">Github</string>
     <string name="source_code">Mã nguồn</string>
     <string name="specific_heat_text">-</string>
-    <string name="get_forked_source_code"><u>Lấy mã nguồn fork</u></string>
-    <string name="get_original_source_code"><u>Lấy mã nguồn gốc</u></string>
+    <string name="get_forked_source_code">&lt;u>Lấy mã nguồn fork&lt;/u></string>
+    <string name="get_original_source_code">&lt;u>Lấy mã nguồn gốc&lt;/u></string>
     <string name="_20_tester_for_closed_testing">20 người thử nghiệm cho closed testing</string>
     <string name="become_a_tester">Trở thành người thử nghiệm</string>
     <string name="share_msg">Ứng dụng này rất bổ ích, thân mời bạn tải về cài đặt để trải nghiệm</string>
@@ -379,7 +379,7 @@
     <string name="balancer_input_hint">Ví dụ: H2 + O2 = H2O</string>
     <string name="balancer_btn">Cân bằng</string>
     <string name="balancer_result">Phương trình đã cân bằng:</string>
-    <string name="balancer_error_invalid">Định dạng phương trình không hợp lệ. Sử dụng dấu "=" để phân tách chất tham gia và sản phẩm.</string>
+    <string name="balancer_error_invalid">Định dạng phương trình không hợp lệ. Sử dụng dấu \"=\" để phân tách chất tham gia và sản phẩm.</string>
     <string name="balancer_error_unbalanced">Phương trình không thể cân bằng hoặc không có nghiệm nguyên duy nhất.</string>
     <string name="balancer_error_elements">Các nguyên tố ở hai vế phương trình phải trùng khớp.</string>
 
@@ -403,7 +403,7 @@
     <string name="molar_mass_title">Tính khối lượng mol</string>
     <string name="molar_mass_hint">Ví dụ: Al2(SO4)3 hoặc H2O</string>
     <string name="molar_mass_btn">Tính</string>
-    <string name="molar_mass_result">Khối lượng mol: %1$.4f g/mol</string>
+    <string name="molar_mass_result" formatted="false">Khối lượng mol: %1$.4f g/mol</string>
     <string name="molar_mass_composition">Tỷ lệ phần trăm khối lượng:</string>
     <string name="molar_mass_error">Công thức hóa học không hợp lệ</string>
     <string name="molar_mass_error_unknown_element">Không xác định được nguyên tố: %1$s</string>
@@ -577,4 +577,5 @@
     <string name="vip_invalid_key">Mã VIP không hợp lệ.</string>
     <string name="vip_ad_unavailable_title">Quảng cáo không khả dụng</string>
     <string name="vip_ad_unavailable_message">Quảng cáo hiện không có sẵn. Hãy kiểm tra kết nối và thử lại sau.</string>
+    <string name="ion_view_all">Xem tất cả %1$d</string>
 </resources>

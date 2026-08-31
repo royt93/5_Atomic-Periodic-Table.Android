@@ -41,7 +41,7 @@ class VipPrefsTest {
         whenever(mockEditor.remove(any())).doAnswer { inv ->
             store.remove(inv.getArgument<String>(0)); mockEditor
         }
-        whenever(mockEditor.apply()).doReturn(Unit)
+        org.mockito.kotlin.doNothing().whenever(mockEditor).apply()
 
         whenever(mockSp.edit()).doReturn(mockEditor)
         whenever(mockSp.getLong(any(), any())).doAnswer { inv ->

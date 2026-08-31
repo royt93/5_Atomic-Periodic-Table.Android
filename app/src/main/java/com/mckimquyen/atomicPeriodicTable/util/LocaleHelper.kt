@@ -31,7 +31,12 @@ object LocaleHelper {
      */
     fun setLocale(context: Context, languageCode: String): Context {
         Log.i("LocaleHelper", "setLocale: setting to $languageCode")
-        val locale = Locale.forLanguageTag(languageCode.replace("-r", "-"))
+        val locale = when (languageCode) {
+            "in", "id" -> Locale("in")
+            "zh-rTW", "zh-TW" -> Locale("zh", "TW")
+            "pt-rBR", "pt-BR" -> Locale("pt", "BR")
+            else -> Locale.forLanguageTag(languageCode.replace("-r", "-"))
+        }
         Locale.setDefault(locale)
 
         val config = Configuration(context.resources.configuration)

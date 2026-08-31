@@ -51,7 +51,7 @@
     <string name="dict_vdw_radius_title">Bán kính Van der Waals</string>
     <string name="dict_vdw_radius_text">Bán kính Van der Waals của một nguyên tử là bán kính của một hình cầu cứng tưởng tượng đại diện cho khoảng cách tiếp cận gần nhất cho một nguyên tử khác.</string>
     <string name="dict_dark_matter_title">Vật chất tối</string>
-    <string name="dict_dark_matter_text">Vật chất tối là một dạng vật chất được cho là chiếm khoảng 85% vật chất trong vũ trụ và khoảng một phần tư tổng mật độ năng lượng khối lượng của nó hoặc khoảng 2,241×10^−27 kg/m3.</string>
+    <string name="dict_dark_matter_text" formatted="false">Vật chất tối là một dạng vật chất được cho là chiếm khoảng 85% vật chất trong vũ trụ và khoảng một phần tư tổng mật độ năng lượng khối lượng của nó hoặc khoảng 2,241×10^−27 kg/m3.</string>
     <string name="dict_elementary_particle_title">Hạt cơ bản</string>
     <string name="dict_elementary_particle_text">Trong vật lý, hạt cơ bản hay hạt sơ cấp là một hạt không được cấu tạo từ các hạt khác.</string>
     <string name="dict_fats_title">Chất béo</string>

@@ -46,37 +46,12 @@ class ElementInfoAct : InfoExt() {
 
         binding.notesInput.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
                 val isNotEmpty = s?.toString()?.trim()?.isNotEmpty() == true
-                if (binding.notesSaveBtn.isEnabled != isNotEmpty) {
-                    binding.notesSaveBtn.isEnabled = isNotEmpty
-                    if (isNotEmpty) {
-                        // Playful spring scale-up bounce animation
-                        binding.notesSaveBtn.animate()
-                            .alpha(1.0f)
-                            .scaleX(1.1f)
-                            .scaleY(1.1f)
-                            .setDuration(180)
-                            .withEndAction {
-                                binding.notesSaveBtn.animate()
-                                    .scaleX(1.0f)
-                                    .scaleY(1.0f)
-                                    .setDuration(100)
-                                    .start()
-                            }
-                            .start()
-                    } else {
-                        // Smooth scale-down & fade
-                        binding.notesSaveBtn.animate()
-                            .alpha(0.5f)
-                            .scaleX(1.0f)
-                            .scaleY(1.0f)
-                            .setDuration(180)
-                            .start()
-                    }
-                }
+                binding.notesSaveBtn.isEnabled = isNotEmpty
+                binding.notesSaveBtn.alpha = if (isNotEmpty) 1.0f else 0.5f
             }
-            override fun afterTextChanged(s: android.text.Editable?) {}
         })
 
         readJson()
@@ -93,7 +68,7 @@ class ElementInfoAct : InfoExt() {
             val elementSendAndLoadValue = elementSendAndLoadPreference.getValue() ?: ""
             val notesPref = com.mckimquyen.atomicPeriodicTable.pref.NotesPref(this)
             val textToSave = binding.notesInput.text.toString().trim()
-            notesPref.saveNote(elementSendAndLoadValue, textToSave)
+            notesPref.saveNote(elementSendAndLoadValue.lowercase(java.util.Locale.US), textToSave)
             android.widget.Toast.makeText(this, getString(R.string.notes_saved), android.widget.Toast.LENGTH_SHORT).show()
 
             // Clear focus and hide soft keyboard

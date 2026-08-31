@@ -51,7 +51,7 @@
     <string name="dict_vdw_radius_title">范德华半径</string>
     <string name="dict_vdw_radius_text">原子的范德华半径是代表另一个原子最接近距离的想象硬球的半径。</string>
     <string name="dict_dark_matter_title">暗物质</string>
-    <string name="dict_dark_matter_text">暗物质是一种物质形式，被认为约占宇宙物质的 85%，约占其总质能密度的四分之一。</string>
+    <string name="dict_dark_matter_text" formatted="false">暗物质是一种物质形式，被认为约占宇宙物质的 85%，约占其总质能密度的四分之一。</string>
     <string name="dict_elementary_particle_title">基本粒子</string>
     <string name="dict_elementary_particle_text">在物理学中，基本粒子是指不由其他粒子组成的粒子。</string>
     <string name="dict_fats_title">脂肪</string>

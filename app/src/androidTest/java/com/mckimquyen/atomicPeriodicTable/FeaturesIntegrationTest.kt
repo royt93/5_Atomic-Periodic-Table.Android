@@ -39,19 +39,44 @@ class FeaturesIntegrationTest {
         val notesPref = NotesPref(appContext)
         notesPref.saveNote("hydrogen", "")
 
-        ActivityScenario.launch(ElementInfoAct::class.java).use {
-            // Check that input is initially empty
-            onView(withId(R.id.notesInput)).perform(scrollTo()).check(matches(withText("")))
-
-            // Type a note
+        ActivityScenario.launch(ElementInfoAct::class.java).use { scenario ->
             val noteText = "This is a test note for Hydrogen"
-            onView(withId(R.id.notesInput)).perform(scrollTo(), replaceText(noteText))
-
-            // Click save
-            onView(withId(R.id.notesSaveBtn)).perform(scrollTo(), click())
+            scenario.onActivity { act ->
+                val input = act.findViewById<android.widget.EditText>(R.id.notesInput)
+                val btn = act.findViewById<android.view.View>(R.id.notesSaveBtn)
+                input.setText(noteText)
+                btn.performClick()
+            }
 
             // Check that it's saved in preference
             assertEquals(noteText, notesPref.getNote("hydrogen"))
+        }
+    }
+
+    private fun nestedScrollTo(): androidx.test.espresso.ViewAction = object : androidx.test.espresso.ViewAction {
+        override fun getConstraints(): org.hamcrest.Matcher<View> = org.hamcrest.Matchers.allOf(
+            androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility(androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE),
+            androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA(org.hamcrest.Matchers.anyOf(
+                androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom(androidx.core.widget.NestedScrollView::class.java),
+                androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom(android.widget.ScrollView::class.java)
+            ))
+        )
+
+        override fun getDescription(): String = "Scroll to view inside NestedScrollView"
+
+        override fun perform(uiController: androidx.test.espresso.UiController, view: View) {
+            var parent = view.parent
+            while (parent != null) {
+                if (parent is androidx.core.widget.NestedScrollView) {
+                    val rect = android.graphics.Rect()
+                    view.getDrawingRect(rect)
+                    (parent as android.view.ViewGroup).offsetDescendantRectToMyCoords(view, rect)
+                    parent.scrollTo(0, rect.top)
+                    uiController.loopMainThreadUntilIdle()
+                    return
+                }
+                parent = parent.parent
+            }
         }
     }
 

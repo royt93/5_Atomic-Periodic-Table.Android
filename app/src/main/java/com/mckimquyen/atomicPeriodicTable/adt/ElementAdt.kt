@@ -55,8 +55,7 @@ class ElementAdt(
             val searchPreference = SearchPref(con)
             val searchPrefValue = searchPreference.getValue()
 
-            // Fixed: Remove redundant first assignment - only use the capitalized version
-            textViewElement.text = item.element.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            textViewElement.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(con, item.element)
             textViewShort.text = item.short
 
             itemView.foreground =

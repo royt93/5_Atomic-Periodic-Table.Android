@@ -320,9 +320,7 @@
                         app:iconPadding="8dp"
                         app:cornerRadius="100dp"
                         android:textColor="?attr/colorOnPrimary"
-                        android:backgroundTint="?attr/colorPrimary"
-                        android:enabled="false"
-                        android:alpha="0.5" />
+                        android:backgroundTint="?attr/colorPrimary" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

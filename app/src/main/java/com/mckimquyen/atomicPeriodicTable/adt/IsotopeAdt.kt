@@ -47,10 +47,7 @@ class IsotopeAdt(
             action: OnElementClickListener,
             context: Context,
         ) {
-            // Fixed: Remove redundant first assignment - only use the capitalized version
-            textViewElement.text = item.element.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-            }
+            textViewElement.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(context, item.element)
             textViewShort.text = item.short
             textViewNumb.text = item.number.toString()
 
