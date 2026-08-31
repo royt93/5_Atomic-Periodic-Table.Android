@@ -41,9 +41,15 @@ Sau khi Sprint 1 xong, audit lại toàn bộ + bổ sung test + smoke test th�
 2. **Nghiêm trọng nhất:** tôi dùng `Write` tạo "file mới" cho `QuizActTest.kt` nhưng thực ra file đã tồn tại sẵn với 5 test — bị ghi đè mất. Review bắt được, đã khôi phục đủ 5 test gốc + giữ lại 1 test mới có giá trị (gộp, không trùng lặp).
 3. `IonModelTest` có lỗ hổng: im lặng bỏ qua thay vì fail khi tên nguyên tố không khớp giữa 2 model → sửa thành fail rõ ràng.
 
-**Vì sao không phải 10/10:** (a) sự cố ghi đè file test ở mục 2 — lẽ ra không nên xảy ra, chỉ được cứu nhờ có bước review độc lập, không phải vì tôi tự phát hiện; (b) FIX-005 chưa loại trừ được pref riêng của SDK `AdManager` khỏi backup (không rõ tên file, ngoài tầm kiểm soát code trong repo); (c) phát hiện thêm 2 bug môi trường pre-existing (FIX-038/039) qua smoke test thật — tốt vì tìm ra, nhưng chưa fix (ngoài scope 7 P0).
+**Vì sao không phải 10/10:** (a) sự cố ghi đè file test ở mục 2 — lẽ ra không nên xảy ra, chỉ được cứu nhờ có bước review độc lập, không phải vì tôi tự phát hiện; (b) FIX-005 chưa loại trừ được pref riêng của SDK `AdManager` khỏi backup (không rõ tên file, ngoài tầm kiểm soát code trong repo).
 
-**Kết luận: 9.3/10 → đạt ngưỡng >9, tiến hành push.**
+**Kết luận: 9.3/10 → đạt ngưỡng >9, đã push.**
+
+## Cập nhật (2026-09-01, sau khi push) — FIX-038/039 đã xử lý xong
+
+Theo yêu cầu, điều tra và xử lý dứt điểm 2 phát hiện mới:
+- **FIX-038 ✅ Fixed** — root cause thật: `ViewActions.scrollTo()` trên nút gần đáy màn hình tạo swipe bị hệ điều hành hiểu nhầm thành cử chỉ "vuốt về Home" (gesture navigation), đẩy app ra nền giữa chừng test. Sửa bằng cách cuộn `NestedScrollView` trực tiếp bằng code (không tạo touch event). Riêng test `emptyKey_showsFailedDialog` hoá ra không phải flaky mà là **test sai giả định** — `btnRedeemVip` bị disable khi field rỗng nên click không bao giờ gọi tới handler, sửa lại thành assert đúng hành vi thật (`emptyKey_redeemButtonDisabled`). Verify: 38/38 test pass trên cả 2 thiết bị.
+- **FIX-039 ❌ Không phải bug** — đọc lại code xác nhận `checkAnswer()` đã cancel `countDownTimer` ngay dòng đầu, không có race. Lần fail quan sát được chỉ xảy ra khi chạy đồng thời 107 test trên 2 thiết bị (quá tải hệ thống làm thời gian thực trôi qua rất lâu, cơ chế đếm giờ 15s/câu tự nhiên advance thêm — đúng thiết kế). Không sửa code vì không có gì sai.
 
 ## Độ tin cậy — cách đọc backlog này
 

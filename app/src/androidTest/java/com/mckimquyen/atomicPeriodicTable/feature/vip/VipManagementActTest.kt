@@ -1,6 +1,8 @@
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
 import android.content.Context
+import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -95,11 +97,15 @@ class VipManagementActTest {
         }
     }
 
+    // FIX-038: this used to click btnRedeemVip while the key field was empty and expect
+    // the "failed" dialog — but `bindKeyWatcher()` sets `btnRedeemVip.isEnabled = false`
+    // until the field has text, so the click never reaches redeemInputKey() at all; the
+    // dialog can never appear here on any environment. The real, reachable behavior is
+    // that the button stays disabled — that's what's worth asserting.
     @Test
-    fun emptyKey_showsFailedDialog() {
+    fun emptyKey_redeemButtonDisabled() {
         ActivityScenario.launch(VipManagementAct::class.java).use {
-            onView(withId(R.id.btnRedeemVip)).perform(click())
-            onView(withText(R.string.vip_failed_title)).check(matches(isDisplayed()))
+            onView(withId(R.id.btnRedeemVip)).check(matches(not(isEnabled())))
         }
     }
 
@@ -153,18 +159,18 @@ class VipManagementActTest {
 
     @Test
     fun revoke_showsConfirmDialog() {
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
             activateVip30dAndDismiss()
-            onView(withId(R.id.btnRevokeVip)).perform(click())
+            clickRevokeButton(scenario)
             onView(withText(R.string.vip_revoke_all_confirm_title)).check(matches(isDisplayed()))
         }
     }
 
     @Test
     fun revoke_confirmed_vipCardHidden() {
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
             activateVip30dAndDismiss()
-            onView(withId(R.id.btnRevokeVip)).perform(click())
+            clickRevokeButton(scenario)
             onView(withText(R.string.confirm)).perform(click())
             onView(withId(R.id.activeVipCard)).check(matches(not(isDisplayed())))
         }
@@ -172,9 +178,9 @@ class VipManagementActTest {
 
     @Test
     fun revoke_confirmed_progressBarHidden() {
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
             activateVip30dAndDismiss()
-            onView(withId(R.id.btnRevokeVip)).perform(click())
+            clickRevokeButton(scenario)
             onView(withText(R.string.confirm)).perform(click())
             onView(withId(R.id.progressVip)).check(matches(not(isDisplayed())))
         }
@@ -182,9 +188,9 @@ class VipManagementActTest {
 
     @Test
     fun revoke_cancelled_vipCardStillVisible() {
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
             activateVip30dAndDismiss()
-            onView(withId(R.id.btnRevokeVip)).perform(click())
+            clickRevokeButton(scenario)
             onView(withText(R.string.cancel)).perform(click())
             onView(withId(R.id.activeVipCard)).check(matches(isDisplayed()))
         }
@@ -288,5 +294,18 @@ class VipManagementActTest {
     private fun activateVip30dAndDismiss() {
         enterKeyAndActivate(VipKeys.VIP_30D_KEY)
         dismissDialog()
+    }
+
+    // FIX-038: btnRevokeVip sits near the bottom of a NestedScrollView. Espresso's
+    // ViewActions.scrollTo() synthesizes a swipe gesture to get there — on real devices
+    // using gesture navigation, a swipe that close to the bottom edge can be intercepted
+    // by the OS as "swipe up to go Home" instead of being delivered to the app, which
+    // sent the whole Activity to background mid-test. Scrolling programmatically (no
+    // touch event at all) avoids the system gesture area entirely.
+    private fun clickRevokeButton(scenario: ActivityScenario<VipManagementAct>) {
+        scenario.onActivity { activity ->
+            activity.findViewById<NestedScrollView>(R.id.scrollVip).fullScroll(View.FOCUS_DOWN)
+        }
+        onView(withId(R.id.btnRevokeVip)).perform(click())
     }
 }

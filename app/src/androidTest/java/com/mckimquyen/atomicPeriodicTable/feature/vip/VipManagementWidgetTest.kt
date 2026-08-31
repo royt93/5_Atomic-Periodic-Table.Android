@@ -1,6 +1,8 @@
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
 import android.content.Context
+import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -175,7 +177,12 @@ class VipManagementWidgetTest {
     @Test
     fun vipActive_afterRevokeConfirmed_watchAdButtonIsEnabled() {
         AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
+            // FIX-038: scroll btnRevokeVip into view programmatically (no swipe gesture)
+            // before clicking — see VipManagementActTest.clickRevokeButton() for why.
+            scenario.onActivity { activity ->
+                activity.findViewById<NestedScrollView>(R.id.scrollVip).fullScroll(View.FOCUS_DOWN)
+            }
             onView(withId(R.id.btnRevokeVip)).perform(click())
             onView(withText(R.string.confirm)).perform(click())
             onView(withId(R.id.btnWatchAdVip)).check(matches(isEnabled()))
