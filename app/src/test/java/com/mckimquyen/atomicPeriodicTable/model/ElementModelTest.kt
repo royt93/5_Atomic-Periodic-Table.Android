@@ -51,4 +51,40 @@ class ElementModelTest {
             assertEquals("Thứ tự nguyên tố bị sai ở chỉ mục $i", i + 1, elements[i].number)
         }
     }
+
+    // Regression guard for FIX-001: Platinum (78) was assigned "Pa", colliding with
+    // Protactinium (91). A symbol must map back to exactly one element.
+    @Test
+    fun testAllElementSymbolsAreUnique() {
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+
+        val bySymbol = elements.groupBy { it.short }
+        val duplicates = bySymbol.filterValues { it.size > 1 }
+            .mapValues { (_, dupes) -> dupes.map { it.element } }
+
+        assertTrue(
+            "Symbol trùng lặp giữa các nguyên tố (mỗi symbol chỉ được gán cho đúng 1 nguyên tố): $duplicates",
+            duplicates.isEmpty()
+        )
+        assertEquals(118, bySymbol.size)
+    }
+
+    @Test
+    fun testPlatinumSymbolIsPt() {
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+        val platinum = elements.first { it.number == 78 }
+        assertEquals("platinum", platinum.element)
+        assertEquals("Pt", platinum.short)
+    }
+
+    @Test
+    fun testProtactiniumSymbolIsPa() {
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+        val protactinium = elements.first { it.number == 91 }
+        assertEquals("protactinium", protactinium.element)
+        assertEquals("Pa", protactinium.short)
+    }
 }

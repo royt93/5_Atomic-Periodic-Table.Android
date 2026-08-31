@@ -422,6 +422,8 @@
     <string name="vip_revoke_all_button">Revocar VIP</string>
     <string name="vip_revoke_all_confirm_title">Confirmar revocación</string>
     <string name="vip_revoke_all_confirm_message">¿Revocar VIP y volver a Gratis?</string>
+    <string name="vip_redeem_replace_confirm_title">¿Reemplazar VIP?</string>
+    <string name="vip_redeem_replace_confirm_message">Ya tienes VIP activo. Canjear este código restablecerá tu VIP a %1$d día(s) a partir de ahora en lugar de extenderlo. ¿Continuar?</string>
     <string name="vip_entry_first_install">🎁 Regalo de nueva instalación</string>
     <string name="vip_entry_redeemed">VIP %1$d días</string>
     <string name="vip_success_title">Éxito</string>

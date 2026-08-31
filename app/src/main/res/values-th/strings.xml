@@ -422,6 +422,8 @@
     <string name="vip_revoke_all_button">ยกเลิก VIP</string>
     <string name="vip_revoke_all_confirm_title">ยืนยันการยกเลิก</string>
     <string name="vip_revoke_all_confirm_message">ยกเลิก VIP และกลับสู่ฟรี?</string>
+    <string name="vip_redeem_replace_confirm_title">แทนที่ VIP?</string>
+    <string name="vip_redeem_replace_confirm_message">คุณมี VIP ที่ใช้งานอยู่แล้ว การใช้รหัสนี้จะรีเซ็ต VIP ของคุณเป็น %1$d วันนับจากนี้แทนที่จะขยายเวลา ต้องการดำเนินการต่อหรือไม่?</string>
     <string name="vip_entry_first_install">🎁 ของขวัญการติดตั้งใหม่</string>
     <string name="vip_entry_redeemed">VIP %1$d วัน</string>
     <string name="vip_success_title">สำเร็จ</string>

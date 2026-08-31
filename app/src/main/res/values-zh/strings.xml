@@ -440,6 +440,8 @@
     <string name="vip_revoke_all_button">撤销VIP</string>
     <string name="vip_revoke_all_confirm_title">确认撤销</string>
     <string name="vip_revoke_all_confirm_message">撤销VIP并返回免费版？</string>
+    <string name="vip_redeem_replace_confirm_title">替换VIP？</string>
+    <string name="vip_redeem_replace_confirm_message">您已经拥有有效的VIP。兑换此代码将把您的VIP重置为从现在起%1$d天，而不是延长时间。是否继续？</string>
     <string name="vip_entry_first_install">🎁 新安装礼物</string>
     <string name="vip_entry_redeemed">VIP %1$d天</string>
     <string name="vip_success_title">成功</string>

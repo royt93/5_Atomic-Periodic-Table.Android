@@ -44,6 +44,7 @@ class QuizAct : BaseAct() {
     private var gradientAnimator: ValueAnimator? = null
     private var restartPulseAnimator: ValueAnimator? = null
     private var currentGradientIndex = 0
+    private var nextQuestionRunnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -529,10 +530,7 @@ class QuizAct : BaseAct() {
         }
 
         // Delay proceed
-        binding.root.postDelayed({
-            currentQuestionIndex++
-            generateQuestion()
-        }, 1500)
+        scheduleNextQuestion()
     }
 
     private fun animateBounce(view: View) {
@@ -715,10 +713,18 @@ class QuizAct : BaseAct() {
             }
         }
 
-        binding.root.postDelayed({
+        scheduleNextQuestion()
+    }
+
+    // FIX-006: shared by checkAnswer() and handleTimesUp() so the cancel-then-reschedule
+    // logic only exists in one place. Cancelling any pending callback first also protects
+    // against double-scheduling if both paths could ever fire for the same question.
+    private fun scheduleNextQuestion() {
+        nextQuestionRunnable?.let { binding.root.removeCallbacks(it) }
+        nextQuestionRunnable = Runnable {
             currentQuestionIndex++
             generateQuestion()
-        }, 1500)
+        }.also { binding.root.postDelayed(it, 1500) }
     }
 
     private fun getColorFromAttr(attr: Int): Int {
@@ -728,6 +734,7 @@ class QuizAct : BaseAct() {
     }
 
     override fun onDestroy() {
+        nextQuestionRunnable?.let { binding.root.removeCallbacks(it) }
         countDownTimer?.cancel()
         gradientAnimator?.cancel()
         restartPulseAnimator?.cancel()

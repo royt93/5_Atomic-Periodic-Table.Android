@@ -79,7 +79,7 @@ object ElementModel {
         elements.add(Element("rhenium", "Re", 75, 1.9, 4))
         elements.add(Element(element = "osmium", short = "Os", number = 76, electro = 2.2, isotopes = 4))
         elements.add(Element("iridium", "Ir", 77, 2.20, 4))
-        elements.add(Element("platinum", "Pa", 78, 2.28, 8))
+        elements.add(Element("platinum", "Pt", 78, 2.28, 8))
         elements.add(Element("gold", "Au", 79, 2.54, 3))
         elements.add(Element("mercury", "Hg", 80, 2.00, 5))
         elements.add(Element("thallium", "Tl", 81, 1.62, 3))

@@ -155,6 +155,35 @@ class FeaturesIntegrationTest {
         }
     }
 
+    // Regression guard for FIX-001: ElementWeightCache keys mass by symbol
+    // (`cache[el.short] = mass`) — before the fix, Platinum(78) and Protactinium(91)
+    // both used symbol "Pa", so the later entry silently overwrote the earlier one and
+    // "Pt" had NO entry in the cache at all. This proves the real end-to-end pipeline
+    // (JSON asset -> ElementWeightCache -> Calculator UI) now resolves "Pt" correctly,
+    // not just the in-memory ElementModel list.
+    @Test
+    fun testMolarMassCalculator_platinum() {
+        ActivityScenario.launch(CalculatorAct::class.java).use {
+            onView(withId(R.id.calcInput)).perform(replaceText("Pt"))
+            onView(withId(R.id.calcBtn)).perform(click())
+            onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("195.08"), containsString("195,08")))))
+        }
+    }
+
+    // Regression guard for FIX-002: Palladium was keyed under "Ph" (not a real chemical
+    // symbol) in ElementModel/IonModel, so ElementWeightCache never had a "Pd" entry and
+    // formulas containing real Palladium ("Pd") would fail to resolve.
+    @Test
+    fun testMolarMassCalculator_palladium() {
+        ActivityScenario.launch(CalculatorAct::class.java).use {
+            onView(withId(R.id.calcInput)).perform(replaceText("Pd"))
+            onView(withId(R.id.calcBtn)).perform(click())
+            onView(withId(R.id.calcResultCard)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+            onView(withId(R.id.calcResultText)).check(matches(withText(anyOf(containsString("106.42"), containsString("106,42")))))
+        }
+    }
+
     @Test
     fun testQuizActivity() {
         ActivityScenario.launch(QuizAct::class.java).use {

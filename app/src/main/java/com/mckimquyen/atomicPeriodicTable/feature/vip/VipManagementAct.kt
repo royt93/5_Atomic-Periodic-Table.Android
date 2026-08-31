@@ -197,8 +197,29 @@ class VipManagementAct : BaseAct() {
             showMessage(R.string.vip_failed_title, R.string.vip_invalid_key)
             return
         }
+        // FIX-007: redeeming while VIP is already active must not silently shorten the
+        // remaining entitlement — ask for confirmation if the new key grants less time.
+        if (AdManager.isVipByKeyActive()) {
+            val remainingMs = AdManager.getVipByKeyExpiry() - System.currentTimeMillis()
+            val newDurationMs = days.toLong() * 24L * 60L * 60L * 1000L
+            if (remainingMs > newDurationMs) {
+                confirmReplaceShorterVip(days)
+                return
+            }
+        }
         // Bug 8: SDK validates against a single vipKeySecret — always pass VIP_SECRET
         activateVip(AdKeys.VIP_SECRET, days)
+    }
+
+    private fun confirmReplaceShorterVip(days: Int) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.vip_redeem_replace_confirm_title)
+            .setMessage(getString(R.string.vip_redeem_replace_confirm_message, days))
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.confirm) { _, _ ->
+                activateVip(AdKeys.VIP_SECRET, days)
+            }
+            .show()
     }
 
     private fun showRewardedForVip() {

@@ -6,6 +6,8 @@
 <full-backup-content>
     <!-- Include app preferences -->
     <include domain="sharedpref" path="." />
+    <!-- VIP entitlement metadata must not be restorable via backup/transfer (FIX-005) -->
+    <exclude domain="sharedpref" path="vip_screen_prefs.xml" />
 
     <!-- Include database files -->
     <include domain="database" path="." />

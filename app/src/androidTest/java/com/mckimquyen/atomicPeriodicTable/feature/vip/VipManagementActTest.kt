@@ -1,6 +1,8 @@
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
+import android.content.Context
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
@@ -28,9 +30,13 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class VipManagementActTest {
 
+    private val ctx: Context get() = ApplicationProvider.getApplicationContext()
+
     @After
     fun tearDown() {
         AdManager.clearVipByKey()
+        VipPrefs(ctx).clearGrantedAtMs()
+        VipPrefs(ctx).clearUserRedeemed()
     }
 
     // ---- màn hình mở ở trạng thái free ----
@@ -211,6 +217,59 @@ class VipManagementActTest {
             enterKeyAndActivate(VipKeys.VIP_3D_KEY)
             dismissDialog()
             onView(withId(R.id.btnRevokeVip)).check(matches(isEnabled()))
+        }
+    }
+
+    // ---- FIX-007: redeem while VIP already active must not silently shorten it ----
+
+    @Test
+    fun redeemShorterKeyWhileActive_showsReplaceConfirmDialog() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            activateVip30dAndDismiss()
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            onView(withText(R.string.vip_redeem_replace_confirm_title)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun redeemShorterKeyWhileActive_cancelled_keepsThirtyDaysMetadata() {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
+            activateVip30dAndDismiss()
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            onView(withText(R.string.cancel)).perform(click())
+
+            scenario.onActivity { activity ->
+                val days = VipPrefs(activity).getActivatedDays()
+                assert(days == 30) { "Cancel phải giữ nguyên 30 ngày, hiện là $days" }
+            }
+        }
+    }
+
+    @Test
+    fun redeemShorterKeyWhileActive_confirmed_appliesThreeDays() {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
+            activateVip30dAndDismiss()
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            onView(withText(R.string.confirm)).perform(click())
+            onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
+            dismissDialog()
+
+            scenario.onActivity { activity ->
+                val days = VipPrefs(activity).getActivatedDays()
+                assert(days == 3) { "Confirm phải đặt lại thành 3 ngày, hiện là $days" }
+            }
+        }
+    }
+
+    @Test
+    fun redeemLongerKeyWhileActive_extendsWithoutConfirmDialog() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            dismissDialog()
+            // Redeeming a LONGER key while active is an extension, not a shortening —
+            // must go straight to success, no replace-confirm dialog.
+            enterKeyAndActivate(VipKeys.VIP_30D_KEY)
+            onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
         }
     }
 

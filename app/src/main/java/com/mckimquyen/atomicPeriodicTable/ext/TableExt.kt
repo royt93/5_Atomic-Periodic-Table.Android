@@ -79,8 +79,6 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
         return insets
     }
 
-    private var elementList = ArrayList<Element>()
-
     private fun closeHover() {
         Utils.fadeOutAnim(binding.hoverBackground, 200)
         Utils.fadeOutAnim(binding.hoverMenuInclude.root, 300)
@@ -145,7 +143,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     @SuppressLint("DiscouragedApi")
     fun initBoiling(list: ArrayList<Element>) {
         boilingHandler = Handler(Looper.getMainLooper())
-        initName(elementList)
+        initName(list)
         closeHover()
         boilingHandler?.postDelayed({
             for (item in list) {
@@ -179,7 +177,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     @SuppressLint("DiscouragedApi")
     fun initMelting(list: ArrayList<Element>) {
         meltingHandler = Handler(Looper.getMainLooper())
-        initName(elementList)
+        initName(list)
         closeHover()
         meltingHandler?.postDelayed({
             for (item in list) {
@@ -211,7 +209,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     @SuppressLint("DiscouragedApi")
     fun initPhase(list: ArrayList<Element>) {
         phaseHandler = Handler(Looper.getMainLooper())
-        initName(elementList)
+        initName(list)
         closeHover()
         phaseHandler?.postDelayed({
             for (item in list) {
@@ -240,7 +238,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     @SuppressLint("DiscouragedApi")
     fun initYear(list: ArrayList<Element>) {
         yearHandler = Handler(Looper.getMainLooper())
-        initName(elementList)
+        initName(list)
         closeHover()
         yearHandler?.postDelayed({
             for (item in list) {
@@ -269,7 +267,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     @SuppressLint("DiscouragedApi")
     fun initElectro(list: ArrayList<Element>) {
         electroHandler = Handler(Looper.getMainLooper())
-        initName(elementList)
+        initName(list)
         closeHover()
         electroHandler?.postDelayed({
             for (item in list) {

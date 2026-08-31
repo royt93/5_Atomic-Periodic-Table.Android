@@ -1,6 +1,5 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -71,5 +70,23 @@ class QuizActTest {
             Thread.sleep(2000)
             onView(withId(R.id.quizProgress)).check(matches(withText(containsString("2/10"))))
         }
+    }
+
+    // Regression guard for FIX-006: checkAnswer()/handleTimesUp() schedule a 1500ms
+    // postDelayed(currentQuestionIndex++; generateQuestion()) that used to keep running
+    // after the Activity was destroyed. This test destroys the Activity immediately after
+    // answering and waits past the 1500ms window — before the fix this could touch
+    // `binding`/animators of a dead Activity from the main Looper; after the fix the
+    // callback is removed in onDestroy() and never fires. There is no direct way to
+    // assert "the callback did not run" from outside the Activity, so this is a
+    // no-crash / no-leaked-callback smoke test rather than a precise state assertion.
+    @Test
+    fun answerQuestion_thenDestroyImmediately_noDelayedCallbackCrash() {
+        val scenario = ActivityScenario.launch(QuizAct::class.java)
+        onView(withId(R.id.option1Card)).perform(click())
+        scenario.close()
+        Thread.sleep(2000)
+        // Reaching this line without the instrumentation process crashing/ANRing
+        // is the pass condition.
     }
 }

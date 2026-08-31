@@ -7,6 +7,8 @@
     <cloud-backup>
         <!-- Include app preferences in cloud backup -->
         <include domain="sharedpref" path="." />
+        <!-- VIP entitlement metadata must not be restorable via backup/transfer (FIX-005) -->
+        <exclude domain="sharedpref" path="vip_screen_prefs.xml" />
 
         <!-- Include database files in cloud backup -->
         <include domain="database" path="." />
@@ -15,6 +17,8 @@
     <device-transfer>
         <!-- Include app preferences in device transfer -->
         <include domain="sharedpref" path="." />
+        <!-- VIP entitlement metadata must not be restorable via backup/transfer (FIX-005) -->
+        <exclude domain="sharedpref" path="vip_screen_prefs.xml" />
 
         <!-- Include database files in device transfer -->
         <include domain="database" path="." />

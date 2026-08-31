@@ -18,7 +18,7 @@ object SeriesModel {
         series.add(Series("nickel", -0.25, "2+", "Ni"))
         series.add(Series("tin", -0.13, "2+", "Sn"))
         series.add(Series("lead", -0.126, "2+", "Pb"))
-        series.add(Series("copper", -0.159, "2+", "Cu"))
+        series.add(Series("copper", +0.34, "2+", "Cu"))
         series.add(Series("silver", +0.7996, "+", "Ag"))
         series.add(Series("mercury", +0.85, "2+", "Hg"))
         series.add(Series("platinum", +1.188, "2+", "Pt"))
