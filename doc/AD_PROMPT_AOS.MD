@@ -16,7 +16,7 @@
 | Build variant phải xanh (release) | `<assemble{Flavor}Release>` |
 | Provider chính (active runtime) | `AppLovin MAX` |
 | Provider fallback | `AdMob` (chỉ active khi `BuildConfig.IS_ENABLE_ADMOB=true`) |
-| AppLovin SDK key | `e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt` |
+| AppLovin SDK key | `<private:DEBUG_APPLOVIN_SDK_KEY>` |
 | AppLovin banner ID | `<hỏi user — dừng nếu thiếu>` |
 | AppLovin interstitial ID | `<hỏi user — dừng nếu thiếu>` |
 | AppLovin app open ID | `<hỏi user — dừng nếu thiếu>` |
@@ -25,8 +25,8 @@
 | AdMob interstitial ID | `<hỏi user — dừng nếu thiếu>` |
 | AdMob app open ID | `<hỏi user — dừng nếu thiếu>` |
 | AdMob rewarded ID | `<hỏi user — dừng nếu thiếu>` |
-| VIP key 30 ngày (plain) | `9fA0q7eN!27cLx04@21993Y2u0I7#Q0` |
-| VIP key 3 ngày (plain) | `eQ7@93L0f!2Y2707xN04021993u0I#2aK` |
+| VIP key 30 ngày (plain) | `<private:VIP_30D_KEY>` |
+| VIP key 3 ngày (plain) | `<private:VIP_3D_KEY>` |
 | Mức che giấu VIP key | Base64 hardcode (AI tự encode plain → Base64 khi compile vào code) |
 | Privacy Policy URL | `<hỏi user — dừng nếu thiếu>` (sẽ nhúng vào VIP screen footer + consent dialog) |
 

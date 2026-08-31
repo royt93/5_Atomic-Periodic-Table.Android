@@ -8,6 +8,12 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 
 ### 1.0 Ad SDK 1.1.5 and VIP Management
 *   **Purpose**: Migrates ads to `com.github.royt93:AdmobApplovinWrapper:1.1.5` with AppLovin MAX as the active runtime provider and AdMob as configured fallback.
+*   **✅ Implemented — Private build configuration**:
+    *   Signing credentials, AdMob/AppLovin identifiers, and both VIP keys are maintained in the single private `com.mckimquyen.atomicPeriodicTable/ads.properties` file in `royt93/myKeyStore`.
+    *   Gradle loads the local private file, supports `ATOMIC_PERIODIC_TABLE_SECRETS_FILE` for path overrides, and fails fast when the file, keystore, or a required property is missing.
+    *   The public project ignores local secret copies and no longer stores the release keystore, signing credentials, or encoded VIP keys in its current tree.
+    *   Audit passed: both release variants assemble and verify with the original signing certificate; all 48 `AdKeys`/`VipKeys` checks pass across the tested variants. The unrelated full suite still has 11 pre-existing `VipPrefsTest` Mockito failures at line 44.
+    *   Security decision: the existing public Git history is intentionally not rewritten, and the private backup repository intentionally stores plaintext. These remain accepted residual risks.
 *   **Integration**:
     *   `RoyApp` builds a complete `AdSdkConfig`, including AppLovin SDK key, banner/interstitial/app-open/rewarded IDs, AdMob fallback IDs, `AdSafetyLimits`, and VIP secret.
     *   `SplashAct` gates SDK initialization and splash ad warmup behind UMP consent via `AdManager.requestConsentInfoUpdate`.
@@ -15,7 +21,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
     *   Interstitial remains limited to the existing element-click navigation path in `MainAct`.
 *   **VIP UI**:
     *   `VipManagementAct` is reachable from both Settings and the Main bottom bar.
-    *   Supports Base64-obfuscated 30-day and 3-day key validation, rewarded 3-day activation, active VIP card, elapsed progress, countdown, revoke, disabled future purchase buttons, and Privacy Policy footer.
+    *   Supports private BuildConfig-injected 30-day and 3-day key validation, rewarded 3-day activation, active VIP card, elapsed progress, countdown, revoke, disabled future purchase buttons, and Privacy Policy footer.
     *   The SDK accepts only one configured VIP secret, so validated 3-day grants call the configured VIP secret with a 3-day duration.
 *   **Memory Safety**:
     *   VIP countdown uses `CountDownTimer` and cancels in `onDestroy`.

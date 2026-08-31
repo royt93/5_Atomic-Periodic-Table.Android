@@ -1,8 +1,10 @@
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
+import com.mckimquyen.atomicPeriodicTable.BuildConfig
+
 object VipKeys {
-    val VIP_30D_KEY: String by lazy { decode(VIP_30D_B64) }
-    val VIP_3D_KEY: String by lazy { decode(VIP_3D_B64) }
+    val VIP_30D_KEY: String get() = BuildConfig.VIP_30D_KEY
+    val VIP_3D_KEY: String get() = BuildConfig.VIP_3D_KEY
 
     private val keyToDays: Map<String, Int> by lazy {
         mapOf(
@@ -12,10 +14,4 @@ object VipKeys {
     }
 
     fun lookupDays(rawInput: String): Int? = keyToDays[rawInput.trim()]
-
-    private fun decode(value: String): String =
-        String(android.util.Base64.decode(value, android.util.Base64.NO_WRAP))
-
-    private const val VIP_30D_B64 = "OWZBMHE3ZU4hMjdjTHgwNEAyMTk5M1kydTBJNyNRMA=="
-    private const val VIP_3D_B64 = "ZVE3QDkzTDBmITJZMjcwN3hOMDQwMjE5OTN1MEkjMmFL"
 }

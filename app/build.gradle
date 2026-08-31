@@ -4,6 +4,37 @@ apply plugin: 'kotlin-android'
 // COMPLETED: All activities and extension classes migrated to ViewBinding
 // Now using Kotlin 2.0.21 with full ViewBinding support
 
+def secretsPath = System.getenv("ATOMIC_PERIODIC_TABLE_SECRETS_FILE") ?:
+        "/Users/loitran/AndroidStudioProjects/@mckimquyen/myKeyStore/com.mckimquyen.atomicPeriodicTable/ads.properties"
+def secretsFile = file(secretsPath)
+if (!secretsFile.isFile()) {
+    throw new GradleException(
+            "Missing private configuration: ${secretsFile}. " +
+                    "Clone royt93/myKeyStore or set ATOMIC_PERIODIC_TABLE_SECRETS_FILE."
+    )
+}
+
+def secrets = new Properties()
+secretsFile.withInputStream { secrets.load(it) }
+
+def requireSecret = { String name ->
+    def value = secrets.getProperty(name)
+    if (value == null || value.isEmpty()) {
+        throw new GradleException("Missing required key '${name}' in ${secretsFile}")
+    }
+    value
+}
+
+def buildConfigSecret = { String name ->
+    def value = requireSecret(name)
+    '"' + value.replace('\\', '\\\\').replace('"', '\\"') + '"'
+}
+
+def releaseKeystoreFile = new File(secretsFile.parentFile, requireSecret("KEYSTORE_FILE"))
+if (!releaseKeystoreFile.isFile()) {
+    throw new GradleException("Missing release keystore: ${releaseKeystoreFile}")
+}
+
 android {
     compileSdkVersion 37
 
@@ -16,6 +47,9 @@ android {
         versionName "2026.09.01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "VIP_30D_KEY", buildConfigSecret("VIP_30D_KEY")
+        buildConfigField "String", "VIP_3D_KEY", buildConfigSecret("VIP_3D_KEY")
+
         // Vector drawable support for API < 21
         vectorDrawables.useSupportLibrary = true
 
@@ -26,33 +60,33 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "ADMOB_BANNER_ID", "\"ca-app-pub-3940256099942544/6300978111\""
-            buildConfigField "String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-3940256099942544/1033173712\""
-            buildConfigField "String", "ADMOB_APP_OPEN_ID", "\"ca-app-pub-3940256099942544/9257395921\""
-            buildConfigField "String", "ADMOB_REWARDED_ID", "\"ca-app-pub-3940256099942544/5224354917\""
+            buildConfigField "String", "ADMOB_BANNER_ID", buildConfigSecret("DEBUG_ADMOB_BANNER_ID")
+            buildConfigField "String", "ADMOB_INTERSTITIAL_ID", buildConfigSecret("DEBUG_ADMOB_INTERSTITIAL_ID")
+            buildConfigField "String", "ADMOB_APP_OPEN_ID", buildConfigSecret("DEBUG_ADMOB_APP_OPEN_ID")
+            buildConfigField "String", "ADMOB_REWARDED_ID", buildConfigSecret("DEBUG_ADMOB_REWARDED_ID")
 
-            buildConfigField "String", "APPLOVIN_SDK_KEY", "\"e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt\""
-            buildConfigField "String", "APPLOVIN_BANNER_ID", "\"7c47d522e938927b\""
-            buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", "\"fca03a66d93f71df\""
-            buildConfigField "String", "APPLOVIN_APP_OPEN_ID", "\"d0c74bfa67df7491\""
-            buildConfigField "String", "APPLOVIN_REWARDED_ID", "\"197bb44da9ccbe62\""
+            buildConfigField "String", "APPLOVIN_SDK_KEY", buildConfigSecret("DEBUG_APPLOVIN_SDK_KEY")
+            buildConfigField "String", "APPLOVIN_BANNER_ID", buildConfigSecret("DEBUG_APPLOVIN_BANNER_ID")
+            buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", buildConfigSecret("DEBUG_APPLOVIN_INTERSTITIAL_ID")
+            buildConfigField "String", "APPLOVIN_APP_OPEN_ID", buildConfigSecret("DEBUG_APPLOVIN_APP_OPEN_ID")
+            buildConfigField "String", "APPLOVIN_REWARDED_ID", buildConfigSecret("DEBUG_APPLOVIN_REWARDED_ID")
             buildConfigField "Boolean", "IS_ENABLE_ADMOB", "false"
             buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f\""
         }
 
         release {
             // nhớ check APPLICATION_ID trong manifest
-            buildConfigField "String", "ADMOB_BANNER_ID", "\"ca-app-pub-3612191981543807/1070088796\""
-            buildConfigField "String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-3612191981543807/9709343750\""
-            buildConfigField "String", "ADMOB_APP_OPEN_ID", "\"ca-app-pub-3612191981543807/9715699725\""
+            buildConfigField "String", "ADMOB_BANNER_ID", buildConfigSecret("RELEASE_ADMOB_BANNER_ID")
+            buildConfigField "String", "ADMOB_INTERSTITIAL_ID", buildConfigSecret("RELEASE_ADMOB_INTERSTITIAL_ID")
+            buildConfigField "String", "ADMOB_APP_OPEN_ID", buildConfigSecret("RELEASE_ADMOB_APP_OPEN_ID")
             // TODO: replace with real production AdMob rewarded ID before setting IS_ENABLE_ADMOB=true
-            buildConfigField "String", "ADMOB_REWARDED_ID", "\"ca-app-pub-3940256099942544/5224354917\""
+            buildConfigField "String", "ADMOB_REWARDED_ID", buildConfigSecret("RELEASE_ADMOB_REWARDED_ID")
 
-            buildConfigField "String", "APPLOVIN_SDK_KEY", "\"e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt\""
-            buildConfigField "String", "APPLOVIN_BANNER_ID", "\"7c47d522e938927b\""
-            buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", "\"fca03a66d93f71df\""
-            buildConfigField "String", "APPLOVIN_APP_OPEN_ID", "\"d0c74bfa67df7491\""
-            buildConfigField "String", "APPLOVIN_REWARDED_ID", "\"197bb44da9ccbe62\""
+            buildConfigField "String", "APPLOVIN_SDK_KEY", buildConfigSecret("RELEASE_APPLOVIN_SDK_KEY")
+            buildConfigField "String", "APPLOVIN_BANNER_ID", buildConfigSecret("RELEASE_APPLOVIN_BANNER_ID")
+            buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", buildConfigSecret("RELEASE_APPLOVIN_INTERSTITIAL_ID")
+            buildConfigField "String", "APPLOVIN_APP_OPEN_ID", buildConfigSecret("RELEASE_APPLOVIN_APP_OPEN_ID")
+            buildConfigField "String", "APPLOVIN_REWARDED_ID", buildConfigSecret("RELEASE_APPLOVIN_REWARDED_ID")
             buildConfigField "Boolean", "IS_ENABLE_ADMOB", "false"
             buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f\""
 
@@ -118,10 +152,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("keystore.jks")
-            storePassword KS_PW
-            keyAlias KS_ALIAS
-            keyPassword KS_PW
+            storeFile releaseKeystoreFile
+            storePassword requireSecret("KEYSTORE_PASSWORD")
+            keyAlias requireSecret("KEY_ALIAS")
+            keyPassword requireSecret("KEY_PASSWORD")
         }
     }
 
@@ -166,9 +200,9 @@ android {
             buildConfigField("String", "FLAVOR_buildEnv", '"dev"')
             resValue "string", "app_name", "Periodic Table DEV"
 
-//            resValue("string", "SDK_KEY", "e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt")
-//            resValue("string", "BANNER", "7c47d522e938927b")
-//            resValue("string", "INTER", "fca03a66d93f71df")
+//            resValue("string", "SDK_KEY", "<private:DEBUG_APPLOVIN_SDK_KEY>")
+//            resValue("string", "BANNER", "<private:DEBUG_APPLOVIN_BANNER_ID>")
+//            resValue("string", "INTER", "<private:DEBUG_APPLOVIN_INTERSTITIAL_ID>")
 //            resValue("string", "EnableAdInter", "true")
 //            resValue("string", "EnableAdBanner", "true")
         }
@@ -179,9 +213,9 @@ android {
             buildConfigField("String", "FLAVOR_buildEnv", '"prod"')
             resValue "string", "app_name", "Periodic Table"
 
-//            resValue("string", "SDK_KEY", "e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt")
-//            resValue("string", "BANNER", "7c47d522e938927b")
-//            resValue("string", "INTER", "fca03a66d93f71df")
+//            resValue("string", "SDK_KEY", "<private:DEBUG_APPLOVIN_SDK_KEY>")
+//            resValue("string", "BANNER", "<private:DEBUG_APPLOVIN_BANNER_ID>")
+//            resValue("string", "INTER", "<private:DEBUG_APPLOVIN_INTERSTITIAL_ID>")
 //            resValue("string", "EnableAdInter", "true")
 //            resValue("string", "EnableAdBanner", "true")
         }

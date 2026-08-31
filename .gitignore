@@ -23,5 +23,10 @@
 .idea/misc.xml
 .idea/vcs.xml
 
+# Release keystore is stored in the private royt93/myKeyStore repository.
+/app/keystore.jks
+/ads.properties
+/gradle.properties.bak
+
 # Claude Code local settings (YOLO/bypassPermissions — không commit)
 .claude/settings.local.json

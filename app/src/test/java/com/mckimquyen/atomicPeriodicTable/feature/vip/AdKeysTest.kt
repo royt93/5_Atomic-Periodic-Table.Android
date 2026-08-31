@@ -4,34 +4,28 @@ import com.mckimquyen.atomicPeriodicTable.common.const.AdKeys
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
-import org.junit.Ignore
 import org.junit.Test
 
 class AdKeysTest {
 
-    // ---- tests that call VIP_SECRET → VipKeys.VIP_30D_KEY → android.util.Base64 ----
-    // These require an Android device; android.util.Base64.decode() returns null in JVM.
+    // ---- private properties injected through BuildConfig ----
 
-    @Ignore("Requires Android device — VIP_SECRET delegates to VipKeys.VIP_30D_KEY which needs android.util.Base64")
     @Test
-    fun `VIP_SECRET decodes to non-null non-empty string`() {
+    fun `VIP_SECRET is non-null and non-empty`() {
         assertNotNull(AdKeys.VIP_SECRET)
         assertTrue(AdKeys.VIP_SECRET.isNotEmpty())
     }
 
-    @Ignore("Requires Android device — VIP_SECRET delegates to VipKeys.VIP_30D_KEY which needs android.util.Base64")
     @Test
-    fun `VIP_SECRET is not a Base64-encoded string itself (must be decoded)`() {
+    fun `VIP_SECRET is stored as its decoded value`() {
         assertFalse("VIP_SECRET should be decoded, not Base64", AdKeys.VIP_SECRET.endsWith("=="))
     }
 
-    @Ignore("Requires Android device — VIP_SECRET delegates to VipKeys.VIP_30D_KEY which needs android.util.Base64")
     @Test
-    fun `VIP_SECRET matches VipKeys 30D key (single-secret design)`() {
+    fun `VIP_SECRET matches VipKeys 30D key`() {
         assertTrue(AdKeys.VIP_SECRET == VipKeys.VIP_30D_KEY)
     }
 
-    @Ignore("Requires Android device — VIP_SECRET delegates to VipKeys.VIP_30D_KEY which needs android.util.Base64")
     @Test
     fun `VIP_SECRET contains special chars expected from spec`() {
         val key = AdKeys.VIP_SECRET

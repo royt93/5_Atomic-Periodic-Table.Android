@@ -5,60 +5,51 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Ignore
 import org.junit.Test
 
 class VipKeysTest {
 
-    // ---- decode sanity — requires android.util.Base64 (Android device only) ----
+    // ---- private properties injected through BuildConfig ----
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
-    fun `VIP_30D_KEY decodes to non-empty string`() {
+    fun `VIP_30D_KEY is non-empty`() {
         assertTrue(VipKeys.VIP_30D_KEY.isNotEmpty())
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
-    fun `VIP_3D_KEY decodes to non-empty string`() {
+    fun `VIP_3D_KEY is non-empty`() {
         assertTrue(VipKeys.VIP_3D_KEY.isNotEmpty())
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
     fun `30D and 3D keys are different`() {
         assertNotEquals(VipKeys.VIP_30D_KEY, VipKeys.VIP_3D_KEY)
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
-    fun `decoded keys are not Base64 strings themselves`() {
+    fun `keys are stored as decoded values`() {
         assertFalse(VipKeys.VIP_30D_KEY.endsWith("="))
         assertFalse(VipKeys.VIP_3D_KEY.endsWith("="))
     }
 
-    // ---- lookupDays — uses VIP_30D_KEY / VIP_3D_KEY (Android device only) ----
+    // ---- lookupDays ----
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
     fun `lookupDays returns 30 for exact 30D key`() {
         assertEquals(30, VipKeys.lookupDays(VipKeys.VIP_30D_KEY))
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
     fun `lookupDays returns 3 for exact 3D key`() {
         assertEquals(3, VipKeys.lookupDays(VipKeys.VIP_3D_KEY))
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
     fun `lookupDays trims leading and trailing spaces`() {
         assertEquals(30, VipKeys.lookupDays("  ${VipKeys.VIP_30D_KEY}  "))
         assertEquals(3, VipKeys.lookupDays("\t${VipKeys.VIP_3D_KEY}\t"))
     }
 
-    @Ignore("Requires Android device — covered by VipKeysInstrumentedTest")
     @Test
     fun `lookupDays is case-sensitive`() {
         assertNull(VipKeys.lookupDays(VipKeys.VIP_30D_KEY.lowercase()))

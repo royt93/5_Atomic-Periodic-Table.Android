@@ -12,10 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Instrumented tests for VipKeys — proves that android.util.Base64 decode
- * works correctly on a real device/emulator (Bug 1).
- *
- * Also verifies Bug 6: AdKeys.VIP_SECRET delegates to VipKeys.VIP_30D_KEY.
+ * Instrumented tests for VIP values injected from the private BuildConfig.
  */
 @RunWith(AndroidJUnit4::class)
 class VipKeysInstrumentedTest {
@@ -82,12 +79,12 @@ class VipKeysInstrumentedTest {
         )
     }
 
-    // ---- Bug 6: AdKeys.VIP_SECRET delegation ----
+    // ---- AdKeys.VIP_SECRET delegation ----
 
     @Test
     fun adKeysVipSecret_equalsvip30DKey() {
         assertEquals(
-            "AdKeys.VIP_SECRET must delegate to VipKeys.VIP_30D_KEY",
+            "AdKeys.VIP_SECRET must match VipKeys.VIP_30D_KEY",
             VipKeys.VIP_30D_KEY,
             AdKeys.VIP_SECRET
         )

@@ -52,7 +52,7 @@ Edits:
 - Use `AdSafetyLimits.TEST` only in debug and default/content safety in release.
 
 Configured user data:
-- AppLovin rewarded ID: `197bb44da9ccbe62`.
+- AppLovin rewarded ID: `<private:DEBUG_APPLOVIN_REWARDED_ID>`.
 - AdMob rewarded ID: Google test rewarded ID, per user instruction.
 - Privacy Policy URL: `https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f`.
 - Main provider remains AppLovin through `IS_ENABLE_ADMOB=false`.
@@ -156,8 +156,8 @@ Edits:
 
 ## User Inputs Applied
 
-- AppLovin rewarded ID: `197bb44da9ccbe62`.
-- AdMob rewarded ID: `ca-app-pub-3940256099942544/5224354917`.
+- AppLovin rewarded ID: `<private:DEBUG_APPLOVIN_REWARDED_ID>`.
+- AdMob rewarded ID: `<private:DEBUG_ADMOB_REWARDED_ID>`.
 - Privacy Policy URL: `https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f`.
 - VIP keys are Base64-encoded in Kotlin; plain keys are not stored in `.kt` sources.
 
