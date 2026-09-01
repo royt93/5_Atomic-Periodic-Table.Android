@@ -467,6 +467,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             val intent = Intent(this, FlashcardAct::class.java)
             startActivity(intent)
         }
+        binding.navMenuInclude.menuTrendsBtn.setOnClickListener {
+            val intent = Intent(this, TrendsChartAct::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

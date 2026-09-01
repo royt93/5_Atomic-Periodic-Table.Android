@@ -7,7 +7,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Molar Mass / Stoichiometry Calculator (`act/CalculatorAct.kt`, `util/ChemicalFormulaParser.kt`) — phát hiện đã có sẵn khi khảo sát cho vòng feature mới 2026-09-01.
 - ✅ Implemented: Element of the Day (widget) — `util/ElementOfDay.kt`, `ShortCommandWidget.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`).
 - ✅ Implemented: Flashcard/Spaced-repetition study — `feature/flashcard/` (FlashcardScheduler/FlashcardPref), `act/FlashcardAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`).
-- 📋 Picked (breakdown chi tiết ở `doc/task/feat_new.md`): Periodic Trends Chart — chọn qua AskUserQuestion 2026-09-01, đang loop implement.
+- ✅ Implemented: Periodic Trends Chart — `feature/trends/TrendsMapper.kt`, `view/TrendsChartView.kt`, `act/TrendsChartAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`). Cả 4 feature mới của vòng 2026-09-01 đã hoàn tất.
 
 ---
 

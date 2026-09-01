@@ -35,14 +35,16 @@ Khảo sát phát hiện feature này **đã được implement từ trước**,
 - Test: `FlashcardSchedulerTest` (17 case JVM, cover đủ 4 rating × biên ease-factor/interval), `FlashcardPrefTest` (3 case instrumented: default/roundtrip/isolation theo symbol), `FlashcardActTest` (6 case instrumented: launch/flip/rating-Good/rating-Again/ignore-trước-flip/edge-case-practice-mode/integration hết-bộ-thẻ-118-lần), `NavigationIntegrationTest.testNavigateFromMainToFlashcard`. Verify: 7/7 + 3/3 + 4/4 pass trên emulator sạch (Pixel 10 Pro XL AVD) sau khi loại trừ 2 lần nhiễu môi trường (TECNO KJ7 bị `com.galaxyjoy.cpuinfo` cướp focus giữa test 118-vòng — xác nhận qua `dumpsys window`; 1 lần "Process crashed" do harness gộp nhiều test class uninstall app giữa chừng — xác nhận qua logcat `pm uninstall`). Full unit suite xanh.
 - Trạng thái: ✅ Đã fix
 
-## 4. Periodic Trends Chart — 📋 Picked
+## 4. Periodic Trends Chart — ✅ Đã fix (2026-09-01)
 
 - Custom View tự vẽ Canvas (tham khảo cấu trúc `view/ConfettiView.kt` — Paint/Canvas/Path), KHÔNG thêm thư viện chart mới (ladder: platform feature đã đủ cho line/scatter đơn giản).
 - Chọn property hiển thị: electronegativity (`Element.electro` có sẵn trong model) là lựa chọn an toàn nhất vì đã có sẵn trong `Element` data class, không cần tra JSON asset cho toàn bộ 118 phần tử. Nếu muốn nhiều property hơn (atomic radius, ionization energy...) phải đọc JSON asset của cả 118 file — cân nhắc effort trước khi mở rộng, có thể để iteration sau.
 - Vẽ trục X = atomic number (1-118), trục Y = giá trị property, chấm/line nối các điểm có dữ liệu (một số nguyên tố `electro == 0.0` = không có dữ liệu, phải bỏ qua điểm đó khi vẽ, không vẽ giá trị 0 giả).
 - Tap vào 1 điểm hiện tooltip tên nguyên tố + giá trị (dùng toạ độ chạm so khớp điểm gần nhất, tương tự cách `NuclideAct` xử lý touch).
 - Test: JVM unit test cho hàm mapping toạ độ dữ liệu → toạ độ pixel (pure function, tách khỏi View để test không cần Android).
-- Trạng thái: ⏸️ (cuối cùng, effort lớn nhất)
+- **Đã implement:** `feature/trends/TrendsMapper.kt` (pure: `mapX`/`mapY`/`nearestPointIndex`), `view/TrendsChartView.kt` (Canvas tự vẽ, tham khảo `ConfettiView`), `act/TrendsChartAct.kt` + `a_trends_chart.xml` (MaterialCardView tông `colorSurfaceVariant`, tooltip text dưới chart), entry point nav menu (`menuTrendsBtn`). Property hiển thị: electronegativity (`Element.electro`, có sẵn trong model, không cần đọc JSON). Bỏ qua điểm `electro == 0.0` khi vẽ (đúng yêu cầu, không vẽ giá trị 0 giả).
+- Test: `TrendsMapperTest` (9 case JVM: biên min/max X/Y, đảo chiều Y, nearest-point kể cả list rỗng), `TrendsChartActTest` (4 case instrumented: hiện chart+hint, tap đúng điểm đã biết → tooltip đúng ký hiệu nguyên tố, tap xa mọi điểm → tooltip không đổi, tap 2 điểm khác nhau → tooltip cập nhật đúng lần sau), `NavigationIntegrationTest.testNavigateFromMainToTrendsChart`. Verify bằng screenshot thật (base64-log-in-logcat) trên emulator sạch — xác nhận UI Material You đúng chuẩn (card tông màu, dot/line màu `colorPrimary`, điểm được chọn nổi bật màu `colorTertiary`, tooltip hiển thị đúng "Xe — Xenon: 2.60"), không phải đọc code suông. 9/9 + 4/4 + 5/5 (cả bộ NavigationIntegrationTest) pass trên Pixel 10 Pro XL AVD. Full unit suite xanh.
+- Trạng thái: ✅ Đã fix
 
 ## Quy tắc thực hiện chung
 

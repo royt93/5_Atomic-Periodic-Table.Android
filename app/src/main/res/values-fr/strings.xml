@@ -562,4 +562,8 @@
     <string name="flashcard_rating_easy">Facile</string>
     <string name="flashcard_progress">%1$d / %2$d</string>
     <string name="flashcard_session_complete">Terminé pour aujourd\'hui !</string>
+    <string name="trends_chart_title">Tendances Périodiques</string>
+    <string name="trends_electronegativity_label">Électronégativité vs Numéro Atomique</string>
+    <string name="trends_tap_hint">Touchez un point pour les détails</string>
+    <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
 </resources>

@@ -97,4 +97,25 @@ class NavigationIntegrationTest {
             onView(withId(R.id.tvFlashcardProgress)).check(matches(isDisplayed()))
         }
     }
+
+    @Test
+    fun testNavigateFromMainToTrendsChart() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Click Trends menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuTrendsBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Verify Trends Chart screen is visible
+            onView(withId(R.id.cardTrendsChart)).check(matches(isDisplayed()))
+        }
+    }
 }

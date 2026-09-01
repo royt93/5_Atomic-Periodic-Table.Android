@@ -562,4 +562,8 @@
     <string name="flashcard_rating_easy">簡單</string>
     <string name="flashcard_progress">%1$d / %2$d</string>
     <string name="flashcard_session_complete">今天已完成！</string>
+    <string name="trends_chart_title">週期性趨勢</string>
+    <string name="trends_electronegativity_label">電負度 vs 原子序數</string>
+    <string name="trends_tap_hint">點擊某點查看詳情</string>
+    <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
 </resources>

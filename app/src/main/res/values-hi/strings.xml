@@ -562,4 +562,8 @@
     <string name="flashcard_rating_easy">आसान</string>
     <string name="flashcard_progress">%1$d / %2$d</string>
     <string name="flashcard_session_complete">आज के लिए पूरा हुआ!</string>
+    <string name="trends_chart_title">आवर्ती रुझान</string>
+    <string name="trends_electronegativity_label">इलेक्ट्रोनगेटिविटी बनाम परमाणु क्रमांक</string>
+    <string name="trends_tap_hint">विवरण के लिए एक बिंदु पर टैप करें</string>
+    <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
 </resources>
