@@ -2,6 +2,11 @@
 
 This document specifies the design, architecture, localization, UI/UX guidelines, edge-to-edge inset handling, memory safety, and test suites for the features implemented in the Atomic Periodic Table Android application.
 
+## Feature status (R2)
+
+- ✅ Implemented: Molar Mass / Stoichiometry Calculator (`act/CalculatorAct.kt`, `util/ChemicalFormulaParser.kt`) — phát hiện đã có sẵn khi khảo sát cho vòng feature mới 2026-09-01.
+- 📋 Picked (breakdown chi tiết ở `doc/task/feat_new.md`): Element of the Day (widget), Flashcard/Spaced-repetition study, Periodic Trends Chart — chọn qua AskUserQuestion 2026-09-01, đang loop implement lần lượt.
+
 ---
 
 ## 1. Feature Specifications & Technical Design
