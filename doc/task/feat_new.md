@@ -22,14 +22,18 @@ Khảo sát phát hiện feature này **đã được implement từ trước**,
 - Test: `ElementOfDayTest` (4 case JVM), `ShortCommandWidgetLayoutTest` mở rộng để check cả `setTextViewText` id (không chỉ `setOnClickPendingIntent`) tồn tại ở mọi layout variant, `ShortCommandWidgetTest.onUpdate_pointsElementSendAndLoad_atTodaysElement` (instrumented) — verify bằng revert-test: comment dòng `setValue` → test fail đúng như kỳ vọng, khôi phục → pass. 3/3 instrumented pass trên TECNO KJ7.
 - Trạng thái: ✅ Đã fix
 
-## 3. Flashcard / Spaced-repetition study — 📋 Picked
+## 3. Flashcard / Spaced-repetition study — ✅ Đã fix (2026-09-01)
 
 - Thuật toán SM-2 rút gọn, pure object tương tự `VipCalculator` (JVM-testable, Android-independent): input rating (Again/Hard/Good/Easy) + state hiện tại (easeFactor, intervalDays, repetitions) → state mới.
 - Persist theo từng nguyên tố bằng pattern `NotesPref` (`pref/NotesPref.kt`) — key `"flashcard_next_$symbol"` (Long, epoch ms), `"flashcard_interval_$symbol"` (Int), `"flashcard_ease_$symbol"` (Float) — không cần Map/JSON phức tạp, đúng pattern đã có trong codebase.
 - UI: `act/FlashcardAct.kt` mới — mặt trước ký hiệu, tap lật mặt sau (tên + số nguyên tử), 4 nút rating. Tham khảo animation pattern từ `QuizAct.kt`.
 - Entry point: nav menu (`view_nav_menu_view.xml` + `MainAct.kt` wiring), theo đúng pattern "Compare Elements" đã ghi trong `doc/quick_win.md`.
 - Test: JVM unit test cho thuật toán SM-2 rút gọn (input/output rõ ràng, giống `VipCalculatorTest`).
-- Trạng thái: ⏸️ (sau mục 2)
+- **Đã implement:** `feature/flashcard/FlashcardScheduler.kt` (pure, SM-2 rút gọn — AGAIN reset về 1 ngày + giảm ease, HARD/GOOD/EASY tăng interval theo ease factor với mốc khởi đầu khác nhau), `feature/flashcard/FlashcardPref.kt` (flat key theo symbol, đúng pattern `NotesPref`), `act/FlashcardAct.kt` (queue = nguyên tố đến hạn `isDue`, rơi về full deck nếu chưa nguyên tố nào đến hạn — practice mode), entry point nav menu (`menuFlashcardBtn` cạnh `menuQuizBtn`).
+- UI Material You: `MaterialCardView`/`CardView` tông màu `colorPrimaryContainer`, `LinearProgressIndicator` animated (`setProgressCompat`), 4 nút rating dùng `MaterialButton` với `style=` **explicit** (`Widget.App.MaterialButton`/`.Outlined`) — bài học thật: bỏ sót `style=` cho 2 nút khiến chúng rơi vào default MDC (sai màu + ALL CAPS), phát hiện qua screenshot thật trên device (không chỉ đọc code). Animation: flip 3D thật (`ObjectAnimator` xoay `rotationY` 2 chặn, swap mặt trước/sau ở giữa) + slide-fade khi chuyển thẻ.
+- Bug thật bắt được bởi test trước khi push: `cardFlashcardComplete` ban đầu constrain theo cạnh `cardFlashcard`, nhưng `cardFlashcard` bị set GONE khi hết thẻ → bounds sụp về 0, complete-card thành invisible. Sửa bằng cách cho `cardFlashcardComplete` constraint độc lập giống hệt `cardFlashcard` (neo vào `flashcardProgressBar`/`layoutFlashcardRatings`, không neo vào nhau).
+- Test: `FlashcardSchedulerTest` (17 case JVM, cover đủ 4 rating × biên ease-factor/interval), `FlashcardPrefTest` (3 case instrumented: default/roundtrip/isolation theo symbol), `FlashcardActTest` (6 case instrumented: launch/flip/rating-Good/rating-Again/ignore-trước-flip/edge-case-practice-mode/integration hết-bộ-thẻ-118-lần), `NavigationIntegrationTest.testNavigateFromMainToFlashcard`. Verify: 7/7 + 3/3 + 4/4 pass trên emulator sạch (Pixel 10 Pro XL AVD) sau khi loại trừ 2 lần nhiễu môi trường (TECNO KJ7 bị `com.galaxyjoy.cpuinfo` cướp focus giữa test 118-vòng — xác nhận qua `dumpsys window`; 1 lần "Process crashed" do harness gộp nhiều test class uninstall app giữa chừng — xác nhận qua logcat `pm uninstall`). Full unit suite xanh.
+- Trạng thái: ✅ Đã fix
 
 ## 4. Periodic Trends Chart — 📋 Picked
 

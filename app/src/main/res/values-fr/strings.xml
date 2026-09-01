@@ -554,4 +554,12 @@
     <string name="ok">OK</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="ion_view_all">Voir les %1$d</string>
+    <string name="flashcard_title">Étude de cartes</string>
+    <string name="flashcard_tap_to_flip">Touchez pour retourner</string>
+    <string name="flashcard_rating_again">Encore</string>
+    <string name="flashcard_rating_hard">Difficile</string>
+    <string name="flashcard_rating_good">Bien</string>
+    <string name="flashcard_rating_easy">Facile</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">Terminé pour aujourd\'hui !</string>
 </resources>

@@ -554,4 +554,12 @@
     <string name="ok">موافق</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="ion_view_all">عرض الكل (%1$d)</string>
+    <string name="flashcard_title">دراسة البطاقات التعليمية</string>
+    <string name="flashcard_tap_to_flip">اضغط للقلب</string>
+    <string name="flashcard_rating_again">مرة أخرى</string>
+    <string name="flashcard_rating_hard">صعب</string>
+    <string name="flashcard_rating_good">جيد</string>
+    <string name="flashcard_rating_easy">سهل</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">انتهيت لهذا اليوم!</string>
 </resources>

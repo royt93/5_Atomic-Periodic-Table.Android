@@ -554,4 +554,12 @@
     <string name="ok">確定</string>
     <string name="privacy_policy">隱私政策</string>
     <string name="ion_view_all">查看全部 %1$d</string>
+    <string name="flashcard_title">閃卡學習</string>
+    <string name="flashcard_tap_to_flip">點擊翻轉</string>
+    <string name="flashcard_rating_again">重來</string>
+    <string name="flashcard_rating_hard">困難</string>
+    <string name="flashcard_rating_good">良好</string>
+    <string name="flashcard_rating_easy">簡單</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">今天已完成！</string>
 </resources>

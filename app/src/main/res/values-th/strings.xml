@@ -554,4 +554,12 @@
     <string name="ok">ตกลง</string>
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="ion_view_all">ดูทั้งหมด %1$d</string>
+    <string name="flashcard_title">เรียนด้วยแฟลชการ์ด</string>
+    <string name="flashcard_tap_to_flip">แตะเพื่อพลิก</string>
+    <string name="flashcard_rating_again">อีกครั้ง</string>
+    <string name="flashcard_rating_hard">ยาก</string>
+    <string name="flashcard_rating_good">ดี</string>
+    <string name="flashcard_rating_easy">ง่าย</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">เสร็จสำหรับวันนี้!</string>
 </resources>

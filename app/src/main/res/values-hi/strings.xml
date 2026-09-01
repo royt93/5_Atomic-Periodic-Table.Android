@@ -554,4 +554,12 @@
     <string name="ok">ठीक है</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="ion_view_all">सभी %1$d देखें</string>
+    <string name="flashcard_title">फ्लैशकार्ड अध्ययन</string>
+    <string name="flashcard_tap_to_flip">पलटने के लिए टैप करें</string>
+    <string name="flashcard_rating_again">फिर से</string>
+    <string name="flashcard_rating_hard">कठिन</string>
+    <string name="flashcard_rating_good">अच्छा</string>
+    <string name="flashcard_rating_easy">आसान</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">आज के लिए पूरा हुआ!</string>
 </resources>

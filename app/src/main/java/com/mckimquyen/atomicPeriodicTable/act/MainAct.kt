@@ -463,6 +463,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             val intent = Intent(this, QuizAct::class.java)
             startActivity(intent)
         }
+        binding.navMenuInclude.menuFlashcardBtn.setOnClickListener {
+            val intent = Intent(this, FlashcardAct::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

@@ -581,4 +581,12 @@
     <string name="vip_ad_unavailable_title">Quảng cáo không khả dụng</string>
     <string name="vip_ad_unavailable_message">Quảng cáo hiện không có sẵn. Hãy kiểm tra kết nối và thử lại sau.</string>
     <string name="ion_view_all">Xem tất cả %1$d</string>
+    <string name="flashcard_title">Học Flashcard</string>
+    <string name="flashcard_tap_to_flip">Chạm để lật</string>
+    <string name="flashcard_rating_again">Lại</string>
+    <string name="flashcard_rating_hard">Khó</string>
+    <string name="flashcard_rating_good">Tốt</string>
+    <string name="flashcard_rating_easy">Dễ</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">Xong cho hôm nay!</string>
 </resources>

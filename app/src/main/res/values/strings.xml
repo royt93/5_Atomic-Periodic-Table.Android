@@ -582,5 +582,13 @@
     <string name="vip_ad_unavailable_title">Ad Unavailable</string>
     <string name="vip_ad_unavailable_message">Ad is not available right now. Please check your connection and try again later.</string>
     <string name="ion_view_all">View all %1$d</string>
+    <string name="flashcard_title">Flashcard Study</string>
+    <string name="flashcard_tap_to_flip">Tap to flip</string>
+    <string name="flashcard_rating_again">Again</string>
+    <string name="flashcard_rating_hard">Hard</string>
+    <string name="flashcard_rating_good">Good</string>
+    <string name="flashcard_rating_easy">Easy</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">All done for today!</string>
 </resources>
 

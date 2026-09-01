@@ -76,4 +76,25 @@ class NavigationIntegrationTest {
             onView(withId(R.id.calcInput)).check(matches(isDisplayed()))
         }
     }
+
+    @Test
+    fun testNavigateFromMainToFlashcard() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Click Flashcard menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuFlashcardBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Verify Flashcard screen is visible
+            onView(withId(R.id.tvFlashcardProgress)).check(matches(isDisplayed()))
+        }
+    }
 }

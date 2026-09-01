@@ -554,4 +554,12 @@
     <string name="ok">확인</string>
     <string name="privacy_policy">개인정보 처리방침</string>
     <string name="ion_view_all">모두 보기 (%1$d)</string>
+    <string name="flashcard_title">플래시카드 학습</string>
+    <string name="flashcard_tap_to_flip">탭하여 뒤집기</string>
+    <string name="flashcard_rating_again">다시</string>
+    <string name="flashcard_rating_hard">어려움</string>
+    <string name="flashcard_rating_good">좋음</string>
+    <string name="flashcard_rating_easy">쉬움</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_session_complete">오늘 학습 완료!</string>
 </resources>
