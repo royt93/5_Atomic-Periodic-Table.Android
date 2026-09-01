@@ -8,6 +8,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Element of the Day (widget) — `util/ElementOfDay.kt`, `ShortCommandWidget.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`).
 - ✅ Implemented: Flashcard/Spaced-repetition study — `feature/flashcard/` (FlashcardScheduler/FlashcardPref), `act/FlashcardAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`).
 - ✅ Implemented: Periodic Trends Chart — `feature/trends/TrendsMapper.kt`, `view/TrendsChartView.kt`, `act/TrendsChartAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`). Cả 4 feature mới của vòng 2026-09-01 đã hoàn tất.
+- 📋 Picked (vòng 2, breakdown chi tiết ở `doc/task/feat_new.md` mục 5-8, chọn qua AskUserQuestion 2026-09-02): Unit Converter (công cụ đổi đơn vị áp suất/khối lượng/thể tích), Chia sẻ thẻ nguyên tố dưới dạng ảnh, Study Streak/Achievement cho Flashcard+Quiz, Practice Exam Mode.
 
 ---
 

@@ -46,8 +46,55 @@ Khảo sát phát hiện feature này **đã được implement từ trước**,
 - Test: `TrendsMapperTest` (9 case JVM: biên min/max X/Y, đảo chiều Y, nearest-point kể cả list rỗng), `TrendsChartActTest` (4 case instrumented: hiện chart+hint, tap đúng điểm đã biết → tooltip đúng ký hiệu nguyên tố, tap xa mọi điểm → tooltip không đổi, tap 2 điểm khác nhau → tooltip cập nhật đúng lần sau), `NavigationIntegrationTest.testNavigateFromMainToTrendsChart`. Verify bằng screenshot thật (base64-log-in-logcat) trên emulator sạch — xác nhận UI Material You đúng chuẩn (card tông màu, dot/line màu `colorPrimary`, điểm được chọn nổi bật màu `colorTertiary`, tooltip hiển thị đúng "Xe — Xenon: 2.60"), không phải đọc code suông. 9/9 + 4/4 + 5/5 (cả bộ NavigationIntegrationTest) pass trên Pixel 10 Pro XL AVD. Full unit suite xanh.
 - Trạng thái: ✅ Đã fix
 
+---
+
+# Vòng 2 (2026-09-02) — 4 feature mới chọn qua AskUserQuestion
+
+User chọn "cả 4 idea đều hay" sau khi được đề xuất Unit Converter mở rộng (Recommended)/Share ảnh/Study Streak/Practice Exam. Rã task để loop lần lượt, theo đúng effort tăng dần và quy tắc chung ở cuối file.
+
+## 5. Unit Converter (công cụ đổi đơn vị hoá học) — 📋 Picked
+
+- Khảo sát: `pref/TemperatureUnits.kt:7-23` chỉ là pref lưu đơn vị **hiển thị** (1 key, 3 giá trị celsius/kelvin/fahrenheit) cho các màn hình đã có sẵn số liệu theo Kelvin trong JSON — không phải máy tính đổi qua lại. Field `element_density` trong JSON asset là string nhúng đơn vị (`"0.0000899 (g/cm^3)"`), không phải số thuần, và không có field áp suất/thể tích mol nào trong data — nghĩa là **không thể** làm kiểu "toggle hiển thị" như nhiệt độ cho áp suất/khối lượng.
+- Quyết định phạm vi: làm 1 **công cụ đổi đơn vị độc lập** (nhập giá trị + chọn đơn vị nguồn/đích + tính), không phải gắn với dữ liệu nguyên tố. Công thức đổi (atm↔kPa↔mmHg↔psi cho áp suất; g↔kg↔mg cho khối lượng; L↔mL cho thể tích) là hằng số toán học cố định, không cần đọc JSON.
+- UI: `act/UnitConverterAct.kt` mới — 1 màn hình dùng chung cho cả 3 nhóm đơn vị (chip chọn nhóm Pressure/Mass/Volume, rồi 2 dropdown/chip from-unit và to-unit, EditText nhập giá trị, TextView kết quả). Tham khảo layout pattern `a_calculator.xml`/`CalculatorAct.kt` (input → validate → hiển thị kết quả qua `TextInputLayout`).
+- Logic pure: `feature/converter/UnitConverter.kt` — object với `convertPressure(value, from, to): Double`, `convertMass(...)`, `convertVolume(...)`, mỗi hàm quy đổi qua 1 đơn vị gốc trung gian (ví dụ Pascal cho áp suất) rồi ra đơn vị đích — JVM-testable thuần, không cần Context.
+- Không cần SharedPreferences mới (không có gì persist — mỗi lần mở lại reset, giống Calculator/EquationBalancer đã có).
+- Entry point: nav menu (`menuUnitConverterBtn` theo đúng pattern các mục trước).
+- Test: JVM unit test cho `UnitConverter` (mọi cặp đơn vị, giá trị biên 0, giá trị âm cho áp suất nên reject hay cho qua — cần quyết định khi code, không đoán).
+- Trạng thái: ⏸️ (chưa code)
+
+## 6. Chia sẻ thẻ nguyên tố dưới dạng ảnh — 📋 Picked
+
+- Khảo sát: codebase đã có share text (`ext/Activity.kt:89-103`, `shareApp()`) nhưng **chưa có share ảnh** — không có `FileProvider`, không có `Bitmap`/`drawToBitmap` ở đâu (grep toàn repo ra rỗng). Đây là feature mới hoàn toàn về mặt hạ tầng.
+- Ladder: dùng thẳng `View.drawToBitmap()` (extension có sẵn trong `androidx-core-ktx`, đã là dependency của project) trên 1 layout card riêng dựng cho mục đích share — KHÔNG tự vẽ Canvas thủ công như `ConfettiView`/`TrendsChartView` (không cần thiết, chỉ là export 1 layout tĩnh).
+- Cần khai báo `FileProvider` mới trong `AndroidManifest.xml` (`res/xml/file_paths.xml`) để share file ảnh ra ngoài app — kiểm tra kỹ quyền `authorities` trùng `applicationId` để tránh crash `FileUriExposedException`.
+- UI card share: layout riêng nhỏ gọn (symbol lớn, tên, số nguyên tử, khối lượng, category) lấy data từ `model/Element` (đã có sẵn qua `ElementModel.getList()`, không cần đọc JSON) — đặt nút "Share" trong `ElementInfoAct.kt`.
+- Luồng: render layout ẩn (không add vào UI thấy được, hoặc render rồi `drawToBitmap()` ngay) → lưu vào `cacheDir` (dùng `context.cacheDir`, tự dọn được, không cần quyền storage) → `FileProvider.getUriForFile()` → `Intent.ACTION_SEND` với `type = "image/png"` + `EXTRA_STREAM` → `createChooser()` (theo đúng try/catch pattern của `shareApp()`).
+- Test: instrumented test verify bitmap tạo ra không rỗng (width/height > 0) và file tồn tại sau khi gọi hàm share; JVM test không khả thi cho phần vẽ (cần Android Bitmap API) — ghi rõ lý do trong doc nếu quyết định vậy khi code.
+- Trạng thái: ⏸️ (chưa code)
+
+## 7. Study Streak / Achievement cho Flashcard + Quiz — 📋 Picked
+
+- Khảo sát: `feature/flashcard/FlashcardPref.kt` chỉ lưu SM-2 state per-symbol, không có streak/last-open. `act/QuizAct.kt:28-30` score chỉ là biến in-memory, đóng app mất hết — không có nền tảng nào tái dùng, phải xây từ đầu.
+- Pref mới: `feature/streak/StudyStreakPref.kt` — flat key: `last_study_epoch_day` (Long), `current_streak` (Int), `longest_streak` (Int). Logic cập nhật (pure, JVM-testable): `feature/streak/StreakCalculator.kt` — hàm `updateStreak(lastEpochDay, currentStreak, todayEpochDay): StreakResult` (nếu `todayEpochDay == lastEpochDay` → không đổi; nếu `== lastEpochDay + 1` → streak+1; nếu cách xa hơn → reset về 1) — tương tự pure-object pattern `FlashcardScheduler`/`VipCalculator`.
+- Điểm gọi: `FlashcardAct` sau khi rate 1 thẻ bất kỳ, và `QuizAct` sau khi hoàn thành 1 bài quiz (`showResults()`) — gọi `StudyStreakPref` cập nhật, dùng chung 1 streak cho cả 2 feature (không tách streak riêng từng feature, đơn giản hơn và hợp lý vì cùng mục đích "học mỗi ngày").
+- UI hiện streak: thêm 1 dòng nhỏ "🔥 N ngày liên tiếp" — vị trí đề xuất: nav menu header hoặc `MainAct` (cần xem layout thật khi code để chọn chỗ hợp lý, không đoán trước). Badge/achievement (ví dụ "học 7 ngày liên tiếp", "thắt nhớ 20 nguyên tố") để mức đơn giản: chỉ hiện text/icon mốc đạt được, không làm màn hình riêng liệt kê tất cả badge (over-engineering cho v1).
+- Test: JVM unit test cho `StreakCalculator` (case liên tiếp, case bỏ 1 ngày reset, case học 2 lần cùng ngày không tăng đôi, case ngày đầu tiên).
+- Trạng thái: ⏸️ (chưa code)
+
+## 8. Practice Exam Mode — 📋 Picked
+
+- Khảo sát: `act/QuizAct.kt:179-298` (`setupQuestionData`) sinh 6 loại câu hỏi trắc nghiệm, hard-code `totalQuestions = 10` (dòng 29) và `maxTimeSeconds = 15` (dòng 42) — tái dùng được bằng cách tham số hoá 2 giá trị này thay vì viết lại từ đầu. `CalculatorAct`/`EquationBalancerAct` là input tự do (không phải trắc nghiệm) — chỉ tái dùng phần logic tính toán (`ChemicalFormulaParser`, `ElementWeightCache`), không tái dùng UI.
+- Phạm vi v1: KHÔNG viết lại QuizAct — thêm 1 chế độ mới `act/PracticeExamAct.kt` tái dùng generator câu hỏi hiện có của QuizAct (refactor tối thiểu: đưa `generateQuestion()`/6 loại câu hỏi vào 1 nơi dùng chung được — cân nhắc khi code có nên extract ra `object QuizQuestionGenerator` hay giữ nguyên trong QuizAct và gọi chéo, tuỳ độ khó refactor thực tế) + thêm 1-2 loại câu hỏi mới dạng "tính khối lượng mol công thức X, chọn đáp án đúng trong 4 lựa chọn" (dùng `ChemicalFormulaParser` + `ElementWeightCache`, tạo 3 đáp án sai bằng cách lệch %).
+- Khác biệt với Quiz thường: số câu nhiều hơn (ví dụ 20-30, tham số hoá), không giới hạn thời gian mỗi câu (hoặc giới hạn tổng thời gian toàn bài thay vì mỗi câu — quyết định khi code), có lưu lịch sử điểm.
+- Pref mới: `feature/exam/ExamHistoryPref.kt` — lưu list điểm số các lần thi trước. Vì mỗi lần thi có nhiều field (điểm, ngày, thời gian làm bài), cân nhắc dùng Gson (đã có sẵn dependency, `com.google.code.gson:gson:2.13.2`) để serialize 1 `List<ExamResult>` thành JSON string lưu trong 1 key duy nhất — đây là trường hợp hợp lý để dùng Gson thay vì flat-key (khác Flashcard/Streak vì dữ liệu ở đây là list có cấu trúc, không phải giá trị đơn theo symbol).
+- Entry point: nav menu (`menuPracticeExamBtn`).
+- Test: JVM unit test cho loại câu hỏi tính toán mới (đáp án đúng luôn có trong 4 lựa chọn, 3 đáp án sai không trùng đáp án đúng), JVM test cho `ExamHistoryPref` serialize/deserialize roundtrip, instrumented test luồng làm bài end-to-end + xem lịch sử.
+- Trạng thái: ⏸️ (chưa code, effort lớn nhất trong 4 mục)
+
 ## Quy tắc thực hiện chung
 
 - Mỗi mục xong: build xanh, chạy test liên quan, cập nhật status trong file này + `doc/feat.md` mục Picked/Implemented, commit + push origin/dev.
-- Không thêm dependency mới (Gson đã có sẵn nếu cần, nhưng ưu tiên flat SharedPreferences key theo pattern `NotesPref` trước).
+- Không thêm dependency mới (Gson đã có sẵn nếu cần, nhưng ưu tiên flat SharedPreferences key theo pattern `NotesPref` trước — chỉ dùng Gson khi dữ liệu thật sự có cấu trúc list/object như mục 8, không dùng cho dữ liệu giá trị đơn).
 - Không thêm WorkManager — mọi lịch định kỳ dùng cơ chế Android có sẵn (`updatePeriodMillis`, hoặc check-on-app-open).
+- **Test rigor bắt buộc mỗi feature** (yêu cầu user 2026-09-01): unit test JVM cho mọi pure logic (mọi nhánh/case), instrumented test cho UI/edge-case, integration test luồng end-to-end thật, smoke test THẬT trên device đang connect (ưu tiên Samsung S24 Ultra — serial `R5CX613VZBR` — vì TECNO KJ7 hay bị app `com.galaxyjoy.cpuinfo` từ 1 session Claude Code khác dùng chung máy cướp focus gây false-fail, luôn kiểm tra `dumpsys window | grep mCurrentFocus` trước khi kết luận fail nào là bug thật). UI mới PHẢI chụp screenshot thật (base64-log-qua-logcat, xem cách làm ở mục 3/4) để tự verify trước khi báo xong, không chỉ đọc code. Tự audit + chấm điểm /10 sau mỗi feature — chỉ push nếu >9/10.
