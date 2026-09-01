@@ -81,25 +81,6 @@ class DensityPref(context: Context) {
     }
 }
 
-class DegreePref(context: Context) {
-
-    private val preferenceName = "Degree_Preference"
-    private val preferenceValue = "Degree_Value"
-
-    private val preference: SharedPreferences =
-        context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
-
-    fun getValue(): Int {
-        return preference.getInt(preferenceValue, 0) //0 = Kelving, 1 == Celsius, 2 = Fahrenheit
-    }
-
-    fun setValue(count: Int) {
-        preference.edit {
-            putInt(preferenceValue, count)
-        }
-    }
-}
-
 class BoilingPref(context: Context) {
 
     private val preferenceName = "Boiling_Preference"

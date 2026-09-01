@@ -1,6 +1,7 @@
 package com.mckimquyen.atomicPeriodicTable.act.table
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -21,12 +22,21 @@ import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.databinding.AElectrodeBinding
 import com.mckimquyen.atomicPeriodicTable.model.Series
 import com.mckimquyen.atomicPeriodicTable.model.SeriesModel
+import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import java.util.Locale
+import com.mckimquyen.atomicPeriodicTable.act.ElementInfoAct
 
 class ElectrodeAct : BaseAct() {
     private lateinit var binding: AElectrodeBinding
+
+    // FIX-021: item.name is a real periodic element name — open its detail screen on tap,
+    // same pattern MainAct.getRandomItem() uses (ElementSendAndLoad + ElementInfoAct).
+    fun electrodeClickListener(item: Series) {
+        ElementSendAndLoad(this).setValue(item.name)
+        startActivity(Intent(this, ElementInfoAct::class.java))
+    }
 
     // FIX-008: single adapter instance, created once in recyclerView() and reused by
     // filter() — see IonAct.kt for the full explanation of the bug this replaces.
@@ -177,7 +187,10 @@ class ElectrodeAct : BaseAct() {
                 filteredList.add(item)
             }
         }
-        filterHandler = Handler(Looper.getMainLooper())
+        // FIX-026: reuse one Handler and cancel the previous pending callback instead of
+        // creating a new Handler on every keystroke.
+        if (filterHandler == null) filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.removeCallbacksAndMessages(null)
         filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxEle, 300)

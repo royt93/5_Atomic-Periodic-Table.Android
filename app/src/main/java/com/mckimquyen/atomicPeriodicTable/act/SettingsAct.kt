@@ -328,8 +328,15 @@ class SettingsAct : BaseAct() {
     }
 
     private fun cacheSettings() {
-        binding.cacheLay.setOnClickListener {
-            this.cacheDir.deleteRecursively()
+        // FIX-029 (bonus): clearCacheSettings is the whole row with the ripple foreground —
+        // the intended tap target per the layout — but the listener was only on cacheLay
+        // (just the text labels), leaving most of the row's ripple visually clickable but dead.
+        binding.clearCacheSettings.setOnClickListener {
+            // FIX-029: deleteRecursively() on cacheDir itself removes the directory Android
+            // guarantees exists, not just its contents — any concurrent write into cache
+            // (Picasso disk cache, OkHttp response cache, ...) could fail against a missing
+            // parent directory. Delete only the contents.
+            this.cacheDir.listFiles()?.forEach { it.deleteRecursively() }
             initializeCache()
         }
     }

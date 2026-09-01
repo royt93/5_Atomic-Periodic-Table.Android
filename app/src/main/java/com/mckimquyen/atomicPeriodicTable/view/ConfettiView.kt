@@ -201,7 +201,5 @@ class ConfettiView @JvmOverloads constructor(
             canvas.restore()
         }
     }
-
-    private fun ClosedRange<Int>.random() = random.nextInt(endInclusive - start) + start
 }
 

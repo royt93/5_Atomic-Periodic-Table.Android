@@ -22,6 +22,14 @@ object VipCalculator {
     }
 
     /**
+     * FIX-030: khi không biết thời điểm kích hoạt thật (storedGrantedAtMs <= 0), trả về 0
+     * (unknown) thay vì tự bịa ra một mốc như "cách đây 24h" — con số bịa đó không liên quan
+     * gì tới thời hạn thật (3 ngày hay 30 ngày) nên elapsed% hiển thị sẽ sai lệch hoàn toàn.
+     * Caller (VipManagementAct) dùng kết quả 0L này để ẩn luôn progress bar thay vì hiện % sai.
+     */
+    fun resolveGrantedAtMs(storedGrantedAtMs: Long): Long = if (storedGrantedAtMs > 0L) storedGrantedAtMs else 0L
+
+    /**
      * Tách tổng milliseconds thành [days, hours, minutes, seconds].
      * Giá trị âm được coi là 0.
      */

@@ -70,13 +70,13 @@ class ElementAdt(
                 textViewNumb.text = item.electro.toString()
                 textViewShort.setTextColor(Color.argb(255, 18, 18, 18))
                 if (item.electro == 0.0) {
-                    elementCard.background.setTint(Color.argb(255, 180, 180, 180))
+                    elementCard.background.mutate().setTint(Color.argb(255, 180, 180, 180))
                     textViewNumb.text = "---"
                 } else {
                     if (item.electro > 1) {
-                        elementCard.background.setTint(Color.argb(255, 255, 225.div(item.electro).toInt(), 0))
+                        elementCard.background.mutate().setTint(Color.argb(255, 255, 225.div(item.electro).toInt(), 0))
                     } else {
-                        elementCard.background.setTint(Color.argb(255, 255, 255, 0))
+                        elementCard.background.mutate().setTint(Color.argb(255, 255, 255, 0))
                     }
                 }
             }

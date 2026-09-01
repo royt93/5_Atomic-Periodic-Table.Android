@@ -249,7 +249,10 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                 if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
         }
-        filterHandler = android.os.Handler(Looper.getMainLooper())
+        // FIX-026: reuse one Handler and cancel the previous pending callback instead of
+        // creating a new Handler on every keystroke.
+        if (filterHandler == null) filterHandler = android.os.Handler(Looper.getMainLooper())
+        filterHandler?.removeCallbacksAndMessages(null)
         filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxIso, 300)
@@ -272,18 +275,23 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
 
     private fun sentIsotope() {
         val isoSent = SendIso(this)
-        if (isoSent.getValue() == "true") {
+        if (isoSent.getValue()) {
             drawCard(elementList)
             Utils.fadeInAnimBack(binding.backgroundI2, 300)
             Utils.fadeInAnim(binding.slidPanel.root, 300)
             binding.slidPanel.slidingLayoutI.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-            isoSent.setValue("false")
+            isoSent.setValue(false)
         }
     }
 
 
     @SuppressLint("SetTextI18n")
     private fun drawCard(list: ArrayList<Element>) {
+        // FIX-025: ElementModel.getList() always appends (never clears) — calling drawCard()
+        // repeatedly on the same persistent `elementList` field without clearing first made
+        // it grow 118 -> 236 -> 354... on every element click, iterating more duplicate
+        // entries each time.
+        list.clear()
         ElementModel.getList(list)
         var jsonString: String?
         for (item in list) {

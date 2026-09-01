@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.LocaleList
+import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.pref.LanguagePref
 import java.util.Locale
 import android.util.Log
@@ -21,7 +22,9 @@ object LocaleHelper {
     fun applyLanguage(context: Context): Context {
         val languagePref = LanguagePref(context)
         val languageCode = languagePref.getValue()
-        Log.i("LocaleHelper", "applyLanguage: fetching lang=$languageCode")
+        if (BuildConfig.DEBUG) {
+            Log.i("LocaleHelper", "applyLanguage: fetching lang=$languageCode")
+        }
         return setLocale(context, languageCode)
     }
 
@@ -30,7 +33,9 @@ object LocaleHelper {
      * Returns a new context with the applied locale configuration.
      */
     fun setLocale(context: Context, languageCode: String): Context {
-        Log.i("LocaleHelper", "setLocale: setting to $languageCode")
+        if (BuildConfig.DEBUG) {
+            Log.i("LocaleHelper", "setLocale: setting to $languageCode")
+        }
         val locale = when (languageCode) {
             "in", "id" -> Locale("in")
             "zh-rTW", "zh-TW" -> Locale("zh", "TW")
@@ -47,7 +52,9 @@ object LocaleHelper {
             config.locale = locale
         }
         config.setLayoutDirection(locale)
-        config.fontScale = 1.0f
+        // FIX (P3): config already copies the real system fontScale from
+        // context.resources.configuration — forcing it to 1.0f here overrode the user's
+        // system-wide "font size" accessibility setting every time the language changed.
 
         return context.createConfigurationContext(config)
     }

@@ -30,9 +30,13 @@ class ShortCommandWidget : AppWidgetProvider() {
             // Construct the RemoteViews object
             val remoteViews = RemoteViews(context.packageName, R.layout.view_short_command_widget)
 
+            // FIX-023: flWidgetSearchBar only exists in layout-v31 (API 31+) — the default
+            // layout (API < 31) has no such id, so setOnClickPendingIntent() on it was a
+            // silent no-op there, leaving the widget dead on Android <= 11. widgetRoot exists
+            // in both layout variants, so binding the click there works on every API level.
             //Open App on Widget Click
             remoteViews.setOnClickPendingIntent(
-                R.id.flWidgetSearchBar,
+                R.id.widgetRoot,
                 PendingIntent.getActivity(
                     /* context = */ context,
                     /* requestCode = */ 0,

@@ -33,6 +33,13 @@ import java.io.IOException
 import java.io.InputStream
 
 class NuclideAct : BaseAct() {
+    companion object {
+        // FIX-033: MIN_SCALE bounds how far pinch-out can zoom in (1f/0.4f = 2.5x); MAX_SCALE
+        // keeps the existing "can't shrink below original size" behavior (1f/1f = 1x).
+        private const val MIN_SCALE = 0.4f
+        private const val MAX_SCALE = 1f
+    }
+
     private lateinit var binding: ANuclideBinding
     private val elementLists = ArrayList<Element>()
     var mScale = 1f
@@ -88,12 +95,14 @@ class NuclideAct : BaseAct() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
                     val scale = 1 - detector.scaleFactor
                     val pScale = mScale
+                    // FIX-033: mScale += scale was applied twice per callback, then both
+                    // clamp branches forced mScale back to exactly 1f on ANY deviation —
+                    // together that made pinch-zoom a no-op (mScale always snapped to 1f).
                     mScale += scale
-                    mScale += scale
-                    if (mScale < 1f)
-                        mScale = 1f
-                    if (mScale > 1f)
-                        mScale = 1f
+                    if (mScale < MIN_SCALE)
+                        mScale = MIN_SCALE
+                    if (mScale > MAX_SCALE)
+                        mScale = MAX_SCALE
                     val scaleAnimation = ScaleAnimation(
                         /* fromX = */ 1f / pScale,
                         /* toX = */ 1f / mScale,
@@ -167,9 +176,12 @@ class NuclideAct : BaseAct() {
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
-        mScaleDetector.onTouchEvent(event)
+        // FIX-032: mScaleDetector.onTouchEvent(event) was called twice for the same
+        // MotionEvent (once discarded, once returned) — ScaleGestureDetector fires its
+        // onScale() callback for each call, so every real touch event doubled mScale's delta.
+        val scaleHandled = mScaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
-        return mScaleDetector.onTouchEvent(event)
+        return scaleHandled
     }
 
     private class GestureListener : GestureDetector.SimpleOnGestureListener() {
@@ -251,57 +263,57 @@ class NuclideAct : BaseAct() {
                         top.text = (z.toInt() + n.toInt()).toString()
                         decay.text = decayTypeResult
                         if (decayTypeResult == "stable") {
-                            frame.background.setTint(Color.argb(255, 42, 50, 61))
+                            frame.background.mutate().setTint(Color.argb(255, 42, 50, 61))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                         }
                         if (decayTypeResult == "3p") {
-                            frame.background.setTint(Color.argb(255, 137, 0, 7))
+                            frame.background.mutate().setTint(Color.argb(255, 137, 0, 7))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                         }
                         if (decayTypeResult == "2p") {
-                            frame.background.setTint(Color.argb(255, 154, 0, 7))
+                            frame.background.mutate().setTint(Color.argb(255, 154, 0, 7))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                         }
                         if (decayTypeResult == "p") {
-                            frame.background.setTint(Color.argb(255, 211, 47, 47))
+                            frame.background.mutate().setTint(Color.argb(255, 211, 47, 47))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorLightPrimary))
                         }
                         if (decayTypeResult == "B+") {
-                            frame.background.setTint(Color.argb(255, 211, 102, 89))
+                            frame.background.mutate().setTint(Color.argb(255, 211, 102, 89))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "2B-") {
-                            frame.background.setTint(Color.argb(255, 3, 155, 229))
+                            frame.background.mutate().setTint(Color.argb(255, 3, 155, 229))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "B-") {
-                            frame.background.setTint(Color.argb(255, 89, 204, 255))
+                            frame.background.mutate().setTint(Color.argb(255, 89, 204, 255))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "n") {
-                            frame.background.setTint(Color.argb(255, 78, 186, 170))
+                            frame.background.mutate().setTint(Color.argb(255, 78, 186, 170))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "2n") {
-                            frame.background.setTint(Color.argb(255, 0, 137, 123))
+                            frame.background.mutate().setTint(Color.argb(255, 0, 137, 123))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "a") {
-                            frame.background.setTint(Color.argb(255, 255, 235, 59))
+                            frame.background.mutate().setTint(Color.argb(255, 255, 235, 59))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }
                         if (decayTypeResult == "e- capture") {
-                            frame.background.setTint(Color.argb(255, 176, 0, 78))
+                            frame.background.mutate().setTint(Color.argb(255, 176, 0, 78))
                             short.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                             top.setTextColor(ContextCompat.getColor(this, R.color.colorDarkPrimary))
                         }

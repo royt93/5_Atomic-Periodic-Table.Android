@@ -217,9 +217,14 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
                 filteredList.add(item)
             }
         }
-        filterHandler = Handler(Looper.getMainLooper())
+        // FIX-026: reuse one Handler and cancel the previous pending callback instead of
+        // creating a new Handler on every keystroke — a new Handler's postDelayed doesn't
+        // cancel prior instances' still-pending callbacks, so fast typing left several stale
+        // delayed callbacks racing to update the empty-state view.
+        if (filterHandler == null) filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.removeCallbacksAndMessages(null)
         filterHandler?.postDelayed({
-            if (recyclerView.adapter!!.itemCount == 0) {
+            if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxIon, 300)
             } else {
                 binding.emptySearchBoxIon.visibility = View.GONE

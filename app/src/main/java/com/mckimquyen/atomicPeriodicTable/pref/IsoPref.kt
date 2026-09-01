@@ -28,21 +28,20 @@ class IsoPref(context: Context) {
 class SendIso(context: Context) {
 
     private val prefName = "send_Iso_pref"
-    private val prefValue = "send_iso_value"
+    // FIX (P3): was storing this boolean flag as the String "true"/"false" via
+    // getString/putString instead of the dedicated getBoolean/putBoolean API. New key name
+    // so an existing install's old String-typed value can't crash getBoolean() with a
+    // ClassCastException on first read after updating.
+    private val prefValue = "send_iso_value_bool"
 
     private val preference: SharedPreferences =
         context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
-    fun getValue(): String {
-        // Optimized: Use elvis operator instead of non-null assertion to avoid potential crash
-        return preference.getString(prefValue, "false") ?: "false"
-        //0 == Not sent
-        //1 == Sent
-    }
+    fun getValue(): Boolean = preference.getBoolean(prefValue, false)
 
-    fun setValue(count: String) {
+    fun setValue(sent: Boolean) {
         preference.edit {
-            putString(prefValue, count)
+            putBoolean(prefValue, sent)
         }
     }
 }

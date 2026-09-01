@@ -116,12 +116,7 @@ class VipManagementAct : BaseAct() {
         // in onCreate because VIP was active at that time), preload now so the button works.
         if (!active) AdManager.loadRewarded(this)
         val expiryMs = AdManager.getVipByKeyExpiry()
-        val storedGrantedAt = vipPrefs.getGrantedAtMs()
-        val grantedAtMs = when {
-            storedGrantedAt > 0L -> storedGrantedAt
-            active && expiryMs > 0L -> expiryMs - 24L * 60L * 60L * 1000L
-            else -> 0L
-        }
+        val grantedAtMs = VipCalculator.resolveGrantedAtMs(vipPrefs.getGrantedAtMs())
 
         binding.heroBackground.setBackgroundResource(
             if (active) R.drawable.bg_vip_status_header_active else R.drawable.bg_vip_status_header_free
@@ -138,7 +133,7 @@ class VipManagementAct : BaseAct() {
         binding.rowExpires.isVisible = heroActive
         binding.tvActivatedAt.text = getString(R.string.vip_activated_at, formatDate(grantedAtMs))
         binding.tvExpiresAt.text = getString(R.string.vip_expires_at, formatDate(expiryMs))
-        binding.progressVip.isVisible = heroActive
+        binding.progressVip.isVisible = heroActive && grantedAtMs > 0L
         binding.tvCountdown.isVisible = heroActive
         binding.activeVipCard.isVisible = active
         binding.btnRevokeVip.isEnabled = active

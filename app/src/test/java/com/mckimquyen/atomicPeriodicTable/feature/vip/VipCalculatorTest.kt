@@ -126,4 +126,19 @@ class VipCalculatorTest {
         val ms = 3L * 86_400_000L
         assertArrayEquals(longArrayOf(3, 0, 0, 0), VipCalculator.remainingParts(ms))
     }
+
+    // ========================================================
+    // resolveGrantedAtMs (FIX-030)
+    // ========================================================
+
+    @Test
+    fun `resolveGrantedAtMs returns the stored value when known`() {
+        assertEquals(1_000_000L, VipCalculator.resolveGrantedAtMs(1_000_000L))
+    }
+
+    @Test
+    fun `resolveGrantedAtMs returns 0 (unknown) instead of fabricating a 24h-ago guess`() {
+        assertEquals(0L, VipCalculator.resolveGrantedAtMs(0L))
+        assertEquals(0L, VipCalculator.resolveGrantedAtMs(-1L))
+    }
 }

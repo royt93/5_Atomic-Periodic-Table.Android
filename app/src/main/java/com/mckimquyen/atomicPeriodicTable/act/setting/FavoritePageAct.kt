@@ -20,7 +20,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.AtomicRadiusCalPref
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicRadiusEmpPref
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicVanPref
 import com.mckimquyen.atomicPeriodicTable.pref.BoilingPref
-import com.mckimquyen.atomicPeriodicTable.pref.DegreePref
+import com.mckimquyen.atomicPeriodicTable.pref.TemperatureUnits
 import com.mckimquyen.atomicPeriodicTable.pref.DensityPref
 import com.mckimquyen.atomicPeriodicTable.pref.ElectronegativityPref
 import com.mckimquyen.atomicPeriodicTable.pref.FavoriteBarPref
@@ -118,23 +118,25 @@ class FavoritePageAct : BaseAct() {
             binding.densityCheck.isChecked = false
         }
 
-        //Degree
-        val degreePref = DegreePref(this)
-        val degreePrefValue = degreePref.getValue()
-        if (degreePrefValue == 0) {
-            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-        }
-        if (degreePrefValue == 1) {
-            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
-            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-        }
-        if (degreePrefValue == 2) {
-            binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
-            binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+        // FIX-024: was reading a separate DegreePref (Int) that Settings > Units (UnitAct)
+        // never wrote to, so this screen's highlighted chip never matched the actual unit
+        // used elsewhere. Read/write the same TemperatureUnits pref UnitAct uses.
+        when (TemperatureUnits(this).getValue()) {
+            "kelvin" -> {
+                binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+                binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+                binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            }
+            "fahrenheit" -> {
+                binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+                binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+                binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+            }
+            else -> {
+                binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+                binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
+                binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
+            }
         }
 
         //Boiling Point
@@ -339,28 +341,19 @@ class FavoritePageAct : BaseAct() {
         }
 
         binding.kelvinBtn.setOnClickListener {
-            val degreePref = DegreePref(this)
-//            var degreePrefValue = degreePref.getValue()
-
-            degreePref.setValue(0)
+            TemperatureUnits(this).setValue("kelvin")
             binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
             binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
             binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
         binding.celsiusBtn.setOnClickListener {
-            val degreePref = DegreePref(this)
-//            var degreePrefValue = degreePref.getValue()
-
-            degreePref.setValue(1)
+            TemperatureUnits(this).setValue("celsius")
             binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
             binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)
             binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
         }
         binding.fahrenheitbtn.setOnClickListener {
-            val degreePref = DegreePref(this)
-//            var degreePrefValue = degreePref.getValue()
-
-            degreePref.setValue(2)
+            TemperatureUnits(this).setValue("fahrenheit")
             binding.kelvinBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
             binding.celsiusBtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_outline)
             binding.fahrenheitbtn.background = ContextCompat.getDrawable(this, R.drawable.shape_chip_active)

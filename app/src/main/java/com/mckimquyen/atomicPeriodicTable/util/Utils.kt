@@ -48,13 +48,17 @@ object Utils {
     }
 
     fun fadeOutAnim(view: View, time: Long) {
-        view.animate().duration = time
-        view.animate().alpha(0.0f)
-        // Use View.postDelayed instead of Handler to tie the callback to the View's lifecycle
-        // This prevents memory leaks as the callback is automatically removed if the View is detached
-        view.postDelayed({
-            view.visibility = View.GONE
-        }, time + 1)
+        // FIX-027: the previous postDelayed(..., time + 1) ran independently of the actual
+        // animation — calling fadeOutAnim() then fadeInAnim() (or fadeOutAnim() again) before
+        // that delay elapsed left the stale callback to force visibility = GONE afterwards,
+        // fighting whatever the later call intended. withEndAction ties the visibility change
+        // to this specific ViewPropertyAnimator run, which a later .animate() call on the
+        // same view cancels/replaces before it fires.
+        view.animate()
+            .setDuration(time)
+            .alpha(0.0f)
+            .withEndAction { view.visibility = View.GONE }
+            .start()
     }
 
 

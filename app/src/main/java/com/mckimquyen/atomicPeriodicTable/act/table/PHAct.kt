@@ -96,7 +96,13 @@ class PHAct : BaseAct() {
         val neutralText = "[H+]=[OH-] pH="
         val alkalineText = "[H+]<[OH-] pH>"
 
-        val item = indicatorList[0]
+        // FIX (P3): indicatorList[0..3] relied on IndicatorModel.getList() always returning
+        // exactly these 4 entries in this exact order — any future reorder/addition would
+        // silently mismatch a button to the wrong indicator, or throw IndexOutOfBoundsException.
+        // Look up by name instead, matching each button to its actual indicator.
+        fun indicatorNamed(name: String) = indicatorList.first { it.name == name }
+
+        val item = indicatorNamed("bromothymol_blue")
         binding.acidInfo.text = acidText + item.acid
         binding.neutralInfo.text = neutralText + item.neutral
         binding.alkalineInfo.text = alkalineText + item.alkali
@@ -104,7 +110,7 @@ class PHAct : BaseAct() {
         updateButtonColor("bromothymol_blue_btn")
 
         binding.phChipBar.bromothymolBlueBtn.setOnClickListener {
-            val item = indicatorList[0]
+            val item = indicatorNamed("bromothymol_blue")
             binding.acidInfo.text = acidText + item.acid
             binding.neutralInfo.text = neutralText + item.neutral
             binding.alkalineInfo.text = alkalineText + item.alkali
@@ -112,7 +118,7 @@ class PHAct : BaseAct() {
             updateButtonColor("bromothymol_blue_btn")
         }
         binding.phChipBar.methylOrangeBtn.setOnClickListener {
-            val item = indicatorList[1]
+            val item = indicatorNamed("methyl_orange")
             binding.acidInfo.text = acidText + item.acid
             binding.neutralInfo.text = neutralText + item.neutral
             binding.alkalineInfo.text = alkalineText + item.alkali
@@ -120,7 +126,7 @@ class PHAct : BaseAct() {
             updateButtonColor("methyl_orange_btn")
         }
         binding.phChipBar.congoRedBtn.setOnClickListener {
-            val item = indicatorList[2]
+            val item = indicatorNamed("congo_red")
             binding.acidInfo.text = acidText + item.acid
             binding.neutralInfo.text = neutralText + item.neutral
             binding.alkalineInfo.text = alkalineText + item.alkali
@@ -128,7 +134,7 @@ class PHAct : BaseAct() {
             updateButtonColor("congo_red_btn")
         }
         binding.phChipBar.phenolphthaleinBtn.setOnClickListener {
-            val item = indicatorList[3]
+            val item = indicatorNamed("phenolphthalein")
             binding.acidInfo.text = acidText + item.acid
             binding.neutralInfo.text = neutralText + item.neutral
             binding.alkalineInfo.text = alkalineText + item.alkali

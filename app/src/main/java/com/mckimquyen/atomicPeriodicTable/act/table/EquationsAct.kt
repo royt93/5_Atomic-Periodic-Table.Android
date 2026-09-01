@@ -191,7 +191,10 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
                 filteredList.add(item)
             }
         }
-        filterHandler = Handler(Looper.getMainLooper())
+        // FIX-026: reuse one Handler and cancel the previous pending callback instead of
+        // creating a new Handler on every keystroke.
+        if (filterHandler == null) filterHandler = Handler(Looper.getMainLooper())
+        filterHandler?.removeCallbacksAndMessages(null)
         filterHandler?.postDelayed({
             if (recyclerView.adapter?.itemCount == 0) {
                 Anim.fadeIn(binding.emptySearchBoxEqu, 300)

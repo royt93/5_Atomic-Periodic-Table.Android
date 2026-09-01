@@ -115,27 +115,27 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
             if (themePrefValue == 100) {
                 when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                     Configuration.UI_MODE_NIGHT_NO -> {
-                        btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                        binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                        binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                        btn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                        binding.vGroup3.lanthanoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                        binding.vGroup3.actinoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
                     }
 
                     Configuration.UI_MODE_NIGHT_YES -> {
-                        btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                        binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                        binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                        btn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                        binding.vGroup3.lanthanoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                        binding.vGroup3.actinoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
                     }
                 }
             }
             if (themePrefValue == 0) {
-                btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
-                binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                btn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                binding.vGroup3.lanthanoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
+                binding.vGroup3.actinoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_light))
             }
             if (themePrefValue == 1) {
-                btn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                binding.vGroup3.lanthanoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
-                binding.vGroup3.actinoidsBtn.background.setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                btn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                binding.vGroup3.lanthanoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
+                binding.vGroup3.actinoidsBtn.background.mutate().setTint(ContextCompat.getColor(this, R.color.element_box_dark))
             }
         }
     }
@@ -300,24 +300,24 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                         if (themePrefValue == 100) {
                             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                                 Configuration.UI_MODE_NIGHT_NO -> {
-                                    btn.background.setTint(Color.argb(255, 254, 254, 254))
+                                    btn.background.mutate().setTint(Color.argb(255, 254, 254, 254))
                                 }
 
                                 Configuration.UI_MODE_NIGHT_YES -> {
-                                    btn.background.setTint(Color.argb(255, 18, 18, 18))
+                                    btn.background.mutate().setTint(Color.argb(255, 18, 18, 18))
                                 }
                             }
                         }
                         if (themePrefValue == 0) {
-                            btn.background.setTint(Color.argb(255, 254, 254, 254))
+                            btn.background.mutate().setTint(Color.argb(255, 254, 254, 254))
                         }
                         if (themePrefValue == 1) {
-                            btn.background.setTint(Color.argb(255, 18, 18, 18))
+                            btn.background.mutate().setTint(Color.argb(255, 18, 18, 18))
                         }
                     } else {
                         if (item.electro > 1) {
                             val btn = findViewById<TextView>(resIDB)
-                            btn.background.setTint(
+                            btn.background.mutate().setTint(
                                 Color.argb(
                                     255,
                                     255,
@@ -327,7 +327,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                             )
                         } else {
                             val btn = findViewById<TextView>(resIDB)
-                            btn.background.setTint(Color.argb(255, 255, 214, 0))
+                            btn.background.mutate().setTint(Color.argb(255, 255, 214, 0))
                         }
                     }
                 }
@@ -375,25 +375,25 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
 
                 val btn = findViewById<TextView>(resIDB)
                 if ((item.number == 3) or (item.number == 11) or (item.number == 19) or (item.number == 37) or (item.number == 55) or (item.number == 87)) {
-                    btn.background.setTint(Color.argb(255, 255, 102, 102))
+                    btn.background.mutate().setTint(Color.argb(255, 255, 102, 102))
                 }
                 if ((item.number == 4) or (item.number == 12) or (item.number == 20) or (item.number == 38) or (item.number == 56) or (item.number == 88)) {
-                    btn.background.setTint(Color.argb(255, 255, 195, 112))
+                    btn.background.mutate().setTint(Color.argb(255, 255, 195, 112))
                 }
                 if ((item.number in 21..30) or (item.number in 39..48) or (item.number in 72..80) or (item.number in 104..112)) {
-                    btn.background.setTint(Color.argb(255, 225, 168, 166))
+                    btn.background.mutate().setTint(Color.argb(255, 225, 168, 166))
                 }
                 if ((item.number == 5) or (item.number == 14) or (item.number in 32..33) or (item.number in 51..52) or (item.number == 85)) {
-                    btn.background.setTint(Color.argb(255, 184, 184, 136))
+                    btn.background.mutate().setTint(Color.argb(255, 184, 184, 136))
                 }
                 if ((item.number == 13) or (item.number == 31) or (item.number in 49..50) or (item.number in 81..84) or (item.number in 113..118)) {
-                    btn.background.setTint(Color.argb(255, 174, 174, 174))
+                    btn.background.mutate().setTint(Color.argb(255, 174, 174, 174))
                 }
                 if ((item.number == 53) or (item.number in 34..35) or (item.number in 15..17) or (item.number in 6..9) or (item.number == 1)) {
-                    btn.background.setTint(Color.argb(255, 129, 199, 132))
+                    btn.background.mutate().setTint(Color.argb(255, 129, 199, 132))
                 }
                 if ((item.number == 2) or (item.number == 10) or (item.number == 18) or (item.number == 36) or (item.number == 54) or (item.number == 86)) {
-                    btn.background.setTint(Color.argb(255, 97, 193, 193))
+                    btn.background.mutate().setTint(Color.argb(255, 97, 193, 193))
                 }
             }
         }, 10)

@@ -22,7 +22,7 @@ class ElectrodeAdt(
         holder: ViewHolder,
         position: Int,
     ) {
-        holder.initialize(list[position], context)
+        holder.initialize(list[position], clickListener, context)
     }
 
     override fun onCreateViewHolder(
@@ -45,6 +45,7 @@ class ElectrodeAdt(
 
         fun initialize(
             item: Series,
+            action: ElectrodeAct,
             context: Context,
         ) {
             textViewName.text = com.mckimquyen.atomicPeriodicTable.util.ElementTranslator.getLocalizedName(context, item.name)
@@ -53,10 +54,15 @@ class ElectrodeAdt(
             textViewVoltage.text = "${item.voltage} (Volt)"
             textViewCharge.text = item.charge
 
+            // FIX-021: row had the ripple foreground + isClickable/isFocusable=true (looked
+            // tappable) but no setOnClickListener was ever attached — tapping did nothing.
+            // item.name matches a real periodic element, so open its detail screen.
             itemView.foreground = ContextCompat.getDrawable(context, R.drawable.shape_toast_card_ripple)
             itemView.isClickable = true
             itemView.isFocusable = true
-
+            itemView.setOnClickListener {
+                action.electrodeClickListener(item)
+            }
         }
     }
 

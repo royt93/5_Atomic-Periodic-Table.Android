@@ -14,6 +14,13 @@ class ExperimentalAct : BaseAct() {
 
     private lateinit var binding: AExperimentalSettingsPageBinding
 
+    // FIX-022: onApplySystemInsets can fire more than once (rotation, keyboard, system bar
+    // visibility change) with the same absolute `top`. Accumulating with `+=` on top of a
+    // value that already includes a previous inset made the header grow every time it fired.
+    // Cache the original layout values once and always recompute from them.
+    private var baseTitleBarHeight = -1
+    private var baseHeaderTopMargin = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -81,11 +88,13 @@ class ExperimentalAct : BaseAct() {
         right: Int,
     ) {
         val params = binding.commonTitleBackExp.layoutParams as ViewGroup.LayoutParams
-        params.height += top
+        if (baseTitleBarHeight < 0) baseTitleBarHeight = params.height
+        params.height = baseTitleBarHeight + top
         binding.commonTitleBackExp.layoutParams = params
 
         val params2 = binding.generalHeaderExp.layoutParams as ViewGroup.MarginLayoutParams
-        params2.topMargin += top
+        if (baseHeaderTopMargin < 0) baseHeaderTopMargin = params2.topMargin
+        params2.topMargin = baseHeaderTopMargin + top
         binding.generalHeaderExp.layoutParams = params2
     }
 

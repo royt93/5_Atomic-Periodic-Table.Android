@@ -24,7 +24,7 @@ import com.mckimquyen.atomicPeriodicTable.pref.AtomicRadiusCalPref
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicRadiusEmpPref
 import com.mckimquyen.atomicPeriodicTable.pref.AtomicVanPref
 import com.mckimquyen.atomicPeriodicTable.pref.BoilingPref
-import com.mckimquyen.atomicPeriodicTable.pref.DegreePref
+import com.mckimquyen.atomicPeriodicTable.pref.TemperatureUnits
 import com.mckimquyen.atomicPeriodicTable.pref.DensityPref
 import com.mckimquyen.atomicPeriodicTable.pref.ElectronegativityPref
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
@@ -193,10 +193,16 @@ abstract class InfoExt : BaseAct() {
             val isRadioactive = jsonObject.optString("radioactive", "---")
             val neutronCrossSection = jsonObject.optString("neutron_cross_sectional", "---")
 
-            if (rMultiplier == "---") {
+            // FIX-031: resistivity_mult can be present while resistivity is "---" (or vice
+            // versa, or non-numeric) in some element JSON files — resistivity.toFloat() then
+            // threw NumberFormatException instead of falling back to "---" like every other
+            // field here does on missing/malformed data.
+            val resistivityValue = resistivity.toFloatOrNull()
+            val rMultiplierValue = rMultiplier.toFloatOrNull()
+            if (resistivityValue == null || rMultiplierValue == null) {
                 binding.electromagneticInc.elementResistivity.text = "---"
             } else {
-                val input = resistivity.toFloat() * rMultiplier.toFloat()
+                val input = resistivityValue * rMultiplierValue
                 val output = input.pow(-1).toString()
                 binding.electromagneticInc.elementResistivity.text = output.replace("E", "*10^") + " (S/m)"
             }
@@ -251,7 +257,7 @@ abstract class InfoExt : BaseAct() {
                 val isoPreference = ElementSendAndLoad(this)
                 isoPreference.setValue(element.lowercase(Locale.getDefault())) //Send element number
                 val isoSend = SendIso(this)
-                isoSend.setValue("true") //Set flag for sent
+                isoSend.setValue(true) //Set flag for sent
                 val intent = Intent(this, IsotopesActExperimental::class.java)
                 startActivity(intent) //Send intent
             }
@@ -300,64 +306,64 @@ abstract class InfoExt : BaseAct() {
 
             if (negOxidationStates.contains(0.toString())) {
                 binding.atomicInc.oxView.ox0.text = "0"
-                binding.atomicInc.oxView.ox0.background.setTint(getColor(R.color.non_metals))
+                binding.atomicInc.oxView.ox0.background.mutate().setTint(getColor(R.color.non_metals))
             }
             if (negOxidationStates.contains(1.toString())) {
                 binding.atomicInc.oxView.m1ox.text = "-1"
-                binding.atomicInc.oxView.m1ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m1ox.background.mutate().setTint(getColor(R.color.noble_gas))
             }
             if (negOxidationStates.contains(2.toString())) {
                 binding.atomicInc.oxView.m2ox.text = "-2"
-                binding.atomicInc.oxView.m2ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m2ox.background.mutate().setTint(getColor(R.color.noble_gas))
             }
             if (negOxidationStates.contains(3.toString())) {
                 binding.atomicInc.oxView.m3ox.text = "-3"
-                binding.atomicInc.oxView.m3ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m3ox.background.mutate().setTint(getColor(R.color.noble_gas))
             }
             if (negOxidationStates.contains(4.toString())) {
                 binding.atomicInc.oxView.m4ox.text = "-4"
-                binding.atomicInc.oxView.m4ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m4ox.background.mutate().setTint(getColor(R.color.noble_gas))
             }
             if (negOxidationStates.contains(5.toString())) {
                 binding.atomicInc.oxView.m5ox.text = "-5"
-                binding.atomicInc.oxView.m5ox.background.setTint(getColor(R.color.noble_gas))
+                binding.atomicInc.oxView.m5ox.background.mutate().setTint(getColor(R.color.noble_gas))
             }
 
             if (posOxidationStates.contains(1.toString())) {
                 binding.atomicInc.oxView.p1ox.text = "+1"
-                binding.atomicInc.oxView.p1ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p1ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(2.toString())) {
                 binding.atomicInc.oxView.p2ox.text = "+2"
-                binding.atomicInc.oxView.p2ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p2ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(3.toString())) {
                 binding.atomicInc.oxView.p3ox.text = "+3"
-                binding.atomicInc.oxView.p3ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p3ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(4.toString())) {
                 binding.atomicInc.oxView.p4ox.text = "+4"
-                binding.atomicInc.oxView.p4ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p4ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(5.toString())) {
                 binding.atomicInc.oxView.p5ox.text = "+5"
-                binding.atomicInc.oxView.p5ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p5ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(6.toString())) {
                 binding.atomicInc.oxView.p6ox.text = "+6"
-                binding.atomicInc.oxView.p6ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p6ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(7.toString())) {
                 binding.atomicInc.oxView.p7ox.text = "+7"
-                binding.atomicInc.oxView.p7ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p7ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(8.toString())) {
                 binding.atomicInc.oxView.p8ox.text = "+8"
-                binding.atomicInc.oxView.p8ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p8ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
             if (posOxidationStates.contains(9.toString())) {
                 binding.atomicInc.oxView.p9ox.text = "+9"
-                binding.atomicInc.oxView.p9ox.background.setTint(getColor(R.color.alkali_metals))
+                binding.atomicInc.oxView.p9ox.background.mutate().setTint(getColor(R.color.alkali_metals))
             }
 
             //set element data for favorite bar
@@ -366,20 +372,22 @@ abstract class InfoExt : BaseAct() {
             binding.favoriteBarInclude.electronegativityF.text = elementElectronegativity
             binding.favoriteBarInclude.densityF.text = sElementDensity
 
-            val degreePref = DegreePref(this)
-            val degreePrefValue = degreePref.getValue()
-
-            if (degreePrefValue == 0) {
-                binding.favoriteBarInclude.boilingF.text = sElementBoilingKelvin
-                binding.favoriteBarInclude.meltingF.text = sElementMeltingKelvin
-            }
-            if (degreePrefValue == 1) {
-                binding.favoriteBarInclude.boilingF.text = sElementBoilingCelsius
-                binding.favoriteBarInclude.meltingF.text = sElementMeltingCelsius
-            }
-            if (degreePrefValue == 2) {
-                binding.favoriteBarInclude.boilingF.text = sElementBoilingFahrenheit
-                binding.favoriteBarInclude.meltingF.text = sElementMeltingFahrenheit
+            // FIX-024: was reading a separate DegreePref (Int) that nothing in Settings ever
+            // wrote to — the unit chosen in Settings > Units (TemperatureUnits) never
+            // reached this favorite bar. Read the same pref UnitAct writes.
+            when (TemperatureUnits(this).getValue()) {
+                "kelvin" -> {
+                    binding.favoriteBarInclude.boilingF.text = sElementBoilingKelvin
+                    binding.favoriteBarInclude.meltingF.text = sElementMeltingKelvin
+                }
+                "fahrenheit" -> {
+                    binding.favoriteBarInclude.boilingF.text = sElementBoilingFahrenheit
+                    binding.favoriteBarInclude.meltingF.text = sElementMeltingFahrenheit
+                }
+                else -> {
+                    binding.favoriteBarInclude.boilingF.text = sElementBoilingCelsius
+                    binding.favoriteBarInclude.meltingF.text = sElementMeltingCelsius
+                }
             }
 
             if (url == "empty") {
