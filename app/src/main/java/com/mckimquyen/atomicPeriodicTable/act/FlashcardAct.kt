@@ -13,6 +13,7 @@ import com.mckimquyen.atomicPeriodicTable.databinding.AFlashcardBinding
 import com.mckimquyen.atomicPeriodicTable.feature.flashcard.FlashcardPref
 import com.mckimquyen.atomicPeriodicTable.feature.flashcard.FlashcardRating
 import com.mckimquyen.atomicPeriodicTable.feature.flashcard.FlashcardScheduler
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.util.ElementTranslator
@@ -126,6 +127,7 @@ class FlashcardAct : BaseAct() {
         val newState = FlashcardScheduler.review(pref.getState(element.short), rating)
         val nextReviewAtMs = FlashcardScheduler.nextReviewAtMs(System.currentTimeMillis(), newState.intervalDays)
         pref.saveState(element.short, newState, nextReviewAtMs)
+        StudyStreakPref(this).recordStudyToday()
         showCard(currentIndex + 1)
     }
 

@@ -577,4 +577,5 @@
     <string name="unit_converter_negative_error">القيمة لا يمكن أن تكون سالبة</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">مشاركة العنصر</string>
+    <string name="study_streak_format">🔥 سلسلة %1$d يوم</string>
 </resources>

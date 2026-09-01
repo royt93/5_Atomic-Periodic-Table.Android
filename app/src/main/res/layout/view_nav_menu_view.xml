@@ -70,6 +70,21 @@
 
             </FrameLayout>
 
+            <!-- Study Streak indicator -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStudyStreak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="🔥 3-day streak"
+                tools:visibility="visible" />
+
             <!--            <FrameLayout-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="54dp">-->

@@ -577,4 +577,5 @@
     <string name="unit_converter_negative_error">Значение не может быть отрицательным</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Поделиться элементом</string>
+    <string name="study_streak_format">🔥 Серия %1$d дн.</string>
 </resources>

@@ -577,4 +577,5 @@
     <string name="unit_converter_negative_error">數值不能為負</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">分享元素</string>
+    <string name="study_streak_format">🔥 連續 %1$d 天</string>
 </resources>

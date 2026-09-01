@@ -1,12 +1,14 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -88,5 +90,30 @@ class QuizActTest {
         Thread.sleep(2000)
         // Reaching this line without the instrumentation process crashing/ANRing
         // is the pass condition.
+    }
+
+    // Regression guard for the study-streak feature: finishing a quiz (showResults()) must
+    // record today's study streak. Clicking through all 10 real questions just to reach
+    // showResults() would be slow and flaky (see FlashcardAct's 118-card test for that cost
+    // at a much smaller scale) — showResults() is private, so invoke it via reflection instead,
+    // same "call the private member directly" approach already used elsewhere in this suite
+    // (e.g. IonActTest's filterHandler field check).
+    @Test
+    fun finishingQuiz_recordsStudyStreak() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        ActivityScenario.launch(QuizAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val method = QuizAct::class.java.getDeclaredMethod("showResults")
+                method.isAccessible = true
+                method.invoke(activity)
+            }
+            Thread.sleep(400) // fade-out/fade-in animation inside showResults()
+
+            val streak = StudyStreakPref(context).getCurrentStreak()
+            assertTrue("expected streak >= 1, got $streak", streak >= 1)
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.databinding.AQuizBinding
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator
@@ -549,6 +550,8 @@ class QuizAct : BaseAct() {
     }
 
     private fun showResults() {
+        StudyStreakPref(this).recordStudyToday()
+
         // Fade out quiz components smoothly
         binding.questionCard.animate().alpha(0f).scaleX(0.8f).scaleY(0.8f).setDuration(300).start()
         binding.optionsContainer.animate().alpha(0f).scaleX(0.8f).scaleY(0.8f).setDuration(300).withEndAction {

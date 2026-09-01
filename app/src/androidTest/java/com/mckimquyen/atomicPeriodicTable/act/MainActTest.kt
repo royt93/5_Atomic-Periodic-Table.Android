@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.act
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -10,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import org.junit.Assert.assertNotNull
@@ -19,6 +21,37 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MainActTest {
+
+    @Test
+    fun noStudySessionYet_streakIndicatorIsHidden() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val tv = activity.findViewById<android.view.View>(R.id.tvStudyStreak)
+                assertSame(android.view.View.GONE, tv.visibility)
+            }
+        }
+    }
+
+    @Test
+    fun existingStreak_showsIndicatorWithDayCount() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+        StudyStreakPref(context).recordStudyToday(todayEpochDay = 20000L)
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val tv = activity.findViewById<android.widget.TextView>(R.id.tvStudyStreak)
+                assertSame(android.view.View.VISIBLE, tv.visibility)
+                assertNotNull(tv.text)
+                assert(tv.text.contains("1")) { "expected streak text to mention 1 day, got ${tv.text}" }
+            }
+        }
+    }
 
     @Test
     fun testMainActivityLaunch() {

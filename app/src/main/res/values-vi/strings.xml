@@ -604,4 +604,5 @@
     <string name="unit_converter_negative_error">Giá trị không được âm</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Chia sẻ nguyên tố</string>
+    <string name="study_streak_format">🔥 Chuỗi %1$d ngày</string>
 </resources>

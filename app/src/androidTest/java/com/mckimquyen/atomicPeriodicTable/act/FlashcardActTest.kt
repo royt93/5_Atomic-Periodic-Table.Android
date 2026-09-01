@@ -14,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.feature.flashcard.FlashcardPref
 import com.mckimquyen.atomicPeriodicTable.feature.flashcard.FlashcardState
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import org.junit.Assert.assertEquals
@@ -27,9 +28,24 @@ class FlashcardActTest {
 
     @Before
     fun clearFlashcardPrefs() {
-        ApplicationProvider.getApplicationContext<android.content.Context>()
-            .getSharedPreferences("Flashcard_Preference", android.content.Context.MODE_PRIVATE)
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Flashcard_Preference", android.content.Context.MODE_PRIVATE)
             .edit().clear().commit()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+    }
+
+    @Test
+    fun ratingACard_recordsStudyStreak() {
+        ActivityScenario.launch(FlashcardAct::class.java).use {
+            onView(withId(R.id.cardFlashcard)).perform(click())
+            Thread.sleep(400) // flip animation
+            onView(withId(R.id.btnFlashcardGood)).perform(click())
+            Thread.sleep(400) // card-advance slide animation
+
+            val streak = StudyStreakPref(ApplicationProvider.getApplicationContext()).getCurrentStreak()
+            assertEquals(1, streak)
+        }
     }
 
     @Test

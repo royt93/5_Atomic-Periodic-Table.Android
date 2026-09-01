@@ -36,6 +36,7 @@ import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
 import com.mckimquyen.atomicPeriodicTable.adt.ElementAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.ext.TableExt
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.ext.moreApp
 import com.mckimquyen.atomicPeriodicTable.ext.openBrowserPolicy
 import com.mckimquyen.atomicPeriodicTable.ext.openUrlInBrowser
@@ -807,6 +808,17 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         }
         rateAppInApp(forceRateInApp = false)
         bindToolbarVipBadge()
+        refreshStudyStreak()
+    }
+
+    private fun refreshStudyStreak() {
+        val streak = StudyStreakPref(this).getCurrentStreak()
+        if (streak > 0) {
+            binding.navMenuInclude.tvStudyStreak.text = getString(R.string.study_streak_format, streak)
+            binding.navMenuInclude.tvStudyStreak.visibility = View.VISIBLE
+        } else {
+            binding.navMenuInclude.tvStudyStreak.visibility = View.GONE
+        }
     }
 
     private fun bindToolbarVipBadge() {

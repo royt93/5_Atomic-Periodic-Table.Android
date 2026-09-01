@@ -577,4 +577,5 @@
     <string name="unit_converter_negative_error">O valor não pode ser negativo</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Compartilhar elemento</string>
+    <string name="study_streak_format">🔥 Sequência de %1$d dias</string>
 </resources>
