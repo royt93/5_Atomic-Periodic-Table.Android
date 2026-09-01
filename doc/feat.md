@@ -12,7 +12,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
     *   Signing credentials, AdMob/AppLovin identifiers, and both VIP keys are maintained in the single private `com.mckimquyen.atomicPeriodicTable/ads.properties` file in `royt93/myKeyStore`.
     *   Gradle loads the local private file, supports `ATOMIC_PERIODIC_TABLE_SECRETS_FILE` for path overrides, and fails fast when the file, keystore, or a required property is missing.
     *   The public project ignores local secret copies and no longer stores the release keystore, signing credentials, or encoded VIP keys in its current tree.
-    *   Audit passed: both release variants assemble and verify with the original signing certificate; all 48 `AdKeys`/`VipKeys` checks pass across the tested variants. The unrelated full suite still has 11 pre-existing `VipPrefsTest` Mockito failures at line 44.
+    *   Audit passed: both release variants assemble and verify with the original signing certificate; all 48 `AdKeys`/`VipKeys` checks pass across the tested variants. *(Cập nhật 2026-09-01: đã chạy lại `./gradlew :app:testDevDebugUnitTest`, `VipPrefsTest` = 11/11 pass, 0 failures — note "11 pre-existing Mockito failures" ở trên đã lỗi thời, không còn tái hiện trên môi trường hiện tại.)*
     *   Security decision: the existing public Git history is intentionally not rewritten, and the private backup repository intentionally stores plaintext. These remain accepted residual risks.
 *   **Integration**:
     *   `RoyApp` builds a complete `AdSdkConfig`, including AppLovin SDK key, banner/interstitial/app-open/rewarded IDs, AdMob fallback IDs, `AdSafetyLimits`, and VIP secret.

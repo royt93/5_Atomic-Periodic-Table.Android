@@ -226,9 +226,10 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         recyclerView: RecyclerView,
     ) {
         val filteredList: ArrayList<Dictionary> = ArrayList()
+        // FIX: DictionaryPref(this) từng bị tạo mới bên trong loop này — gọi hàng trăm
+        // lần/keystroke dù giá trị pref không đổi trong suốt vòng lặp. Đọc 1 lần trước loop.
+        val dictionaryPrefValue1 = DictionaryPref(this).getValue()
         for (item in list) {
-            val dictionaryPreference = DictionaryPref(this)
-            val dictionaryPrefValue1 = dictionaryPreference.getValue()
             if (item.heading.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT))) {
                 if (item.category.lowercase(Locale.ROOT)
                         .contains(dictionaryPrefValue1.lowercase(Locale.ROOT))
