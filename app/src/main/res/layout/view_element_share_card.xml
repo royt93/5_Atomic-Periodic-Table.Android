@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardShareElement"
+    android:layout_width="360dp"
+    android:layout_height="360dp"
+    android:backgroundTint="?attr/colorPrimaryContainer"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShareNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="16sp"
+            tools:text="#79" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShareSymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="72sp"
+            android:textStyle="bold"
+            tools:text="Au" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShareName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="20sp"
+            tools:text="Gold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShareMass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="14sp"
+            tools:text="196.97 u" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShareCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:alpha="0.7"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="14sp"
+            tools:text="Transition Metals" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.cardview.widget.CardView>

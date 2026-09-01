@@ -604,5 +604,6 @@
     <string name="unit_converter_swap">Swap units</string>
     <string name="unit_converter_negative_error">Value cannot be negative</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="share_element_button">Share element</string>
 </resources>
 

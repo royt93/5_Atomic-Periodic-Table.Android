@@ -576,4 +576,5 @@
     <string name="unit_converter_swap">단위 바꾸기</string>
     <string name="unit_converter_negative_error">값은 음수가 될 수 없습니다</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="share_element_button">원소 공유</string>
 </resources>

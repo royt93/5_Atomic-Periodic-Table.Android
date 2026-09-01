@@ -50,19 +50,38 @@
                     app:tint="?attr/colorOnSecondaryContainer"
                     tools:ignore="PrivateResource" />
 
-                <!-- Wikipedia Button -->
-                <ImageButton
-                    android:id="@+id/wikipediaBtn"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="56dp"
+                <!-- Share + Wikipedia Buttons -->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="56dp"
                     android:layout_gravity="center_vertical|end"
-                    android:contentDescription="@string/wikipedia_button"
-                    android:padding="16dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_wikipedia_logo"
-                    app:tint="?attr/colorOnSecondaryContainer"
-                    tools:ignore="PrivateResource" />
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/shareElementBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:contentDescription="@string/share_element_button"
+                        android:padding="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_baseline_ios_share_24"
+                        app:tint="?attr/colorOnSecondaryContainer"
+                        tools:ignore="PrivateResource" />
+
+                    <ImageButton
+                        android:id="@+id/wikipediaBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:contentDescription="@string/wikipedia_button"
+                        android:padding="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_wikipedia_logo"
+                        app:tint="?attr/colorOnSecondaryContainer"
+                        tools:ignore="PrivateResource" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <!-- Element Title -->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -70,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
-                    android:layout_marginEnd="70dp"
+                    android:layout_marginEnd="126dp"
                     android:gravity="center_vertical"
                     android:text="@string/periodic_table"
                     android:textColor="?attr/colorOnSecondaryContainer"

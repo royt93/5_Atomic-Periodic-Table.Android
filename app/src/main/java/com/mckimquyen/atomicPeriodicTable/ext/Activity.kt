@@ -3,10 +3,14 @@ package com.mckimquyen.atomicPeriodicTable.ext
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.mckimquyen.atomicPeriodicTable.R
+import java.io.File
+import java.io.FileOutputStream
 import java.util.Calendar
 
 @Suppress("unused")
@@ -96,6 +100,23 @@ fun Activity.shareApp(
         val sAux =
             "\n${this.getString(R.string.share_msg)}\n\nhttps://play.google.com/store/apps/details?id=${this.packageName}"
         intent.putExtra(Intent.EXTRA_TEXT, sAux)
+        this.startActivity(Intent.createChooser(intent, this.getString(R.string.chooser_title)))
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+/** Saves [bitmap] to cacheDir and shares it via a FileProvider content:// Uri (image/png). */
+fun Activity.shareImage(bitmap: Bitmap, fileName: String) {
+    try {
+        val file = File(this.cacheDir, fileName)
+        FileOutputStream(file).use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        val uri = FileProvider.getUriForFile(this, "${this.packageName}.fileprovider", file)
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
         this.startActivity(Intent.createChooser(intent, this.getString(R.string.chooser_title)))
     } catch (e: Exception) {
         e.printStackTrace()

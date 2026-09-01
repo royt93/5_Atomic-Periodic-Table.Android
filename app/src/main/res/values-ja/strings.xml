@@ -576,4 +576,5 @@
     <string name="unit_converter_swap">単位を入れ替え</string>
     <string name="unit_converter_negative_error">値は負にできません</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="share_element_button">元素を共有</string>
 </resources>

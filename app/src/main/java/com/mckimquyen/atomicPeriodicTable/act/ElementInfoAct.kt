@@ -17,11 +17,15 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.FavoritePageAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
 import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.mckimquyen.atomicPeriodicTable.ext.InfoExt
+import com.mckimquyen.atomicPeriodicTable.ext.shareImage
+import com.mckimquyen.atomicPeriodicTable.feature.share.ElementCardRenderer
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.util.ElementTranslator
+import com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import org.json.JSONArray
 import org.json.JSONObject
@@ -128,6 +132,9 @@ class ElementInfoAct : InfoExt() {
             val intent = Intent(this, SubmitAct::class.java)
             startActivity(intent)
         }
+        binding.shareElementBtn.setOnClickListener {
+            shareCurrentElement()
+        }
 
         refreshVipGatedBanner(
             container = findViewById(R.id.bannerContainer),
@@ -135,6 +142,28 @@ class ElementInfoAct : InfoExt() {
         )
     }
 
+
+    private fun shareCurrentElement() {
+        val elementName = ElementSendAndLoad(this).getValue() ?: return
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+        val element = elements.find { it.element == elementName } ?: return
+
+        ElementWeightCache.init(this)
+        val massText = ElementWeightCache.getMass(element.short)?.let { "%.2f u".format(it) } ?: "---"
+        val categoryRaw = ElementWeightCache.getCategory(element.short) ?: "---"
+        val categoryText = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, categoryRaw)
+
+        val bitmap = ElementCardRenderer.render(
+            context = this,
+            symbol = element.short,
+            name = ElementTranslator.getLocalizedName(this, element.element),
+            number = element.number,
+            massText = massText,
+            categoryText = categoryText,
+        )
+        shareImage(bitmap, "element_${element.short}.png")
+    }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {
         val params = binding.frame.layoutParams as ViewGroup.MarginLayoutParams

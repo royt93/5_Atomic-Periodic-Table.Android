@@ -594,5 +594,6 @@
     <string name="unit_converter_swap">交换单位</string>
     <string name="unit_converter_negative_error">数值不能为负</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="share_element_button">分享元素</string>
 </resources>
 

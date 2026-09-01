@@ -9,7 +9,8 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Flashcard/Spaced-repetition study — `feature/flashcard/` (FlashcardScheduler/FlashcardPref), `act/FlashcardAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`).
 - ✅ Implemented: Periodic Trends Chart — `feature/trends/TrendsMapper.kt`, `view/TrendsChartView.kt`, `act/TrendsChartAct.kt` (2026-09-01, breakdown ở `doc/task/feat_new.md`). Cả 4 feature mới của vòng 2026-09-01 đã hoàn tất.
 - ✅ Implemented: Unit Converter — `feature/converter/UnitConverter.kt`, `act/UnitConverterAct.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 5).
-- 📋 Picked (vòng 2, breakdown chi tiết ở `doc/task/feat_new.md` mục 6-8, chọn qua AskUserQuestion 2026-09-02): Chia sẻ thẻ nguyên tố dưới dạng ảnh, Study Streak/Achievement cho Flashcard+Quiz, Practice Exam Mode.
+- ✅ Implemented: Chia sẻ thẻ nguyên tố dưới dạng ảnh — `feature/share/ElementCardRenderer.kt`, `ext/Activity.shareImage()`, FileProvider (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 6).
+- 📋 Picked (vòng 2, breakdown chi tiết ở `doc/task/feat_new.md` mục 7-8, chọn qua AskUserQuestion 2026-09-02): Study Streak/Achievement cho Flashcard+Quiz, Practice Exam Mode.
 
 ---
 

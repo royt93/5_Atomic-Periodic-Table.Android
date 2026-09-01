@@ -576,4 +576,5 @@
     <string name="unit_converter_swap">Échanger les unités</string>
     <string name="unit_converter_negative_error">La valeur ne peut pas être négative</string>
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
+    <string name="share_element_button">Partager l\'élément</string>
 </resources>
