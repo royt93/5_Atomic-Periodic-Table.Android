@@ -31,8 +31,10 @@ import androidx.core.view.isVisible
 
 class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
     private lateinit var binding: AEquationsBinding
-    private var equationList = ArrayList<Equation>()
-    private var mAdapter = EquationsAdt(list = equationList, clickListener = this, context = this)
+
+    // FIX-008: single adapter instance, created once in recyclerView() and reused by
+    // filter() — see IonAct.kt for the full explanation of the bug this replaces.
+    private lateinit var mAdapter: EquationsAdt
 
     // Handler instances for memory leak prevention
     private var filterHandler: Handler? = null
@@ -149,15 +151,13 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
             RecyclerView.VERTICAL,/* reverseLayout = */
             false
         )
-        val adapter = EquationsAdt(list = equation, clickListener = this, context = this)
-        binding.equRecycler.adapter = adapter
-
         // Sắp xếp danh sách equations theo title (alphabetically)
         equation.sortWith { lhs, rhs ->
             if (lhs.equationTitle < rhs.equationTitle) -1 else if (lhs.equationTitle > rhs.equationTitle) 1 else 0
         }
 
-        adapter.notifyDataSetChanged()
+        mAdapter = EquationsAdt(list = equation, clickListener = this, context = this)
+        binding.equRecycler.adapter = mAdapter
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
@@ -200,8 +200,6 @@ class EquationsAct : BaseAct(), EquationsAdt.OnEquationClickListener {
             }
         }, 10)
         mAdapter.filterList(filteredList)
-        mAdapter.notifyDataSetChanged()
-        recyclerView.adapter = EquationsAdt(filteredList, this, this)
     }
 
     private fun clickSearch() {

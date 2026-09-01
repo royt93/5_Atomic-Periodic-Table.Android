@@ -31,7 +31,6 @@ import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.databinding.AFavoriteSettingsPageBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
-import com.roy.sdkadbmob.AdManager
 
 class FavoritePageAct : BaseAct() {
 
@@ -298,22 +297,19 @@ class FavoritePageAct : BaseAct() {
         }
 
         // ===============================================================
-        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
-        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        if (!AdManager.isVipByKeyActive()) {
-            AdManager.loadBanner(
-                context = this,
-                container = bannerContainer,
-                tvLabelAd = tvLabelAd,
-                adSize = AdManager.getAdaptiveBannerSize(this),
-                autoManageLifecycle = true,
-            )
-        }
-//        adView = this.createAdBanner(
-//            logTag = FavoritePageAct::class.simpleName,
-//            viewGroup = flAd,
-//            isAdaptiveBanner = true,
-//        )
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // FIX-013: re-sync banner with current VIP state (see BaseAct.refreshVipGatedBanner).
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
     }
 
     override fun onApplySystemInsets(top: Int, bottom: Int, left: Int, right: Int) {

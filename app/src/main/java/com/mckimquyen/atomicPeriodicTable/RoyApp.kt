@@ -3,6 +3,8 @@ package com.mckimquyen.atomicPeriodicTable
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.mckimquyen.atomicPeriodicTable.common.const.AdKeys
@@ -11,6 +13,12 @@ import com.roy.sdkadbmob.AdSafetyLimits
 import com.roy.sdkadbmob.AdSdkConfig
 
 class RoyApp : Application() {
+    // FIX-012: guards adsInitializeStarted/adsInitialized/pendingAdInitCallbacks —
+    // AdManager.initialize()'s completion callback is not guaranteed to run on the main
+    // thread, so mutating this state from both a caller thread and the SDK's callback
+    // thread without synchronization was a real race (e.g. concurrent list mutation).
+    private val initLock = Any()
+    private val mainHandler = Handler(Looper.getMainLooper())
     private var adsInitializeStarted = false
     private var adsInitialized = false
     private val pendingAdInitCallbacks = mutableListOf<(Boolean, String?) -> Unit>()
@@ -86,23 +94,41 @@ class RoyApp : Application() {
     }
 
     fun initializeAdsIfNeeded(onComplete: (Boolean, String?) -> Unit) {
-        if (adsInitialized) {
-            onComplete(true, null)
-            return
-        }
-        if (adsInitializeStarted) {
+        val shouldStartInit: Boolean
+        synchronized(initLock) {
+            if (adsInitialized) {
+                onComplete(true, null)
+                return
+            }
             pendingAdInitCallbacks += onComplete
-            return
+            shouldStartInit = !adsInitializeStarted
+            if (shouldStartInit) adsInitializeStarted = true
         }
-        adsInitializeStarted = true
-        pendingAdInitCallbacks += onComplete
+        if (!shouldStartInit) return
+
         AdManager.initialize(this) { success, gaid ->
-            adsInitialized = success
-            adsInitializeStarted = false
-            Log.d("RoyApp", "AdManager initialize success=$success, gaid=$gaid")
-            val callbacks = pendingAdInitCallbacks.toList()
-            pendingAdInitCallbacks.clear()
-            callbacks.forEach { it(success, gaid) }
+            // FIX-012: post to main thread — the SDK callback thread isn't guaranteed to be
+            // main, and pendingAdInitCallbacks entries navigate/touch UI (e.g. SplashAct).
+            mainHandler.post {
+                val callbacks: List<(Boolean, String?) -> Unit>
+                synchronized(initLock) {
+                    adsInitialized = success
+                    adsInitializeStarted = false
+                    callbacks = pendingAdInitCallbacks.toList()
+                    pendingAdInitCallbacks.clear()
+                }
+                Log.d("RoyApp", "AdManager initialize success=$success, gaid=$gaid")
+                callbacks.forEach { it(success, gaid) }
+            }
+        }
+    }
+
+    // FIX-012: lets a destroyed Activity (e.g. SplashAct.onDestroy()) remove its own
+    // pending callback so it never fires against a dead Activity — same pattern as
+    // removeFullscreenAdDismissedListener() above.
+    fun removePendingAdInitCallback(callback: (Boolean, String?) -> Unit) {
+        synchronized(initLock) {
+            pendingAdInitCallbacks.remove(callback)
         }
     }
 }

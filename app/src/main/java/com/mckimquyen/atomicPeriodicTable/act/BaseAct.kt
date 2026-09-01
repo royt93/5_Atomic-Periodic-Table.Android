@@ -5,11 +5,14 @@ import android.content.res.Configuration
 import android.os.Build
 import android.view.Display
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import com.mckimquyen.atomicPeriodicTable.util.LocaleHelper
+import com.roy.sdkadbmob.AdManager
 
 abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     companion object {
@@ -17,6 +20,32 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     }
 
     private var systemUiConfigured = false
+
+    // FIX-013: ElementInfoAct/SettingsAct/FavoritePageAct used to load the VIP-gated
+    // banner once in onCreate() and never re-check — redeeming VIP in VipManagementAct
+    // and returning to one of these screens still showed the old banner. Call this from
+    // both onCreate() and onResume() so it re-syncs to the current VIP state every time
+    // the screen becomes visible.
+    private var vipGatedBannerView: View? = null
+
+    protected fun refreshVipGatedBanner(container: ViewGroup, tvLabelAd: TextView) {
+        if (AdManager.isVipByKeyActive()) {
+            vipGatedBannerView?.let { AdManager.bannerDestroy(it) }
+            vipGatedBannerView = null
+            container.visibility = View.GONE
+            tvLabelAd.visibility = View.GONE
+        } else if (vipGatedBannerView == null) {
+            container.visibility = View.VISIBLE
+            tvLabelAd.visibility = View.VISIBLE
+            vipGatedBannerView = AdManager.loadBanner(
+                context = this,
+                container = container,
+                tvLabelAd = tvLabelAd,
+                adSize = AdManager.getAdaptiveBannerSize(this),
+                autoManageLifecycle = true,
+            )
+        }
+    }
 
     // Subclasses that manage their own window theme (e.g. SplashAct with SplashTheme)
     // can return false to skip the app-wide theme override.

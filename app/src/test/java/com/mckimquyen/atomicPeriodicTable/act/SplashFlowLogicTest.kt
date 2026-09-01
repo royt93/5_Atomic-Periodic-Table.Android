@@ -133,4 +133,67 @@ class SplashFlowLogicTest {
         assertFalse("third call is blocked", guardedAction())
         assertTrue("flag remains true after repeated checks", navigatedToMain)
     }
+
+    // ---- FIX-019: 30s emergency escape must be a hard cap, not just a retry ----
+    //
+    // Pre-fix bug: the 30s escape called plain goToMain() again. That re-entered the
+    // isFullscreenAdShowing branch; since adDismissListener was already non-null, it
+    // skipped scheduling a NEW escape and returned without navigating — if
+    // isFullscreenAdShowing never clears, the splash is stuck forever with zero future
+    // fallback. The fix adds a `force` parameter that bypasses the ad-showing check.
+
+    private class GoToMainSimulator(private val isFullscreenAdShowing: () -> Boolean) {
+        var navigatedToMain = false
+            private set
+        private var dismissListenerRegistered = false
+        var escapeScheduledCount = 0
+            private set
+
+        fun goToMain(force: Boolean = false) {
+            if (navigatedToMain) return
+            if (!force && isFullscreenAdShowing()) {
+                if (!dismissListenerRegistered) {
+                    dismissListenerRegistered = true
+                    escapeScheduledCount++
+                }
+                return
+            }
+            navigatedToMain = true
+        }
+    }
+
+    @Test
+    fun `FIX-019 - forced escape navigates even while ad is still marked showing`() {
+        val sim = GoToMainSimulator(isFullscreenAdShowing = { true })
+        sim.goToMain()
+        assertFalse("still deferred while ad is showing", sim.navigatedToMain)
+        assertEquals(1, sim.escapeScheduledCount)
+
+        // 30s later: ad is STILL (bug-simulated) showing, escape timer fires with force=true.
+        sim.goToMain(force = true)
+        assertTrue("forced escape must navigate regardless of ad state", sim.navigatedToMain)
+    }
+
+    @Test
+    fun `FIX-019 regression - without force, stuck ad state schedules no further escape and never navigates`() {
+        val sim = GoToMainSimulator(isFullscreenAdShowing = { true })
+        sim.goToMain()
+        assertEquals(1, sim.escapeScheduledCount)
+
+        sim.goToMain() // pre-fix behavior: escape re-calls plain goToMain(), no force
+        assertFalse("bug: stuck forever with no navigation", sim.navigatedToMain)
+        assertEquals("bug: no second escape gets scheduled either", 1, sim.escapeScheduledCount)
+    }
+
+    @Test
+    fun `FIX-019 - normal dismissal without escape still navigates once ad clears`() {
+        var adShowing = true
+        val sim = GoToMainSimulator(isFullscreenAdShowing = { adShowing })
+        sim.goToMain()
+        assertFalse(sim.navigatedToMain)
+
+        adShowing = false // ad dismissed normally, well before the 30s escape
+        sim.goToMain()
+        assertTrue(sim.navigatedToMain)
+    }
 }

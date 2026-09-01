@@ -26,7 +26,6 @@ import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import com.mckimquyen.atomicPeriodicTable.pref.LanguagePref
@@ -245,17 +244,19 @@ class SettingsAct : BaseAct() {
             startActivity(intent)
         }
 
-        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
-        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        if (!AdManager.isVipByKeyActive()) {
-            AdManager.loadBanner(
-                context = this,
-                container = bannerContainer,
-                tvLabelAd = tvLabelAd,
-                adSize = AdManager.getAdaptiveBannerSize(this),
-                autoManageLifecycle = true,
-            )
-        }
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // FIX-013: re-sync banner with current VIP state (see BaseAct.refreshVipGatedBanner).
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
     }
 
     override fun onApplySystemInsets(

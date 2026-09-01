@@ -38,7 +38,11 @@ import java.util.Locale
 class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
     private lateinit var binding: AIsotopesExperimentalBinding
     private var elementList = ArrayList<Element>()
-    var mAdapter = IsotopeAdt(elementList = elementList, clickListener = this, context = this)
+
+    // FIX-008: single adapter instance, created once in setupViews() and reused by
+    // filter()/searchFilter() — see IonAct.kt for the full explanation of the bug this
+    // replaces.
+    private lateinit var mAdapter: IsotopeAdt
 
     // Handler instance for memory leak prevention
     private var filterHandler: android.os.Handler? = null
@@ -80,8 +84,8 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         binding.rView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val elements = ArrayList<Element>()
         ElementModel.getList(elements)
-        val adapter = IsotopeAdt(elementList = elements, clickListener = this, context = this)
-        binding.rView.adapter = adapter
+        mAdapter = IsotopeAdt(elementList = elements, clickListener = this, context = this)
+        binding.rView.adapter = mAdapter
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -131,7 +135,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         clickSearch()
-        searchFilter(elements, binding.rView)
+        searchFilter(elements)
         sentIsotope()
 
         // ===============================================================
@@ -167,7 +171,7 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun searchFilter(list: ArrayList<Element>, recyclerView: RecyclerView) {
+    private fun searchFilter(list: ArrayList<Element>) {
         binding.filterBtn2.setOnClickListener {
             Utils.fadeInAnim(binding.isoFilterBox.root, 150)
             Utils.fadeInAnim(binding.filterBackground, 150)
@@ -191,12 +195,6 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                 if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
             mAdapter.filterList(filtList)
-            mAdapter.notifyDataSetChanged()
-            recyclerView.adapter = IsotopeAdt(
-                elementList = filtList,
-                clickListener = this,
-                context = this
-            )
         }
         binding.isoFilterBox.isoElementNumbBtn.setOnClickListener {
             val isoPreference = IsoPref(this)
@@ -209,12 +207,6 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
             Utils.fadeOutAnim(binding.isoFilterBox.root, 150)
             Utils.fadeOutAnim(binding.filterBackground, 150)
             mAdapter.filterList(filtList)
-            mAdapter.notifyDataSetChanged()
-            recyclerView.adapter = IsotopeAdt(
-                elementList = filtList,
-                clickListener = this,
-                context = this
-            )
         }
     }
 
@@ -266,12 +258,6 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
             }
         }, 10)
         mAdapter.filterList(filteredList)
-        mAdapter.notifyDataSetChanged()
-        recyclerView.adapter = IsotopeAdt(
-            elementList = filteredList,
-            clickListener = this,
-            context = this
-        )
     }
 
     override fun elementClickListener(item: Element, position: Int) {
@@ -372,7 +358,12 @@ class IsotopesActExperimental : BaseAct(), IsotopeAdt.OnElementClickListener {
                         mainLayout.addView(myLayout)
                     }
                 }
-            } catch (_: IOException) {
+            } catch (e: Exception) {
+                // FIX-010: JSONArray/getJSONObject also throw JSONException, which is not
+                // a subclass of IOException — catching only IOException let malformed
+                // JSON crash instead of showing this message. Rethrow anything else so
+                // unrelated bugs (view inflation, NPE) still crash loudly.
+                if (e !is IOException && e !is org.json.JSONException) throw e
                 ToastUtil.showToast(this, "Couldn't load Data")
             }
         }

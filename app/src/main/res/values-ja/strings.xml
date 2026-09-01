@@ -424,6 +424,7 @@
     <string name="vip_revoke_all_confirm_message">VIPを取り消して無料版に戻しますか？</string>
     <string name="vip_redeem_replace_confirm_title">VIPを置き換えますか？</string>
     <string name="vip_redeem_replace_confirm_message">すでに有効なVIPがあります。このコードを引き換えると、延長ではなく今から%1$d日間にリセットされます。続けますか？</string>
+    <string name="email_client_not_found">メールアプリが見つかりません</string>
     <string name="vip_entry_first_install">🎁 新規インストール特典</string>
     <string name="vip_entry_redeemed">VIP %1$d日</string>
     <string name="vip_success_title">成功</string>

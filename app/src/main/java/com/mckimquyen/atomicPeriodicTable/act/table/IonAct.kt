@@ -32,8 +32,14 @@ import java.util.Locale
 
 class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
     private lateinit var binding: AIonBinding
-    private var ionList = ArrayList<Ion>()
-    private var mAdapter = IonAdapter(list = ionList, clickListener = this, context = this)
+
+    // FIX-008: this used to be a second, never-attached IonAdapter instance built from an
+    // always-empty list — filter() called filterList()/notifyDataSetChanged() on it
+    // pointlessly, then discarded the REAL attached adapter by replacing
+    // recyclerView.adapter with yet another new instance every keystroke (losing scroll
+    // position). Now there is exactly one adapter instance, created once in
+    // recyclerView() and reused by filter().
+    private lateinit var mAdapter: IonAdapter
 
     // Handler instances for memory leak prevention
     private var filterHandler: Handler? = null
@@ -190,9 +196,8 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
         val ionList = ArrayList<Ion>()
         IonModel.getList(ionList)
         binding.ionView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val adapter = IonAdapter(ionList, this, this)
-        binding.ionView.adapter = adapter
-        adapter.notifyDataSetChanged()
+        mAdapter = IonAdapter(ionList, this, this)
+        binding.ionView.adapter = mAdapter
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -221,8 +226,6 @@ class IonAct : BaseAct(), IonAdapter.OnIonClickListener {
             }
         }, 10)
         mAdapter.filterList(filteredList)
-        mAdapter.notifyDataSetChanged()
-        recyclerView.adapter = IonAdapter(list = filteredList, clickListener = this, context = this)
     }
 
     private fun clickSearch() {

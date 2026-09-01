@@ -27,8 +27,10 @@ import java.util.Locale
 
 class ElectrodeAct : BaseAct() {
     private lateinit var binding: AElectrodeBinding
-    private var seriesList = ArrayList<Series>()
-    private var mAdapter = ElectrodeAdt(list = seriesList, clickListener = this, context = this)
+
+    // FIX-008: single adapter instance, created once in recyclerView() and reused by
+    // filter() — see IonAct.kt for the full explanation of the bug this replaces.
+    private lateinit var mAdapter: ElectrodeAdt
 
     // Handler instances for memory leak prevention
     private var filterHandler: Handler? = null
@@ -136,10 +138,8 @@ class ElectrodeAct : BaseAct() {
             RecyclerView.VERTICAL,/* reverseLayout = */
             false
         )
-        val adapter = ElectrodeAdt(list = series, clickListener = this, context = this)
-        recyclerView.adapter = adapter
-
-        adapter.notifyDataSetChanged()
+        mAdapter = ElectrodeAdt(list = series, clickListener = this, context = this)
+        recyclerView.adapter = mAdapter
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
@@ -186,8 +186,6 @@ class ElectrodeAct : BaseAct() {
             }
         }, 10)
         mAdapter.filterList(filteredList)
-        mAdapter.notifyDataSetChanged()
-        recyclerView.adapter = ElectrodeAdt(filteredList, this, this)
     }
 
     private fun clickSearch() {

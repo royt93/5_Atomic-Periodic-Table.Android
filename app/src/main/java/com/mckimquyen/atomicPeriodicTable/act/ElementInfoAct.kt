@@ -22,7 +22,6 @@ import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
-import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import org.json.JSONArray
 import org.json.JSONObject
@@ -130,17 +129,10 @@ class ElementInfoAct : InfoExt() {
             startActivity(intent)
         }
 
-        val bannerContainer = findViewById<ViewGroup>(R.id.bannerContainer)
-        val tvLabelAd = findViewById<TextView>(R.id.tvLabelAd)
-        if (!AdManager.isVipByKeyActive()) {
-            AdManager.loadBanner(
-                context = this,
-                container = bannerContainer,
-                tvLabelAd = tvLabelAd,
-                adSize = AdManager.getAdaptiveBannerSize(this),
-                autoManageLifecycle = true,
-            )
-        }
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
     }
 
 
@@ -176,6 +168,11 @@ class ElementInfoAct : InfoExt() {
     override fun onResume() {
         super.onResume()
         favoriteBarSetup()
+        // FIX-013: re-sync banner with current VIP state (see BaseAct.refreshVipGatedBanner).
+        refreshVipGatedBanner(
+            container = findViewById(R.id.bannerContainer),
+            tvLabelAd = findViewById(R.id.tvLabelAd),
+        )
     }
 
     private fun detailViews() {

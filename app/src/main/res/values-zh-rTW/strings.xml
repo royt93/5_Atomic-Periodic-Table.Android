@@ -424,6 +424,7 @@
     <string name="vip_revoke_all_confirm_message">撤銷VIP並返回免費版？</string>
     <string name="vip_redeem_replace_confirm_title">替換VIP？</string>
     <string name="vip_redeem_replace_confirm_message">您已經擁有有效的VIP。兌換此代碼將把您的VIP重置為從現在起%1$d天，而不是延長時間。是否繼續？</string>
+    <string name="email_client_not_found">未找到郵件應用程式</string>
     <string name="vip_entry_first_install">🎁 新安裝禮物</string>
     <string name="vip_entry_redeemed">VIP %1$d天</string>
     <string name="vip_success_title">成功</string>

@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.text.TextUtils
 import android.view.Display
+import java.io.IOException
 import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import android.view.WindowManager
@@ -46,7 +47,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.IOException
 import java.io.InputStream
 import java.net.ConnectException
 import java.util.Locale
@@ -59,6 +59,34 @@ abstract class InfoExt : BaseAct() {
 
     companion object {
         private const val TAG = "BaseActivity"
+
+        // FIX-016: loadImage() used to build a brand-new OkHttpClient + Picasso instance
+        // (its own connection pool and dispatcher thread pool) on every call — every time
+        // ElementInfoAct opened or Next/Previous was tapped — and never shut them down.
+        // Share one instance across all calls instead.
+        private val wikipediaOkHttpClient: OkHttpClient by lazy {
+            OkHttpClient.Builder()
+                .addInterceptor { chain: Interceptor.Chain ->
+                    // Add User-Agent header to bypass Wikipedia's bot protection
+                    val request = chain.request().newBuilder()
+                        .addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36")
+                        .build()
+                    chain.proceed(request)
+                }
+                .build()
+        }
+
+        @Volatile
+        private var cachedWikipediaPicasso: Picasso? = null
+
+        private fun wikipediaPicasso(context: Context): Picasso {
+            return cachedWikipediaPicasso ?: synchronized(this) {
+                cachedWikipediaPicasso ?: Picasso.Builder(context.applicationContext)
+                    .downloader(OkHttp3Downloader(wikipediaOkHttpClient))
+                    .build()
+                    .also { cachedWikipediaPicasso = it }
+            }
+        }
     }
 
     private var systemUiConfigured = false
@@ -124,6 +152,14 @@ abstract class InfoExt : BaseAct() {
             val sElementMeltingFahrenheit =
                 jsonObject.optString("element_melting_fahrenheit", "---")
             val sElementAtomicNumber = jsonObject.optString("element_atomic_number", "---")
+            // FIX-009: nextPrev() indexes out of bounds at Hydrogen(1)/Oganesson(118) and
+            // that IndexOutOfBoundsException was silently swallowed by its own try/catch —
+            // the buttons just did nothing, with no feedback. Disable them at the edges
+            // instead so the boundary can't be reached at all.
+            sElementAtomicNumber.toIntOrNull()?.let { atomicNumber ->
+                binding.previousBtn.isEnabled = atomicNumber > 1
+                binding.nextBtn.isEnabled = atomicNumber < 118
+            }
             val sElementAtomicWeight = jsonObject.optString("element_atomicmass", "---")
             val sElementDensity = jsonObject.optString("element_density", "---")
             val elementModelUrl = jsonObject.optString("element_model", "---")
@@ -255,64 +291,71 @@ abstract class InfoExt : BaseAct() {
                 )
             }
 
-            if (oxidationNeg1.contains(0.toString())) {
+            // FIX-015: oxidation_state_neg/pos are space-separated number tokens (e.g.
+            // "2 3 4 5 6 7"). Matching with String.contains() on the raw text is a
+            // substring check, not a token check — it would false-positive on values
+            // like "10" containing "1" or "0". Split into exact tokens instead.
+            val negOxidationStates = oxidationNeg1.split(" ").filter { it.isNotBlank() }.toSet()
+            val posOxidationStates = oxidationPos1.split(" ").filter { it.isNotBlank() }.toSet()
+
+            if (negOxidationStates.contains(0.toString())) {
                 binding.atomicInc.oxView.ox0.text = "0"
                 binding.atomicInc.oxView.ox0.background.setTint(getColor(R.color.non_metals))
             }
-            if (oxidationNeg1.contains(1.toString())) {
+            if (negOxidationStates.contains(1.toString())) {
                 binding.atomicInc.oxView.m1ox.text = "-1"
                 binding.atomicInc.oxView.m1ox.background.setTint(getColor(R.color.noble_gas))
             }
-            if (oxidationNeg1.contains(2.toString())) {
+            if (negOxidationStates.contains(2.toString())) {
                 binding.atomicInc.oxView.m2ox.text = "-2"
                 binding.atomicInc.oxView.m2ox.background.setTint(getColor(R.color.noble_gas))
             }
-            if (oxidationNeg1.contains(3.toString())) {
+            if (negOxidationStates.contains(3.toString())) {
                 binding.atomicInc.oxView.m3ox.text = "-3"
                 binding.atomicInc.oxView.m3ox.background.setTint(getColor(R.color.noble_gas))
             }
-            if (oxidationNeg1.contains(4.toString())) {
+            if (negOxidationStates.contains(4.toString())) {
                 binding.atomicInc.oxView.m4ox.text = "-4"
                 binding.atomicInc.oxView.m4ox.background.setTint(getColor(R.color.noble_gas))
             }
-            if (oxidationNeg1.contains(5.toString())) {
+            if (negOxidationStates.contains(5.toString())) {
                 binding.atomicInc.oxView.m5ox.text = "-5"
                 binding.atomicInc.oxView.m5ox.background.setTint(getColor(R.color.noble_gas))
             }
 
-            if (oxidationPos1.contains(1.toString())) {
+            if (posOxidationStates.contains(1.toString())) {
                 binding.atomicInc.oxView.p1ox.text = "+1"
                 binding.atomicInc.oxView.p1ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(2.toString())) {
+            if (posOxidationStates.contains(2.toString())) {
                 binding.atomicInc.oxView.p2ox.text = "+2"
                 binding.atomicInc.oxView.p2ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(3.toString())) {
+            if (posOxidationStates.contains(3.toString())) {
                 binding.atomicInc.oxView.p3ox.text = "+3"
                 binding.atomicInc.oxView.p3ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(4.toString())) {
+            if (posOxidationStates.contains(4.toString())) {
                 binding.atomicInc.oxView.p4ox.text = "+4"
                 binding.atomicInc.oxView.p4ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(5.toString())) {
+            if (posOxidationStates.contains(5.toString())) {
                 binding.atomicInc.oxView.p5ox.text = "+5"
                 binding.atomicInc.oxView.p5ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(6.toString())) {
+            if (posOxidationStates.contains(6.toString())) {
                 binding.atomicInc.oxView.p6ox.text = "+6"
                 binding.atomicInc.oxView.p6ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(7.toString())) {
+            if (posOxidationStates.contains(7.toString())) {
                 binding.atomicInc.oxView.p7ox.text = "+7"
                 binding.atomicInc.oxView.p7ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(8.toString())) {
+            if (posOxidationStates.contains(8.toString())) {
                 binding.atomicInc.oxView.p8ox.text = "+8"
                 binding.atomicInc.oxView.p8ox.background.setTint(getColor(R.color.alkali_metals))
             }
-            if (oxidationPos1.contains(9.toString())) {
+            if (posOxidationStates.contains(9.toString())) {
                 binding.atomicInc.oxView.p9ox.text = "+9"
                 binding.atomicInc.oxView.p9ox.background.setTint(getColor(R.color.alkali_metals))
             }
@@ -363,7 +406,12 @@ abstract class InfoExt : BaseAct() {
                 loadSp(short)
             }
             wikiListener(wikipedia)
-        } catch (_: IOException) {
+        } catch (e: Exception) {
+            // FIX-010: JSONArray/getJSONObject also throw JSONException, which is not a
+            // subclass of IOException — catching only IOException let malformed JSON crash.
+            // Rethrow anything else so unrelated bugs (e.g. a bad toFloat() call) still
+            // crash loudly instead of being masked as a generic JSON-load error.
+            if (e !is IOException && e !is org.json.JSONException) throw e
             binding.elementTitle.text = "Not able to load json"
             val stringText = "Couldn't load element:"
             val elementSendAndLoadPreference = ElementSendAndLoad(this)
@@ -384,20 +432,9 @@ abstract class InfoExt : BaseAct() {
                 return
             }
 
-            // Fix HTTP 403: Add custom OkHttpClient with User-Agent interceptor
-            val client = OkHttpClient.Builder()
-                .addInterceptor { chain: Interceptor.Chain ->
-                    // Add User-Agent header to bypass Wikipedia's bot protection
-                    val request = chain.request().newBuilder()
-                        .addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36")
-                        .build()
-                    chain.proceed(request)
-                }
-                .build()
-
-            val picasso = Picasso.Builder(this)
-                .downloader(OkHttp3Downloader(client))
-                .build()
+            // FIX-016: reuse the shared client/Picasso instance instead of building a new
+            // OkHttpClient + Picasso (own connection pool and thread pool) every call.
+            val picasso = wikipediaPicasso(this)
 
             // Add Picasso callback for better debugging
             picasso

@@ -71,6 +71,33 @@ class ChemicalParserAndBalancerTest {
         }
     }
 
+    // Regression guard for FIX-018: the bracket stack used to track only nesting depth,
+    // not bracket type, so a "(" closed by "]" (or "{" closed by ")") parsed successfully
+    // instead of being rejected as malformed.
+    @Test
+    fun testFormulaParser_MismatchedBracketTypeThrows() {
+        try {
+            ChemicalFormulaParser.parse("Ca(OH]2")
+            fail("Should throw IllegalArgumentException for mismatched bracket type")
+        } catch (e: IllegalArgumentException) {
+            // Expected
+        }
+
+        try {
+            ChemicalFormulaParser.parse("{H2O)")
+            fail("Should throw IllegalArgumentException for mismatched bracket type")
+        } catch (e: IllegalArgumentException) {
+            // Expected
+        }
+
+        try {
+            ChemicalFormulaParser.parse("[NH4)2SO4")
+            fail("Should throw IllegalArgumentException for mismatched bracket type")
+        } catch (e: IllegalArgumentException) {
+            // Expected
+        }
+    }
+
     @Test
     fun testEquationBalancer_SuccessCases() {
         // H2 + O2 = H2O -> 2 H2 + O2 = 2 H2O

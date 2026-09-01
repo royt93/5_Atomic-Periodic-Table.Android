@@ -58,9 +58,14 @@ import java.util.Locale
 import androidx.core.view.isVisible
 
 class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
+
+    private var adInitCallback: ((Boolean, String?) -> Unit)? = null
     // binding inherited from TableExt
-    private var elementList = ArrayList<Element>()
-    private var mAdapter = ElementAdt(elementList = elementList, clickListener = this, con = this)
+
+    // FIX-008: single adapter instance, created once in setupViews() and reused by
+    // filter()/searchFilter() — see IonAct.kt for the full explanation of the bug this
+    // replaces.
+    private lateinit var mAdapter: ElementAdt
 
     private var mScale = 1f
     private lateinit var mScaleDetector: ScaleGestureDetector
@@ -92,8 +97,8 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         )
         val elements = ArrayList<Element>()
         ElementModel.getList(elements)
-        val adapter = ElementAdt(elementList = elements, clickListener = this, con = this)
-        recyclerView.adapter = adapter
+        mAdapter = ElementAdt(elementList = elements, clickListener = this, con = this)
+        recyclerView.adapter = mAdapter
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -109,7 +114,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         onClickNav()
         searchListener()
         binding.navMenuInclude.slidingLayout.panelState = PanelState.COLLAPSED
-        searchFilter(elements, recyclerView)
+        searchFilter(elements)
         mediaListeners()
         hoverListeners(elements)
         initName(elements)
@@ -201,9 +206,12 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         // Ensure SDK is fully initialized before loading interstitial.
         // MainAct can be restored by Android before SplashAct completes init,
         // causing loadInterstitial to fire before ###init completed.
-        (application as RoyApp).initializeAdsIfNeeded { _, _ ->
+        // FIX-012 (review follow-up): same destroyed-Activity risk as SplashAct's
+        // adInitCallback — deregister in onDestroy so a slow init doesn't fire late.
+        adInitCallback = { _, _ ->
             AdManager.loadInterstitial(this)
         }
+        (application as RoyApp).initializeAdsIfNeeded(adInitCallback!!)
 
         // ===============================================================
         // Back Button Handler (Modern API)
@@ -277,6 +285,17 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         }
     }
 
+    // FIX-014: Random Element and Search result navigation used to call startActivity()
+    // directly, bypassing the interstitial gate that the grid click already applies —
+    // inconsistent monetization gating between equivalent navigation paths.
+    private fun navigateToElementInfoGated(intent: Intent) {
+        if (AdManager.isVipByKeyActive()) {
+            startActivity(intent)
+        } else {
+            AdManager.showInterstitial(this) { startActivity(intent) }
+        }
+    }
+
     private fun getRandomItem() {
         val elements = ArrayList<Element>()
         ElementModel.getList(elements)
@@ -286,7 +305,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         val elementSendAndLoad = ElementSendAndLoad(this)
         elementSendAndLoad.setValue(item.element)
         val intent = Intent(/* packageContext = */ this, /* cls = */ ElementInfoAct::class.java)
-        startActivity(intent)
+        navigateToElementInfoGated(intent)
     }
 
     private fun openHover() {
@@ -317,7 +336,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             }
         }
         mAdapter.filterList(filteredList)
-        mAdapter.notifyDataSetChanged()
         // Reuse filterHandler — cancel any pending callback before posting new one
         if (filterHandler == null) {
             filterHandler = android.os.Handler(Looper.getMainLooper())
@@ -330,10 +348,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 binding.searchMenuInclude.emptySearchBox.visibility = View.GONE
             }
         }, 10)
-
-        recyclerView.adapter = ElementAdt(
-            elementList = filteredList, clickListener = this, con = this
-        )
     }
 
     override fun elementClickListener2(item: Element, position: Int) {
@@ -341,7 +355,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         elementSendAndLoad.setValue(item.element)
 
         val intent = Intent(this, ElementInfoAct::class.java)
-        startActivity(intent)
+        navigateToElementInfoGated(intent)
     }
 
 
@@ -515,17 +529,13 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 val elementSend = ElementSendAndLoad(this)
                 elementSend.setValue(item.element)
                 val intent = Intent(this, ElementInfoAct::class.java)
-                if (AdManager.isVipByKeyActive()) {
-                    startActivity(intent)
-                } else {
-                    AdManager.showInterstitial(this) { startActivity(intent) }
-                }
+                navigateToElementInfoGated(intent)
             }
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun searchFilter(list: ArrayList<Element>, recyclerView: RecyclerView) {
+    private fun searchFilter(list: ArrayList<Element>) {
         binding.searchMenuInclude.filterBox.root.visibility = View.GONE
         binding.searchMenuInclude.background.visibility = View.GONE
 
@@ -550,10 +560,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
             Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             mAdapter.filterList(filtList)
-            mAdapter.notifyDataSetChanged()
-            recyclerView.adapter = ElementAdt(
-                elementList = filtList, clickListener = this, con = this
-            )
         }
         binding.searchMenuInclude.filterBox.electroBtn.setOnClickListener {
             binding.searchMenuInclude.editElement.setText("")
@@ -568,10 +574,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             Utils.fadeOutAnim(binding.searchMenuInclude.filterBox.root, 150)
             Utils.fadeOutAnim(binding.searchMenuInclude.background, 150)
             mAdapter.filterList(filtList)
-            mAdapter.notifyDataSetChanged()
-            recyclerView.adapter = ElementAdt(
-                elementList = filtList, clickListener = this, con = this
-            )
         }
         binding.searchMenuInclude.filterBox.alphabetBtn.setOnClickListener {
             binding.searchMenuInclude.editElement.setText("")
@@ -590,10 +592,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 if (lhs.element < rhs.element) -1 else if (lhs.element > rhs.element) 1 else 0
             }
             mAdapter.filterList(filtList)
-            mAdapter.notifyDataSetChanged()
-            recyclerView.adapter = ElementAdt(
-                elementList = filtList, clickListener = this, con = this
-            )
         }
     }
 
@@ -875,6 +873,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             binding.searchMenuInclude.editElement.removeTextChangedListener(it)
         }
         textWatcher = null
+
+        adInitCallback?.let { (application as RoyApp).removePendingAdInitCallback(it) }
+        adInitCallback = null
 
         super.onDestroy()
     }

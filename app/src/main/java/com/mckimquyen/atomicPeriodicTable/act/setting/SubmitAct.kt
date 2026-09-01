@@ -1,7 +1,9 @@
 package com.mckimquyen.atomicPeriodicTable.act.setting
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.BaseAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASubmitBinding
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
+import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 
 class SubmitAct : BaseAct() {
@@ -204,11 +207,19 @@ class SubmitAct : BaseAct() {
             val title = binding.iTitle.text.toString()
             val content = binding.iContent.text.toString()
 
-            // Tạo email intent với subject và body
-            val request = Intent(Intent.ACTION_VIEW)
-            request.data = "mailto:roy.mobile.dev@gmail.com?subject=$type $title&body=$content".toUri()
-                .toString().toUri()
-            startActivity(request)
+            // FIX-011: Uri.encode() the user-entered subject/body so spaces, accented
+            // characters, and reserved chars (#, &, ?) don't corrupt the mailto URI.
+            val subject = Uri.encode("$type $title")
+            val body = Uri.encode(content)
+            val request = Intent(
+                Intent.ACTION_VIEW,
+                "mailto:roy.mobile.dev@gmail.com?subject=$subject&body=$body".toUri(),
+            )
+            try {
+                startActivity(request)
+            } catch (_: ActivityNotFoundException) {
+                ToastUtil.showToast(this, getString(R.string.email_client_not_found))
+            }
         }
     }
 

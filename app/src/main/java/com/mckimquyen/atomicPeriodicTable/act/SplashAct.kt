@@ -30,6 +30,12 @@ class SplashAct : BaseAct() {
     // preventing the lambda from firing on a destroyed Activity.
     private var adDismissListener: (() -> Unit)? = null
 
+    // FIX-012: same reasoning as adDismissListener — this lambda captures SplashAct via
+    // `this` (to call AdManager.initSplashScreen / goToMain()); without deregistering it
+    // in onDestroy, a slow AdManager.initialize() callback could fire against a destroyed
+    // Activity.
+    private var adInitCallback: ((Boolean, String?) -> Unit)? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -51,10 +57,13 @@ class SplashAct : BaseAct() {
         AdManager.requestConsentInfoUpdate(this) {
             splashTimeoutHandler.removeCallbacks(splashTimeoutRunnable)
             if (navigatedToMain) return@requestConsentInfoUpdate
-            (application as RoyApp).initializeAdsIfNeeded { _, _ ->
-                if (navigatedToMain) return@initializeAdsIfNeeded
-                AdManager.initSplashScreen(this) { goToMain() }
+            adInitCallback = { _, _ ->
+                adInitCallback = null
+                if (!navigatedToMain) {
+                    AdManager.initSplashScreen(this) { goToMain() }
+                }
             }
+            (application as RoyApp).initializeAdsIfNeeded(adInitCallback!!)
         }
     }
 
@@ -154,12 +163,17 @@ class SplashAct : BaseAct() {
         }
     }
 
-    private fun goToMain() {
+    private fun goToMain(force: Boolean = false) {
         if (navigatedToMain) return
         // F3: don't navigate if Activity is already closing (back-press while ad is showing).
         if (isDestroyed || isFinishing) return
         val app = application as RoyApp
-        if (app.isFullscreenAdShowing) {
+        // FIX-019: the 30s emergency escape used to call plain goToMain() again, which
+        // re-entered this same isFullscreenAdShowing branch — since adDismissListener was
+        // already non-null, it skipped scheduling a new escape AND didn't navigate,
+        // leaving zero future fallback if isFullscreenAdShowing never clears. `force`
+        // bypasses the ad-showing check entirely so the 30s cap is an actual hard cap.
+        if (!force && app.isFullscreenAdShowing) {
             // Race guard: ProcessLifecycle's App Open is showing — defer navigation until dismissed.
             // F1: store listener reference so onDestroy can deregister, preventing a fire on dead Activity.
             // F6: skip if already deferred (no duplicate listeners).
@@ -169,7 +183,7 @@ class SplashAct : BaseAct() {
                 // F2: emergency escape — only post once. If ad is somehow stuck for >30s,
                 // force-navigate regardless so user is never permanently stuck on splash.
                 splashTimeoutHandler.postDelayed({
-                    if (!navigatedToMain) goToMain()
+                    goToMain(force = true)
                 }, 30_000L)
             }
             return
@@ -201,6 +215,9 @@ class SplashAct : BaseAct() {
         // F1: deregister dismiss listener to prevent firing on destroyed Activity
         adDismissListener?.let { (application as RoyApp).removeFullscreenAdDismissedListener(it) }
         adDismissListener = null
+        // FIX-012: deregister pending ad-init callback for the same reason.
+        adInitCallback?.let { (application as RoyApp).removePendingAdInitCallback(it) }
+        adInitCallback = null
         finishRunnable?.let { window.decorView.removeCallbacks(it) }
         finishRunnable = null
 

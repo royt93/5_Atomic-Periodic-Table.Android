@@ -424,6 +424,7 @@
     <string name="vip_revoke_all_confirm_message">Révoquer le VIP et revenir à Gratuit ?</string>
     <string name="vip_redeem_replace_confirm_title">Remplacer le VIP ?</string>
     <string name="vip_redeem_replace_confirm_message">Vous avez déjà un VIP actif. Échanger ce code réinitialisera votre VIP à %1$d jour(s) à partir de maintenant au lieu de le prolonger. Continuer ?</string>
+    <string name="email_client_not_found">Aucune application e-mail trouvée</string>
     <string name="vip_entry_first_install">🎁 Cadeau nouvelle installation</string>
     <string name="vip_entry_redeemed">VIP %1$d jours</string>
     <string name="vip_success_title">Succès</string>

@@ -92,6 +92,10 @@ object ChemicalFormulaParser {
         }
 
         val stack = Stack<MutableMap<String, Int>>()
+        // FIX-018: track which bracket char opened each stack frame so a closer must
+        // match its opener's type — without this, "Ca(OH]2" or "{H2O)" parsed silently
+        // because the stack only tracked nesting depth, not bracket type.
+        val bracketStack = Stack<Char>()
         stack.push(mutableMapOf())
 
         var i = 0
@@ -102,11 +106,23 @@ object ChemicalFormulaParser {
             when {
                 c == '(' || c == '[' || c == '{' -> {
                     stack.push(mutableMapOf())
+                    bracketStack.push(c)
                     i++
                 }
                 c == ')' || c == ']' || c == '}' -> {
                     if (stack.size <= 1) {
                         throw IllegalArgumentException("Mismatched closing bracket at index $i")
+                    }
+                    val expectedOpener = when (c) {
+                        ')' -> '('
+                        ']' -> '['
+                        else -> '{'
+                    }
+                    val actualOpener = bracketStack.pop()
+                    if (actualOpener != expectedOpener) {
+                        throw IllegalArgumentException(
+                            "Mismatched bracket type at index $i: '$actualOpener' closed with '$c'"
+                        )
                     }
                     i++
                     // Read multiplier after bracket

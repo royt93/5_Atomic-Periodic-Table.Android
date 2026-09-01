@@ -36,12 +36,10 @@ import java.util.Locale
 
 class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
     private lateinit var binding: ADictionaryBinding
-    private var dictionaryList = ArrayList<Dictionary>()
-    private var mAdapter = DictionaryAdt(
-        dictionaryList = dictionaryList,
-        clickListener = this,
-        con = this
-    )
+
+    // FIX-008: single adapter instance, created once in recyclerView() and reused by
+    // filter() — see IonAct.kt for the full explanation of the bug this replaces.
+    private lateinit var mAdapter: DictionaryAdt
 
     // Handler instances for memory leak prevention
     private var updateButtonHandler: Handler? = null
@@ -204,14 +202,13 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
         val dictionaryList = ArrayList<Dictionary>()
         DictionaryModel.getList(this, dictionaryList)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val adapter = DictionaryAdt(dictionaryList = dictionaryList, clickListener = this, con = this)
-        recyclerView.adapter = adapter
         // Sắp xếp danh sách dictionary theo heading (alphabetically)
         dictionaryList.sortWith { lhs, rhs ->
             if (lhs.heading < rhs.heading) -1 else if (lhs.heading > rhs.heading) 1 else 0
         }
 
-        adapter.notifyDataSetChanged()
+        mAdapter = DictionaryAdt(dictionaryList = dictionaryList, clickListener = this, con = this)
+        recyclerView.adapter = mAdapter
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -251,13 +248,7 @@ class DictionaryAct : BaseAct(), DictionaryAdt.OnDictionaryClickListener {
                 binding.emptySearchBoxDic.visibility = View.GONE
             }
         }, 10)
-        mAdapter.notifyDataSetChanged()
         mAdapter.filterList(filteredList)
-        recyclerView.adapter = DictionaryAdt(
-            dictionaryList = filteredList,
-            clickListener = this,
-            con = this
-        )
     }
 
     private fun clickSearch() {
