@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">Elektronegativität vs. Ordnungszahl</string>
     <string name="trends_tap_hint">Tippen Sie auf einen Punkt für Details</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">Einheitenumrechner</string>
+    <string name="unit_category_pressure">Druck</string>
+    <string name="unit_category_mass">Masse</string>
+    <string name="unit_category_volume">Volumen</string>
+    <string name="unit_converter_value_hint">Wert</string>
+    <string name="unit_converter_from_hint">Von</string>
+    <string name="unit_converter_to_hint">Zu</string>
+    <string name="unit_converter_swap">Einheiten tauschen</string>
+    <string name="unit_converter_negative_error">Wert darf nicht negativ sein</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

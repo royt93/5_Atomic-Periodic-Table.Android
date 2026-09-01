@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">Elektronegativitas vs Nomor Atom</string>
     <string name="trends_tap_hint">Ketuk satu titik untuk detail</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">Konverter Satuan</string>
+    <string name="unit_category_pressure">Tekanan</string>
+    <string name="unit_category_mass">Massa</string>
+    <string name="unit_category_volume">Volume</string>
+    <string name="unit_converter_value_hint">Nilai</string>
+    <string name="unit_converter_from_hint">Dari</string>
+    <string name="unit_converter_to_hint">Ke</string>
+    <string name="unit_converter_swap">Tukar satuan</string>
+    <string name="unit_converter_negative_error">Nilai tidak boleh negatif</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

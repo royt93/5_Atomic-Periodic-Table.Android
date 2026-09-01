@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">電気陰性度 対 原子番号</string>
     <string name="trends_tap_hint">タップして詳細を表示</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">単位変換</string>
+    <string name="unit_category_pressure">圧力</string>
+    <string name="unit_category_mass">質量</string>
+    <string name="unit_category_volume">体積</string>
+    <string name="unit_converter_value_hint">値</string>
+    <string name="unit_converter_from_hint">から</string>
+    <string name="unit_converter_to_hint">へ</string>
+    <string name="unit_converter_swap">単位を入れ替え</string>
+    <string name="unit_converter_negative_error">値は負にできません</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

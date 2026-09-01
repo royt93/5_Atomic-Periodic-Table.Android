@@ -593,4 +593,14 @@
     <string name="trends_electronegativity_label">Độ Âm Điện theo Số Hiệu Nguyên Tử</string>
     <string name="trends_tap_hint">Chạm vào 1 điểm để xem chi tiết</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">Bộ Đổi Đơn Vị</string>
+    <string name="unit_category_pressure">Áp suất</string>
+    <string name="unit_category_mass">Khối lượng</string>
+    <string name="unit_category_volume">Thể tích</string>
+    <string name="unit_converter_value_hint">Giá trị</string>
+    <string name="unit_converter_from_hint">Từ</string>
+    <string name="unit_converter_to_hint">Đến</string>
+    <string name="unit_converter_swap">Đổi chỗ đơn vị</string>
+    <string name="unit_converter_negative_error">Giá trị không được âm</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

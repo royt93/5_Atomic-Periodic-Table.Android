@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">इलेक्ट्रोनगेटिविटी बनाम परमाणु क्रमांक</string>
     <string name="trends_tap_hint">विवरण के लिए एक बिंदु पर टैप करें</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">इकाई परिवर्तक</string>
+    <string name="unit_category_pressure">दबाव</string>
+    <string name="unit_category_mass">द्रव्यमान</string>
+    <string name="unit_category_volume">आयतन</string>
+    <string name="unit_converter_value_hint">मान</string>
+    <string name="unit_converter_from_hint">से</string>
+    <string name="unit_converter_to_hint">तक</string>
+    <string name="unit_converter_swap">इकाइयाँ बदलें</string>
+    <string name="unit_converter_negative_error">मान ऋणात्मक नहीं हो सकता</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

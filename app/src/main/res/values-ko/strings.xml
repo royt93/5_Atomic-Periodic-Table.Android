@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">전기음성도 대 원자 번호</string>
     <string name="trends_tap_hint">탭하여 세부 정보 보기</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">단위 변환기</string>
+    <string name="unit_category_pressure">압력</string>
+    <string name="unit_category_mass">질량</string>
+    <string name="unit_category_volume">부피</string>
+    <string name="unit_converter_value_hint">값</string>
+    <string name="unit_converter_from_hint">부터</string>
+    <string name="unit_converter_to_hint">까지</string>
+    <string name="unit_converter_swap">단위 바꾸기</string>
+    <string name="unit_converter_negative_error">값은 음수가 될 수 없습니다</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

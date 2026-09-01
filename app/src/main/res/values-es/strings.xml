@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">Electronegatividad vs Número Atómico</string>
     <string name="trends_tap_hint">Toca un punto para ver detalles</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">Convertidor de Unidades</string>
+    <string name="unit_category_pressure">Presión</string>
+    <string name="unit_category_mass">Masa</string>
+    <string name="unit_category_volume">Volumen</string>
+    <string name="unit_converter_value_hint">Valor</string>
+    <string name="unit_converter_from_hint">De</string>
+    <string name="unit_converter_to_hint">A</string>
+    <string name="unit_converter_swap">Intercambiar unidades</string>
+    <string name="unit_converter_negative_error">El valor no puede ser negativo</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

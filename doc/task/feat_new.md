@@ -52,7 +52,7 @@ Khảo sát phát hiện feature này **đã được implement từ trước**,
 
 User chọn "cả 4 idea đều hay" sau khi được đề xuất Unit Converter mở rộng (Recommended)/Share ảnh/Study Streak/Practice Exam. Rã task để loop lần lượt, theo đúng effort tăng dần và quy tắc chung ở cuối file.
 
-## 5. Unit Converter (công cụ đổi đơn vị hoá học) — 📋 Picked
+## 5. Unit Converter (công cụ đổi đơn vị hoá học) — ✅ Đã fix (2026-09-02)
 
 - Khảo sát: `pref/TemperatureUnits.kt:7-23` chỉ là pref lưu đơn vị **hiển thị** (1 key, 3 giá trị celsius/kelvin/fahrenheit) cho các màn hình đã có sẵn số liệu theo Kelvin trong JSON — không phải máy tính đổi qua lại. Field `element_density` trong JSON asset là string nhúng đơn vị (`"0.0000899 (g/cm^3)"`), không phải số thuần, và không có field áp suất/thể tích mol nào trong data — nghĩa là **không thể** làm kiểu "toggle hiển thị" như nhiệt độ cho áp suất/khối lượng.
 - Quyết định phạm vi: làm 1 **công cụ đổi đơn vị độc lập** (nhập giá trị + chọn đơn vị nguồn/đích + tính), không phải gắn với dữ liệu nguyên tố. Công thức đổi (atm↔kPa↔mmHg↔psi cho áp suất; g↔kg↔mg cho khối lượng; L↔mL cho thể tích) là hằng số toán học cố định, không cần đọc JSON.
@@ -61,7 +61,11 @@ User chọn "cả 4 idea đều hay" sau khi được đề xuất Unit Converte
 - Không cần SharedPreferences mới (không có gì persist — mỗi lần mở lại reset, giống Calculator/EquationBalancer đã có).
 - Entry point: nav menu (`menuUnitConverterBtn` theo đúng pattern các mục trước).
 - Test: JVM unit test cho `UnitConverter` (mọi cặp đơn vị, giá trị biên 0, giá trị âm cho áp suất nên reject hay cho qua — cần quyết định khi code, không đoán).
-- Trạng thái: ⏸️ (chưa code)
+- **Quyết định giá trị âm:** reject (throw `IllegalArgumentException`) cho cả 3 nhóm — áp suất/khối lượng/thể tích là đại lượng vật lý luôn dương trong ngữ cảnh hoá học phổ thông (khác nhiệt độ có thang âm hợp lệ), không cần hỏi user vì lý do miền giá trị rõ ràng.
+- **Đã implement:** `feature/converter/UnitConverter.kt` (3 enum `PressureUnit`/`MassUnit`/`VolumeUnit` mang theo hệ số quy đổi về 1 đơn vị gốc + object `UnitConverter` với 3 hàm convert, `require(value >= 0)` reject âm), `act/UnitConverterAct.kt` + `a_unit_converter.xml` — `ChipGroup` singleSelection chọn nhóm đơn vị (Material `Chip`, không tự chế toggle), 2 `TextInputLayout.ExposedDropdownMenu` (from/to unit) dùng `AutoCompleteTextView`, nút swap ⇄. Entry point nav menu (`menuUnitConverterBtn`).
+- **Bug thật bắt được trước khi push (tự audit, không phải test bắt):** dropdown adapter ban đầu dùng `android.R.layout.simple_list_item_1` (layout Android gốc, không theo theme Material của app — tiềm ẩn vỡ màu ở dark mode). Sửa sang `androidx.appcompat.R.layout.support_simple_spinner_dropdown_item` (layout chuẩn cho `AutoCompleteTextView`/`ExposedDropdownMenu`, tự theo `?attr` màu theme). Verify bằng screenshot thật chụp **màn hình thật** (`UiAutomation.takeScreenshot()`, khác kỹ thuật `View.draw()` cũ vì PopupWindow của dropdown không nằm trong decorView của Activity nên `drawToBitmap` không chụp được popup).
+- Test: `UnitConverterTest` (16 case JVM: mọi cặp đơn vị đại diện, roundtrip, biên 0, âm throw cho cả 3 nhóm — revert-tested bằng cách đổi sai hệ số PSI, confirm fail, khôi phục, confirm pass), `UnitConverterActTest` (7 case instrumented: mặc định Pressure atm→kPa, chuyển Mass/Volume category, swap, âm hiện lỗi đúng message không crash, rỗng không lỗi, chuyển category sau khi swap phải reset về from/to mặc định chứ không giữ index đã swap), `NavigationIntegrationTest.testNavigateFromMainToUnitConverter`. 16/16 + 7/7 + 1/1 pass — smoke test S24U (ưu tiên theo yêu cầu, dù `com.galaxyjoy.cpuinfo` từ session khác đang chiếm focus lúc chạy, verify bằng dumpsys không ảnh hưởng kết quả) + emulator sạch. Full unit suite xanh.
+- Trạng thái: ✅ Đã fix
 
 ## 6. Chia sẻ thẻ nguyên tố dưới dạng ảnh — 📋 Picked
 

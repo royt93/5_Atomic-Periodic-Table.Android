@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">อิเล็กโทรเนกาติวิตี เทียบกับ เลขอะตอม</string>
     <string name="trends_tap_hint">แตะจุดเพื่อดูรายละเอียด</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">ตัวแปลงหน่วย</string>
+    <string name="unit_category_pressure">ความดัน</string>
+    <string name="unit_category_mass">มวล</string>
+    <string name="unit_category_volume">ปริมาตร</string>
+    <string name="unit_converter_value_hint">ค่า</string>
+    <string name="unit_converter_from_hint">จาก</string>
+    <string name="unit_converter_to_hint">ถึง</string>
+    <string name="unit_converter_swap">สลับหน่วย</string>
+    <string name="unit_converter_negative_error">ค่าต้องไม่ติดลบ</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>

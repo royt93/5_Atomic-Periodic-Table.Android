@@ -584,5 +584,15 @@
     <string name="trends_electronegativity_label">电负性 vs 原子序数</string>
     <string name="trends_tap_hint">点击某点查看详情</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">单位换算</string>
+    <string name="unit_category_pressure">压力</string>
+    <string name="unit_category_mass">质量</string>
+    <string name="unit_category_volume">体积</string>
+    <string name="unit_converter_value_hint">数值</string>
+    <string name="unit_converter_from_hint">从</string>
+    <string name="unit_converter_to_hint">到</string>
+    <string name="unit_converter_swap">交换单位</string>
+    <string name="unit_converter_negative_error">数值不能为负</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>
 

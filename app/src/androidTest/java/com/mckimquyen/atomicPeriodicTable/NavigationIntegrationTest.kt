@@ -118,4 +118,25 @@ class NavigationIntegrationTest {
             onView(withId(R.id.cardTrendsChart)).check(matches(isDisplayed()))
         }
     }
+
+    @Test
+    fun testNavigateFromMainToUnitConverter() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Click Unit Converter menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuUnitConverterBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Verify Unit Converter screen is visible
+            onView(withId(R.id.cardConverter)).check(matches(isDisplayed()))
+        }
+    }
 }

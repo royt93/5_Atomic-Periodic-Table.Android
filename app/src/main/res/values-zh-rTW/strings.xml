@@ -566,4 +566,14 @@
     <string name="trends_electronegativity_label">電負度 vs 原子序數</string>
     <string name="trends_tap_hint">點擊某點查看詳情</string>
     <string name="trends_tooltip_format">%1$s — %2$s: %3$.2f</string>
+    <string name="unit_converter_title">單位換算</string>
+    <string name="unit_category_pressure">壓力</string>
+    <string name="unit_category_mass">質量</string>
+    <string name="unit_category_volume">體積</string>
+    <string name="unit_converter_value_hint">數值</string>
+    <string name="unit_converter_from_hint">從</string>
+    <string name="unit_converter_to_hint">到</string>
+    <string name="unit_converter_swap">交換單位</string>
+    <string name="unit_converter_negative_error">數值不能為負</string>
+    <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
 </resources>
