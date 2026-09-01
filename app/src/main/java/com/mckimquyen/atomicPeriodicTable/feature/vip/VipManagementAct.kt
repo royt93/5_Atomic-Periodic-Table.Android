@@ -163,7 +163,7 @@ class VipManagementAct : BaseAct() {
             override fun onTick(millisUntilFinished: Long) {
                 val now = System.currentTimeMillis()
                 binding.progressVip.setProgressCompat(
-                    computeElapsedProgress(grantedAtMs, expiresAtMs, now),
+                    VipCalculator.computeElapsedProgress(grantedAtMs, expiresAtMs, now),
                     true,
                 )
                 binding.tvCountdown.text = formatRemaining(millisUntilFinished)
@@ -336,16 +336,11 @@ class VipManagementAct : BaseAct() {
         }
     }
 
-    private fun computeElapsedProgress(grantedAtMs: Long, expiresAtMs: Long, nowMs: Long): Int =
-        VipCalculator.computeElapsedProgress(grantedAtMs, expiresAtMs, nowMs)
-
     private fun formatDate(ms: Long): String =
         if (ms > 0L) dateFormat.format(Date(ms)) else "-"
 
     private fun formatRemaining(ms: Long): String {
-        val (days, hours, minutes, seconds) = VipCalculator.remainingParts(ms).let {
-            listOf(it[0], it[1], it[2], it[3])
-        }
+        val (days, hours, minutes, seconds) = VipCalculator.remainingParts(ms)
         return getString(R.string.vip_remaining, days, hours, minutes, seconds)
     }
 }

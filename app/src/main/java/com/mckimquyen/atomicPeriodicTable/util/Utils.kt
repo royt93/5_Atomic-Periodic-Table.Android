@@ -1,9 +1,6 @@
 package com.mckimquyen.atomicPeriodicTable.util
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 object Utils {
     fun fadeInAnim(
@@ -33,18 +30,6 @@ object Utils {
         view.alpha = 0.0f
         view.animate().duration = time
         view.animate().alpha(0.6f)
-    }
-
-    fun slideUp(panel: SlidingUpPanelLayout) {
-        panel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-    }
-
-    fun fadeInAnimCard(view: View, time: Long) {
-        view.visibility = View.VISIBLE
-        view.alpha = 0.0f
-        view.animate().duration = time
-        view.animate().alpha(0.85f)
-
     }
 
     fun fadeOutAnim(view: View, time: Long) {

@@ -16,7 +16,6 @@ import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.pref.TemperatureUnits
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
-import com.mckimquyen.atomicPeriodicTable.util.Pasteur
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
 import org.json.JSONArray
@@ -28,24 +27,17 @@ import java.util.Locale
 abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
     protected lateinit var binding: AMainBinding
 
-    companion object {
-        private const val TAG = "BaseActivity"
-    }
-
     private var systemUiConfigured = false
 
     // Handler instances stored as protected members for memory leak prevention
     // Subclasses can access these if needed, and they will be cleaned up in onDestroy()
-    protected var boilingHandler: Handler? = null
-    protected var meltingHandler: Handler? = null
-    protected var phaseHandler: Handler? = null
-    protected var yearHandler: Handler? = null
+    // initBoiling/initMelting/initPhase/initYear/initWeight/initHeat/initSpecific/initVape
+    // only ever run one-at-a-time (one hover-menu button click at a time), so they share
+    // a single handler via initJsonField() below. initElectro/initGroups have real
+    // per-color branching logic and keep their own handlers.
+    protected var jsonFieldHandler: Handler? = null
     protected var electroHandler: Handler? = null
     protected var groupsHandler: Handler? = null
-    protected var weightHandler: Handler? = null
-    protected var heatHandler: Handler? = null
-    protected var specificHandler: Handler? = null
-    protected var vapeHandler: Handler? = null
 
     override fun onStart() {
         super.onStart()
@@ -69,7 +61,6 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
         val insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets, v)
         val systemBars = insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
 
-        Pasteur.info(TAG, "height: ${systemBars.bottom}")
         onApplySystemInsets(
             systemBars.top,
             systemBars.bottom,
@@ -140,33 +131,26 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
         }
     }
 
+    /**
+     * Shared body for the 8 hover-menu fields that just copy one JSON key into each
+     * element's TextView (boiling/melting/phase/year/weight/heat/specific/vape) — only
+     * the key differs. initElectro/initGroups keep their own bodies (real per-color logic).
+     */
     @SuppressLint("DiscouragedApi")
-    fun initBoiling(list: ArrayList<Element>) {
-        boilingHandler = Handler(Looper.getMainLooper())
+    private fun initJsonField(list: ArrayList<Element>, jsonKey: (JSONObject) -> String) {
         initName(list)
         closeHover()
-        boilingHandler?.postDelayed({
+        jsonFieldHandler = Handler(Looper.getMainLooper())
+        jsonFieldHandler?.postDelayed({
             for (item in list) {
                 val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
                 val iText =
-                    findViewById<TextView>(resources.getIdentifier(eView, "id", packageName))
-                var jsonString: String?
+                    findViewById<TextView>(resources.getIdentifier("${name}_text", "id", packageName))
                 try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonString = inputStream.bufferedReader().use {
-                        it.readText()
-                    }
-                    val jsonArray = JSONArray(jsonString)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val tempPreference = TemperatureUnits(this)
-                    val tempPrefValue = tempPreference.getValue()
-                    val elementAtomicWeight =
-                        jsonObject.optString("element_boiling_$tempPrefValue", "---")
-                    iText.text = elementAtomicWeight
+                    val inputStream: InputStream = assets.open("$name.json")
+                    val jsonString = inputStream.bufferedReader().use { it.readText() }
+                    val jsonObject: JSONObject = JSONArray(jsonString).getJSONObject(0)
+                    iText.text = jsonKey(jsonObject)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -174,94 +158,20 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
         }, 10)
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initMelting(list: ArrayList<Element>) {
-        meltingHandler = Handler(Looper.getMainLooper())
-        initName(list)
-        closeHover()
-        meltingHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val iText =
-                    findViewById<TextView>(resources.getIdentifier(eView, "id", packageName))
-                var jsonString: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonString = inputStream.bufferedReader().use { it.readText() }
-                    val jsonArray = JSONArray(jsonString)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val tempPreference = TemperatureUnits(this)
-                    val tempPrefValue = tempPreference.getValue()
-                    val elementAtomicWeight =
-                        jsonObject.optString("element_melting_$tempPrefValue", "---")
-                    iText.text = elementAtomicWeight
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initBoiling(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_boiling_${TemperatureUnits(this).getValue()}", "---")
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initPhase(list: ArrayList<Element>) {
-        phaseHandler = Handler(Looper.getMainLooper())
-        initName(list)
-        closeHover()
-        phaseHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val iText =
-                    findViewById<TextView>(resources.getIdentifier(eView, "id", packageName))
-                var jsonString: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonString = inputStream.bufferedReader().use { it.readText() }
-                    val jsonArray = JSONArray(jsonString)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementAtomicWeight = jsonObject.optString("element_phase", "---")
-                    iText.text = elementAtomicWeight
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initMelting(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_melting_${TemperatureUnits(this).getValue()}", "---")
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initYear(list: ArrayList<Element>) {
-        yearHandler = Handler(Looper.getMainLooper())
-        initName(list)
-        closeHover()
-        yearHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val iText =
-                    findViewById<TextView>(resources.getIdentifier(eView, "id", packageName))
-                var jsonString: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonString = inputStream.bufferedReader().use { it.readText() }
-                    val jsonArray = JSONArray(jsonString)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementAtomicWeight = jsonObject.optString("element_year", "---")
-                    iText.text = elementAtomicWeight
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initPhase(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_phase", "---")
+    }
+
+    fun initYear(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_year", "---")
     }
 
     @SuppressLint("DiscouragedApi")
@@ -399,135 +309,20 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
         }, 10)
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initWeight(list: ArrayList<Element>) {
-        weightHandler = Handler(Looper.getMainLooper())
-        initName(list)
-        closeHover()
-        weightHandler?.postDelayed({
-            for (item in list) {
-                val namee = item.element
-                val extText = "_text"
-                val eView = "$namee$extText"
-                val resIDB = resources.getIdentifier(eView, "id", packageName)
-
-                val iText = findViewById<TextView>(resIDB)
-
-                var jsonstring: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$namee$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonstring = inputStream.bufferedReader().use { it.readText() }
-
-                    val jsonArray = JSONArray(jsonstring)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementAtomicWeight = jsonObject.optString("element_atomicmass", "---")
-                    iText.text = elementAtomicWeight
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initWeight(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_atomicmass", "---")
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initHeat(list: ArrayList<Element>) {
-        initName(list)
-        closeHover()
-        heatHandler = Handler(Looper.getMainLooper())
-        heatHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val resID = resources.getIdentifier(eView, "id", packageName)
-
-                val iText = findViewById<TextView>(resID)
-
-                var jsonstring: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonstring = inputStream.bufferedReader().use { it.readText() }
-
-                    val jsonArray = JSONArray(jsonstring)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementFusionHeat = jsonObject.optString("element_fusion_heat", "---")
-                    iText.text = elementFusionHeat
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-        }, 10)
-
+    fun initHeat(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_fusion_heat", "---")
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initSpecific(list: ArrayList<Element>) {
-        initName(list)
-        closeHover()
-        specificHandler = Handler(Looper.getMainLooper())
-        specificHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val resID = resources.getIdentifier(eView, "id", packageName)
-
-                val iText = findViewById<TextView>(resID)
-
-                var jsonstring: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonstring = inputStream.bufferedReader().use { it.readText() }
-
-                    val jsonArray = JSONArray(jsonstring)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementSpecificHeat =
-                        jsonObject.optString("element_specific_heat_capacity", "---")
-                    iText.text = elementSpecificHeat
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initSpecific(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_specific_heat_capacity", "---")
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun initVape(list: ArrayList<Element>) {
-        initName(list)
-        closeHover()
-        vapeHandler = Handler(Looper.getMainLooper())
-        vapeHandler?.postDelayed({
-            for (item in list) {
-                val name = item.element
-                val extText = "_text"
-                val eView = "$name$extText"
-                val resID = resources.getIdentifier(eView, "id", packageName)
-
-                val iText = findViewById<TextView>(resID)
-
-                var jsonstring: String?
-                try {
-                    val ext = ".json"
-                    val elementJson = "$name$ext"
-                    val inputStream: InputStream = assets.open(elementJson)
-                    jsonstring = inputStream.bufferedReader().use { it.readText() }
-
-                    val jsonArray = JSONArray(jsonstring)
-                    val jsonObject: JSONObject = jsonArray.getJSONObject(0)
-                    val elementVapeHeat = jsonObject.optString("element_vaporization_heat", "---")
-                    iText.text = elementVapeHeat
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }, 10)
+    fun initVape(list: ArrayList<Element>) = initJsonField(list) {
+        it.optString("element_vaporization_heat", "---")
     }
 
     /**
@@ -536,26 +331,12 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
      */
     override fun onDestroy() {
         // Clean up all handlers to prevent memory leaks
-        boilingHandler?.removeCallbacksAndMessages(null)
-        boilingHandler = null
-        meltingHandler?.removeCallbacksAndMessages(null)
-        meltingHandler = null
-        phaseHandler?.removeCallbacksAndMessages(null)
-        phaseHandler = null
-        yearHandler?.removeCallbacksAndMessages(null)
-        yearHandler = null
+        jsonFieldHandler?.removeCallbacksAndMessages(null)
+        jsonFieldHandler = null
         electroHandler?.removeCallbacksAndMessages(null)
         electroHandler = null
         groupsHandler?.removeCallbacksAndMessages(null)
         groupsHandler = null
-        weightHandler?.removeCallbacksAndMessages(null)
-        weightHandler = null
-        heatHandler?.removeCallbacksAndMessages(null)
-        heatHandler = null
-        specificHandler?.removeCallbacksAndMessages(null)
-        specificHandler = null
-        vapeHandler?.removeCallbacksAndMessages(null)
-        vapeHandler = null
         super.onDestroy()
     }
 

@@ -36,7 +36,6 @@ import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.SendIso
 import com.mckimquyen.atomicPeriodicTable.pref.SpecificHeatPref
 import com.mckimquyen.atomicPeriodicTable.pref.VaporizationHeatPref
-import com.mckimquyen.atomicPeriodicTable.util.Pasteur
 import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.util.ToastUtil
 import com.mckimquyen.atomicPeriodicTable.util.Utils
