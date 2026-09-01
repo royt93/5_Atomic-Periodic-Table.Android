@@ -10,6 +10,7 @@ object ElementWeightCache {
     private val cache = mutableMapOf<String, Double>() // Symbol -> Mass
     private val symbolToName = mutableMapOf<String, String>() // Symbol -> Name (lowercase)
     private val categoryCache = mutableMapOf<String, String>() // Symbol -> Category
+    private val descriptionCache = mutableMapOf<String, String>() // Symbol -> Wikipedia-style description
 
     fun init(context: Context) {
         if (cache.isNotEmpty()) return
@@ -42,6 +43,9 @@ object ElementWeightCache {
                 // Category (element_group in JSON)
                 val category = jsonObject.optString("element_group", "---")
                 categoryCache[el.short] = category
+
+                // Description
+                descriptionCache[el.short] = jsonObject.optString("description", "")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -58,6 +62,14 @@ object ElementWeightCache {
 
     fun getCategory(symbol: String): String? {
         return categoryCache[symbol]
+    }
+
+    /** First sentence of the element's description, for compact display (e.g. widgets). */
+    fun getFact(symbol: String): String? {
+        val description = descriptionCache[symbol] ?: return null
+        if (description.isEmpty()) return null
+        val firstSentenceEnd = description.indexOf(". ")
+        return if (firstSentenceEnd != -1) description.substring(0, firstSentenceEnd + 1) else description
     }
 
     fun isValidSymbol(symbol: String): Boolean {

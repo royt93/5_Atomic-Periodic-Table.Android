@@ -7,17 +7,30 @@
     android:padding="@dimen/widget_margin"
     android:theme="@style/ThemeOverlay.Science.AppWidgetContainer">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAppwidgetText"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
         android:background="?attr/appWidgetBackgroundColor"
-        android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textColor="?attr/appWidgetTextColor"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWidgetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appwidget_text"
+            android:textColor="?attr/appWidgetTextColor"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWidgetFact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textColor="?attr/appWidgetTextColor"
+            android:textSize="12sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </RelativeLayout>

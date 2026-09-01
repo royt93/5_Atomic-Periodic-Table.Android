@@ -20,8 +20,9 @@ class ShortCommandWidgetLayoutTest {
         File("src/main/java/com/mckimquyen/atomicPeriodicTable/widget/ShortCommandWidget.kt")
 
     @Test
-    fun everyWidgetLayoutVariant_declaresTheIdBoundInCode() {
-        val boundId = extractBoundClickTargetId()
+    fun everyWidgetLayoutVariant_declaresEveryIdBoundInCode() {
+        val boundIds = extractBoundIds()
+        assertTrue("expected to find at least one R.id.xxx bound in $widgetSourceFile", boundIds.isNotEmpty())
 
         val layoutVariants = resDir.listFiles { f -> f.isDirectory && f.name.startsWith("layout") }
             ?.mapNotNull { dir -> File(dir, "view_short_command_widget.xml").takeIf { it.exists() } }
@@ -31,20 +32,24 @@ class ShortCommandWidgetLayoutTest {
 
         for (layoutFile in layoutVariants) {
             val xml = layoutFile.readText()
-            assertTrue(
-                "$layoutFile must declare android:id=\"@+id/$boundId\" — ShortCommandWidget.kt " +
-                    "binds the widget's click PendingIntent to it, and RemoteViews silently " +
-                    "no-ops (dead widget) if the id is missing from a layout variant actually " +
-                    "inflated on some API level",
-                xml.contains("@+id/$boundId"),
-            )
+            for (boundId in boundIds) {
+                assertTrue(
+                    "$layoutFile must declare android:id=\"@+id/$boundId\" — ShortCommandWidget.kt " +
+                        "binds it via RemoteViews, which silently no-ops (dead widget content) if " +
+                        "the id is missing from a layout variant actually inflated on some API level",
+                    xml.contains("@+id/$boundId"),
+                )
+            }
         }
     }
 
-    private fun extractBoundClickTargetId(): String {
+    private fun extractBoundIds(): Set<String> {
         val source = widgetSourceFile.readText()
-        val match = Regex("""setOnClickPendingIntent\(\s*R\.id\.(\w+)""").find(source)
-        return match?.groupValues?.get(1)
-            ?: error("could not find setOnClickPendingIntent(R.id.xxx, ...) in $widgetSourceFile")
+        val ids = mutableSetOf<String>()
+        Regex("""setOnClickPendingIntent\(\s*R\.id\.(\w+)""").findAll(source)
+            .forEach { ids += it.groupValues[1] }
+        Regex("""setTextViewText\(\s*R\.id\.(\w+)""").findAll(source)
+            .forEach { ids += it.groupValues[1] }
+        return ids
     }
 }

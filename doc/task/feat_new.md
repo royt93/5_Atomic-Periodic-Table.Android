@@ -11,14 +11,16 @@ Khảo sát phát hiện feature này **đã được implement từ trước**,
 
 → Không cần làm lại. 3 feature còn lại tiến hành theo thứ tự effort tăng dần:
 
-## 2. Element of the Day (widget) — 📋 Picked
+## 2. Element of the Day (widget) — ✅ Đã fix (2026-09-01)
 
 - Pick nguyên tố theo ngày: hàm pure `pickElementOfDay(dateEpochDay: Long, totalElements: Int): Int` (index theo `dateEpochDay % totalElements`, deterministic, unit-testable JVM không cần Android).
 - Cần 1 dòng "fact" mỗi nguyên tố — tái dùng dữ liệu JSON asset đã có (`assets/<element>.json`) qua field có sẵn (kiểm tra field nào hợp lý, ví dụ description/category) thay vì tạo dữ liệu fact mới.
 - Widget: mở rộng `widget/ShortCommandWidget.kt` (đã có `onUpdate` + `updatePeriodMillis=86400000` = 24h sẵn) — thêm hiển thị tên/ký hiệu/fact nguyên tố hôm nay vào `RemoteViews`, tap mở `ElementInfoAct` đúng nguyên tố đó (không phải mở `MainAct` chung chung như hiện tại).
 - Không thêm WorkManager/AlarmManager mới — `updatePeriodMillis` có sẵn đã đủ (ponytail: platform feature đã có, không thêm dependency).
 - Test: JVM unit test cho `pickElementOfDay` (deterministic, đổi ngày → đổi index, index luôn trong `0 until totalElements`).
-- Trạng thái: ⏸️ (thực hiện tiếp theo trong loop)
+- **Đã implement:** `util/ElementOfDay.kt` (`indexForDay(epochDay, total)`, dùng `System.currentTimeMillis() / 86_400_000L` thay `java.time.LocalDate` vì minSdk 24 < API 26). `ElementWeightCache` mở rộng thêm `descriptionCache`/`getFact()` (câu đầu tiên của field `description` có sẵn trong JSON asset). `ShortCommandWidget.onUpdate()` set `tvWidgetName`/`tvWidgetFact` qua `RemoteViews`, ghi `ElementSendAndLoad` rồi trỏ click PendingIntent sang `ElementInfoAct` (trước đây mở `MainAct` chung chung). Cả 2 layout variant (`layout/`, `layout-v31/`) đều khai báo 2 id mới.
+- Test: `ElementOfDayTest` (4 case JVM), `ShortCommandWidgetLayoutTest` mở rộng để check cả `setTextViewText` id (không chỉ `setOnClickPendingIntent`) tồn tại ở mọi layout variant, `ShortCommandWidgetTest.onUpdate_pointsElementSendAndLoad_atTodaysElement` (instrumented) — verify bằng revert-test: comment dòng `setValue` → test fail đúng như kỳ vọng, khôi phục → pass. 3/3 instrumented pass trên TECNO KJ7.
+- Trạng thái: ✅ Đã fix
 
 ## 3. Flashcard / Spaced-repetition study — 📋 Picked
 
