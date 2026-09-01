@@ -78,9 +78,16 @@ class VipManagementActTest {
         }
     }
 
+    // FIX-040: tvPrivacyPolicy is the last item in scrollVip. On a screen with less
+    // effective dp height (e.g. a larger system font/display-size setting), it sits below
+    // the fold at the initial scroll position — isDisplayed() then sees an unattached/empty
+    // visible rect. Scroll programmatically first (same FIX-038 reasoning: no swipe gesture).
     @Test
     fun privacyPolicyFooter_isDisplayedAndClickable() {
-        ActivityScenario.launch(VipManagementAct::class.java).use {
+        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<NestedScrollView>(R.id.scrollVip).fullScroll(View.FOCUS_DOWN)
+            }
             onView(withId(R.id.tvPrivacyPolicy)).check(matches(isDisplayed()))
         }
     }
@@ -186,12 +193,18 @@ class VipManagementActTest {
         }
     }
 
+    // FIX-040: clickRevokeButton() scrolls scrollVip to the bottom to reach btnRevokeVip.
+    // On a screen with less effective dp height, activeVipCard (near the top) ends up
+    // scrolled out of view after that — scroll back up before asserting it's displayed.
     @Test
     fun revoke_cancelled_vipCardStillVisible() {
         ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
             activateVip30dAndDismiss()
             clickRevokeButton(scenario)
             onView(withText(R.string.cancel)).perform(click())
+            scenario.onActivity { activity ->
+                activity.findViewById<NestedScrollView>(R.id.scrollVip).fullScroll(View.FOCUS_UP)
+            }
             onView(withId(R.id.activeVipCard)).check(matches(isDisplayed()))
         }
     }
