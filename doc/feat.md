@@ -11,7 +11,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Unit Converter — `feature/converter/UnitConverter.kt`, `act/UnitConverterAct.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 5).
 - ✅ Implemented: Chia sẻ thẻ nguyên tố dưới dạng ảnh — `feature/share/ElementCardRenderer.kt`, `ext/Activity.shareImage()`, FileProvider (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 6).
 - ✅ Implemented: Study Streak cho Flashcard + Quiz — `feature/streak/StreakCalculator.kt`, `feature/streak/StudyStreakPref.kt`, hiển thị ở nav menu (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 7).
-- 📋 Picked (vòng 2, breakdown chi tiết ở `doc/task/feat_new.md` mục 8, chọn qua AskUserQuestion 2026-09-02): Practice Exam Mode.
+- ✅ Implemented: Practice Exam Mode — tham số hoá `act/QuizAct.kt` (không tạo Activity riêng, quyết định đổi so với breakdown gốc), `feature/exam/MolarMassQuestionGenerator.kt`, `feature/exam/ExamHistoryPref.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 8). Cả 4 feature vòng 2 (2026-09-02) đã hoàn tất.
 
 ---
 

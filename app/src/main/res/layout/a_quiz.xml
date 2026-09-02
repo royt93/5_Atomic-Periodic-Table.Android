@@ -331,6 +331,18 @@
                         android:textAllCaps="false"
                         android:textStyle="bold" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/examHistoryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="Lịch sử gần đây:\n18/20\n15/20"
+                        tools:visibility="visible" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.cardview.widget.CardView>

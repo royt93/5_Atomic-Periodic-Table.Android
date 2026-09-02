@@ -476,6 +476,12 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             val intent = Intent(this, UnitConverterAct::class.java)
             startActivity(intent)
         }
+        binding.navMenuInclude.menuPracticeExamBtn.setOnClickListener {
+            val intent = Intent(this, QuizAct::class.java)
+                .putExtra(QuizAct.EXTRA_PRACTICE_MODE, true)
+                .putExtra(QuizAct.EXTRA_TOTAL_QUESTIONS, QuizAct.PRACTICE_EXAM_QUESTION_COUNT)
+            startActivity(intent)
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

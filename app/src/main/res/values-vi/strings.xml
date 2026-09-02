@@ -605,4 +605,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Chia sẻ nguyên tố</string>
     <string name="study_streak_format">🔥 Chuỗi %1$d ngày</string>
+    <string name="practice_exam_title">Luyện thi</string>
+    <string name="quiz_question_molar_mass">Khối lượng mol của %1$s là bao nhiêu (g/mol)?</string>
+    <string name="exam_history_label">Lần thi gần đây:\n%1$s</string>
+    <string name="practice_exam_restart">Thi lại</string>
 </resources>

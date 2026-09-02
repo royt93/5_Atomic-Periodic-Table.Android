@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Element teilen</string>
     <string name="study_streak_format">🔥 %1$d Tage Serie</string>
+    <string name="practice_exam_title">Übungsprüfung</string>
+    <string name="quiz_question_molar_mass">Wie hoch ist die molare Masse von %1$s (g/mol)?</string>
+    <string name="exam_history_label">Letzte Versuche:\n%1$s</string>
+    <string name="practice_exam_restart">Prüfung neu starten</string>
 </resources>

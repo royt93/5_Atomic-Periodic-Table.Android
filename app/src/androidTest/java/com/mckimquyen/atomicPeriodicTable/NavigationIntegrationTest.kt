@@ -8,6 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.act.MainAct
+import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -137,6 +138,29 @@ class NavigationIntegrationTest {
 
             // Verify Unit Converter screen is visible
             onView(withId(R.id.cardConverter)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun testNavigateFromMainToPracticeExam() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Click Practice Exam menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuPracticeExamBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Verify Practice Exam screen is visible, in practice mode (custom title, timer hidden)
+            onView(withId(R.id.quizProgress)).check(matches(isDisplayed()))
+            onView(withId(R.id.quizTitleText)).check(matches(withText(R.string.practice_exam_title)))
+            onView(withId(R.id.timerContainer)).check(matches(not(isDisplayed())))
         }
     }
 }

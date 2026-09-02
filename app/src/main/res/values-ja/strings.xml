@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">元素を共有</string>
     <string name="study_streak_format">🔥 %1$d日連続</string>
+    <string name="practice_exam_title">実践試験</string>
+    <string name="quiz_question_molar_mass">%1$s のモル質量 (g/mol) はいくつですか?</string>
+    <string name="exam_history_label">最近の記録:\n%1$s</string>
+    <string name="practice_exam_restart">試験をやり直す</string>
 </resources>

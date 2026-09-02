@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.databinding.AQuizBinding
+import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
+import com.mckimquyen.atomicPeriodicTable.feature.exam.MolarMassQuestionGenerator
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
@@ -27,7 +29,8 @@ class QuizAct : BaseAct() {
     private val random = Random()
 
     private var currentQuestionIndex = 0
-    private val totalQuestions = 10
+    private var totalQuestions = 10
+    private var isPracticeMode = false
     private var score = 0
 
     private lateinit var optionCards: List<CardView>
@@ -52,12 +55,20 @@ class QuizAct : BaseAct() {
         binding = AQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        isPracticeMode = intent.getBooleanExtra(EXTRA_PRACTICE_MODE, false)
+        totalQuestions = intent.getIntExtra(EXTRA_TOTAL_QUESTIONS, 10)
+        if (isPracticeMode) {
+            binding.quizTitleText.text = getString(R.string.practice_exam_title)
+            binding.timerContainer.visibility = View.GONE
+            binding.quizRestartBtn.text = getString(R.string.practice_exam_restart)
+        }
+
         // Initialize elements
         ElementModel.getList(elementsList)
 
         setupViews()
         startBackgroundAnimation()
-        
+
         // Smooth entrance slide-up and fade-in for content container
         binding.quizScrollView.alpha = 0f
         binding.quizScrollView.translationY = 50f
@@ -180,7 +191,8 @@ class QuizAct : BaseAct() {
     private fun setupQuestionData() {
         // Pick target element
         val targetElement = elementsList[random.nextInt(elementsList.size)]
-        val questionType = random.nextInt(6) // 0: Atomic Number, 1: Symbol, 2: Category, 3: Name from Symbol, 4: Isotopes, 5: Electronegativity
+        // 0: Atomic Number, 1: Symbol, 2: Category, 3: Name from Symbol, 4: Isotopes, 5: Electronegativity, 6: Molar Mass (practice only)
+        val questionType = random.nextInt(if (isPracticeMode) 7 else 6)
 
         // Generate choices
         currentChoices.clear()
@@ -264,7 +276,7 @@ class QuizAct : BaseAct() {
                     }
                 }
             }
-            else -> {
+            5 -> {
                 // Electronegativity (fallback if 0.0)
                 if (targetElement.electro == 0.0) {
                     binding.questionText.text = getString(R.string.quiz_question_symbol).format(formattedElementName)
@@ -289,6 +301,27 @@ class QuizAct : BaseAct() {
                             if (!currentChoices.contains(wrongStr)) {
                                 currentChoices.add(wrongStr)
                             }
+                        }
+                    }
+                }
+            }
+            else -> {
+                // Molar mass of a common compound (practice mode only, questionType == 6).
+                val question = MolarMassQuestionGenerator.generate(random) { symbol -> ElementWeightCache.getMass(symbol) }
+                if (question != null) {
+                    binding.questionText.text = getString(R.string.quiz_question_molar_mass).format(question.formula)
+                    currentCorrectAnswer = String.format(java.util.Locale.US, "%.2f", question.correctMass)
+                    currentChoices.addAll(question.choices.map { String.format(java.util.Locale.US, "%.2f", it) })
+                } else {
+                    // Fallback: formula lookup failed (shouldn't happen with the curated list) — degrade to a symbol question.
+                    binding.questionText.text = getString(R.string.quiz_question_symbol).format(formattedElementName)
+                    currentCorrectAnswer = targetElement.short
+                    currentChoices.add(currentCorrectAnswer)
+
+                    while (currentChoices.size < 4) {
+                        val wrongEl = elementsList[random.nextInt(elementsList.size)]
+                        if (wrongEl.short != currentCorrectAnswer && !currentChoices.contains(wrongEl.short)) {
+                            currentChoices.add(wrongEl.short)
                         }
                     }
                 }
@@ -551,6 +584,9 @@ class QuizAct : BaseAct() {
 
     private fun showResults() {
         StudyStreakPref(this).recordStudyToday()
+        if (isPracticeMode) {
+            ExamHistoryPref(this).addResult(score, totalQuestions)
+        }
 
         // Fade out quiz components smoothly
         binding.questionCard.animate().alpha(0f).scaleX(0.8f).scaleY(0.8f).setDuration(300).start()
@@ -573,7 +609,7 @@ class QuizAct : BaseAct() {
                 .setInterpolator(android.view.animation.OvershootInterpolator(1.4f))
                 .withEndAction {
                     binding.confettiView.startConfetti()
-                    
+
                     // Score count-up ticker
                     val scoreAnimator = ValueAnimator.ofInt(0, score).apply {
                         duration = 1200
@@ -584,6 +620,13 @@ class QuizAct : BaseAct() {
                         }
                     }
                     scoreAnimator.start()
+
+                    if (isPracticeMode) {
+                        val historyLines = ExamHistoryPref(this@QuizAct).getHistory()
+                            .joinToString("\n") { "${it.score}/${it.total}" }
+                        binding.examHistoryText.text = getString(R.string.exam_history_label).format(historyLines)
+                        binding.examHistoryText.visibility = View.VISIBLE
+                    }
 
                     // Restart button pulse animation
                     restartPulseAnimator?.cancel()
@@ -620,8 +663,9 @@ class QuizAct : BaseAct() {
     }
 
     private fun startQuestionTimer() {
+        if (isPracticeMode) return // Practice Exam is untimed per-question.
         countDownTimer?.cancel()
-        
+
         binding.timerProgress.max = maxTimeSeconds * 1000
         binding.timerProgress.progress = maxTimeSeconds * 1000
         binding.timerText.text = maxTimeSeconds.toString()
@@ -742,5 +786,11 @@ class QuizAct : BaseAct() {
         gradientAnimator?.cancel()
         restartPulseAnimator?.cancel()
         super.onDestroy()
+    }
+
+    companion object {
+        const val EXTRA_PRACTICE_MODE = "extra_practice_mode"
+        const val EXTRA_TOTAL_QUESTIONS = "extra_total_questions"
+        const val PRACTICE_EXAM_QUESTION_COUNT = 20
     }
 }

@@ -596,5 +596,9 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">分享元素</string>
     <string name="study_streak_format">🔥 连续 %1$d 天</string>
+    <string name="practice_exam_title">模拟测验</string>
+    <string name="quiz_question_molar_mass">%1$s 的摩尔质量是多少 (g/mol)?</string>
+    <string name="exam_history_label">最近记录:\n%1$s</string>
+    <string name="practice_exam_restart">重新测验</string>
 </resources>
 

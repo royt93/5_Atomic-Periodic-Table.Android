@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">مشاركة العنصر</string>
     <string name="study_streak_format">🔥 سلسلة %1$d يوم</string>
+    <string name="practice_exam_title">اختبار تدريبي</string>
+    <string name="quiz_question_molar_mass">ما هي الكتلة المولية لـ %1$s (غ/مول)؟</string>
+    <string name="exam_history_label">المحاولات الأخيرة:\n%1$s</string>
+    <string name="practice_exam_restart">إعادة الاختبار</string>
 </resources>

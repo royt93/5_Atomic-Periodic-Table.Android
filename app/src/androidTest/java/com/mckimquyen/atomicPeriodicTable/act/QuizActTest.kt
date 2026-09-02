@@ -8,8 +8,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -114,6 +117,77 @@ class QuizActTest {
 
             val streak = StudyStreakPref(context).getCurrentStreak()
             assertTrue("expected streak >= 1, got $streak", streak >= 1)
+        }
+    }
+
+    // Practice Exam Mode (mục 8): QuizAct is parameterized via intent extras rather than
+    // forked into a separate Activity (decision made 2026-09-02 to reuse the ~700 lines of
+    // already-tested animation/question logic instead of duplicating it).
+    @Test
+    fun launchingInPracticeMode_showsCustomTitle_hidesTimer_usesExtraQuestionCount() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val intent = android.content.Intent(context, QuizAct::class.java)
+            .putExtra(QuizAct.EXTRA_PRACTICE_MODE, true)
+            .putExtra(QuizAct.EXTRA_TOTAL_QUESTIONS, 20)
+
+        ActivityScenario.launch<QuizAct>(intent).use {
+            onView(withId(R.id.quizTitleText)).check(matches(withText(R.string.practice_exam_title)))
+            onView(withId(R.id.timerContainer)).check(matches(not(isDisplayed())))
+            onView(withId(R.id.quizProgress)).check(matches(withText(containsString("/20"))))
+        }
+    }
+
+    @Test
+    fun finishingPracticeExam_savesExamHistory_andShowsHistorySection() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Exam_History_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        val intent = android.content.Intent(context, QuizAct::class.java)
+            .putExtra(QuizAct.EXTRA_PRACTICE_MODE, true)
+            .putExtra(QuizAct.EXTRA_TOTAL_QUESTIONS, 5)
+
+        ActivityScenario.launch<QuizAct>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val method = QuizAct::class.java.getDeclaredMethod("showResults")
+                method.isAccessible = true
+                method.invoke(activity)
+            }
+            Thread.sleep(1000) // fade-out (300ms) + result card entrance (400ms) + buffer
+
+            val history = ExamHistoryPref(context).getHistory()
+            assertTrue("expected at least 1 history entry, got ${history.size}", history.isNotEmpty())
+            assertEquals(5, history[0].total)
+
+            onView(withId(R.id.examHistoryText)).check(matches(isDisplayed()))
+        }
+    }
+
+    // Exercises setupQuestionData() directly (bypassing the entrance/carousel animation chain)
+    // across many random draws so the new molar-mass branch (questionType == 6, practice-only)
+    // gets real coverage without the cost of clicking through dozens of real questions.
+    @Test
+    fun practiceMode_repeatedQuestionGeneration_neverCrashes_andAlwaysProducesFourDistinctChoices() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val intent = android.content.Intent(context, QuizAct::class.java)
+            .putExtra(QuizAct.EXTRA_PRACTICE_MODE, true)
+            .putExtra(QuizAct.EXTRA_TOTAL_QUESTIONS, 10)
+
+        ActivityScenario.launch<QuizAct>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val setupMethod = QuizAct::class.java.getDeclaredMethod("setupQuestionData")
+                setupMethod.isAccessible = true
+                val choicesField = QuizAct::class.java.getDeclaredField("currentChoices")
+                choicesField.isAccessible = true
+
+                repeat(200) {
+                    setupMethod.invoke(activity)
+                    @Suppress("UNCHECKED_CAST")
+                    val choices = choicesField.get(activity) as ArrayList<String>
+                    assertEquals(4, choices.size)
+                    assertEquals("choices must be distinct: $choices", 4, choices.toSet().size)
+                }
+            }
         }
     }
 }

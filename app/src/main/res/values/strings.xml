@@ -606,5 +606,9 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Share element</string>
     <string name="study_streak_format">🔥 %1$d-day streak</string>
+    <string name="practice_exam_title">Practice Exam</string>
+    <string name="quiz_question_molar_mass">What is the molar mass of %1$s (g/mol)?</string>
+    <string name="exam_history_label">Recent attempts:\n%1$s</string>
+    <string name="practice_exam_restart">Restart Exam</string>
 </resources>
 

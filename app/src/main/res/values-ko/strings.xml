@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">원소 공유</string>
     <string name="study_streak_format">🔥 %1$d일 연속</string>
+    <string name="practice_exam_title">연습 시험</string>
+    <string name="quiz_question_molar_mass">%1$s의 몰 질량(g/mol)은 얼마입니까?</string>
+    <string name="exam_history_label">최근 기록:\n%1$s</string>
+    <string name="practice_exam_restart">시험 다시 시작</string>
 </resources>

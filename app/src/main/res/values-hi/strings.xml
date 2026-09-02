@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">तत्व साझा करें</string>
     <string name="study_streak_format">🔥 %1$d दिन की श्रृंखला</string>
+    <string name="practice_exam_title">अभ्यास परीक्षा</string>
+    <string name="quiz_question_molar_mass">%1$s का मोलर द्रव्यमान (g/mol) क्या है?</string>
+    <string name="exam_history_label">हाल के प्रयास:\n%1$s</string>
+    <string name="practice_exam_restart">परीक्षा फिर से शुरू करें</string>
 </resources>

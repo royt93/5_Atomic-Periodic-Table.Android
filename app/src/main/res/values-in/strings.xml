@@ -578,4 +578,8 @@
     <string name="unit_converter_result_format">%1$.2f %2$s = %3$.2f %4$s</string>
     <string name="share_element_button">Bagikan elemen</string>
     <string name="study_streak_format">🔥 Rentetan %1$d hari</string>
+    <string name="practice_exam_title">Ujian Latihan</string>
+    <string name="quiz_question_molar_mass">Berapa massa molar dari %1$s (g/mol)?</string>
+    <string name="exam_history_label">Percobaan terbaru:\n%1$s</string>
+    <string name="practice_exam_restart">Ulangi Ujian</string>
 </resources>
