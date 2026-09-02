@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -13,10 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.act.setting.AboutAct
@@ -27,6 +30,7 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
+import com.mckimquyen.atomicPeriodicTable.feature.backup.BackupManager
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
@@ -64,6 +68,14 @@ class SettingsAct : BaseAct() {
         } else {
             binding.dailyTriviaSwitch.isChecked = false
         }
+    }
+
+    private val exportProgressLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri != null) writeBackupToUri(uri)
+    }
+
+    private val importProgressLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) readBackupFromUri(uri)
     }
 
     // ===============================================================
@@ -164,6 +176,12 @@ class SettingsAct : BaseAct() {
         }
         binding.dailyTriviaSettings.setOnClickListener {
             binding.dailyTriviaSwitch.toggle()
+        }
+        binding.exportProgressSettings.setOnClickListener {
+            exportProgressLauncher.launch("atomic_periodic_table_backup.json")
+        }
+        binding.importProgressSettings.setOnClickListener {
+            confirmThenImportProgress()
         }
 
         // ===============================================================
@@ -355,6 +373,45 @@ class SettingsAct : BaseAct() {
         } else {
             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
+    }
+
+    private fun writeBackupToUri(uri: Uri) {
+        try {
+            contentResolver.openOutputStream(uri)?.use { output ->
+                output.write(BackupManager.export(this).toByteArray())
+            }
+            Toast.makeText(this, R.string.export_progress_success, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, R.string.export_progress_failure, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun confirmThenImportProgress() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.import_progress_confirm_title)
+            .setMessage(R.string.import_progress_confirm_message)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.confirm) { _, _ ->
+                importProgressLauncher.launch(arrayOf("application/json"))
+            }
+            .show()
+    }
+
+    private fun readBackupFromUri(uri: Uri) {
+        val json = try {
+            contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+        } catch (e: Exception) {
+            null
+        }
+        if (json == null) {
+            Toast.makeText(this, R.string.import_progress_failure, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        BackupManager.import(this, json).fold(
+            onSuccess = { Toast.makeText(this, R.string.import_progress_success, Toast.LENGTH_SHORT).show() },
+            onFailure = { Toast.makeText(this, R.string.import_progress_failure, Toast.LENGTH_SHORT).show() },
+        )
     }
 
     private fun openPages() {

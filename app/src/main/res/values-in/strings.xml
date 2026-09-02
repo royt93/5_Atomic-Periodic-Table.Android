@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Trivia Elemen Harian</string>
     <string name="daily_trivia_notification_desc">Dapatkan notifikasi tentang elemen baru setiap hari</string>
     <string name="daily_trivia_channel_name">Trivia Harian</string>
+    <string name="export_progress_title">Ekspor Progres</string>
+    <string name="export_progress_desc">Simpan progres Anda ke file</string>
+    <string name="export_progress_success">Progres berhasil diekspor</string>
+    <string name="export_progress_failure">Gagal mengekspor progres</string>
+    <string name="import_progress_title">Impor Progres</string>
+    <string name="import_progress_desc">Pulihkan progres dari file cadangan</string>
+    <string name="import_progress_confirm_title">Timpa progres saat ini?</string>
+    <string name="import_progress_confirm_message">Mengimpor akan mengganti progres kartu flash, rentetan, riwayat ujian, dan catatan Anda saat ini. Ini tidak dapat dibatalkan.</string>
+    <string name="import_progress_success">Progres berhasil diimpor</string>
+    <string name="import_progress_failure">Gagal mengimpor progres — file mungkin rusak atau berasal dari versi aplikasi yang lebih baru</string>
 </resources>

@@ -628,5 +628,15 @@
     <string name="daily_trivia_notification_title">Daily Element Trivia</string>
     <string name="daily_trivia_notification_desc">Get a notification about a new element every day</string>
     <string name="daily_trivia_channel_name">Daily Trivia</string>
+    <string name="export_progress_title">Export Progress</string>
+    <string name="export_progress_desc">Save your progress to a file</string>
+    <string name="export_progress_success">Progress exported successfully</string>
+    <string name="export_progress_failure">Failed to export progress</string>
+    <string name="import_progress_title">Import Progress</string>
+    <string name="import_progress_desc">Restore progress from a backup file</string>
+    <string name="import_progress_confirm_title">Overwrite current progress?</string>
+    <string name="import_progress_confirm_message">Importing will replace your current flashcard progress, streak, exam history, and notes. This cannot be undone.</string>
+    <string name="import_progress_success">Progress imported successfully</string>
+    <string name="import_progress_failure">Failed to import progress — the file may be corrupted or from a newer app version</string>
 </resources>
 

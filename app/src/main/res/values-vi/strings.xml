@@ -627,4 +627,14 @@
     <string name="daily_trivia_notification_title">Kiến thức nguyên tố mỗi ngày</string>
     <string name="daily_trivia_notification_desc">Nhận thông báo về 1 nguyên tố mới mỗi ngày</string>
     <string name="daily_trivia_channel_name">Kiến thức mỗi ngày</string>
+    <string name="export_progress_title">Xuất tiến độ</string>
+    <string name="export_progress_desc">Lưu tiến độ của bạn vào 1 file</string>
+    <string name="export_progress_success">Xuất tiến độ thành công</string>
+    <string name="export_progress_failure">Xuất tiến độ thất bại</string>
+    <string name="import_progress_title">Nhập tiến độ</string>
+    <string name="import_progress_desc">Khôi phục tiến độ từ file sao lưu</string>
+    <string name="import_progress_confirm_title">Ghi đè tiến độ hiện tại?</string>
+    <string name="import_progress_confirm_message">Nhập sẽ thay thế tiến độ thẻ ghi nhớ, chuỗi ngày học, lịch sử thi và ghi chú hiện tại của bạn. Không thể hoàn tác thao tác này.</string>
+    <string name="import_progress_success">Nhập tiến độ thành công</string>
+    <string name="import_progress_failure">Nhập tiến độ thất bại — file có thể bị hỏng hoặc từ phiên bản app mới hơn</string>
 </resources>

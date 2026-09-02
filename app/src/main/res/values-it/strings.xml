@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Curiosità quotidiana sugli elementi</string>
     <string name="daily_trivia_notification_desc">Ricevi una notifica su un nuovo elemento ogni giorno</string>
     <string name="daily_trivia_channel_name">Curiosità quotidiana</string>
+    <string name="export_progress_title">Esporta progressi</string>
+    <string name="export_progress_desc">Salva i tuoi progressi in un file</string>
+    <string name="export_progress_success">Progressi esportati con successo</string>
+    <string name="export_progress_failure">Impossibile esportare i progressi</string>
+    <string name="import_progress_title">Importa progressi</string>
+    <string name="import_progress_desc">Ripristina i progressi da un file di backup</string>
+    <string name="import_progress_confirm_title">Sovrascrivere i progressi attuali?</string>
+    <string name="import_progress_confirm_message">L\'importazione sostituirà i tuoi progressi attuali delle flashcard, serie, cronologia esami e note. Questa azione non può essere annullata.</string>
+    <string name="import_progress_success">Progressi importati con successo</string>
+    <string name="import_progress_failure">Impossibile importare i progressi — il file potrebbe essere danneggiato o provenire da una versione più recente dell\'app</string>
 </resources>

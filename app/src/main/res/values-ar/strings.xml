@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">كويز يومي عن العناصر</string>
     <string name="daily_trivia_notification_desc">احصل على إشعار حول عنصر جديد كل يوم</string>
     <string name="daily_trivia_channel_name">الكويز اليومي</string>
+    <string name="export_progress_title">تصدير التقدم</string>
+    <string name="export_progress_desc">احفظ تقدمك في ملف</string>
+    <string name="export_progress_success">تم تصدير التقدم بنجاح</string>
+    <string name="export_progress_failure">فشل تصدير التقدم</string>
+    <string name="import_progress_title">استيراد التقدم</string>
+    <string name="import_progress_desc">استعادة التقدم من ملف نسخة احتياطية</string>
+    <string name="import_progress_confirm_title">استبدال التقدم الحالي؟</string>
+    <string name="import_progress_confirm_message">سيؤدي الاستيراد إلى استبدال تقدم البطاقات التعليمية والسلسلة وسجل الاختبارات والملاحظات الحالية. لا يمكن التراجع عن هذا.</string>
+    <string name="import_progress_success">تم استيراد التقدم بنجاح</string>
+    <string name="import_progress_failure">فشل استيراد التقدم — قد يكون الملف تالفًا أو من إصدار أحدث من التطبيق</string>
 </resources>

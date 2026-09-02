@@ -22,6 +22,11 @@ class ExamHistoryPref(context: Context) {
         preference.edit { putString(KEY_HISTORY, gson.toJson(updated.take(MAX_HISTORY))) }
     }
 
+    /** Overwrites the whole history verbatim (no prepend/cap logic) — for restoring from a backup. */
+    fun replaceHistory(history: List<ExamResult>) {
+        preference.edit { putString(KEY_HISTORY, gson.toJson(history.take(MAX_HISTORY))) }
+    }
+
     fun getHistory(): List<ExamResult> {
         val json = preference.getString(KEY_HISTORY, null) ?: return emptyList()
         return try {

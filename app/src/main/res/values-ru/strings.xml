@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Ежедневный факт об элементе</string>
     <string name="daily_trivia_notification_desc">Получайте уведомление о новом элементе каждый день</string>
     <string name="daily_trivia_channel_name">Ежедневный факт</string>
+    <string name="export_progress_title">Экспорт прогресса</string>
+    <string name="export_progress_desc">Сохраните прогресс в файл</string>
+    <string name="export_progress_success">Прогресс успешно экспортирован</string>
+    <string name="export_progress_failure">Не удалось экспортировать прогресс</string>
+    <string name="import_progress_title">Импорт прогресса</string>
+    <string name="import_progress_desc">Восстановите прогресс из резервной копии</string>
+    <string name="import_progress_confirm_title">Перезаписать текущий прогресс?</string>
+    <string name="import_progress_confirm_message">Импорт заменит ваш текущий прогресс карточек, серию, историю экзаменов и заметки. Это действие нельзя отменить.</string>
+    <string name="import_progress_success">Прогресс успешно импортирован</string>
+    <string name="import_progress_failure">Не удалось импортировать прогресс — файл может быть повреждён или из более новой версии приложения</string>
 </resources>

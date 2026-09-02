@@ -1,6 +1,7 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
 import android.Manifest
+import android.net.Uri
 import android.os.Build
 import android.widget.ScrollView
 import androidx.test.core.app.ActivityScenario
@@ -11,8 +12,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -105,5 +108,41 @@ class SettingsActTest {
             assertFalse(DailyTriviaPref(context).isEnabled())
             assertFalse(DailyTriviaScheduler.isScheduled(context))
         }
+    }
+
+    // Export/Import buttons launch the system file picker (ACTION_CREATE_DOCUMENT /
+    // ACTION_OPEN_DOCUMENT), which Espresso cannot drive — instead this exercises the actual
+    // private write/read glue functions via reflection against a real temp-file Uri, covering
+    // the full export -> import round trip through SettingsAct's own code path.
+    @Test
+    fun exportThenImport_throughSettingsActGlue_roundTripsStreak() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE).edit().clear().commit()
+        StudyStreakPref(context).recordStudyToday(todayEpochDay = 20003L)
+
+        val tempFile = File(context.cacheDir, "settings_act_backup_test.json")
+        val uri = Uri.fromFile(tempFile)
+
+        ActivityScenario.launch(SettingsAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val writeMethod = SettingsAct::class.java.getDeclaredMethod("writeBackupToUri", Uri::class.java)
+                writeMethod.isAccessible = true
+                writeMethod.invoke(activity, uri)
+            }
+            assertTrue("backup file must be written", tempFile.exists() && tempFile.length() > 0)
+
+            // Clear local state, then restore from the file we just wrote.
+            context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE).edit().clear().commit()
+
+            scenario.onActivity { activity ->
+                val readMethod = SettingsAct::class.java.getDeclaredMethod("readBackupFromUri", Uri::class.java)
+                readMethod.isAccessible = true
+                readMethod.invoke(activity, uri)
+            }
+
+            assertEquals(1, StudyStreakPref(context).getCurrentStreak())
+            assertEquals(20003L, StudyStreakPref(context).getLastEpochDay())
+        }
+        tempFile.delete()
     }
 }

@@ -14,6 +14,16 @@ class StudyStreakPref(context: Context) {
 
     fun getCurrentStreak(): Int = preference.getInt("current_streak", 0)
 
+    fun getLastEpochDay(): Long = preference.getLong("last_study_epoch_day", 0L)
+
+    /** Writes raw values directly (no streak-continuation logic) — for restoring from a backup. */
+    fun restore(currentStreak: Int, lastEpochDay: Long) {
+        preference.edit {
+            putInt("current_streak", currentStreak)
+            putLong("last_study_epoch_day", lastEpochDay)
+        }
+    }
+
     /** Call once whenever the user completes a study action (a flashcard rating, a finished quiz). */
     fun recordStudyToday(todayEpochDay: Long = System.currentTimeMillis() / 86_400_000L): Int {
         val lastEpochDay = preference.getLong("last_study_epoch_day", 0L)

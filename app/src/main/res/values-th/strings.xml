@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">เกร็ดความรู้ธาตุประจำวัน</string>
     <string name="daily_trivia_notification_desc">รับการแจ้งเตือนเกี่ยวกับธาตุใหม่ทุกวัน</string>
     <string name="daily_trivia_channel_name">เกร็ดความรู้ประจำวัน</string>
+    <string name="export_progress_title">ส่งออกความคืบหน้า</string>
+    <string name="export_progress_desc">บันทึกความคืบหน้าของคุณลงไฟล์</string>
+    <string name="export_progress_success">ส่งออกความคืบหน้าสำเร็จ</string>
+    <string name="export_progress_failure">ส่งออกความคืบหน้าล้มเหลว</string>
+    <string name="import_progress_title">นำเข้าความคืบหน้า</string>
+    <string name="import_progress_desc">กู้คืนความคืบหน้าจากไฟล์สำรอง</string>
+    <string name="import_progress_confirm_title">เขียนทับความคืบหน้าปัจจุบันหรือไม่?</string>
+    <string name="import_progress_confirm_message">การนำเข้าจะแทนที่ความคืบหน้าแฟลชการ์ด ความต่อเนื่อง ประวัติการสอบ และบันทึกปัจจุบันของคุณ ไม่สามารถยกเลิกการดำเนินการนี้ได้</string>
+    <string name="import_progress_success">นำเข้าความคืบหน้าสำเร็จ</string>
+    <string name="import_progress_failure">นำเข้าความคืบหน้าล้มเหลว — ไฟล์อาจเสียหายหรือมาจากแอปเวอร์ชันใหม่กว่า</string>
 </resources>

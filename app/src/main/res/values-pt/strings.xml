@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Curiosidade diária de elementos</string>
     <string name="daily_trivia_notification_desc">Receba uma notificação sobre um novo elemento todos os dias</string>
     <string name="daily_trivia_channel_name">Curiosidade diária</string>
+    <string name="export_progress_title">Exportar progresso</string>
+    <string name="export_progress_desc">Salve seu progresso em um arquivo</string>
+    <string name="export_progress_success">Progresso exportado com sucesso</string>
+    <string name="export_progress_failure">Falha ao exportar progresso</string>
+    <string name="import_progress_title">Importar progresso</string>
+    <string name="import_progress_desc">Restaure o progresso de um arquivo de backup</string>
+    <string name="import_progress_confirm_title">Substituir progresso atual?</string>
+    <string name="import_progress_confirm_message">A importação substituirá seu progresso atual de flashcards, sequência, histórico de exames e notas. Isso não pode ser desfeito.</string>
+    <string name="import_progress_success">Progresso importado com sucesso</string>
+    <string name="import_progress_failure">Falha ao importar progresso — o arquivo pode estar corrompido ou ser de uma versão mais recente do aplicativo</string>
 </resources>

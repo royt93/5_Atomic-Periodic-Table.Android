@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Anecdote quotidienne sur les éléments</string>
     <string name="daily_trivia_notification_desc">Recevez une notification sur un nouvel élément chaque jour</string>
     <string name="daily_trivia_channel_name">Anecdote quotidienne</string>
+    <string name="export_progress_title">Exporter la progression</string>
+    <string name="export_progress_desc">Enregistrez votre progression dans un fichier</string>
+    <string name="export_progress_success">Progression exportée avec succès</string>
+    <string name="export_progress_failure">Échec de l\'exportation de la progression</string>
+    <string name="import_progress_title">Importer la progression</string>
+    <string name="import_progress_desc">Restaurer la progression depuis un fichier de sauvegarde</string>
+    <string name="import_progress_confirm_title">Remplacer la progression actuelle ?</string>
+    <string name="import_progress_confirm_message">L\'importation remplacera votre progression actuelle des fiches, série, historique des examens et notes. Cette action est irréversible.</string>
+    <string name="import_progress_success">Progression importée avec succès</string>
+    <string name="import_progress_failure">Échec de l\'importation de la progression — le fichier est peut-être corrompu ou provient d\'une version plus récente de l\'application</string>
 </resources>

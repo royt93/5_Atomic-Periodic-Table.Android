@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">今日の元素豆知識</string>
     <string name="daily_trivia_notification_desc">毎日新しい元素についての通知を受け取る</string>
     <string name="daily_trivia_channel_name">今日の豆知識</string>
+    <string name="export_progress_title">進捗をエクスポート</string>
+    <string name="export_progress_desc">進捗をファイルに保存します</string>
+    <string name="export_progress_success">進捗のエクスポートに成功しました</string>
+    <string name="export_progress_failure">進捗のエクスポートに失敗しました</string>
+    <string name="import_progress_title">進捗をインポート</string>
+    <string name="import_progress_desc">バックアップファイルから進捗を復元します</string>
+    <string name="import_progress_confirm_title">現在の進捗を上書きしますか?</string>
+    <string name="import_progress_confirm_message">インポートすると、現在のフラッシュカードの進捗、連続記録、試験履歴、メモが置き換えられます。この操作は元に戻せません。</string>
+    <string name="import_progress_success">進捗のインポートに成功しました</string>
+    <string name="import_progress_failure">進捗のインポートに失敗しました — ファイルが破損しているか、新しいバージョンのアプリのものである可能性があります</string>
 </resources>

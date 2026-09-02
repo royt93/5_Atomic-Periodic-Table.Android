@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Trivia diaria de elementos</string>
     <string name="daily_trivia_notification_desc">Recibe una notificación sobre un nuevo elemento cada día</string>
     <string name="daily_trivia_channel_name">Trivia diaria</string>
+    <string name="export_progress_title">Exportar progreso</string>
+    <string name="export_progress_desc">Guarda tu progreso en un archivo</string>
+    <string name="export_progress_success">Progreso exportado correctamente</string>
+    <string name="export_progress_failure">Error al exportar el progreso</string>
+    <string name="import_progress_title">Importar progreso</string>
+    <string name="import_progress_desc">Restaura el progreso desde un archivo de copia de seguridad</string>
+    <string name="import_progress_confirm_title">¿Sobrescribir el progreso actual?</string>
+    <string name="import_progress_confirm_message">Importar reemplazará tu progreso actual de tarjetas, racha, historial de exámenes y notas. Esto no se puede deshacer.</string>
+    <string name="import_progress_success">Progreso importado correctamente</string>
+    <string name="import_progress_failure">Error al importar el progreso — el archivo puede estar dañado o ser de una versión más reciente de la app</string>
 </resources>

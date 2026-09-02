@@ -14,7 +14,8 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Practice Exam Mode — tham số hoá `act/QuizAct.kt` (không tạo Activity riêng, quyết định đổi so với breakdown gốc), `feature/exam/MolarMassQuestionGenerator.kt`, `feature/exam/ExamHistoryPref.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 8). Cả 4 feature vòng 2 (2026-09-02) đã hoàn tất.
 - ✅ Implemented: Achievements/Badges — `feature/badge/BadgeCalculator.kt`, `feature/quiz/QuizBestScorePref.kt`, `act/BadgeAct.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 9).
 - ✅ Implemented: Daily Trivia Notification — `feature/trivia/DailyTriviaScheduler.kt`, `DailyTriviaReceiver.kt`, `DailyTriviaPref.kt`, switch mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 10).
-- 📋 Picked (vòng 3, breakdown chi tiết ở `doc/task/feat_new.md` mục 11-12, chọn qua AskUserQuestion 2026-09-02): Backup & Restore tiến độ, Compound/Molecule Builder.
+- ✅ Implemented: Backup & Restore tiến độ — `feature/backup/BackupData.kt`, `BackupManager.kt`, 2 row Export/Import trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 11).
+- 📋 Picked (vòng 3, breakdown chi tiết ở `doc/task/feat_new.md` mục 12, chọn qua AskUserQuestion 2026-09-02): Compound/Molecule Builder.
 
 ---
 

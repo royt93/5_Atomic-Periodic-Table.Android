@@ -600,4 +600,14 @@
     <string name="daily_trivia_notification_title">Tägliches Element-Wissen</string>
     <string name="daily_trivia_notification_desc">Erhalte jeden Tag eine Benachrichtigung über ein neues Element</string>
     <string name="daily_trivia_channel_name">Tägliches Wissen</string>
+    <string name="export_progress_title">Fortschritt exportieren</string>
+    <string name="export_progress_desc">Speichere deinen Fortschritt in einer Datei</string>
+    <string name="export_progress_success">Fortschritt erfolgreich exportiert</string>
+    <string name="export_progress_failure">Export des Fortschritts fehlgeschlagen</string>
+    <string name="import_progress_title">Fortschritt importieren</string>
+    <string name="import_progress_desc">Fortschritt aus einer Sicherungsdatei wiederherstellen</string>
+    <string name="import_progress_confirm_title">Aktuellen Fortschritt überschreiben?</string>
+    <string name="import_progress_confirm_message">Der Import ersetzt deinen aktuellen Karteikarten-Fortschritt, deine Serie, deinen Prüfungsverlauf und deine Notizen. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="import_progress_success">Fortschritt erfolgreich importiert</string>
+    <string name="import_progress_failure">Import des Fortschritts fehlgeschlagen — die Datei ist möglicherweise beschädigt oder stammt aus einer neueren App-Version</string>
 </resources>
