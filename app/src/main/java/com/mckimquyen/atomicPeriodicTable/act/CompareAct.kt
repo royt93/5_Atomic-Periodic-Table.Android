@@ -31,9 +31,14 @@ class CompareAct : BaseAct() {
     private var element1Name: String = "hydrogen"
     private var element2Name: String = "helium"
 
+    // Element C (mục 16: 3-way compare) — null means the 3rd column is not active (default,
+    // matches the original 2-element experience exactly).
+    private var element3Name: String? = null
+
     // Memory leak prevention: store TextWatcher references for cleanup
     private var textWatcher1: TextWatcher? = null
     private var textWatcher2: TextWatcher? = null
+    private var textWatcher3: TextWatcher? = null
 
     // Memory leak prevention: store the delayed-hide handler for focus-loss dropdowns
     // postDelayed on a View is NOT auto-cancelled when Activity is destroyed → must cancel manually
@@ -122,6 +127,30 @@ class CompareAct : BaseAct() {
         }
         binding.searchElement2.addTextChangedListener(textWatcher2)
 
+        // TextWatcher for element 3 search input (mục 16: 3-way compare)
+        textWatcher3 = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                filterPickerDropdown(
+                    query = s.toString(),
+                    dropdownView = binding.dropdownElement3,
+                    onSelect = { name ->
+                        element3Name = name
+                        updatePickerLabel(binding.tvElement3Label, name)
+                        binding.searchElement3.setText("")
+                        binding.dropdownElement3.visibility = View.GONE
+                        updateComparisonTable()
+                    }
+                )
+            }
+        }
+        binding.searchElement3.addTextChangedListener(textWatcher3)
+
+        binding.compareToggleThirdBtn.setOnClickListener {
+            toggleThirdElement()
+        }
+
         // Race condition fix: Hide dropdown on focus loss with a small delay.
         // Without delay, focus leaves EditText BEFORE the dropdown item click is processed,
         // causing the dropdown to disappear and the click to be lost (items become unclickable).
@@ -142,6 +171,34 @@ class CompareAct : BaseAct() {
                 }, 150)
             }
         }
+        binding.searchElement3.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                focusHideHandler?.postDelayed({
+                    if (!isDestroyed) binding.dropdownElement3.visibility = View.GONE
+                }, 150)
+            }
+        }
+    }
+
+    // ================================================================
+    // Toggle a 3rd element column on/off (mục 16: 3-way compare, v1 scope)
+    // ================================================================
+    private fun toggleThirdElement() {
+        if (element3Name == null) {
+            element3Name = DEFAULT_THIRD_ELEMENT
+            updatePickerLabel(binding.tvElement3Label, DEFAULT_THIRD_ELEMENT)
+            binding.compareVsSpacer2.visibility = View.VISIBLE
+            binding.cardElement3.visibility = View.VISIBLE
+            binding.tvHeaderElement3.visibility = View.VISIBLE
+            binding.compareToggleThirdBtn.text = getString(R.string.compare_remove_third_element)
+        } else {
+            element3Name = null
+            binding.compareVsSpacer2.visibility = View.GONE
+            binding.cardElement3.visibility = View.GONE
+            binding.tvHeaderElement3.visibility = View.GONE
+            binding.compareToggleThirdBtn.text = getString(R.string.compare_add_third_element)
+        }
+        updateComparisonTable()
     }
 
     // ================================================================
@@ -233,18 +290,23 @@ class CompareAct : BaseAct() {
     private fun updateComparisonTable() {
         val json1 = loadElementJson(element1Name) ?: return
         val json2 = loadElementJson(element2Name) ?: return
+        // Element C is optional — a load failure here degrades to "---" rather than aborting
+        // the whole table (json1/json2 are required, json3 is not).
+        val json3 = element3Name?.let { loadElementJson(it) }
 
-        Log.i("CompareAct", "Comparing $element1Name vs $element2Name")
+        Log.i("CompareAct", "Comparing $element1Name vs $element2Name" + (element3Name?.let { " vs $it" } ?: ""))
 
         // Convenience lambda for binding a row
         fun bind(label: String, key1: String, key2: String, isCategory: Boolean = false) {
             var v1 = json1.optString(key1, "---")
             var v2 = json2.optString(key2, "---")
+            var v3 = if (element3Name != null) (json3?.optString(key1, "---") ?: "---") else null
             if (isCategory) {
                 v1 = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, v1)
                 v2 = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, v2)
+                v3 = v3?.let { com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(this, it) }
             }
-            bindCompareRow(label, v1, v2)
+            bindCompareRow(label, v1, v2, v3)
         }
 
         // Clear previous rows (keep header rows which are static)
@@ -278,21 +340,18 @@ class CompareAct : BaseAct() {
     // Inflate a single comparison row with color-coded indicators
     // ================================================================
     @SuppressLint("SetTextI18n")
-    private fun bindCompareRow(label: String, val1: String, val2: String) {
+    private fun bindCompareRow(label: String, val1: String, val2: String, val3: String? = null) {
         // Inflate row from layout
         val row = layoutInflater.inflate(R.layout.view_compare_row, binding.compareTableBody, false)
         val tvLabel = row.findViewById<TextView>(R.id.tvCompareLabel)
         val tvVal1 = row.findViewById<TextView>(R.id.tvCompareVal1)
         val tvVal2 = row.findViewById<TextView>(R.id.tvCompareVal2)
         val tvIndicator = row.findViewById<TextView>(R.id.tvCompareIndicator)
+        val tvVal3 = row.findViewById<TextView>(R.id.tvCompareVal3)
 
         tvLabel.text = label
         tvVal1.text = val1
         tvVal2.text = val2
-
-        // Numeric comparison: highlight which is larger/smaller
-        val n1 = val1.toDoubleOrNull()
-        val n2 = val2.toDoubleOrNull()
 
         val colorHighlight = ContextCompat.getColor(this, R.color.compare_higher)
         val colorLower = ContextCompat.getColor(this, R.color.compare_lower)
@@ -302,38 +361,65 @@ class CompareAct : BaseAct() {
             Color.BLACK
         )
 
-        when {
-            n1 != null && n2 != null -> {
-                when {
-                    n1 > n2 -> {
-                        tvVal1.setTextColor(colorHighlight)
-                        tvVal2.setTextColor(colorLower)
-                        tvIndicator.text = "▲"
-                        tvIndicator.setTextColor(colorHighlight)
-                    }
-                    n1 < n2 -> {
-                        tvVal1.setTextColor(colorLower)
-                        tvVal2.setTextColor(colorHighlight)
-                        tvIndicator.text = "▼"
-                        tvIndicator.setTextColor(colorLower)
-                    }
-                    else -> {
-                        tvVal1.setTextColor(colorNeutral)
-                        tvVal2.setTextColor(colorNeutral)
-                        tvIndicator.text = "="
-                        tvIndicator.setTextColor(colorNeutral)
+        if (val3 == null) {
+            // Original 2-element behavior, untouched (regression-safe): a single ▲/▼/= indicator
+            // between the two columns makes sense only for a pairwise comparison.
+            val n1 = val1.toDoubleOrNull()
+            val n2 = val2.toDoubleOrNull()
+
+            when {
+                n1 != null && n2 != null -> {
+                    when {
+                        n1 > n2 -> {
+                            tvVal1.setTextColor(colorHighlight)
+                            tvVal2.setTextColor(colorLower)
+                            tvIndicator.text = "▲"
+                            tvIndicator.setTextColor(colorHighlight)
+                        }
+                        n1 < n2 -> {
+                            tvVal1.setTextColor(colorLower)
+                            tvVal2.setTextColor(colorHighlight)
+                            tvIndicator.text = "▼"
+                            tvIndicator.setTextColor(colorLower)
+                        }
+                        else -> {
+                            tvVal1.setTextColor(colorNeutral)
+                            tvVal2.setTextColor(colorNeutral)
+                            tvIndicator.text = "="
+                            tvIndicator.setTextColor(colorNeutral)
+                        }
                     }
                 }
+                val1 == val2 && val1 != "---" -> {
+                    // Only show "=" if both values are real equal text (not both missing)
+                    tvIndicator.text = "="
+                    tvIndicator.setTextColor(colorNeutral)
+                }
+                else -> {
+                    // Text differs, or one/both values are missing — no indicator
+                    tvIndicator.text = ""
+                }
             }
-            val1 == val2 && val1 != "---" -> {
-                // Only show "=" if both values are real equal text (not both missing)
-                tvIndicator.text = "="
-                tvIndicator.setTextColor(colorNeutral)
+        } else {
+            // 3-way compare (mục 16): a single shared ▲/▼ arrow no longer identifies which
+            // column it refers to, so rank each value's OWN color instead — max → highlight,
+            // min → lower, everything else (including the middle value) → neutral. Missing/
+            // non-numeric values are left in the neutral color and excluded from ranking.
+            tvVal3.visibility = View.VISIBLE
+            tvVal3.text = val3
+            tvIndicator.text = ""
+
+            val numbers = listOf(val1, val2, val3).map { it.toDoubleOrNull() }
+            val colors = com.mckimquyen.atomicPeriodicTable.feature.compare.CompareRanking.rank(numbers).map { rank ->
+                when (rank) {
+                    com.mckimquyen.atomicPeriodicTable.feature.compare.Rank.HIGH -> colorHighlight
+                    com.mckimquyen.atomicPeriodicTable.feature.compare.Rank.LOW -> colorLower
+                    com.mckimquyen.atomicPeriodicTable.feature.compare.Rank.NEUTRAL -> colorNeutral
+                }
             }
-            else -> {
-                // Text differs, or one/both values are missing — no indicator
-                tvIndicator.text = ""
-            }
+            tvVal1.setTextColor(colors[0])
+            tvVal2.setTextColor(colors[1])
+            tvVal3.setTextColor(colors[2])
         }
 
         binding.compareTableBody.addView(row)
@@ -376,6 +462,9 @@ class CompareAct : BaseAct() {
         textWatcher2?.let { binding.searchElement2.removeTextChangedListener(it) }
         textWatcher2 = null
 
+        textWatcher3?.let { binding.searchElement3.removeTextChangedListener(it) }
+        textWatcher3 = null
+
         // Memory leak prevention: cancel any pending postDelayed callbacks from focus listeners
         focusHideHandler?.removeCallbacksAndMessages(null)
         focusHideHandler = null
@@ -389,5 +478,6 @@ class CompareAct : BaseAct() {
     companion object {
         const val EXTRA_ELEMENT_1 = "extra_element_1"
         const val EXTRA_ELEMENT_2 = "extra_element_2"
+        const val DEFAULT_THIRD_ELEMENT = "lithium"
     }
 }

@@ -362,6 +362,9 @@
     <string name="compare_elements_title">So sánh các nguyên tố</string>
     <string name="compare_element_a">Nguyên tố A</string>
     <string name="compare_element_b">Nguyên tố B</string>
+    <string name="compare_element_c">Nguyên tố C</string>
+    <string name="compare_add_third_element">+ Thêm nguyên tố C</string>
+    <string name="compare_remove_third_element">− Bỏ nguyên tố C</string>
     <string name="compare_search_hint">Tìm kiếm…</string>
     <string name="compare_property">Thuộc tính</string>
     <string name="compare_legend_higher">Cao hơn</string>

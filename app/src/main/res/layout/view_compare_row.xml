@@ -59,6 +59,19 @@
             android:textColor="?attr/colorOnSurface"
             android:textSize="12sp" />
 
+        <!-- Value for Element 3 (mục 16: 3-way compare) — GONE unless a 3rd element is active -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCompareVal3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:paddingEnd="8dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <!-- Subtle bottom divider — uses theme-aware color for light/dark mode -->

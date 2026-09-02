@@ -344,6 +344,9 @@
     <string name="compare_elements_title">Comparer les éléments</string>
     <string name="compare_element_a">Élément A</string>
     <string name="compare_element_b">Élément B</string>
+    <string name="compare_element_c">Élément C</string>
+    <string name="compare_add_third_element">+ Ajouter l\'élément C</string>
+    <string name="compare_remove_third_element">− Retirer l\'élément C</string>
     <string name="compare_search_hint">Rechercher…</string>
     <string name="compare_property">Propriété</string>
     <string name="compare_legend_higher">Plus élevé</string>

@@ -344,6 +344,9 @@
     <string name="compare_elements_title">要素を比較</string>
     <string name="compare_element_a">要素 A</string>
     <string name="compare_element_b">要素 B</string>
+    <string name="compare_element_c">要素 C</string>
+    <string name="compare_add_third_element">+ 元素Cを追加</string>
+    <string name="compare_remove_third_element">− 元素Cを削除</string>
     <string name="compare_search_hint">検索…</string>
     <string name="compare_property">プロパティ</string>
     <string name="compare_legend_higher">高い</string>

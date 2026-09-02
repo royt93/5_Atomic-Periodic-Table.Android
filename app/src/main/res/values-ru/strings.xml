@@ -344,6 +344,9 @@
     <string name="compare_elements_title">Сравнить элементы</string>
     <string name="compare_element_a">Элемент A</string>
     <string name="compare_element_b">Элемент B</string>
+    <string name="compare_element_c">Элемент C</string>
+    <string name="compare_add_third_element">+ Добавить элемент C</string>
+    <string name="compare_remove_third_element">− Удалить элемент C</string>
     <string name="compare_search_hint">Поиск…</string>
     <string name="compare_property">Свойство</string>
     <string name="compare_legend_higher">Выше</string>

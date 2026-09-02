@@ -362,6 +362,9 @@
     <string name="compare_elements_title">比较元素</string>
     <string name="compare_element_a">元素 A</string>
     <string name="compare_element_b">元素 B</string>
+    <string name="compare_element_c">元素 C</string>
+    <string name="compare_add_third_element">+ 添加元素 C</string>
+    <string name="compare_remove_third_element">− 移除元素 C</string>
     <string name="compare_search_hint">搜索…</string>
     <string name="compare_property">属性</string>
     <string name="compare_legend_higher">更高</string>

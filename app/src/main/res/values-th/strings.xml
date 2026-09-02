@@ -344,6 +344,9 @@
     <string name="compare_elements_title">เปรียบเทียบองค์ประกอบ</string>
     <string name="compare_element_a">องค์ประกอบ A</string>
     <string name="compare_element_b">องค์ประกอบ B</string>
+    <string name="compare_element_c">องค์ประกอบ C</string>
+    <string name="compare_add_third_element">+ เพิ่มธาตุ C</string>
+    <string name="compare_remove_third_element">− ลบธาตุ C</string>
     <string name="compare_search_hint">ค้นหา…</string>
     <string name="compare_property">คุณสมบัติ</string>
     <string name="compare_legend_higher">สูงกว่า</string>

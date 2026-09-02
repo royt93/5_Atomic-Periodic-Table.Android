@@ -344,6 +344,9 @@
     <string name="compare_elements_title">तत्वों की तुलना करें</string>
     <string name="compare_element_a">तत्व A</string>
     <string name="compare_element_b">तत्व B</string>
+    <string name="compare_element_c">तत्व C</string>
+    <string name="compare_add_third_element">+ तत्व C जोड़ें</string>
+    <string name="compare_remove_third_element">− तत्व C हटाएं</string>
     <string name="compare_search_hint">खोजें…</string>
     <string name="compare_property">संपत्ति</string>
     <string name="compare_legend_higher">उच्च</string>

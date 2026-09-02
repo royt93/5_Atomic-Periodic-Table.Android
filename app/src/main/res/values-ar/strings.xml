@@ -344,6 +344,9 @@
     <string name="compare_elements_title">مقارنة العناصر</string>
     <string name="compare_element_a">العنصر A</string>
     <string name="compare_element_b">العنصر B</string>
+    <string name="compare_element_c">العنصر C</string>
+    <string name="compare_add_third_element">+ إضافة العنصر C</string>
+    <string name="compare_remove_third_element">− إزالة العنصر C</string>
     <string name="compare_search_hint">بحث…</string>
     <string name="compare_property">خاصية</string>
     <string name="compare_legend_higher">أعلى</string>

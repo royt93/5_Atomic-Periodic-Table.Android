@@ -344,6 +344,9 @@
     <string name="compare_elements_title">요소 비교</string>
     <string name="compare_element_a">요소 A</string>
     <string name="compare_element_b">요소 B</string>
+    <string name="compare_element_c">요소 C</string>
+    <string name="compare_add_third_element">+ 요소 C 추가</string>
+    <string name="compare_remove_third_element">− 요소 C 제거</string>
     <string name="compare_search_hint">검색…</string>
     <string name="compare_property">속성</string>
     <string name="compare_legend_higher">높음</string>

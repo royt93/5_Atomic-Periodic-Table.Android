@@ -344,6 +344,9 @@
     <string name="compare_elements_title">Bandingkan Elemen</string>
     <string name="compare_element_a">Elemen A</string>
     <string name="compare_element_b">Elemen B</string>
+    <string name="compare_element_c">Elemen C</string>
+    <string name="compare_add_third_element">+ Tambah Elemen C</string>
+    <string name="compare_remove_third_element">− Hapus Elemen C</string>
     <string name="compare_search_hint">Mencari…</string>
     <string name="compare_property">Properti</string>
     <string name="compare_legend_higher">Lebih Tinggi</string>
