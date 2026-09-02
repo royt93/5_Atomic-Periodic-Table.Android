@@ -611,6 +611,9 @@
     <string name="import_progress_success">Progression importée avec succès</string>
     <string name="import_progress_failure">Échec de l\'importation de la progression — le fichier est peut-être corrompu ou provient d\'une version plus récente de l\'application</string>
     <string name="compound_builder_title">Créateur de Composés</string>
+    <string name="category_practice_title">Pratique par catégorie</string>
+    <string name="category_practice_picker_title">Choisir une catégorie</string>
+    <string name="category_practice_all">Tous les éléments</string>
     <string name="compound_builder_empty_selection">Appuyez sur les éléments ci-dessous pour former un composé</string>
     <string name="compound_builder_clear">Effacer</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

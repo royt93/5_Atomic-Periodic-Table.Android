@@ -638,6 +638,9 @@
     <string name="import_progress_success">Nhập tiến độ thành công</string>
     <string name="import_progress_failure">Nhập tiến độ thất bại — file có thể bị hỏng hoặc từ phiên bản app mới hơn</string>
     <string name="compound_builder_title">Ghép hợp chất</string>
+    <string name="category_practice_title">Luyện tập theo nhóm</string>
+    <string name="category_practice_picker_title">Chọn nhóm nguyên tố</string>
+    <string name="category_practice_all">Tất cả nguyên tố</string>
     <string name="compound_builder_empty_selection">Chạm vào nguyên tố bên dưới để tạo hợp chất</string>
     <string name="compound_builder_clear">Xoá</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

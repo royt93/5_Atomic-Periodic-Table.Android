@@ -611,6 +611,9 @@
     <string name="import_progress_success">Прогресс успешно импортирован</string>
     <string name="import_progress_failure">Не удалось импортировать прогресс — файл может быть повреждён или из более новой версии приложения</string>
     <string name="compound_builder_title">Конструктор соединений</string>
+    <string name="category_practice_title">Практика по категориям</string>
+    <string name="category_practice_picker_title">Выберите категорию</string>
+    <string name="category_practice_all">Все элементы</string>
     <string name="compound_builder_empty_selection">Нажимайте на элементы ниже, чтобы создать соединение</string>
     <string name="compound_builder_clear">Очистить</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f г/моль</string>

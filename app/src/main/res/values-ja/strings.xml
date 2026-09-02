@@ -611,6 +611,9 @@
     <string name="import_progress_success">進捗のインポートに成功しました</string>
     <string name="import_progress_failure">進捗のインポートに失敗しました — ファイルが破損しているか、新しいバージョンのアプリのものである可能性があります</string>
     <string name="compound_builder_title">化合物ビルダー</string>
+    <string name="category_practice_title">カテゴリー練習</string>
+    <string name="category_practice_picker_title">カテゴリーを選択</string>
+    <string name="category_practice_all">すべての元素</string>
     <string name="compound_builder_empty_selection">下の元素をタップして化合物を作りましょう</string>
     <string name="compound_builder_clear">クリア</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

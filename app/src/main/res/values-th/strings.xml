@@ -611,6 +611,9 @@
     <string name="import_progress_success">นำเข้าความคืบหน้าสำเร็จ</string>
     <string name="import_progress_failure">นำเข้าความคืบหน้าล้มเหลว — ไฟล์อาจเสียหายหรือมาจากแอปเวอร์ชันใหม่กว่า</string>
     <string name="compound_builder_title">เครื่องมือสร้างสารประกอบ</string>
+    <string name="category_practice_title">ฝึกฝนตามหมวดหมู่</string>
+    <string name="category_practice_picker_title">เลือกหมวดหมู่</string>
+    <string name="category_practice_all">ธาตุทั้งหมด</string>
     <string name="compound_builder_empty_selection">แตะธาตุด้านล่างเพื่อสร้างสารประกอบ</string>
     <string name="compound_builder_clear">ล้าง</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

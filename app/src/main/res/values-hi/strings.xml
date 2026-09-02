@@ -611,6 +611,9 @@
     <string name="import_progress_success">प्रगति सफलतापूर्वक आयात की गई</string>
     <string name="import_progress_failure">प्रगति आयात करने में विफल — फ़ाइल दूषित हो सकती है या ऐप के नए संस्करण से हो सकती है</string>
     <string name="compound_builder_title">यौगिक निर्माता</string>
+    <string name="category_practice_title">श्रेणी अभ्यास</string>
+    <string name="category_practice_picker_title">एक श्रेणी चुनें</string>
+    <string name="category_practice_all">सभी तत्व</string>
     <string name="compound_builder_empty_selection">यौगिक बनाने के लिए नीचे दिए गए तत्वों को टैप करें</string>
     <string name="compound_builder_clear">साफ़ करें</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

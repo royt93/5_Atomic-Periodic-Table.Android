@@ -611,6 +611,9 @@
     <string name="import_progress_success">Fortschritt erfolgreich importiert</string>
     <string name="import_progress_failure">Import des Fortschritts fehlgeschlagen — die Datei ist möglicherweise beschädigt oder stammt aus einer neueren App-Version</string>
     <string name="compound_builder_title">Verbindungs-Baukasten</string>
+    <string name="category_practice_title">Kategorieübung</string>
+    <string name="category_practice_picker_title">Kategorie auswählen</string>
+    <string name="category_practice_all">Alle Elemente</string>
     <string name="compound_builder_empty_selection">Tippe unten auf Elemente, um eine Verbindung zu bilden</string>
     <string name="compound_builder_clear">Löschen</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

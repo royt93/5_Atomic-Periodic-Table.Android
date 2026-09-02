@@ -5,9 +5,11 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.act.MainAct
+import com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -203,6 +205,35 @@ class NavigationIntegrationTest {
 
             // Verify Compound Builder screen is visible
             onView(withId(R.id.chipGroupElements)).check(matches(isDisplayed()))
+        }
+    }
+
+    // Category/Group Practice Mode (mục 15): menuCategoryPracticeBtn opens a picker dialog;
+    // choosing a specific category (not "All Elements") launches QuizAct filtered to it.
+    @Test
+    fun testNavigateFromMainToCategoryPractice_pickingSpecificCategory() {
+        var nobleGasesLabel = ""
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+                // Computed from the Activity's own (LocaleHelper-wrapped) context — see
+                // QuizActTest's launchingWithCategoryFilter test for why ApplicationProvider's
+                // raw context isn't equivalent (app language default vs. device system locale).
+                nobleGasesLabel = CategoryTranslator.translate(activity, "Noble Gases")
+            }
+            Thread.sleep(1000)
+
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuCategoryPracticeBtn).performClick()
+            }
+            Thread.sleep(500)
+
+            onView(withText(nobleGasesLabel)).inRoot(isDialog()).perform(click())
+            Thread.sleep(1000)
+
+            onView(withId(R.id.quizProgress)).check(matches(isDisplayed()))
+            onView(withId(R.id.quizTitleText)).check(matches(withText(nobleGasesLabel)))
         }
     }
 }

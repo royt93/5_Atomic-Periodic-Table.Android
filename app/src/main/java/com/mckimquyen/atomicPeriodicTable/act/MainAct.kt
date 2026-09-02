@@ -37,6 +37,7 @@ import com.mckimquyen.atomicPeriodicTable.adt.ElementAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.ext.TableExt
 import com.mckimquyen.atomicPeriodicTable.feature.history.RecentlyViewedPref
+import com.mckimquyen.atomicPeriodicTable.feature.quiz.CategoryFilter
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.ext.moreApp
 import com.mckimquyen.atomicPeriodicTable.ext.openBrowserPolicy
@@ -52,7 +53,9 @@ import com.mckimquyen.atomicPeriodicTable.pref.SearchPref
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
 import com.roy.sdkadbmob.AdManager
+import com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator
 import com.mckimquyen.atomicPeriodicTable.util.Utils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
 import org.deejdev.twowaynestedscrollview.TwoWayNestedScrollView
@@ -495,6 +498,26 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         binding.navMenuInclude.menuCompoundBuilderBtn.setOnClickListener {
             startActivity(Intent(this, CompoundBuilderAct::class.java))
         }
+        binding.navMenuInclude.menuCategoryPracticeBtn.setOnClickListener {
+            showCategoryPracticePicker()
+        }
+    }
+
+    private fun showCategoryPracticePicker() {
+        val rawCategories = CategoryFilter.ALL_CATEGORIES
+        val labels = (listOf(getString(R.string.category_practice_all)) +
+            rawCategories.map { CategoryTranslator.translate(this, it) }).toTypedArray()
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.category_practice_picker_title)
+            .setItems(labels) { _, which ->
+                val intent = Intent(this, QuizAct::class.java)
+                if (which > 0) {
+                    intent.putExtra(QuizAct.EXTRA_CATEGORY_FILTER, rawCategories[which - 1])
+                }
+                startActivity(intent)
+            }
+            .show()
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

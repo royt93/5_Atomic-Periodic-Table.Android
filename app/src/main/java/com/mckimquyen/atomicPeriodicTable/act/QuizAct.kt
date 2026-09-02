@@ -12,6 +12,7 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.databinding.AQuizBinding
 import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
 import com.mckimquyen.atomicPeriodicTable.feature.exam.MolarMassQuestionGenerator
+import com.mckimquyen.atomicPeriodicTable.feature.quiz.CategoryFilter
 import com.mckimquyen.atomicPeriodicTable.feature.quiz.QuizBestScorePref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
@@ -27,6 +28,7 @@ class QuizAct : BaseAct() {
 
     private lateinit var binding: AQuizBinding
     private val elementsList = ArrayList<Element>()
+    private var targetPool: List<Element> = elementsList
     private val random = Random()
 
     private var currentQuestionIndex = 0
@@ -66,6 +68,14 @@ class QuizAct : BaseAct() {
 
         // Initialize elements
         ElementModel.getList(elementsList)
+
+        val categoryFilter = intent.getStringExtra(EXTRA_CATEGORY_FILTER)
+        if (categoryFilter != null) {
+            targetPool = CategoryFilter.filterElementsByCategory(elementsList, categoryFilter) {
+                ElementWeightCache.getCategory(it)
+            }.ifEmpty { elementsList }
+            binding.quizTitleText.text = CategoryTranslator.translate(this, categoryFilter)
+        }
 
         setupViews()
         startBackgroundAnimation()
@@ -190,8 +200,8 @@ class QuizAct : BaseAct() {
     }
 
     private fun setupQuestionData() {
-        // Pick target element
-        val targetElement = elementsList[random.nextInt(elementsList.size)]
+        // Pick target element (from the category-filtered pool if a filter is active)
+        val targetElement = targetPool[random.nextInt(targetPool.size)]
         // 0: Atomic Number, 1: Symbol, 2: Category, 3: Name from Symbol, 4: Isotopes, 5: Electronegativity, 6: Molar Mass (practice only)
         val questionType = random.nextInt(if (isPracticeMode) 7 else 6)
 
@@ -234,10 +244,8 @@ class QuizAct : BaseAct() {
                 currentCorrectAnswer = CategoryTranslator.translate(this, rawCategory)
                 currentChoices.add(currentCorrectAnswer)
 
-                val categories = listOf(
-                    "Other Nonmetals", "Noble Gases", "Alkali Metals", "Alkaline Earth Metals",
-                    "Transition Metals", "Lanthanides", "Actinides", "Post-transition Metals", "Metalloids", "Halogens"
-                ).map { CategoryTranslator.translate(this, it) }.toMutableSet()
+                val categories = CategoryFilter.ALL_CATEGORIES
+                    .map { CategoryTranslator.translate(this, it) }.toMutableSet()
 
                 categories.remove(currentCorrectAnswer)
 
@@ -794,6 +802,7 @@ class QuizAct : BaseAct() {
     companion object {
         const val EXTRA_PRACTICE_MODE = "extra_practice_mode"
         const val EXTRA_TOTAL_QUESTIONS = "extra_total_questions"
+        const val EXTRA_CATEGORY_FILTER = "extra_category_filter"
         const val PRACTICE_EXAM_QUESTION_COUNT = 20
         const val DEFAULT_QUESTION_COUNT = 10
     }

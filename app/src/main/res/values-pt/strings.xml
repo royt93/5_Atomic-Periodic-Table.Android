@@ -611,6 +611,9 @@
     <string name="import_progress_success">Progresso importado com sucesso</string>
     <string name="import_progress_failure">Falha ao importar progresso — o arquivo pode estar corrompido ou ser de uma versão mais recente do aplicativo</string>
     <string name="compound_builder_title">Construtor de Compostos</string>
+    <string name="category_practice_title">Prática por categoria</string>
+    <string name="category_practice_picker_title">Escolha uma categoria</string>
+    <string name="category_practice_all">Todos os elementos</string>
     <string name="compound_builder_empty_selection">Toque nos elementos abaixo para formar um composto</string>
     <string name="compound_builder_clear">Limpar</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

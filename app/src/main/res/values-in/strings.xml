@@ -611,6 +611,9 @@
     <string name="import_progress_success">Progres berhasil diimpor</string>
     <string name="import_progress_failure">Gagal mengimpor progres — file mungkin rusak atau berasal dari versi aplikasi yang lebih baru</string>
     <string name="compound_builder_title">Pembuat Senyawa</string>
+    <string name="category_practice_title">Latihan Kategori</string>
+    <string name="category_practice_picker_title">Pilih Kategori</string>
+    <string name="category_practice_all">Semua Unsur</string>
     <string name="compound_builder_empty_selection">Ketuk elemen di bawah untuk membuat senyawa</string>
     <string name="compound_builder_clear">Hapus</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

@@ -216,4 +216,79 @@ class QuizActTest {
             assertEquals(8, QuizBestScorePref(context).getBestScore())
         }
     }
+
+    // Category/Group Practice Mode (mục 15): EXTRA_CATEGORY_FILTER restricts targetPool (the
+    // pool the TARGET element is drawn from) to a single category. Wrong-answer choices still
+    // draw from the full 118-element list unfiltered — accepted decision, avoids edge cases for
+    // tiny categories (e.g. Actinides) not having enough same-category wrong answers.
+    @Test
+    fun launchingWithCategoryFilter_restrictsTargetPoolToThatCategory_andShowsCategoryAsTitle() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache.init(context)
+
+        val intent = android.content.Intent(context, QuizAct::class.java)
+            .putExtra(QuizAct.EXTRA_CATEGORY_FILTER, "Noble Gases")
+
+        var expectedTitle = ""
+        ActivityScenario.launch<QuizAct>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val poolField = QuizAct::class.java.getDeclaredField("targetPool")
+                poolField.isAccessible = true
+                @Suppress("UNCHECKED_CAST")
+                val pool = poolField.get(activity) as List<com.mckimquyen.atomicPeriodicTable.model.Element>
+
+                assertTrue("expected a non-empty filtered pool, got ${pool.size}", pool.isNotEmpty())
+                assertTrue("expected pool smaller than full 118-element list, got ${pool.size}", pool.size < 118)
+                pool.forEach { el ->
+                    assertEquals(
+                        "Noble Gases",
+                        com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache.getCategory(el.short)
+                    )
+                }
+
+                // Compute the expected label from the ACTIVITY's own context, not
+                // ApplicationProvider's raw context — BaseAct.attachBaseContext() wraps every
+                // Activity with LocaleHelper's app-language override (LanguagePref, default
+                // "en"), which is independent of the device's system locale. On a device whose
+                // system language differs from the app's saved language (e.g. a Vietnamese-locale
+                // device with the app still defaulted to English), the two contexts resolve
+                // strings differently and a raw-ApplicationProvider comparison flakes.
+                expectedTitle = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(
+                    activity, "Noble Gases"
+                )
+            }
+
+            onView(withId(R.id.quizTitleText)).check(matches(withText(expectedTitle)))
+        }
+    }
+
+    @Test
+    fun launchingWithUnknownCategoryFilter_fallsBackToFullElementList() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val intent = android.content.Intent(context, QuizAct::class.java)
+            .putExtra(QuizAct.EXTRA_CATEGORY_FILTER, "NotARealCategory")
+
+        ActivityScenario.launch<QuizAct>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                val poolField = QuizAct::class.java.getDeclaredField("targetPool")
+                poolField.isAccessible = true
+                @Suppress("UNCHECKED_CAST")
+                val pool = poolField.get(activity) as List<com.mckimquyen.atomicPeriodicTable.model.Element>
+                assertEquals(118, pool.size)
+            }
+        }
+    }
+
+    @Test
+    fun launchingWithoutCategoryFilter_targetPoolIsFullElementList_regressionCheck() {
+        ActivityScenario.launch(QuizAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val poolField = QuizAct::class.java.getDeclaredField("targetPool")
+                poolField.isAccessible = true
+                @Suppress("UNCHECKED_CAST")
+                val pool = poolField.get(activity) as List<com.mckimquyen.atomicPeriodicTable.model.Element>
+                assertEquals(118, pool.size)
+            }
+        }
+    }
 }

@@ -611,6 +611,9 @@
     <string name="import_progress_success">進度匯入成功</string>
     <string name="import_progress_failure">匯入進度失敗 — 檔案可能已損壞或來自較新版本的應用程式</string>
     <string name="compound_builder_title">化合物建構器</string>
+    <string name="category_practice_title">分類練習</string>
+    <string name="category_practice_picker_title">選擇類別</string>
+    <string name="category_practice_all">所有元素</string>
     <string name="compound_builder_empty_selection">點擊下方元素來建構化合物</string>
     <string name="compound_builder_clear">清除</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

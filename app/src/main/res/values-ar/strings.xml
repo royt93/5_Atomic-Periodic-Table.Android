@@ -611,6 +611,9 @@
     <string name="import_progress_success">تم استيراد التقدم بنجاح</string>
     <string name="import_progress_failure">فشل استيراد التقدم — قد يكون الملف تالفًا أو من إصدار أحدث من التطبيق</string>
     <string name="compound_builder_title">منشئ المركبات</string>
+    <string name="category_practice_title">تدريب حسب الفئة</string>
+    <string name="category_practice_picker_title">اختر فئة</string>
+    <string name="category_practice_all">جميع العناصر</string>
     <string name="compound_builder_empty_selection">اضغط على العناصر أدناه لبناء مركب</string>
     <string name="compound_builder_clear">مسح</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f غ/مول</string>

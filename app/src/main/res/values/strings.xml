@@ -639,6 +639,9 @@
     <string name="import_progress_success">Progress imported successfully</string>
     <string name="import_progress_failure">Failed to import progress — the file may be corrupted or from a newer app version</string>
     <string name="compound_builder_title">Compound Builder</string>
+    <string name="category_practice_title">Category Practice</string>
+    <string name="category_practice_picker_title">Choose a Category</string>
+    <string name="category_practice_all">All Elements</string>
     <string name="compound_builder_empty_selection">Tap elements below to build a compound</string>
     <string name="compound_builder_clear">Clear</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>

@@ -611,6 +611,9 @@
     <string name="import_progress_success">진행 상황을 성공적으로 가져왔습니다</string>
     <string name="import_progress_failure">진행 상황 가져오기에 실패했습니다 — 파일이 손상되었거나 더 새로운 앱 버전의 파일일 수 있습니다</string>
     <string name="compound_builder_title">화합물 빌더</string>
+    <string name="category_practice_title">카테고리 연습</string>
+    <string name="category_practice_picker_title">카테고리 선택</string>
+    <string name="category_practice_all">모든 원소</string>
     <string name="compound_builder_empty_selection">아래 원소를 탭하여 화합물을 만드세요</string>
     <string name="compound_builder_clear">지우기</string>
     <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
