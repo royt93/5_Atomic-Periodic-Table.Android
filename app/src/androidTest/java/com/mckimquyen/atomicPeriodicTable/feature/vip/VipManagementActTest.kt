@@ -1,3 +1,5 @@
+@file:OptIn(com.roy.sdkadbmob.InternalAdApi::class)
+
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
 import android.content.Context
@@ -17,6 +19,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.roy.sdkadbmob.AdManager
+import com.roy.sdkadbmob.clearAppPreferencesForTest
+import com.roy.sdkadbmob.resetVipActivationBackoffForTest
 import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Test
@@ -26,8 +30,10 @@ import org.junit.runner.RunWith
  * Integration tests cho VipManagementAct.
  *
  * Mỗi test tự dọn dẹp VIP state trong @After để độc lập nhau.
- * AdManager.activateVipByKey hoạt động mà không cần network vì chỉ validate
- * key == vipKeySecret (đã configure trong RoyApp.configureAds).
+ * AdManager.activateVipByKey resolves VipKeys.VIP_30D_KEY/VIP_3D_KEY through
+ * AdSdkConfig.vipRedeemCodes (configured in RoyApp.configureAds) — 100% local/offline
+ * match, but each code is marked used-per-device permanently, so tearDown must wipe
+ * the whole AppPreferences store (not just the VIP expiry) for the next test to redeem it again.
  */
 @RunWith(AndroidJUnit4::class)
 class VipManagementActTest {
@@ -36,7 +42,8 @@ class VipManagementActTest {
 
     @After
     fun tearDown() {
-        AdManager.clearVipByKey()
+        AdManager.clearAppPreferencesForTest(ctx)
+        AdManager.resetVipActivationBackoffForTest()
         VipPrefs(ctx).clearGrantedAtMs()
         VipPrefs(ctx).clearUserRedeemed()
     }
@@ -209,9 +216,9 @@ class VipManagementActTest {
         }
     }
 
-    // ---- Bug 8: redeemInputKey always passes VIP_SECRET ----
-    // Even when the user types the 3D key, redeemInputKey internally passes VIP_SECRET
-    // (which equals VIP_30D_KEY) to AdManager, so activation succeeds.
+    // ---- kích hoạt bằng 3D key ----
+    // redeemInputKey passes the raw typed key straight to AdManager, which matches it
+    // against AdSdkConfig.vipRedeemCodes to resolve the day count itself.
 
     @Test
     fun valid3DKey_showsSuccessDialog() {
@@ -239,56 +246,28 @@ class VipManagementActTest {
         }
     }
 
-    // ---- FIX-007: redeem while VIP already active must not silently shorten it ----
+    // ---- vipRedeemCodes (SDK 1.2+): redeeming a second code while VIP is already active
+    // ADDS to the existing expiry (never shortens/resets it) — no confirmation needed.
+    // Superseded the old FIX-007 "replace confirm" dialog, which assumed SET semantics
+    // that no longer apply now the app uses AdSdkConfig.vipRedeemCodes.
 
     @Test
-    fun redeemShorterKeyWhileActive_showsReplaceConfirmDialog() {
+    fun redeemSecondKeyWhileActive_accumulatesWithoutConfirmDialog() {
         ActivityScenario.launch(VipManagementAct::class.java).use {
             activateVip30dAndDismiss()
             enterKeyAndActivate(VipKeys.VIP_3D_KEY)
-            onView(withText(R.string.vip_redeem_replace_confirm_title)).check(matches(isDisplayed()))
-        }
-    }
-
-    @Test
-    fun redeemShorterKeyWhileActive_cancelled_keepsThirtyDaysMetadata() {
-        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
-            activateVip30dAndDismiss()
-            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
-            onView(withText(R.string.cancel)).perform(click())
-
-            scenario.onActivity { activity ->
-                val days = VipPrefs(activity).getActivatedDays()
-                assert(days == 30) { "Cancel phải giữ nguyên 30 ngày, hiện là $days" }
-            }
-        }
-    }
-
-    @Test
-    fun redeemShorterKeyWhileActive_confirmed_appliesThreeDays() {
-        ActivityScenario.launch(VipManagementAct::class.java).use { scenario ->
-            activateVip30dAndDismiss()
-            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
-            onView(withText(R.string.confirm)).perform(click())
             onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
-            dismissDialog()
-
-            scenario.onActivity { activity ->
-                val days = VipPrefs(activity).getActivatedDays()
-                assert(days == 3) { "Confirm phải đặt lại thành 3 ngày, hiện là $days" }
-            }
         }
     }
 
+    // ---- vipRedeemCodes: each code is usable once per device, permanently (CLAUDE.md) ----
+
     @Test
-    fun redeemLongerKeyWhileActive_extendsWithoutConfirmDialog() {
+    fun redeemSameKeyTwice_secondAttemptShowsFailedDialog() {
         ActivityScenario.launch(VipManagementAct::class.java).use {
-            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
-            dismissDialog()
-            // Redeeming a LONGER key while active is an extension, not a shortening —
-            // must go straight to success, no replace-confirm dialog.
+            activateVip30dAndDismiss()
             enterKeyAndActivate(VipKeys.VIP_30D_KEY)
-            onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
+            onView(withText(R.string.vip_failed_title)).check(matches(isDisplayed()))
         }
     }
 

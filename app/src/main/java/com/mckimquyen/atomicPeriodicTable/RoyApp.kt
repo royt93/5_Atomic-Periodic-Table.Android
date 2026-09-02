@@ -88,6 +88,15 @@ class RoyApp : Application() {
             safety                 = if (BuildConfig.DEBUG) AdSafetyLimits.TEST else AdSafetyLimits.CONTENT,
             vipKeySecret           = AdKeys.VIP_SECRET,
             applovinSdkKey         = BuildConfig.APPLOVIN_SDK_KEY,
+            // Fixed-code redeem (SDK 1.2+): VIP_30D_KEY/VIP_3D_KEY map straight to their day
+            // counts — this is the SDK's supported mechanism for "a few fixed codes -> fixed
+            // days" (unlike allowLegacyPlaintextVipKey, which is @Deprecated and slated for
+            // removal). AdManager.activateVipByKey(context, rawUserInput, ...) now looks days
+            // up from this map itself; the app no longer needs to pass vipKeySecret as the key.
+            vipRedeemCodes = mapOf(
+                BuildConfig.VIP_30D_KEY to 30,
+                BuildConfig.VIP_3D_KEY to 3,
+            ),
         )
 
         AdManager.setConfig(adConfig)

@@ -1,3 +1,5 @@
+@file:OptIn(com.roy.sdkadbmob.InternalAdApi::class)
+
 package com.mckimquyen.atomicPeriodicTable.feature.vip
 
 import android.content.Context
@@ -15,6 +17,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.roy.sdkadbmob.AdManager
+import com.roy.sdkadbmob.clearAppPreferencesForTest
+import com.roy.sdkadbmob.resetVipActivationBackoffForTest
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.not
 import org.junit.After
@@ -35,7 +39,13 @@ class VipManagementWidgetTest {
 
     @After
     fun tearDown() {
-        AdManager.clearVipByKey()
+        // vipRedeemCodes (SDK 1.2+) marks each code as used-per-device permanently —
+        // clearVipByKey() only resets the expiry, not that mark, so re-redeeming
+        // VipKeys.VIP_30D_KEY in the next @Test would silently fail. clearAppPreferencesForTest
+        // wipes the whole AppPreferences store (VIP + used-code marks); reset the
+        // brute-force backoff too since it's shared process-wide across every test in this run.
+        AdManager.clearAppPreferencesForTest(ctx)
+        AdManager.resetVipActivationBackoffForTest()
         VipPrefs(ctx).clearGrantedAtMs()
         VipPrefs(ctx).clearUserRedeemed()
     }
@@ -128,11 +138,12 @@ class VipManagementWidgetTest {
     // ---- Offline resilience: VIP activate/check work without network ----
 
     @Test
-    fun activateVipByKey_worksWithoutNetwork_stateCorrect() {
-        // activateVipByKey only validates key == vipKeySecret locally,
-        // no network needed. This proves the offline VIP feature works.
+    fun activateVipByKey_redeemCodeMatch_activatesLocally() {
+        // V-03 (SDK 1.6+): activateVipByKey requires network connectivity at call time
+        // (device under test has it), but the actual code match against
+        // AdSdkConfig.vipRedeemCodes is 100% local/offline — no server round-trip.
         val activated = AdManager.activateVipByKey(ctx, VipKeys.VIP_30D_KEY, 30)
-        assert(activated) { "activateVipByKey should succeed offline" }
+        assert(activated) { "activateVipByKey should succeed for a valid, unused redeem code" }
         assert(AdManager.isVipByKeyActive()) { "isVipByKeyActive should be true after activation" }
         assert(AdManager.getVipByKeyExpiry() > System.currentTimeMillis()) {
             "expiry should be in the future"

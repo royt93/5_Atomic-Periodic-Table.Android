@@ -1,3 +1,5 @@
+@file:OptIn(com.roy.sdkadbmob.InternalAdApi::class)
+
 package com.mckimquyen.atomicPeriodicTable.act
 
 import android.content.Context
@@ -12,6 +14,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipKeys
 import com.roy.sdkadbmob.AdManager
+import com.roy.sdkadbmob.clearAppPreferencesForTest
+import com.roy.sdkadbmob.resetVipActivationBackoffForTest
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +34,11 @@ class MainActVipGateTest {
 
     @After
     fun tearDown() {
-        AdManager.clearVipByKey()
+        // vipRedeemCodes marks each code used-per-device permanently; clearVipByKey() only
+        // resets the expiry, not that mark — reset the whole store so VipKeys.VIP_30D_KEY can
+        // be redeemed again by the next @Test. Also reset the shared brute-force backoff.
+        AdManager.clearAppPreferencesForTest(ctx)
+        AdManager.resetVipActivationBackoffForTest()
     }
 
     // ---- Free state ----

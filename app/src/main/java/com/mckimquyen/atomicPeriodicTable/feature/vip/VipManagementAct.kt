@@ -193,29 +193,11 @@ class VipManagementAct : BaseAct() {
             showMessage(R.string.vip_failed_title, R.string.vip_invalid_key)
             return
         }
-        // FIX-007: redeeming while VIP is already active must not silently shorten the
-        // remaining entitlement — ask for confirmation if the new key grants less time.
-        if (AdManager.isVipByKeyActive()) {
-            val remainingMs = AdManager.getVipByKeyExpiry() - System.currentTimeMillis()
-            val newDurationMs = days.toLong() * 24L * 60L * 60L * 1000L
-            if (remainingMs > newDurationMs) {
-                confirmReplaceShorterVip(days)
-                return
-            }
-        }
-        // Bug 8: SDK validates against a single vipKeySecret — always pass VIP_SECRET
-        activateVip(AdKeys.VIP_SECRET, days)
-    }
-
-    private fun confirmReplaceShorterVip(days: Int) {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.vip_redeem_replace_confirm_title)
-            .setMessage(getString(R.string.vip_redeem_replace_confirm_message, days))
-            .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.confirm) { _, _ ->
-                activateVip(AdKeys.VIP_SECRET, days)
-            }
-            .show()
+        // vipRedeemCodes (AdSdkConfig, set in RoyApp.configureAds()) is the SDK's own map of
+        // key -> days and ADDS to any existing VIP time (never shortens it), so — unlike the
+        // old single-secret plaintext path — the raw typed key goes straight through and no
+        // "you'll lose remaining time" confirmation is needed.
+        activateVip(rawKey, days)
     }
 
     private fun showRewardedForVip() {
@@ -229,8 +211,28 @@ class VipManagementAct : BaseAct() {
         }
     }
 
+    // SDK 1.6+: rewarded-ad grants now go through grantVipDays (no secret key needed,
+    // doesn't depend on the deprecated allowLegacyPlaintextVipKey flag used by the
+    // typed-key redeem flow below) — the SDK's own recommended replacement for the old
+    // "hack" of calling activateVipByKey with vipKeySecret as the key.
     private fun grantRewardedVip() {
-        activateVip(AdKeys.VIP_SECRET, 3)
+        val expiryBefore = AdManager.getVipByKeyExpiry()
+        val activated = AdManager.grantVipDays(this, 3)
+        val expiryAfter = AdManager.getVipByKeyExpiry()
+        Log.i(
+            "VipManagementAct",
+            "grantRewardedVip: activated=$activated expiryBefore=$expiryBefore expiryAfter=$expiryAfter"
+        )
+        if (activated) {
+            vipPrefs.saveGrantedAtMs(System.currentTimeMillis())
+            vipPrefs.saveActivatedDays(3)
+            vipPrefs.markUserRedeemed()
+            performSuccessFeedback()
+            bindUi()
+            showMessage(R.string.vip_success_title, R.string.vip_success_message)
+        } else {
+            showMessage(R.string.vip_ad_unavailable_title, R.string.vip_ad_unavailable_message)
+        }
     }
 
     private fun activateVip(key: String, days: Int) {

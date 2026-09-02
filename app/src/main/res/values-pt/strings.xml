@@ -443,8 +443,6 @@
     <string name="vip_revoke_all_button">Revogar VIP</string>
     <string name="vip_revoke_all_confirm_title">Confirmar revogação</string>
     <string name="vip_revoke_all_confirm_message">Revogar VIP e voltar ao Gratuito?</string>
-    <string name="vip_redeem_replace_confirm_title">Substituir VIP?</string>
-    <string name="vip_redeem_replace_confirm_message">Já tem um VIP ativo. Resgatar este código irá redefinir o seu VIP para %1$d dia(s) a partir de agora, em vez de o prolongar. Continuar?</string>
     <string name="email_client_not_found">Nenhuma aplicação de email encontrada</string>
     <string name="vip_entry_first_install">🎁 Presente de nova instalação</string>
     <string name="vip_entry_redeemed">VIP %1$d dias</string>

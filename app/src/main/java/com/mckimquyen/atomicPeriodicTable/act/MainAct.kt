@@ -69,6 +69,14 @@ import androidx.core.view.isVisible
 
 class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
 
+    companion object {
+        // Extracted for unit testing: IS_ENABLE_ADMOB is also true in release now (real
+        // production traffic), so gating the test-device-hash clipboard copy + Toast on it
+        // alone would fire for every real user on every launch — must also require DEBUG.
+        fun shouldCaptureAdMobTestDeviceHash(isDebug: Boolean, isEnableAdmob: Boolean): Boolean =
+            isDebug && isEnableAdmob
+    }
+
     private var adInitCallback: ((Boolean, String?) -> Unit)? = null
     // binding inherited from TableExt
 
@@ -230,6 +238,14 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         // adInitCallback — deregister in onDestroy so a slow init doesn't fire late.
         adInitCallback = { _, _ ->
             AdManager.loadInterstitial(this)
+            // Protects the AdMob account from QA/dev accidental clicks on real ads —
+            // copies the test-device hash so it can be registered via setTestDeviceIds().
+            // Release testers who need to self-report a hash should temporarily run a debug
+            // build, or use the manual adb logcat method (see AdConfigTest for the regression
+            // this guards: IS_ENABLE_ADMOB alone is not enough, it's also true in release now).
+            if (shouldCaptureAdMobTestDeviceHash(BuildConfig.DEBUG, BuildConfig.IS_ENABLE_ADMOB)) {
+                AdManager.copyTestDeviceHashToClipboard(this)
+            }
         }
         (application as RoyApp).initializeAdsIfNeeded(adInitCallback!!)
 

@@ -39,7 +39,7 @@
         <!-- =============================================================== -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3612191981543807~8639804669" />
+            android:value="${admobAppId}" />
 
         <!-- AppLovin SDK key is set via AdSdkConfig.applovinSdkKey (BuildConfig),
              NOT via meta-data. AppLovin SDK 13+ rejects having both. -->

@@ -121,11 +121,12 @@ android {
 
     buildTypes {
         release {
-            // nhớ check APPLICATION_ID trong manifest
+            // AdMob App ID phải qua manifestPlaceholders, không hardcode trong Manifest (SDK guide Bước 3a)
+            manifestPlaceholders["admobAppId"] = requireSecret("RELEASE_ADMOB_APP_ID")
+            buildConfigField "String", "ADMOB_APP_ID", buildConfigSecret("RELEASE_ADMOB_APP_ID")
             buildConfigField "String", "ADMOB_BANNER_ID", buildConfigSecret("RELEASE_ADMOB_BANNER_ID")
             buildConfigField "String", "ADMOB_INTERSTITIAL_ID", buildConfigSecret("RELEASE_ADMOB_INTERSTITIAL_ID")
             buildConfigField "String", "ADMOB_APP_OPEN_ID", buildConfigSecret("RELEASE_ADMOB_APP_OPEN_ID")
-            // TODO: replace with real production AdMob rewarded ID before setting IS_ENABLE_ADMOB=true
             buildConfigField "String", "ADMOB_REWARDED_ID", buildConfigSecret("RELEASE_ADMOB_REWARDED_ID")
 
             buildConfigField "String", "APPLOVIN_SDK_KEY", buildConfigSecret("RELEASE_APPLOVIN_SDK_KEY")
@@ -133,7 +134,7 @@ android {
             buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", buildConfigSecret("RELEASE_APPLOVIN_INTERSTITIAL_ID")
             buildConfigField "String", "APPLOVIN_APP_OPEN_ID", buildConfigSecret("RELEASE_APPLOVIN_APP_OPEN_ID")
             buildConfigField "String", "APPLOVIN_REWARDED_ID", buildConfigSecret("RELEASE_APPLOVIN_REWARDED_ID")
-            buildConfigField "Boolean", "IS_ENABLE_ADMOB", "false"
+            buildConfigField "Boolean", "IS_ENABLE_ADMOB", "true"
             buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f\""
 
             debuggable false
@@ -150,6 +151,8 @@ android {
             }
         }
         debug {
+            manifestPlaceholders["admobAppId"] = requireSecret("DEBUG_ADMOB_APP_ID")
+            buildConfigField "String", "ADMOB_APP_ID", buildConfigSecret("DEBUG_ADMOB_APP_ID")
             buildConfigField "String", "ADMOB_BANNER_ID", buildConfigSecret("DEBUG_ADMOB_BANNER_ID")
             buildConfigField "String", "ADMOB_INTERSTITIAL_ID", buildConfigSecret("DEBUG_ADMOB_INTERSTITIAL_ID")
             buildConfigField "String", "ADMOB_APP_OPEN_ID", buildConfigSecret("DEBUG_ADMOB_APP_OPEN_ID")
@@ -160,7 +163,7 @@ android {
             buildConfigField "String", "APPLOVIN_INTERSTITIAL_ID", buildConfigSecret("DEBUG_APPLOVIN_INTERSTITIAL_ID")
             buildConfigField "String", "APPLOVIN_APP_OPEN_ID", buildConfigSecret("DEBUG_APPLOVIN_APP_OPEN_ID")
             buildConfigField "String", "APPLOVIN_REWARDED_ID", buildConfigSecret("DEBUG_APPLOVIN_REWARDED_ID")
-            buildConfigField "Boolean", "IS_ENABLE_ADMOB", "false"
+            buildConfigField "Boolean", "IS_ENABLE_ADMOB", "true"
             buildConfigField "String", "PRIVACY_POLICY_URL", "\"https://loitp.notion.site/Term-Privacy-Policy-Disclaimer-319b1cd8783942fa8923d2a3c9bce60f\""
 
             minifyEnabled false
@@ -247,7 +250,7 @@ dependencies {
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
 //    implementation 'com.applovin:applovin-sdk:13.2.0'
     // AdmobWrapper SDK
-    implementation("com.github.royt93:AdmobApplovinWrapper:1.1.5")
+    implementation("com.github.royt93:AdmobApplovinWrapper:1.8.5")
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.11.0'

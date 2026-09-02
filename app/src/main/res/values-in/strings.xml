@@ -443,8 +443,6 @@
     <string name="vip_revoke_all_button">Cabut VIP</string>
     <string name="vip_revoke_all_confirm_title">Konfirmasi pencabutan</string>
     <string name="vip_revoke_all_confirm_message">Cabut VIP dan kembali ke Gratis?</string>
-    <string name="vip_redeem_replace_confirm_title">Ganti VIP?</string>
-    <string name="vip_redeem_replace_confirm_message">Anda sudah memiliki VIP aktif. Menukarkan kode ini akan mengatur ulang VIP Anda menjadi %1$d hari mulai sekarang, bukan memperpanjangnya. Lanjutkan?</string>
     <string name="email_client_not_found">Aplikasi email tidak ditemukan</string>
     <string name="vip_entry_first_install">🎁 Hadiah instalasi baru</string>
     <string name="vip_entry_redeemed">VIP %1$d hari</string>
