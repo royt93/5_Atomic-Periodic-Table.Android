@@ -11,7 +11,7 @@ Status: implemented; all requested variants passed.
 | Question | Answer | Evidence |
 |---|---|---|
 | Project already applies wrapper? | Yes, upgraded from `com.github.royt93:AdmobWrapper:1.1.1` to `com.github.royt93:AdmobApplovinWrapper:1.1.5`. | `app/build.gradle` |
-| Old SDK still present? | Mostly removed. Current active code imports `com.roy.sdkadbmob.AdManager`; commented AppLovin/MAX remnants remain and can be deleted after grep verification. | `MainAct.kt:695`, `ElementInfoAct.kt:311`, `util/Applovin.kt` |
+| Old SDK still present? | ✅ Fully removed (2026-09-02, release audit). Current active code imports only `com.roy.sdkadbmob.AdManager`. Deleted `util/Applovin.kt` (164 lines, entirely commented-out) and the commented `createAdInter()`/`showAd()` MAX-listener blocks in `MainAct.kt` and `ElementInfoAct.kt` — grep-verified zero remaining `com.applovin.*`/`MaxAd`/`MaxError` references outside `RoyApp.kt`'s legitimate `AppLovinFullscreenActivity` lifecycle-tracking comment (that one is live code, not a remnant). | — |
 | Application init path? | `RoyApp.configureAds()` builds full `AdSdkConfig` and calls `setConfig`; `initializeAdsIfNeeded()` is invoked only after Splash consent resolves. | `RoyApp.kt` |
 | Splash consent + App Open warmup? | Splash now calls `requestConsentInfoUpdate`, then `RoyApp.initializeAdsIfNeeded`, then `initSplashScreen`. | `SplashAct.kt` |
 | Banner slots? | Three existing banner hosts remain. All use adaptive banner size and SDK auto lifecycle. | `ElementInfoAct.kt`, `SettingsAct.kt`, `FavoritePageAct.kt` |

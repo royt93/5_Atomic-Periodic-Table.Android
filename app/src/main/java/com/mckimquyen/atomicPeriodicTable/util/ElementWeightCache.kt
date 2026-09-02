@@ -1,6 +1,7 @@
 package com.mckimquyen.atomicPeriodicTable.util
 
 import android.content.Context
+import android.util.Log
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import org.json.JSONArray
@@ -47,7 +48,7 @@ object ElementWeightCache {
                 // Description
                 descriptionCache[el.short] = jsonObject.optString("description", "")
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("ElementWeightCache", "Failed to load JSON for ${el.element}", e)
             }
         }
     }

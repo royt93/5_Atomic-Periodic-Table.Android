@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -321,7 +322,7 @@ class NuclideAct : BaseAct() {
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("NuclideAct", "Failed to render nuclide grid", e)
             }
         }
 

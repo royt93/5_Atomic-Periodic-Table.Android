@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsCompat
@@ -152,7 +153,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     val jsonObject: JSONObject = JSONArray(jsonString).getJSONObject(0)
                     iText.text = jsonKey(jsonObject)
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.e("TableExt", "initJsonField: failed to load JSON for $name", e)
                 }
             }
         }, 10)
@@ -280,7 +281,7 @@ abstract class TableExt : BaseAct(), View.OnApplyWindowInsetsListener {
                     iText.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                     iText.requestLayout()
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.e("TableExt", "Failed to load element_group for $name", e)
                 }
 
                 val btn = findViewById<TextView>(resIDB)

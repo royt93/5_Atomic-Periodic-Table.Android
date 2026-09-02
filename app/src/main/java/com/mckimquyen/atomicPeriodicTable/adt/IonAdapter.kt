@@ -2,6 +2,7 @@ package com.mckimquyen.atomicPeriodicTable.adt
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +78,7 @@ class IonAdapter(
 
                     jsonObject.optString("element_ionization_energy1", "---")
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.e("IonAdapter", "Failed to load ionization energy for ${item.name}", e)
                     "---"
                 }
             }

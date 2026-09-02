@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
@@ -163,7 +164,7 @@ class PHAct : BaseAct() {
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("PHAct", "Failed to resolve indicator colors for $item", e)
         }
     }
 

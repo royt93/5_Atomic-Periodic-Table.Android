@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.android.play.core.review.ReviewInfo
@@ -72,7 +73,7 @@ fun Activity.rateApp(
             )
         )
     } catch (e: android.content.ActivityNotFoundException) {
-        e.printStackTrace()
+        Log.e("Activity.rateApp", "Play Store app not found, falling back to browser", e)
         this.startActivity(
             Intent(
                 Intent.ACTION_VIEW,
@@ -102,7 +103,7 @@ fun Activity.shareApp(
         intent.putExtra(Intent.EXTRA_TEXT, sAux)
         this.startActivity(Intent.createChooser(intent, this.getString(R.string.chooser_title)))
     } catch (e: Exception) {
-        e.printStackTrace()
+        Log.e("Activity.shareApp", "Failed to launch share chooser", e)
     }
 }
 
@@ -119,7 +120,7 @@ fun Activity.shareImage(bitmap: Bitmap, fileName: String) {
         }
         this.startActivity(Intent.createChooser(intent, this.getString(R.string.chooser_title)))
     } catch (e: Exception) {
-        e.printStackTrace()
+        Log.e("Activity.shareImage", "Failed to share $fileName", e)
     }
 }
 

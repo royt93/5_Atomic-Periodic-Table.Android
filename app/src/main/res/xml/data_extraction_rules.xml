@@ -9,6 +9,11 @@
         <include domain="sharedpref" path="." />
         <!-- VIP entitlement metadata must not be restorable via backup/transfer (FIX-005) -->
         <exclude domain="sharedpref" path="vip_screen_prefs.xml" />
+        <!-- Third-party AdManager SDK's own prefs file (com.roy.sdkadbmob:AppPreferences) —
+             holds its own VIP entitlement flags (keyAddVIPMemberFirstInitSuccess,
+             keyVipByKeyUntil) plus GAID list and ad-safety counters. Same reasoning as
+             vip_screen_prefs.xml above: entitlement/anti-abuse state must not be restorable. -->
+        <exclude domain="sharedpref" path="loitp_admob.xml" />
 
         <!-- Include database files in cloud backup -->
         <include domain="database" path="." />
@@ -19,6 +24,8 @@
         <include domain="sharedpref" path="." />
         <!-- VIP entitlement metadata must not be restorable via backup/transfer (FIX-005) -->
         <exclude domain="sharedpref" path="vip_screen_prefs.xml" />
+        <!-- Third-party AdManager SDK's own prefs file — see cloud-backup section above. -->
+        <exclude domain="sharedpref" path="loitp_admob.xml" />
 
         <!-- Include database files in device transfer -->
         <include domain="database" path="." />

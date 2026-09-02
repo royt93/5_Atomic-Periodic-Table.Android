@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
@@ -233,7 +234,17 @@ class VipManagementAct : BaseAct() {
     }
 
     private fun activateVip(key: String, days: Int) {
+        // FIX-007: the actual entitlement-overwrite behavior lives inside the closed-source
+        // AdManager SDK and can't be verified from this codebase alone — log the before/after
+        // expiry so a real redeem-while-active bug (silently shortening remaining VIP time)
+        // would be visible in production logs/crash-reporting breadcrumbs rather than invisible.
+        val expiryBefore = AdManager.getVipByKeyExpiry()
         val activated = AdManager.activateVipByKey(this, key, days)
+        val expiryAfter = AdManager.getVipByKeyExpiry()
+        Log.i(
+            "VipManagementAct",
+            "activateVip: days=$days activated=$activated expiryBefore=$expiryBefore expiryAfter=$expiryAfter"
+        )
         if (activated) {
             vipPrefs.saveGrantedAtMs(System.currentTimeMillis())
             vipPrefs.saveActivatedDays(days)

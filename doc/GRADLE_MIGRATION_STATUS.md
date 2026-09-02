@@ -1,7 +1,9 @@
 # 🚨 GRADLE DEPENDENCIES MIGRATION STATUS
 
 **Date**: 2025-10-12
-**Status**: ⚠️ **BLOCKED - ViewBinding Migration Required**
+**Status**: ✅ **RESOLVED (2026-09-02) — Option 2 (ViewBinding Migration) was chosen and completed.**
+
+> **Cập nhật 2026-09-02 (release-readiness audit)**: Tài liệu này ĐÃ LỖI THỜI — được viết tại thời điểm build đang FAIL và đang chờ user chọn hướng xử lý (xem phần "HỎI Ý KIẾN" bên dưới, giữ nguyên làm lịch sử tham khảo). Thực tế: **Option 2 đã được chọn và hoàn thành từ lâu** — `app/build.gradle` hiện có `buildFeatures { viewBinding true }`, và toàn bộ codebase (`app/src/main/java/**/*.kt`) dùng `binding.xxx` nhất quán, không còn `kotlinx.android.synthetic` nào sót lại (đã grep xác nhận). Build `assembleDevDebug`/`assembleProductionRelease` hiện chạy sạch. Nội dung gốc bên dưới được giữ nguyên làm lịch sử của quá trình ra quyết định, KHÔNG phản ánh trạng thái build hiện tại.
 
 ---
 
@@ -166,13 +168,13 @@ Tôi sẽ:
 
 ---
 
-## 📝 CURRENT BUILD STATUS
+## 📝 CURRENT BUILD STATUS (lịch sử — xem cập nhật 2026-09-02 ở đầu file cho trạng thái thật)
 
 ```bash
 ./gradlew assembleDevDebug
 ```
 
-**Status**: ❌ **FAIL**
+**Status (2025-10-12, tại thời điểm viết doc này)**: ❌ **FAIL** — đã fix từ lâu, build hiện tại (2026-09-02) chạy sạch.
 
 **Errors**:
 - `Unresolved reference` - Tất cả view references (backBtn, textView, etc.)
