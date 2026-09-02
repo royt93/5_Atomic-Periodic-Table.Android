@@ -103,6 +103,32 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/recentlyViewedRow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recently_viewed_bar_height"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupRecentlyViewed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:chipSpacingHorizontal="8dp"
+                        app:singleLine="true" />
+
+                </HorizontalScrollView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </LinearLayout>
     </FrameLayout>
 

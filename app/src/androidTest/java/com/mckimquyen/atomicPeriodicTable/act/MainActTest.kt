@@ -4,18 +4,25 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.history.RecentlyViewedPref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
+import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -115,6 +122,93 @@ class MainActTest {
                     adapterBefore,
                     adapterAfter,
                 )
+            }
+        }
+    }
+
+    // Regression guard for the Recently Viewed feature (vòng 4 mục 14): row must stay hidden
+    // when there's no history — no wasted header space on first launch.
+    @Test
+    fun noRecentlyViewedHistory_rowIsHidden() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Recently_Viewed_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val row = activity.findViewById<android.view.View>(R.id.recentlyViewedRow)
+                assertSame(android.view.View.GONE, row.visibility)
+            }
+        }
+    }
+
+    @Test
+    fun existingRecentlyViewedHistory_rowShowsOneChipPerSymbol() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Recently_Viewed_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+        RecentlyViewedPref(context).recordViewed("H")
+        RecentlyViewedPref(context).recordViewed("He")
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val row = activity.findViewById<android.view.View>(R.id.recentlyViewedRow)
+                assertSame(android.view.View.VISIBLE, row.visibility)
+
+                val chipGroup = activity.findViewById<ChipGroup>(R.id.chipGroupRecentlyViewed)
+                assertEquals(2, chipGroup.childCount)
+            }
+        }
+    }
+
+    @Test
+    fun clickingElementOnGrid_recordsRecentlyViewed() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Recently_Viewed_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val resId = activity.resources.getIdentifier("hydrogen_btn", "id", activity.packageName)
+                activity.findViewById<android.view.View>(resId).performClick()
+            }
+            Thread.sleep(300)
+
+            assertTrue(RecentlyViewedPref(context).getRecent().contains("H"))
+
+            // Click navigates to ElementInfoAct (or via interstitial) outside this scenario's
+            // ownership — close it best-effort so it doesn't linger and steal focus from the
+            // next test's fresh MainAct launch.
+            try {
+                pressBackUnconditionally()
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    @Test
+    fun tappingRecentlyViewedChip_setsElementSendAndLoadValueForThatElement() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Recently_Viewed_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+        RecentlyViewedPref(context).recordViewed("He")
+
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+        val expectedName = elements.first { it.short == "He" }.element
+
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val chipGroup = activity.findViewById<ChipGroup>(R.id.chipGroupRecentlyViewed)
+                (chipGroup.getChildAt(0) as Chip).performClick()
+            }
+            Thread.sleep(300)
+
+            assertEquals(expectedName, ElementSendAndLoad(context).getValue())
+
+            try {
+                pressBackUnconditionally()
+            } catch (_: Exception) {
             }
         }
     }

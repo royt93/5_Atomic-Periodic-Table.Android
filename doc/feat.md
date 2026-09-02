@@ -17,7 +17,8 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Backup & Restore tiến độ — `feature/backup/BackupData.kt`, `BackupManager.kt`, 2 row Export/Import trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 11).
 - ✅ Implemented: Compound/Molecule Builder — `feature/compound/CompoundMatcher.kt`, `CompoundNames.kt`, `act/CompoundBuilderAct.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 12). Cả 4 feature vòng 3 (2026-09-02) đã hoàn tất.
 - ✅ Implemented: Phát âm nguyên tố (TTS) — `feature/tts/TtsAvailability.kt`, nút loa mới trong `ElementInfoAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 13).
-- 📋 Picked (vòng 4, breakdown chi tiết ở `doc/task/feat_new.md` mục 14-16, chọn qua AskUserQuestion 2026-09-02): Nguyên tố xem gần đây, Category/Group Practice Mode, So sánh 3+ nguyên tố.
+- ✅ Implemented: Nguyên tố xem gần đây — `feature/history/RecentlyViewedPref.kt`, hàng chip mới `recentlyViewedRow` trong `MainAct`/`a_main.xml` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 14).
+- 📋 Picked (vòng 4, breakdown chi tiết ở `doc/task/feat_new.md` mục 15-16, chọn qua AskUserQuestion 2026-09-02): Category/Group Practice Mode, So sánh 3+ nguyên tố.
 
 ---
 

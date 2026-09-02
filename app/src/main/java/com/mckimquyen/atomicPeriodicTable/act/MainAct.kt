@@ -36,6 +36,7 @@ import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
 import com.mckimquyen.atomicPeriodicTable.adt.ElementAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.ext.TableExt
+import com.mckimquyen.atomicPeriodicTable.feature.history.RecentlyViewedPref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.ext.moreApp
 import com.mckimquyen.atomicPeriodicTable.ext.openBrowserPolicy
@@ -78,6 +79,11 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
     private var initNameHandler: android.os.Handler? = null
     private var filterHandler: android.os.Handler? = null
     private var textWatcher: TextWatcher? = null
+
+    // Recently Viewed row grows the header — cached so its extra height can be re-applied
+    // (headerBottomEdgePx()) whenever the row's visibility changes outside of an inset callback.
+    private var lastTopInset = 0
+    private var recentlyViewedExtraHeightPx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -354,6 +360,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
     override fun elementClickListener2(item: Element, position: Int) {
         val elementSendAndLoad = ElementSendAndLoad(this)
         elementSendAndLoad.setValue(item.element)
+        RecentlyViewedPref(this).recordViewed(item.short)
 
         val intent = Intent(this, ElementInfoAct::class.java)
         navigateToElementInfoGated(intent)
@@ -553,6 +560,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             btn.setOnClickListener {
                 val elementSend = ElementSendAndLoad(this)
                 elementSend.setValue(item.element)
+                RecentlyViewedPref(this).recordViewed(item.short)
                 val intent = Intent(this, ElementInfoAct::class.java)
                 navigateToElementInfoGated(intent)
             }
@@ -620,12 +628,43 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         }
     }
 
+    /** Bottom edge of the header (status bar inset + title bar + Recently Viewed row when shown) —
+     * every view that must clear the header (topBar, corner, leftBar, scrollView) reads this. */
+    private fun headerBottomEdgePx(): Int =
+        lastTopInset + resources.getDimensionPixelSize(R.dimen.title_bar_main) + recentlyViewedExtraHeightPx
+
+    /** Re-runs the header-height-dependent margin/height updates using the cached inset — for
+     * when Recently Viewed visibility changes outside of an onApplySystemInsets callback. */
+    private fun reapplyHeaderDependentLayout() {
+        val params = binding.commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
+        params.height = headerBottomEdgePx()
+        binding.commonTitleBackMain.layoutParams = params
+
+        val leftScrollBar = binding.leftBar.layoutParams as ViewGroup.MarginLayoutParams
+        leftScrollBar.topMargin = headerBottomEdgePx() + resources.getDimensionPixelSize(R.dimen.left_bar)
+        binding.leftBar.layoutParams = leftScrollBar
+
+        val topScrollBar = binding.topBar.layoutParams as ViewGroup.MarginLayoutParams
+        topScrollBar.topMargin = headerBottomEdgePx()
+        binding.topBar.layoutParams = topScrollBar
+
+        val cornerM = binding.corner.layoutParams as ViewGroup.MarginLayoutParams
+        cornerM.topMargin = headerBottomEdgePx()
+        binding.corner.layoutParams = cornerM
+
+        val params6 = binding.scrollView.layoutParams as ViewGroup.MarginLayoutParams
+        params6.topMargin = headerBottomEdgePx()
+        binding.scrollView.layoutParams = params6
+    }
+
     override fun onApplySystemInsets(
         top: Int,
         bottom: Int,
         left: Int,
         right: Int,
     ) {
+        lastTopInset = top
+
         // Nav panel: do NOT override height (it is wrap_content in XML so it sizes to content).
         // Only apply bottom padding on navLin so content clears the system navigation bar.
         binding.navMenuInclude.navLin.setPadding(
@@ -635,9 +674,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             bottom
         )
 
-        val params = binding.commonTitleBackMain.layoutParams as ViewGroup.LayoutParams
-        params.height = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        binding.commonTitleBackMain.layoutParams = params
+        reapplyHeaderDependentLayout()
 
         val params2 = binding.navBarMain.layoutParams as ViewGroup.LayoutParams
         params2.height = bottom + resources.getDimensionPixelSize(R.dimen.nav_bar)
@@ -676,17 +713,6 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         pillParams.rightMargin = right + resources.getDimensionPixelSize(R.dimen.margin_space_card)
         binding.btnVipMenu.layoutParams = pillParams
 
-        val leftScrollBar = binding.leftBar.layoutParams as ViewGroup.MarginLayoutParams
-        leftScrollBar.topMargin =
-            top + resources.getDimensionPixelSize(R.dimen.title_bar_main) + resources.getDimensionPixelSize(
-                R.dimen.left_bar
-            )
-        binding.leftBar.layoutParams = leftScrollBar
-
-        val topScrollBar = binding.topBar.layoutParams as ViewGroup.MarginLayoutParams
-        topScrollBar.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        binding.topBar.layoutParams = topScrollBar
-
         val numb = binding.leftBar.layoutParams as ViewGroup.LayoutParams
         numb.width = left + resources.getDimensionPixelSize(R.dimen.left_bar)
         binding.leftBar.layoutParams = numb
@@ -695,17 +721,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         cornerP.width = left + resources.getDimensionPixelSize(R.dimen.left_bar)
         binding.corner.layoutParams = cornerP
 
-        val cornerM = binding.corner.layoutParams as ViewGroup.MarginLayoutParams
-        cornerM.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        binding.corner.layoutParams = cornerM
-
         val params5 = binding.hoverMenuInclude.root.layoutParams as ViewGroup.MarginLayoutParams
         params5.bottomMargin = bottom
         binding.hoverMenuInclude.root.layoutParams = params5
-
-        val params6 = binding.scrollView.layoutParams as ViewGroup.MarginLayoutParams
-        params6.topMargin = top + resources.getDimensionPixelSize(R.dimen.title_bar_main)
-        binding.scrollView.layoutParams = params6
 
         // Note: slidingLayout height is intentionally NOT overridden here.
         // The XML uses wrap_content so the panel sizes to its content automatically.
@@ -821,6 +839,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         rateAppInApp(forceRateInApp = false)
         bindToolbarVipBadge()
         refreshStudyStreak()
+        updateRecentlyViewedRow()
     }
 
     private fun refreshStudyStreak() {
@@ -830,6 +849,36 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
             binding.navMenuInclude.tvStudyStreak.visibility = View.VISIBLE
         } else {
             binding.navMenuInclude.tvStudyStreak.visibility = View.GONE
+        }
+    }
+
+    private fun updateRecentlyViewedRow() {
+        val recentSymbols = RecentlyViewedPref(this).getRecent()
+        val visible = recentSymbols.isNotEmpty()
+        binding.recentlyViewedRow.visibility = if (visible) View.VISIBLE else View.GONE
+        recentlyViewedExtraHeightPx = if (visible) resources.getDimensionPixelSize(R.dimen.recently_viewed_bar_height) else 0
+        reapplyHeaderDependentLayout()
+
+        binding.chipGroupRecentlyViewed.removeAllViews()
+        if (!visible) return
+
+        val elements = ArrayList<Element>()
+        ElementModel.getList(elements)
+        for (symbol in recentSymbols) {
+            val element = elements.find { it.short == symbol } ?: continue
+            val chip = com.google.android.material.chip.Chip(
+                this, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Action
+            ).apply {
+                text = symbol
+                isCheckable = false
+                setOnClickListener {
+                    ElementSendAndLoad(this@MainAct).setValue(element.element)
+                    RecentlyViewedPref(this@MainAct).recordViewed(element.short)
+                    val intent = Intent(this@MainAct, ElementInfoAct::class.java)
+                    navigateToElementInfoGated(intent)
+                }
+            }
+            binding.chipGroupRecentlyViewed.addView(chip)
         }
     }
 
