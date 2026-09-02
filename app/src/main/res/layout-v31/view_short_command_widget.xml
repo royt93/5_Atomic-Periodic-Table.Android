@@ -92,6 +92,83 @@
                     android:textColor="@android:color/system_accent2_800"
                     android:textSize="12sp" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWidgetResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@android:color/system_accent2_800"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/widgetAnswersRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/widgetAnswer1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:background="@drawable/shape_toast_widget"
+                            android:backgroundTint="@android:color/system_accent1_200"
+                            android:maxLines="1"
+                            android:padding="6dp"
+                            android:textColor="@android:color/system_accent2_800"
+                            android:textSize="10sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/widgetAnswer2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_toast_widget"
+                            android:backgroundTint="@android:color/system_accent1_200"
+                            android:maxLines="1"
+                            android:padding="6dp"
+                            android:textColor="@android:color/system_accent2_800"
+                            android:textSize="10sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/widgetAnswer3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:background="@drawable/shape_toast_widget"
+                            android:backgroundTint="@android:color/system_accent1_200"
+                            android:maxLines="1"
+                            android:padding="6dp"
+                            android:textColor="@android:color/system_accent2_800"
+                            android:textSize="10sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/widgetAnswer4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_toast_widget"
+                            android:backgroundTint="@android:color/system_accent1_200"
+                            android:maxLines="1"
+                            android:padding="6dp"
+                            android:textColor="@android:color/system_accent2_800"
+                            android:textSize="10sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </FrameLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

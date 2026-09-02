@@ -178,6 +178,8 @@
     <string name="filter_clear">Effacer le filtre</string>
     <string name="filter_category_all">Tous</string>
     <string name="filter_active_hint">Filtre actif — les éléments estompés ne correspondent pas</string>
+    <string name="widget_trivia_correct">✓ Correct !</string>
+    <string name="widget_trivia_wrong">✗ C\'était %1$s</string>
     <string name="favorite_bar">Barre des favoris</string>
     <string name="personalise_the_favorite_bar">Personnaliser la barre</string>
     <string name="detail_card_order">Ordre des cartes</string>

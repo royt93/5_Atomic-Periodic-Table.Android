@@ -178,6 +178,8 @@
     <string name="filter_clear">फ़िल्टर साफ़ करें</string>
     <string name="filter_category_all">सभी</string>
     <string name="filter_active_hint">फ़िल्टर सक्रिय है — धुंधले तत्व मेल नहीं खाते</string>
+    <string name="widget_trivia_correct">✓ सही!</string>
+    <string name="widget_trivia_wrong">✗ यह %1$s था</string>
     <string name="favorite_bar">पसंदीदा बार</string>
     <string name="personalise_the_favorite_bar">बार को अनुकूलित करें</string>
     <string name="detail_card_order">कार्ड का क्रम</string>

@@ -178,6 +178,8 @@
     <string name="filter_clear">Cancella filtro</string>
     <string name="filter_category_all">Tutti</string>
     <string name="filter_active_hint">Filtro attivo — gli elementi sfumati non corrispondono</string>
+    <string name="widget_trivia_correct">✓ Corretto!</string>
+    <string name="widget_trivia_wrong">✗ Era %1$s</string>
     <string name="favorite_bar">Barra preferiti</string>
     <string name="personalise_the_favorite_bar">Personalizza barra</string>
     <string name="detail_card_order">Ordine schede</string>

@@ -178,6 +178,8 @@
     <string name="filter_clear">Сбросить фильтр</string>
     <string name="filter_category_all">Все</string>
     <string name="filter_active_hint">Фильтр активен — затемнённые элементы не соответствуют</string>
+    <string name="widget_trivia_correct">✓ Верно!</string>
+    <string name="widget_trivia_wrong">✗ Это был %1$s</string>
     <string name="favorite_bar">Панель избранного</string>
     <string name="personalise_the_favorite_bar">Настроить панель</string>
     <string name="detail_card_order">Порядок карточек</string>

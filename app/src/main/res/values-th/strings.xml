@@ -178,6 +178,8 @@
     <string name="filter_clear">ล้างตัวกรอง</string>
     <string name="filter_category_all">ทั้งหมด</string>
     <string name="filter_active_hint">ตัวกรองทำงานอยู่ — ธาตุที่จางลงไม่ตรงเงื่อนไข</string>
+    <string name="widget_trivia_correct">✓ ถูกต้อง!</string>
+    <string name="widget_trivia_wrong">✗ คำตอบคือ %1$s</string>
     <string name="favorite_bar">แถบรายการโปรด</string>
     <string name="personalise_the_favorite_bar">ปรับแต่งแถบรายการโปรด</string>
     <string name="detail_card_order">ลำดับการ์ดรายละเอียด</string>

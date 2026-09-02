@@ -193,6 +193,8 @@
     <string name="filter_clear">Clear Filter</string>
     <string name="filter_category_all">All</string>
     <string name="filter_active_hint">Filter active — dimmed elements don\'t match</string>
+    <string name="widget_trivia_correct">✓ Correct!</string>
+    <string name="widget_trivia_wrong">✗ It was %1$s</string>
     <string name="favorite_bar">Favorite Bar</string>
     <string name="personalise_the_favorite_bar">Personalise the favorite bar</string>
     <string name="detail_card_order">Detail Card Order</string>

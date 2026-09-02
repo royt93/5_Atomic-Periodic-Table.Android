@@ -178,6 +178,8 @@
     <string name="filter_clear">Filter zurücksetzen</string>
     <string name="filter_category_all">Alle</string>
     <string name="filter_active_hint">Filter aktiv — abgeblendete Elemente stimmen nicht überein</string>
+    <string name="widget_trivia_correct">✓ Richtig!</string>
+    <string name="widget_trivia_wrong">✗ Es war %1$s</string>
     <string name="favorite_bar">Favoritenleiste</string>
     <string name="personalise_the_favorite_bar">Leiste anpassen</string>
     <string name="detail_card_order">Kartenreihenfolge</string>

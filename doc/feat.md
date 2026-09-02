@@ -23,7 +23,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Reset tiến trình học tập — `feature/reset/ProgressResetManager.kt`, row mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 17).
 - ✅ Implemented: Cỡ chữ/Accessibility — `pref/FontScalePref.kt`, `util/FontScaleHelper.kt`, panel mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 18).
 - ✅ Implemented: Lọc nguyên tố nâng cao — `feature/filter/ElementFilter.kt`, nút `filterElementsBtn` + dialog mới trong `MainAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 19).
-- 📋 Picked (vòng 5, breakdown chi tiết ở `doc/task/feat_new.md` mục 20, chọn qua AskUserQuestion 2026-09-02): Widget câu hỏi nhanh.
+- ✅ Implemented: Widget câu hỏi nhanh — `feature/trivia/TriviaQuestionGenerator.kt`, `feature/trivia/TriviaWidgetPref.kt`, `widget/ShortCommandWidget.kt` nâng cấp thêm 4 đáp án trắc nghiệm (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 20). Cả 4 feature vòng 5 (2026-09-02) đã hoàn tất.
 
 ---
 

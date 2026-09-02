@@ -178,6 +178,8 @@
     <string name="filter_clear">Hapus Filter</string>
     <string name="filter_category_all">Semua</string>
     <string name="filter_active_hint">Filter aktif — unsur yang diredupkan tidak cocok</string>
+    <string name="widget_trivia_correct">✓ Benar!</string>
+    <string name="widget_trivia_wrong">✗ Jawabannya %1$s</string>
     <string name="favorite_bar">Bilah Favorit</string>
     <string name="personalise_the_favorite_bar">Personalisasi bilah</string>
     <string name="detail_card_order">Urutan kartu</string>

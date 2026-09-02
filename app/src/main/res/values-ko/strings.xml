@@ -178,6 +178,8 @@
     <string name="filter_clear">필터 지우기</string>
     <string name="filter_category_all">전체</string>
     <string name="filter_active_hint">필터 적용 중 — 흐리게 표시된 원소는 조건에 맞지 않습니다</string>
+    <string name="widget_trivia_correct">✓ 정답!</string>
+    <string name="widget_trivia_wrong">✗ 정답은 %1$s였습니다</string>
     <string name="favorite_bar">즐겨찾기 바</string>
     <string name="personalise_the_favorite_bar">바 사용자 정의</string>
     <string name="detail_card_order">상세 카드 순서</string>

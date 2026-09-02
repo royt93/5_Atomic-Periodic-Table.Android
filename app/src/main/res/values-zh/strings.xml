@@ -178,6 +178,8 @@
     <string name="filter_clear">清除筛选</string>
     <string name="filter_category_all">全部</string>
     <string name="filter_active_hint">筛选已启用 — 变暗的元素不符合条件</string>
+    <string name="widget_trivia_correct">✓ 正确！</string>
+    <string name="widget_trivia_wrong">✗ 答案是 %1$s</string>
     <string name="favorite_bar">收藏栏</string>
     <string name="personalise_the_favorite_bar">个性化收藏栏</string>
     <string name="detail_card_order">详细卡片顺序</string>

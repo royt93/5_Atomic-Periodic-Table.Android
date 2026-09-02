@@ -178,6 +178,8 @@
     <string name="filter_clear">مسح التصفية</string>
     <string name="filter_category_all">الكل</string>
     <string name="filter_active_hint">التصفية نشطة — العناصر الباهتة غير مطابقة</string>
+    <string name="widget_trivia_correct">✓ إجابة صحيحة!</string>
+    <string name="widget_trivia_wrong">✗ كانت الإجابة %1$s</string>
     <string name="favorite_bar">شريط المفضلة</string>
     <string name="personalise_the_favorite_bar">تخصيص الشريط</string>
     <string name="detail_card_order">ترتيب البطاقة</string>

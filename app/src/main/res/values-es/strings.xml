@@ -178,6 +178,8 @@
     <string name="filter_clear">Borrar filtro</string>
     <string name="filter_category_all">Todos</string>
     <string name="filter_active_hint">Filtro activo — los elementos atenuados no coinciden</string>
+    <string name="widget_trivia_correct">✓ ¡Correcto!</string>
+    <string name="widget_trivia_wrong">✗ Era %1$s</string>
     <string name="favorite_bar">Barra de favoritos</string>
     <string name="personalise_the_favorite_bar">Personalizar barra</string>
     <string name="detail_card_order">Orden de tarjetas</string>

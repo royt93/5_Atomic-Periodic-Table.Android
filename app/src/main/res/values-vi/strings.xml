@@ -178,6 +178,8 @@
     <string name="filter_clear">Xoá bộ lọc</string>
     <string name="filter_category_all">Tất cả</string>
     <string name="filter_active_hint">Bộ lọc đang bật — nguyên tố mờ không khớp điều kiện</string>
+    <string name="widget_trivia_correct">✓ Chính xác!</string>
+    <string name="widget_trivia_wrong">✗ Đáp án là %1$s</string>
     <string name="favorite_bar">Thanh yêu thích</string>
     <string name="personalise_the_favorite_bar">Cá nhân hoá thanh yêu thích</string>
     <string name="detail_card_order">Thứ tự thẻ chi tiết</string>
