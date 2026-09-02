@@ -168,6 +168,16 @@
     <string name="font_size_small">صغير</string>
     <string name="font_size_default">افتراضي</string>
     <string name="font_size_large">كبير</string>
+    <string name="filter_elements_title">تصفية العناصر</string>
+    <string name="filter_atomic_mass">الكتلة الذرية</string>
+    <string name="filter_electronegativity">السالبية الكهربية</string>
+    <string name="filter_category">الفئة</string>
+    <string name="filter_min">الحد الأدنى</string>
+    <string name="filter_max">الحد الأقصى</string>
+    <string name="filter_apply">تطبيق</string>
+    <string name="filter_clear">مسح التصفية</string>
+    <string name="filter_category_all">الكل</string>
+    <string name="filter_active_hint">التصفية نشطة — العناصر الباهتة غير مطابقة</string>
     <string name="favorite_bar">شريط المفضلة</string>
     <string name="personalise_the_favorite_bar">تخصيص الشريط</string>
     <string name="detail_card_order">ترتيب البطاقة</string>

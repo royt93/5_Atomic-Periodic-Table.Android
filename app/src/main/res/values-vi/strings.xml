@@ -168,6 +168,16 @@
     <string name="font_size_small">Nhỏ</string>
     <string name="font_size_default">Mặc định</string>
     <string name="font_size_large">Lớn</string>
+    <string name="filter_elements_title">Lọc nguyên tố</string>
+    <string name="filter_atomic_mass">Khối lượng nguyên tử</string>
+    <string name="filter_electronegativity">Độ âm điện</string>
+    <string name="filter_category">Danh mục</string>
+    <string name="filter_min">Tối thiểu</string>
+    <string name="filter_max">Tối đa</string>
+    <string name="filter_apply">Áp dụng</string>
+    <string name="filter_clear">Xoá bộ lọc</string>
+    <string name="filter_category_all">Tất cả</string>
+    <string name="filter_active_hint">Bộ lọc đang bật — nguyên tố mờ không khớp điều kiện</string>
     <string name="favorite_bar">Thanh yêu thích</string>
     <string name="personalise_the_favorite_bar">Cá nhân hoá thanh yêu thích</string>
     <string name="detail_card_order">Thứ tự thẻ chi tiết</string>

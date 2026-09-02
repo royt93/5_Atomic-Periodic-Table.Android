@@ -22,7 +22,8 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: So sánh 3+ nguyên tố — `feature/compare/CompareRanking.kt`, `CompareAct` thêm cột 3 tuỳ chọn qua nút toggle (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 16). Cả 4 feature vòng 4 (2026-09-02) đã hoàn tất.
 - ✅ Implemented: Reset tiến trình học tập — `feature/reset/ProgressResetManager.kt`, row mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 17).
 - ✅ Implemented: Cỡ chữ/Accessibility — `pref/FontScalePref.kt`, `util/FontScaleHelper.kt`, panel mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 18).
-- 📋 Picked (vòng 5, breakdown chi tiết ở `doc/task/feat_new.md` mục 19-20, chọn qua AskUserQuestion 2026-09-02): Lọc nguyên tố nâng cao, Widget câu hỏi nhanh.
+- ✅ Implemented: Lọc nguyên tố nâng cao — `feature/filter/ElementFilter.kt`, nút `filterElementsBtn` + dialog mới trong `MainAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 19).
+- 📋 Picked (vòng 5, breakdown chi tiết ở `doc/task/feat_new.md` mục 20, chọn qua AskUserQuestion 2026-09-02): Widget câu hỏi nhanh.
 
 ---
 

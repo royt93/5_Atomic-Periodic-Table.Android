@@ -168,6 +168,16 @@
     <string name="font_size_small">Klein</string>
     <string name="font_size_default">Standard</string>
     <string name="font_size_large">Groß</string>
+    <string name="filter_elements_title">Elemente filtern</string>
+    <string name="filter_atomic_mass">Atommasse</string>
+    <string name="filter_electronegativity">Elektronegativität</string>
+    <string name="filter_category">Kategorie</string>
+    <string name="filter_min">Min</string>
+    <string name="filter_max">Max</string>
+    <string name="filter_apply">Anwenden</string>
+    <string name="filter_clear">Filter zurücksetzen</string>
+    <string name="filter_category_all">Alle</string>
+    <string name="filter_active_hint">Filter aktiv — abgeblendete Elemente stimmen nicht überein</string>
     <string name="favorite_bar">Favoritenleiste</string>
     <string name="personalise_the_favorite_bar">Leiste anpassen</string>
     <string name="detail_card_order">Kartenreihenfolge</string>

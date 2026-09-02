@@ -168,6 +168,16 @@
     <string name="font_size_small">Маленький</string>
     <string name="font_size_default">По умолчанию</string>
     <string name="font_size_large">Крупный</string>
+    <string name="filter_elements_title">Фильтр элементов</string>
+    <string name="filter_atomic_mass">Атомная масса</string>
+    <string name="filter_electronegativity">Электроотрицательность</string>
+    <string name="filter_category">Категория</string>
+    <string name="filter_min">Мин</string>
+    <string name="filter_max">Макс</string>
+    <string name="filter_apply">Применить</string>
+    <string name="filter_clear">Сбросить фильтр</string>
+    <string name="filter_category_all">Все</string>
+    <string name="filter_active_hint">Фильтр активен — затемнённые элементы не соответствуют</string>
     <string name="favorite_bar">Панель избранного</string>
     <string name="personalise_the_favorite_bar">Настроить панель</string>
     <string name="detail_card_order">Порядок карточек</string>

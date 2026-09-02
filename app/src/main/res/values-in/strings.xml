@@ -168,6 +168,16 @@
     <string name="font_size_small">Kecil</string>
     <string name="font_size_default">Default</string>
     <string name="font_size_large">Besar</string>
+    <string name="filter_elements_title">Filter Unsur</string>
+    <string name="filter_atomic_mass">Massa Atom</string>
+    <string name="filter_electronegativity">Elektronegativitas</string>
+    <string name="filter_category">Kategori</string>
+    <string name="filter_min">Min</string>
+    <string name="filter_max">Maks</string>
+    <string name="filter_apply">Terapkan</string>
+    <string name="filter_clear">Hapus Filter</string>
+    <string name="filter_category_all">Semua</string>
+    <string name="filter_active_hint">Filter aktif — unsur yang diredupkan tidak cocok</string>
     <string name="favorite_bar">Bilah Favorit</string>
     <string name="personalise_the_favorite_bar">Personalisasi bilah</string>
     <string name="detail_card_order">Urutan kartu</string>

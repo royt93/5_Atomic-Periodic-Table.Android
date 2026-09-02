@@ -168,6 +168,16 @@
     <string name="font_size_small">Petite</string>
     <string name="font_size_default">Par défaut</string>
     <string name="font_size_large">Grande</string>
+    <string name="filter_elements_title">Filtrer les éléments</string>
+    <string name="filter_atomic_mass">Masse atomique</string>
+    <string name="filter_electronegativity">Électronégativité</string>
+    <string name="filter_category">Catégorie</string>
+    <string name="filter_min">Min</string>
+    <string name="filter_max">Max</string>
+    <string name="filter_apply">Appliquer</string>
+    <string name="filter_clear">Effacer le filtre</string>
+    <string name="filter_category_all">Tous</string>
+    <string name="filter_active_hint">Filtre actif — les éléments estompés ne correspondent pas</string>
     <string name="favorite_bar">Barre des favoris</string>
     <string name="personalise_the_favorite_bar">Personnaliser la barre</string>
     <string name="detail_card_order">Ordre des cartes</string>

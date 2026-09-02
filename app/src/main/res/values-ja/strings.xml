@@ -168,6 +168,16 @@
     <string name="font_size_small">小</string>
     <string name="font_size_default">デフォルト</string>
     <string name="font_size_large">大</string>
+    <string name="filter_elements_title">元素をフィルタ</string>
+    <string name="filter_atomic_mass">原子量</string>
+    <string name="filter_electronegativity">電気陰性度</string>
+    <string name="filter_category">カテゴリー</string>
+    <string name="filter_min">最小</string>
+    <string name="filter_max">最大</string>
+    <string name="filter_apply">適用</string>
+    <string name="filter_clear">フィルタを解除</string>
+    <string name="filter_category_all">すべて</string>
+    <string name="filter_active_hint">フィルタ適用中 — 薄い元素は条件に一致しません</string>
     <string name="favorite_bar">お気に入りバー</string>
     <string name="personalise_the_favorite_bar">バーをカスタマイズ</string>
     <string name="detail_card_order">詳細カードの順序</string>

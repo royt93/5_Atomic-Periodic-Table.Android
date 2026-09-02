@@ -168,6 +168,16 @@
     <string name="font_size_small">小</string>
     <string name="font_size_default">預設</string>
     <string name="font_size_large">大</string>
+    <string name="filter_elements_title">篩選元素</string>
+    <string name="filter_atomic_mass">原子質量</string>
+    <string name="filter_electronegativity">電負度</string>
+    <string name="filter_category">類別</string>
+    <string name="filter_min">最小值</string>
+    <string name="filter_max">最大值</string>
+    <string name="filter_apply">套用</string>
+    <string name="filter_clear">清除篩選</string>
+    <string name="filter_category_all">全部</string>
+    <string name="filter_active_hint">篩選已啟用 — 變暗的元素不符合條件</string>
     <string name="favorite_bar">收藏欄</string>
     <string name="personalise_the_favorite_bar">自定義欄</string>
     <string name="detail_card_order">卡片順序</string>

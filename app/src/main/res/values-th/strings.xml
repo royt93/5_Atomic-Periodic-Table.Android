@@ -168,6 +168,16 @@
     <string name="font_size_small">เล็ก</string>
     <string name="font_size_default">ค่าเริ่มต้น</string>
     <string name="font_size_large">ใหญ่</string>
+    <string name="filter_elements_title">กรองธาตุ</string>
+    <string name="filter_atomic_mass">มวลอะตอม</string>
+    <string name="filter_electronegativity">ค่าอิเล็กโทรเนกาติวิตี</string>
+    <string name="filter_category">หมวดหมู่</string>
+    <string name="filter_min">ต่ำสุด</string>
+    <string name="filter_max">สูงสุด</string>
+    <string name="filter_apply">ใช้</string>
+    <string name="filter_clear">ล้างตัวกรอง</string>
+    <string name="filter_category_all">ทั้งหมด</string>
+    <string name="filter_active_hint">ตัวกรองทำงานอยู่ — ธาตุที่จางลงไม่ตรงเงื่อนไข</string>
     <string name="favorite_bar">แถบรายการโปรด</string>
     <string name="personalise_the_favorite_bar">ปรับแต่งแถบรายการโปรด</string>
     <string name="detail_card_order">ลำดับการ์ดรายละเอียด</string>

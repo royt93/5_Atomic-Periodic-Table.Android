@@ -36,6 +36,8 @@ import com.mckimquyen.atomicPeriodicTable.act.table.DictionaryAct
 import com.mckimquyen.atomicPeriodicTable.adt.ElementAdt
 import com.mckimquyen.atomicPeriodicTable.anim.Anim
 import com.mckimquyen.atomicPeriodicTable.ext.TableExt
+import com.mckimquyen.atomicPeriodicTable.feature.filter.ElementFilter
+import com.mckimquyen.atomicPeriodicTable.feature.filter.FilterCriteria
 import com.mckimquyen.atomicPeriodicTable.feature.history.RecentlyViewedPref
 import com.mckimquyen.atomicPeriodicTable.feature.quiz.CategoryFilter
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
@@ -54,7 +56,10 @@ import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.databinding.AMainBinding
 import com.roy.sdkadbmob.AdManager
 import com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator
+import com.mckimquyen.atomicPeriodicTable.util.ElementWeightCache
 import com.mckimquyen.atomicPeriodicTable.util.Utils
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState
@@ -88,6 +93,10 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
     private var lastTopInset = 0
     private var recentlyViewedExtraHeightPx = 0
 
+    // Advanced Element Filter (vòng 5 mục 19) — not persisted across MainAct launches (decision:
+    // simpler, avoids a stale filter silently hiding elements after the user forgot it was on).
+    private var activeElementFilter = FilterCriteria()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
@@ -119,6 +128,7 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         binding.searchMenuInclude.editElement.addTextChangedListener(textWatcher)
 
         setOnCLickListenerSetups(elements)
+        binding.filterElementsBtn.setOnClickListener { showElementFilterDialog(elements) }
         scrollAdapter()
         setupNavListeners()
         onClickNav()
@@ -518,6 +528,75 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 startActivity(intent)
             }
             .show()
+    }
+
+    // Advanced Element Filter (vòng 5 mục 19): dims (alpha 0.25f) grid cells that don't match —
+    // never GONE, so the periodic table's layout/positions never shift while a filter is active.
+    private fun showElementFilterDialog(elements: ArrayList<Element>) {
+        val dialogView = layoutInflater.inflate(R.layout.view_filter_dialog, null)
+        val minMassInput = dialogView.findViewById<android.widget.EditText>(R.id.filterMinMass)
+        val maxMassInput = dialogView.findViewById<android.widget.EditText>(R.id.filterMaxMass)
+        val minElectroInput = dialogView.findViewById<android.widget.EditText>(R.id.filterMinElectro)
+        val maxElectroInput = dialogView.findViewById<android.widget.EditText>(R.id.filterMaxElectro)
+        val chipGroup = dialogView.findViewById<ChipGroup>(R.id.filterCategoryChips)
+
+        val current = activeElementFilter
+        minMassInput.setText(current.minMass?.toString() ?: "")
+        maxMassInput.setText(current.maxMass?.toString() ?: "")
+        minElectroInput.setText(current.minElectronegativity?.toString() ?: "")
+        maxElectroInput.setText(current.maxElectronegativity?.toString() ?: "")
+
+        val rawCategories = CategoryFilter.ALL_CATEGORIES
+        val allChip = Chip(this).apply {
+            text = getString(R.string.filter_category_all)
+            isCheckable = true
+            isChecked = current.category == null
+        }
+        chipGroup.addView(allChip)
+        rawCategories.forEach { rawCategory ->
+            chipGroup.addView(Chip(this).apply {
+                text = CategoryTranslator.translate(this@MainAct, rawCategory)
+                isCheckable = true
+                isChecked = current.category == rawCategory
+                tag = rawCategory
+            })
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.filter_elements_title)
+            .setView(dialogView)
+            .setNegativeButton(R.string.filter_clear) { _, _ ->
+                applyElementFilter(elements, FilterCriteria())
+            }
+            .setPositiveButton(R.string.filter_apply) { _, _ ->
+                val checkedChip = chipGroup.checkedChipId.let { chipGroup.findViewById<Chip>(it) }
+                val criteria = FilterCriteria(
+                    minMass = minMassInput.text.toString().toDoubleOrNull(),
+                    maxMass = maxMassInput.text.toString().toDoubleOrNull(),
+                    minElectronegativity = minElectroInput.text.toString().toDoubleOrNull(),
+                    maxElectronegativity = maxElectroInput.text.toString().toDoubleOrNull(),
+                    category = checkedChip?.tag as? String,
+                )
+                applyElementFilter(elements, criteria)
+            }
+            .setNeutralButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun applyElementFilter(elements: ArrayList<Element>, criteria: FilterCriteria) {
+        activeElementFilter = criteria
+        elements.forEach { element ->
+            val matches = criteria.isEmpty || ElementFilter.matches(
+                element = element,
+                criteria = criteria,
+                massLookup = { symbol -> ElementWeightCache.getMass(symbol) },
+                categoryLookup = { symbol -> ElementWeightCache.getCategory(symbol) },
+            )
+            val resId = resources.getIdentifier("${element.element}_btn", "id", packageName)
+            if (resId != 0) {
+                findViewById<View>(resId)?.alpha = if (matches) 1.0f else 0.25f
+            }
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

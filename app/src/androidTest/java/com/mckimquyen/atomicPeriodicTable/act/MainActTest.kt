@@ -8,8 +8,10 @@ import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -209,6 +211,96 @@ class MainActTest {
             try {
                 pressBackUnconditionally()
             } catch (_: Exception) {
+            }
+        }
+    }
+
+    // Advanced Element Filter (vòng 5 mục 19): dims (alpha 0.25f) grid cells that don't match a
+    // mass/electronegativity/category filter, without ever hiding them (GONE) — layout positions
+    // must never shift while a filter is active.
+    private fun alphaOf(activity: android.app.Activity, elementName: String): Float {
+        val resId = activity.resources.getIdentifier("${elementName}_btn", "id", activity.packageName)
+        return activity.findViewById<android.view.View>(resId).alpha
+    }
+
+    @Test
+    fun applyingMassFilter_dimsNonMatchingElements_keepsMatchingAtFullAlpha() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.filterElementsBtn).performClick()
+            }
+            Thread.sleep(300)
+
+            onView(withId(R.id.filterMinMass)).inRoot(isDialog()).perform(replaceText("3"))
+            onView(withId(R.id.filterMaxMass)).inRoot(isDialog()).perform(replaceText("5"))
+            onView(withText(R.string.filter_apply)).inRoot(isDialog()).perform(click())
+            Thread.sleep(300)
+
+            scenario.onActivity { activity ->
+                assertEquals(0.25f, alphaOf(activity, "hydrogen"), 0.001f)
+                assertEquals(1.0f, alphaOf(activity, "helium"), 0.001f)
+                assertEquals(0.25f, alphaOf(activity, "lithium"), 0.001f)
+            }
+        }
+    }
+
+    @Test
+    fun clearingFilter_resetsAllElementsToFullAlpha() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.filterElementsBtn).performClick()
+            }
+            Thread.sleep(300)
+            onView(withId(R.id.filterMinMass)).inRoot(isDialog()).perform(replaceText("3"))
+            onView(withId(R.id.filterMaxMass)).inRoot(isDialog()).perform(replaceText("5"))
+            onView(withText(R.string.filter_apply)).inRoot(isDialog()).perform(click())
+            Thread.sleep(300)
+            scenario.onActivity { activity ->
+                assertEquals(0.25f, alphaOf(activity, "hydrogen"), 0.001f) // sanity: filter is active
+            }
+
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.filterElementsBtn).performClick()
+            }
+            Thread.sleep(300)
+            onView(withText(R.string.filter_clear)).inRoot(isDialog()).perform(click())
+            Thread.sleep(300)
+
+            scenario.onActivity { activity ->
+                assertEquals(1.0f, alphaOf(activity, "hydrogen"), 0.001f)
+                assertEquals(1.0f, alphaOf(activity, "helium"), 0.001f)
+                assertEquals(1.0f, alphaOf(activity, "lithium"), 0.001f)
+            }
+        }
+    }
+
+    @Test
+    fun applyingCategoryFilter_matchesOnlyThatCategory() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            var nobleGasesLabel = ""
+            scenario.onActivity { activity ->
+                // Computed from the Activity's own (LocaleHelper-wrapped) context — see mục 15's
+                // launchingWithCategoryFilter test for why ApplicationProvider's raw context
+                // isn't equivalent (app language default vs. device system locale).
+                nobleGasesLabel = com.mckimquyen.atomicPeriodicTable.util.CategoryTranslator.translate(activity, "Noble Gases")
+                activity.findViewById<android.view.View>(R.id.filterElementsBtn).performClick()
+            }
+            Thread.sleep(300)
+
+            // Material Chip's built-in state/ripple animator never reports "idle" to Espresso's
+            // GeneralClickAction (it waits for animations to settle after injecting the tap),
+            // which surfaces as a PerformException ("Animations or transitions are enabled") on
+            // real devices with animator scales on — this is unrelated to app/test correctness.
+            // performClick() inside a ViewAssertion callback (guaranteed to run on the UI thread)
+            // clicks the Chip directly, bypassing that wait entirely.
+            onView(withText(nobleGasesLabel)).inRoot(isDialog()).check { view, _ -> view.performClick() }
+            onView(withText(R.string.filter_apply)).inRoot(isDialog()).perform(click())
+            Thread.sleep(300)
+
+            scenario.onActivity { activity ->
+                assertEquals(0.25f, alphaOf(activity, "hydrogen"), 0.001f)
+                assertEquals(1.0f, alphaOf(activity, "helium"), 0.001f) // Noble Gases
+                assertEquals(0.25f, alphaOf(activity, "lithium"), 0.001f)
             }
         }
     }

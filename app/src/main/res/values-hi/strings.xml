@@ -168,6 +168,16 @@
     <string name="font_size_small">छोटा</string>
     <string name="font_size_default">डिफ़ॉल्ट</string>
     <string name="font_size_large">बड़ा</string>
+    <string name="filter_elements_title">तत्व फ़िल्टर करें</string>
+    <string name="filter_atomic_mass">परमाणु द्रव्यमान</string>
+    <string name="filter_electronegativity">विद्युत ऋणात्मकता</string>
+    <string name="filter_category">श्रेणी</string>
+    <string name="filter_min">न्यूनतम</string>
+    <string name="filter_max">अधिकतम</string>
+    <string name="filter_apply">लागू करें</string>
+    <string name="filter_clear">फ़िल्टर साफ़ करें</string>
+    <string name="filter_category_all">सभी</string>
+    <string name="filter_active_hint">फ़िल्टर सक्रिय है — धुंधले तत्व मेल नहीं खाते</string>
     <string name="favorite_bar">पसंदीदा बार</string>
     <string name="personalise_the_favorite_bar">बार को अनुकूलित करें</string>
     <string name="detail_card_order">कार्ड का क्रम</string>

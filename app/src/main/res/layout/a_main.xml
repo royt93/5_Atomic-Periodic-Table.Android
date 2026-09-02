@@ -70,6 +70,17 @@
                         app:drawableStartCompat="@drawable/ic_search" />
                 </FrameLayout>
 
+                <ImageButton
+                    android:id="@+id/filterElementsBtn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/filter_elements_title"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_filter"
+                    app:tint="?attr/colorOnSecondaryContainer" />
+
                 <LinearLayout
                     android:id="@+id/btnVipMenu"
                     android:layout_width="wrap_content"
