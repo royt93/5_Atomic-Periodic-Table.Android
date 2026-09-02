@@ -12,6 +12,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Chia sẻ thẻ nguyên tố dưới dạng ảnh — `feature/share/ElementCardRenderer.kt`, `ext/Activity.shareImage()`, FileProvider (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 6).
 - ✅ Implemented: Study Streak cho Flashcard + Quiz — `feature/streak/StreakCalculator.kt`, `feature/streak/StudyStreakPref.kt`, hiển thị ở nav menu (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 7).
 - ✅ Implemented: Practice Exam Mode — tham số hoá `act/QuizAct.kt` (không tạo Activity riêng, quyết định đổi so với breakdown gốc), `feature/exam/MolarMassQuestionGenerator.kt`, `feature/exam/ExamHistoryPref.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 8). Cả 4 feature vòng 2 (2026-09-02) đã hoàn tất.
+- 📋 Picked (vòng 3, breakdown chi tiết ở `doc/task/feat_new.md` mục 9-12, chọn qua AskUserQuestion 2026-09-02, **chỉ rã task, chưa code**): Achievements/Badges, Daily Trivia Notification, Backup & Restore tiến độ, Compound/Molecule Builder.
 
 ---
 
