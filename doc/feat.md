@@ -16,6 +16,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Daily Trivia Notification — `feature/trivia/DailyTriviaScheduler.kt`, `DailyTriviaReceiver.kt`, `DailyTriviaPref.kt`, switch mới trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 10).
 - ✅ Implemented: Backup & Restore tiến độ — `feature/backup/BackupData.kt`, `BackupManager.kt`, 2 row Export/Import trong `SettingsAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 11).
 - ✅ Implemented: Compound/Molecule Builder — `feature/compound/CompoundMatcher.kt`, `CompoundNames.kt`, `act/CompoundBuilderAct.kt` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 12). Cả 4 feature vòng 3 (2026-09-02) đã hoàn tất.
+- 📋 Picked (vòng 4, breakdown chi tiết ở `doc/task/feat_new.md` mục 13-16, chọn qua AskUserQuestion 2026-09-02, **chỉ rã task, chưa code**): Phát âm nguyên tố (TTS), Nguyên tố xem gần đây, Category/Group Practice Mode, So sánh 3+ nguyên tố.
 
 ---
 
