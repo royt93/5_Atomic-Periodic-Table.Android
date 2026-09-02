@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">การนำเข้าจะแทนที่ความคืบหน้าแฟลชการ์ด ความต่อเนื่อง ประวัติการสอบ และบันทึกปัจจุบันของคุณ ไม่สามารถยกเลิกการดำเนินการนี้ได้</string>
     <string name="import_progress_success">นำเข้าความคืบหน้าสำเร็จ</string>
     <string name="import_progress_failure">นำเข้าความคืบหน้าล้มเหลว — ไฟล์อาจเสียหายหรือมาจากแอปเวอร์ชันใหม่กว่า</string>
+    <string name="compound_builder_title">เครื่องมือสร้างสารประกอบ</string>
+    <string name="compound_builder_empty_selection">แตะธาตุด้านล่างเพื่อสร้างสารประกอบ</string>
+    <string name="compound_builder_clear">ล้าง</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">ยังไม่มีในฐานข้อมูลสารประกอบ</string>
+    <string name="compound_name_h2o">น้ำ</string>
+    <string name="compound_name_co2">คาร์บอนไดออกไซด์</string>
+    <string name="compound_name_nacl">เกลือแกง</string>
+    <string name="compound_name_ch4">มีเทน</string>
+    <string name="compound_name_nh3">แอมโมเนีย</string>
+    <string name="compound_name_o2">แก๊สออกซิเจน</string>
+    <string name="compound_name_h2so4">กรดซัลฟิวริก</string>
+    <string name="compound_name_hcl">กรดไฮโดรคลอริก</string>
+    <string name="compound_name_caco3">แคลเซียมคาร์บอเนต</string>
+    <string name="compound_name_c6h12o6">กลูโคส</string>
+    <string name="compound_name_naoh">โซเดียมไฮดรอกไซด์</string>
+    <string name="compound_name_kmno4">โพแทสเซียมเปอร์แมงกาเนต</string>
+    <string name="compound_name_fe2o3">เหล็ก(III) ออกไซด์</string>
+    <string name="compound_name_agno3">ซิลเวอร์ไนเตรต</string>
+    <string name="compound_name_al2o3">อะลูมิเนียมออกไซด์</string>
 </resources>

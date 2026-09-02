@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">L\'importation remplacera votre progression actuelle des fiches, série, historique des examens et notes. Cette action est irréversible.</string>
     <string name="import_progress_success">Progression importée avec succès</string>
     <string name="import_progress_failure">Échec de l\'importation de la progression — le fichier est peut-être corrompu ou provient d\'une version plus récente de l\'application</string>
+    <string name="compound_builder_title">Créateur de Composés</string>
+    <string name="compound_builder_empty_selection">Appuyez sur les éléments ci-dessous pour former un composé</string>
+    <string name="compound_builder_clear">Effacer</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Pas encore dans la base de données des composés</string>
+    <string name="compound_name_h2o">Eau</string>
+    <string name="compound_name_co2">Dioxyde de Carbone</string>
+    <string name="compound_name_nacl">Sel de Table</string>
+    <string name="compound_name_ch4">Méthane</string>
+    <string name="compound_name_nh3">Ammoniac</string>
+    <string name="compound_name_o2">Gaz Oxygène</string>
+    <string name="compound_name_h2so4">Acide Sulfurique</string>
+    <string name="compound_name_hcl">Acide Chlorhydrique</string>
+    <string name="compound_name_caco3">Carbonate de Calcium</string>
+    <string name="compound_name_c6h12o6">Glucose</string>
+    <string name="compound_name_naoh">Hydroxyde de Sodium</string>
+    <string name="compound_name_kmno4">Permanganate de Potassium</string>
+    <string name="compound_name_fe2o3">Oxyde de Fer(III)</string>
+    <string name="compound_name_agno3">Nitrate d\'Argent</string>
+    <string name="compound_name_al2o3">Oxyde d\'Aluminium</string>
 </resources>

@@ -485,6 +485,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
         binding.navMenuInclude.menuBadgesBtn.setOnClickListener {
             startActivity(Intent(this, BadgeAct::class.java))
         }
+        binding.navMenuInclude.menuCompoundBuilderBtn.setOnClickListener {
+            startActivity(Intent(this, CompoundBuilderAct::class.java))
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

@@ -628,5 +628,25 @@
     <string name="import_progress_confirm_message">导入将替换您当前的抽认卡进度、连续记录、考试历史和笔记。此操作无法撤消。</string>
     <string name="import_progress_success">进度导入成功</string>
     <string name="import_progress_failure">导入进度失败 — 文件可能已损坏或来自较新版本的应用</string>
+    <string name="compound_builder_title">化合物构建器</string>
+    <string name="compound_builder_empty_selection">点击下方元素来构建化合物</string>
+    <string name="compound_builder_clear">清除</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">尚未收录在化合物数据库中</string>
+    <string name="compound_name_h2o">水</string>
+    <string name="compound_name_co2">二氧化碳</string>
+    <string name="compound_name_nacl">食盐</string>
+    <string name="compound_name_ch4">甲烷</string>
+    <string name="compound_name_nh3">氨</string>
+    <string name="compound_name_o2">氧气</string>
+    <string name="compound_name_h2so4">硫酸</string>
+    <string name="compound_name_hcl">盐酸</string>
+    <string name="compound_name_caco3">碳酸钙</string>
+    <string name="compound_name_c6h12o6">葡萄糖</string>
+    <string name="compound_name_naoh">氢氧化钠</string>
+    <string name="compound_name_kmno4">高锰酸钾</string>
+    <string name="compound_name_fe2o3">氧化铁(III)</string>
+    <string name="compound_name_agno3">硝酸银</string>
+    <string name="compound_name_al2o3">氧化铝</string>
 </resources>
 

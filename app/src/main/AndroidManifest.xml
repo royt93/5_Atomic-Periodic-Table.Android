@@ -158,6 +158,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
+        <!-- Compound/Molecule Builder Activity -->
+        <activity
+            android:name=".act.CompoundBuilderAct"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:parentActivityName=".act.MainAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".feature.vip.VipManagementAct"
             android:configChanges="orientation|screenSize"

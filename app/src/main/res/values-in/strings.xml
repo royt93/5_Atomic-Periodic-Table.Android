@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">Mengimpor akan mengganti progres kartu flash, rentetan, riwayat ujian, dan catatan Anda saat ini. Ini tidak dapat dibatalkan.</string>
     <string name="import_progress_success">Progres berhasil diimpor</string>
     <string name="import_progress_failure">Gagal mengimpor progres — file mungkin rusak atau berasal dari versi aplikasi yang lebih baru</string>
+    <string name="compound_builder_title">Pembuat Senyawa</string>
+    <string name="compound_builder_empty_selection">Ketuk elemen di bawah untuk membuat senyawa</string>
+    <string name="compound_builder_clear">Hapus</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Belum ada dalam database senyawa</string>
+    <string name="compound_name_h2o">Air</string>
+    <string name="compound_name_co2">Karbon Dioksida</string>
+    <string name="compound_name_nacl">Garam Dapur</string>
+    <string name="compound_name_ch4">Metana</string>
+    <string name="compound_name_nh3">Amonia</string>
+    <string name="compound_name_o2">Gas Oksigen</string>
+    <string name="compound_name_h2so4">Asam Sulfat</string>
+    <string name="compound_name_hcl">Asam Klorida</string>
+    <string name="compound_name_caco3">Kalsium Karbonat</string>
+    <string name="compound_name_c6h12o6">Glukosa</string>
+    <string name="compound_name_naoh">Natrium Hidroksida</string>
+    <string name="compound_name_kmno4">Kalium Permanganat</string>
+    <string name="compound_name_fe2o3">Besi(III) Oksida</string>
+    <string name="compound_name_agno3">Perak Nitrat</string>
+    <string name="compound_name_al2o3">Aluminium Oksida</string>
 </resources>

@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">Der Import ersetzt deinen aktuellen Karteikarten-Fortschritt, deine Serie, deinen Prüfungsverlauf und deine Notizen. Dies kann nicht rückgängig gemacht werden.</string>
     <string name="import_progress_success">Fortschritt erfolgreich importiert</string>
     <string name="import_progress_failure">Import des Fortschritts fehlgeschlagen — die Datei ist möglicherweise beschädigt oder stammt aus einer neueren App-Version</string>
+    <string name="compound_builder_title">Verbindungs-Baukasten</string>
+    <string name="compound_builder_empty_selection">Tippe unten auf Elemente, um eine Verbindung zu bilden</string>
+    <string name="compound_builder_clear">Löschen</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Noch nicht in der Verbindungsdatenbank</string>
+    <string name="compound_name_h2o">Wasser</string>
+    <string name="compound_name_co2">Kohlendioxid</string>
+    <string name="compound_name_nacl">Kochsalz</string>
+    <string name="compound_name_ch4">Methan</string>
+    <string name="compound_name_nh3">Ammoniak</string>
+    <string name="compound_name_o2">Sauerstoffgas</string>
+    <string name="compound_name_h2so4">Schwefelsäure</string>
+    <string name="compound_name_hcl">Salzsäure</string>
+    <string name="compound_name_caco3">Calciumcarbonat</string>
+    <string name="compound_name_c6h12o6">Glukose</string>
+    <string name="compound_name_naoh">Natriumhydroxid</string>
+    <string name="compound_name_kmno4">Kaliumpermanganat</string>
+    <string name="compound_name_fe2o3">Eisen(III)-oxid</string>
+    <string name="compound_name_agno3">Silbernitrat</string>
+    <string name="compound_name_al2o3">Aluminiumoxid</string>
 </resources>

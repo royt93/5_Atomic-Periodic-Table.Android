@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">匯入將取代您目前的單字卡進度、連續記錄、考試歷史和筆記。此操作無法復原。</string>
     <string name="import_progress_success">進度匯入成功</string>
     <string name="import_progress_failure">匯入進度失敗 — 檔案可能已損壞或來自較新版本的應用程式</string>
+    <string name="compound_builder_title">化合物建構器</string>
+    <string name="compound_builder_empty_selection">點擊下方元素來建構化合物</string>
+    <string name="compound_builder_clear">清除</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">尚未收錄在化合物資料庫中</string>
+    <string name="compound_name_h2o">水</string>
+    <string name="compound_name_co2">二氧化碳</string>
+    <string name="compound_name_nacl">食鹽</string>
+    <string name="compound_name_ch4">甲烷</string>
+    <string name="compound_name_nh3">氨</string>
+    <string name="compound_name_o2">氧氣</string>
+    <string name="compound_name_h2so4">硫酸</string>
+    <string name="compound_name_hcl">鹽酸</string>
+    <string name="compound_name_caco3">碳酸鈣</string>
+    <string name="compound_name_c6h12o6">葡萄糖</string>
+    <string name="compound_name_naoh">氫氧化鈉</string>
+    <string name="compound_name_kmno4">過錳酸鉀</string>
+    <string name="compound_name_fe2o3">氧化鐵(III)</string>
+    <string name="compound_name_agno3">硝酸銀</string>
+    <string name="compound_name_al2o3">氧化鋁</string>
 </resources>

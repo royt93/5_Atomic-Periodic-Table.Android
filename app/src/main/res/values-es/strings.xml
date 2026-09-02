@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">Importar reemplazará tu progreso actual de tarjetas, racha, historial de exámenes y notas. Esto no se puede deshacer.</string>
     <string name="import_progress_success">Progreso importado correctamente</string>
     <string name="import_progress_failure">Error al importar el progreso — el archivo puede estar dañado o ser de una versión más reciente de la app</string>
+    <string name="compound_builder_title">Constructor de Compuestos</string>
+    <string name="compound_builder_empty_selection">Toca los elementos de abajo para formar un compuesto</string>
+    <string name="compound_builder_clear">Borrar</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Aún no está en la base de datos de compuestos</string>
+    <string name="compound_name_h2o">Agua</string>
+    <string name="compound_name_co2">Dióxido de Carbono</string>
+    <string name="compound_name_nacl">Sal de Mesa</string>
+    <string name="compound_name_ch4">Metano</string>
+    <string name="compound_name_nh3">Amoníaco</string>
+    <string name="compound_name_o2">Gas Oxígeno</string>
+    <string name="compound_name_h2so4">Ácido Sulfúrico</string>
+    <string name="compound_name_hcl">Ácido Clorhídrico</string>
+    <string name="compound_name_caco3">Carbonato de Calcio</string>
+    <string name="compound_name_c6h12o6">Glucosa</string>
+    <string name="compound_name_naoh">Hidróxido de Sodio</string>
+    <string name="compound_name_kmno4">Permanganato de Potasio</string>
+    <string name="compound_name_fe2o3">Óxido de Hierro(III)</string>
+    <string name="compound_name_agno3">Nitrato de Plata</string>
+    <string name="compound_name_al2o3">Óxido de Aluminio</string>
 </resources>

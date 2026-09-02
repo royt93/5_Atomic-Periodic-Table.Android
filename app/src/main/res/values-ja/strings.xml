@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">インポートすると、現在のフラッシュカードの進捗、連続記録、試験履歴、メモが置き換えられます。この操作は元に戻せません。</string>
     <string name="import_progress_success">進捗のインポートに成功しました</string>
     <string name="import_progress_failure">進捗のインポートに失敗しました — ファイルが破損しているか、新しいバージョンのアプリのものである可能性があります</string>
+    <string name="compound_builder_title">化合物ビルダー</string>
+    <string name="compound_builder_empty_selection">下の元素をタップして化合物を作りましょう</string>
+    <string name="compound_builder_clear">クリア</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">まだ化合物データベースにありません</string>
+    <string name="compound_name_h2o">水</string>
+    <string name="compound_name_co2">二酸化炭素</string>
+    <string name="compound_name_nacl">食塩</string>
+    <string name="compound_name_ch4">メタン</string>
+    <string name="compound_name_nh3">アンモニア</string>
+    <string name="compound_name_o2">酸素ガス</string>
+    <string name="compound_name_h2so4">硫酸</string>
+    <string name="compound_name_hcl">塩酸</string>
+    <string name="compound_name_caco3">炭酸カルシウム</string>
+    <string name="compound_name_c6h12o6">グルコース</string>
+    <string name="compound_name_naoh">水酸化ナトリウム</string>
+    <string name="compound_name_kmno4">過マンガン酸カリウム</string>
+    <string name="compound_name_fe2o3">酸化鉄(III)</string>
+    <string name="compound_name_agno3">硝酸銀</string>
+    <string name="compound_name_al2o3">酸化アルミニウム</string>
 </resources>

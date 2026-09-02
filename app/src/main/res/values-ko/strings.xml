@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">가져오기를 하면 현재 플래시카드 진행 상황, 연속 기록, 시험 기록 및 메모가 교체됩니다. 이 작업은 되돌릴 수 없습니다.</string>
     <string name="import_progress_success">진행 상황을 성공적으로 가져왔습니다</string>
     <string name="import_progress_failure">진행 상황 가져오기에 실패했습니다 — 파일이 손상되었거나 더 새로운 앱 버전의 파일일 수 있습니다</string>
+    <string name="compound_builder_title">화합물 빌더</string>
+    <string name="compound_builder_empty_selection">아래 원소를 탭하여 화합물을 만드세요</string>
+    <string name="compound_builder_clear">지우기</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">아직 화합물 데이터베이스에 없습니다</string>
+    <string name="compound_name_h2o">물</string>
+    <string name="compound_name_co2">이산화탄소</string>
+    <string name="compound_name_nacl">식탁염</string>
+    <string name="compound_name_ch4">메탄</string>
+    <string name="compound_name_nh3">암모니아</string>
+    <string name="compound_name_o2">산소 기체</string>
+    <string name="compound_name_h2so4">황산</string>
+    <string name="compound_name_hcl">염산</string>
+    <string name="compound_name_caco3">탄산칼슘</string>
+    <string name="compound_name_c6h12o6">포도당</string>
+    <string name="compound_name_naoh">수산화나트륨</string>
+    <string name="compound_name_kmno4">과망가니즈산칼륨</string>
+    <string name="compound_name_fe2o3">산화철(III)</string>
+    <string name="compound_name_agno3">질산은</string>
+    <string name="compound_name_al2o3">산화알루미늄</string>
 </resources>

@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">आयात करने से आपकी वर्तमान फ्लैशकार्ड प्रगति, श्रृंखला, परीक्षा इतिहास और नोट्स बदल जाएंगे। इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="import_progress_success">प्रगति सफलतापूर्वक आयात की गई</string>
     <string name="import_progress_failure">प्रगति आयात करने में विफल — फ़ाइल दूषित हो सकती है या ऐप के नए संस्करण से हो सकती है</string>
+    <string name="compound_builder_title">यौगिक निर्माता</string>
+    <string name="compound_builder_empty_selection">यौगिक बनाने के लिए नीचे दिए गए तत्वों को टैप करें</string>
+    <string name="compound_builder_clear">साफ़ करें</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">अभी तक यौगिक डेटाबेस में नहीं है</string>
+    <string name="compound_name_h2o">पानी</string>
+    <string name="compound_name_co2">कार्बन डाइऑक्साइड</string>
+    <string name="compound_name_nacl">टेबल नमक</string>
+    <string name="compound_name_ch4">मीथेन</string>
+    <string name="compound_name_nh3">अमोनिया</string>
+    <string name="compound_name_o2">ऑक्सीजन गैस</string>
+    <string name="compound_name_h2so4">सल्फ्यूरिक एसिड</string>
+    <string name="compound_name_hcl">हाइड्रोक्लोरिक एसिड</string>
+    <string name="compound_name_caco3">कैल्शियम कार्बोनेट</string>
+    <string name="compound_name_c6h12o6">ग्लूकोज</string>
+    <string name="compound_name_naoh">सोडियम हाइड्रॉक्साइड</string>
+    <string name="compound_name_kmno4">पोटेशियम परमैंगनेट</string>
+    <string name="compound_name_fe2o3">आयरन(III) ऑक्साइड</string>
+    <string name="compound_name_agno3">सिल्वर नाइट्रेट</string>
+    <string name="compound_name_al2o3">एल्युमिनियम ऑक्साइड</string>
 </resources>

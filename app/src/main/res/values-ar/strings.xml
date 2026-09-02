@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">سيؤدي الاستيراد إلى استبدال تقدم البطاقات التعليمية والسلسلة وسجل الاختبارات والملاحظات الحالية. لا يمكن التراجع عن هذا.</string>
     <string name="import_progress_success">تم استيراد التقدم بنجاح</string>
     <string name="import_progress_failure">فشل استيراد التقدم — قد يكون الملف تالفًا أو من إصدار أحدث من التطبيق</string>
+    <string name="compound_builder_title">منشئ المركبات</string>
+    <string name="compound_builder_empty_selection">اضغط على العناصر أدناه لبناء مركب</string>
+    <string name="compound_builder_clear">مسح</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f غ/مول</string>
+    <string name="compound_builder_not_found">غير موجود في قاعدة بيانات المركبات بعد</string>
+    <string name="compound_name_h2o">ماء</string>
+    <string name="compound_name_co2">ثاني أكسيد الكربون</string>
+    <string name="compound_name_nacl">ملح الطعام</string>
+    <string name="compound_name_ch4">ميثان</string>
+    <string name="compound_name_nh3">أمونيا</string>
+    <string name="compound_name_o2">غاز الأكسجين</string>
+    <string name="compound_name_h2so4">حمض الكبريتيك</string>
+    <string name="compound_name_hcl">حمض الهيدروكلوريك</string>
+    <string name="compound_name_caco3">كربونات الكالسيوم</string>
+    <string name="compound_name_c6h12o6">جلوكوز</string>
+    <string name="compound_name_naoh">هيدروكسيد الصوديوم</string>
+    <string name="compound_name_kmno4">برمنجنات البوتاسيوم</string>
+    <string name="compound_name_fe2o3">أكسيد الحديد الثلاثي</string>
+    <string name="compound_name_agno3">نترات الفضة</string>
+    <string name="compound_name_al2o3">أكسيد الألومنيوم</string>
 </resources>

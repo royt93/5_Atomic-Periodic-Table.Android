@@ -637,4 +637,24 @@
     <string name="import_progress_confirm_message">Nhập sẽ thay thế tiến độ thẻ ghi nhớ, chuỗi ngày học, lịch sử thi và ghi chú hiện tại của bạn. Không thể hoàn tác thao tác này.</string>
     <string name="import_progress_success">Nhập tiến độ thành công</string>
     <string name="import_progress_failure">Nhập tiến độ thất bại — file có thể bị hỏng hoặc từ phiên bản app mới hơn</string>
+    <string name="compound_builder_title">Ghép hợp chất</string>
+    <string name="compound_builder_empty_selection">Chạm vào nguyên tố bên dưới để tạo hợp chất</string>
+    <string name="compound_builder_clear">Xoá</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Chưa có trong cơ sở dữ liệu hợp chất</string>
+    <string name="compound_name_h2o">Nước</string>
+    <string name="compound_name_co2">Khí Carbonic</string>
+    <string name="compound_name_nacl">Muối Ăn</string>
+    <string name="compound_name_ch4">Metan</string>
+    <string name="compound_name_nh3">Amoniac</string>
+    <string name="compound_name_o2">Khí Oxy</string>
+    <string name="compound_name_h2so4">Axit Sulfuric</string>
+    <string name="compound_name_hcl">Axit Clohydric</string>
+    <string name="compound_name_caco3">Canxi Carbonat</string>
+    <string name="compound_name_c6h12o6">Glucose</string>
+    <string name="compound_name_naoh">Natri Hydroxit</string>
+    <string name="compound_name_kmno4">Kali Pemanganat</string>
+    <string name="compound_name_fe2o3">Sắt(III) Oxit</string>
+    <string name="compound_name_agno3">Bạc Nitrat</string>
+    <string name="compound_name_al2o3">Nhôm Oxit</string>
 </resources>

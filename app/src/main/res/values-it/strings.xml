@@ -610,4 +610,24 @@
     <string name="import_progress_confirm_message">L\'importazione sostituirà i tuoi progressi attuali delle flashcard, serie, cronologia esami e note. Questa azione non può essere annullata.</string>
     <string name="import_progress_success">Progressi importati con successo</string>
     <string name="import_progress_failure">Impossibile importare i progressi — il file potrebbe essere danneggiato o provenire da una versione più recente dell\'app</string>
+    <string name="compound_builder_title">Costruttore di Composti</string>
+    <string name="compound_builder_empty_selection">Tocca gli elementi qui sotto per creare un composto</string>
+    <string name="compound_builder_clear">Cancella</string>
+    <string name="compound_builder_found_format">✓ %1$s (%2$s) — %3$.2f g/mol</string>
+    <string name="compound_builder_not_found">Non ancora nel database dei composti</string>
+    <string name="compound_name_h2o">Acqua</string>
+    <string name="compound_name_co2">Anidride Carbonica</string>
+    <string name="compound_name_nacl">Sale da Cucina</string>
+    <string name="compound_name_ch4">Metano</string>
+    <string name="compound_name_nh3">Ammoniaca</string>
+    <string name="compound_name_o2">Gas Ossigeno</string>
+    <string name="compound_name_h2so4">Acido Solforico</string>
+    <string name="compound_name_hcl">Acido Cloridrico</string>
+    <string name="compound_name_caco3">Carbonato di Calcio</string>
+    <string name="compound_name_c6h12o6">Glucosio</string>
+    <string name="compound_name_naoh">Idrossido di Sodio</string>
+    <string name="compound_name_kmno4">Permanganato di Potassio</string>
+    <string name="compound_name_fe2o3">Ossido di Ferro(III)</string>
+    <string name="compound_name_agno3">Nitrato d\'Argento</string>
+    <string name="compound_name_al2o3">Ossido di Alluminio</string>
 </resources>
