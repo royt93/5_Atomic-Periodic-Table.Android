@@ -219,7 +219,7 @@ User chọn cả 4 idea được đề xuất (Category/Group Practice Mode — 
 
 User chọn cả 4 idea được đề xuất (Lọc nguyên tố nâng cao — recommended, Cỡ chữ/Accessibility, Reset tiến trình học tập, Widget câu hỏi nhanh). Yêu cầu rõ: **chỉ rã task vào file này, chưa code**. Thứ tự dưới đây xếp theo effort tăng dần dựa trên khảo sát thực tế code (không phải ước lượng ban đầu ở bước AskUserQuestion — thứ tự đã điều chỉnh sau khi đọc code thật, xem mục 19 để biết lý do "lọc nâng cao" bị đẩy lên effort cao hơn dự kiến ban đầu).
 
-## 17. Reset tiến trình học tập — 📋 Picked
+## 17. Reset tiến trình học tập — ✅ Đã fix (2026-09-02)
 
 - Khảo sát: 4 nguồn dữ liệu "tiến trình" cần xoá, **không nguồn nào có sẵn method clear/reset**:
   - `feature/streak/StudyStreakPref.kt` (file `Study_Streak_Preference`, keys `current_streak`/`last_study_epoch_day`) — có `restore(streak, epochDay)` nhưng đó là hàm GHI giá trị (dùng cho Backup/Restore), không phải reset; dùng lại `restore(0, 0)` hoặc thêm `clear()`.
@@ -233,8 +233,14 @@ User chọn cả 4 idea được đề xuất (Lọc nguyên tố nâng cao — 
   1. `feature/history/RecentlyViewedPref.kt` có tính là "tiến trình" cần xoá không? Nghiêng về KHÔNG (nó gần với `pref/SearchPref.kt` — tiện ích tìm kiếm/xem gần đây, không phải thành tích học tập) — nhưng cần chốt rõ, có thể hỏi AskUserQuestion nếu không tự tin.
   2. Thêm `clear()` riêng lẻ vào từng 3 pref còn thiếu, hay viết 1 `ProgressResetManager.resetAll(context)` gom cả 4 nguồn — nghiêng về `ProgressResetManager` để tránh rải rác danh sách "cái gì tính là tiến trình" ở nhiều nơi gọi.
   3. Sau khi reset, `MainAct`/`BadgeAct` đang mở có cần refresh ngay UI (streak indicator, badge lock state) không cần thoát app, hay chấp nhận chỉ đúng sau khi mở lại màn hình (đơn giản hơn, có thể chấp nhận cho v1).
-- Test dự kiến: JVM unit test cho `ProgressResetManager`/từng `clear()` mới (trước reset có dữ liệu, sau reset về đúng giá trị mặc định, VIP không bị đụng), instrumented test luồng tap row → dialog confirm → xác nhận → streak/badge/exam history/best score đều về 0, test huỷ dialog (bấm Cancel) không xoá gì.
-- Trạng thái: 📋 Picked (chưa code)
+- **Phát hiện thêm qua đọc code khi cài đặt**: `feature/backup/BackupData.kt` (định nghĩa "progress" của mục 11, cũ hơn) chỉ gồm `flashcards`/`currentStreak`/`examHistory`/`notes` — **thiếu `QuizBestScorePref`** (thêm sau, ở mục 9 Badges) và **có thêm Notes** (không có trong danh sách reset của mục này). Quyết định: Reset Progress dùng đúng 4 nguồn `BadgeCalculator` đọc (streak/flashcard/exam/best-score) — đầy đủ hơn định nghĩa cũ của Backup, và **không đụng Notes** vì đó là nội dung tự viết của user (giống lý do loại `RecentlyViewedPref` — cả 2 đều là tiện ích/nội dung, không phải thành tích học tập). Đây là bug tiềm ẩn có sẵn trong Backup/Restore (thiếu backup Quiz Best Score) — ngoài phạm vi mục này, không sửa.
+- `feature/reset/ProgressResetManager.kt` (mới, `resetAll(context)`): gọi `StudyStreakPref.restore(0, 0)`, `FlashcardPref.clear()` (mới thêm), `ExamHistoryPref.replaceHistory(emptyList())` (đã có sẵn), `QuizBestScorePref.clear()` (mới thêm) — gom 1 chỗ duy nhất để tránh rải rác danh sách "cái gì tính là tiến trình".
+- UI: row `resetProgressSettings` trong `a_settings.xml` (đúng convention 70dp, đặt sau Import Backup), `SettingsAct.kt` với `MaterialAlertDialogBuilder` confirm dialog (tái dùng đúng string `cancel`/`confirm` đã có).
+- **Quyết định đã chốt**: KHÔNG refresh UI ngay lập tức sau reset (không gọi lại `refreshStudyStreak()`/badge lock state trên Activity khác) — chấp nhận cho v1, đúng như đề xuất "đơn giản hơn" trong khảo sát ban đầu; UI đúng khi mở lại màn hình.
+- Test: 3 instrumented `ProgressResetManagerTest` (wipe đúng 4 nguồn về mặc định, không đụng Notes/VIP, không crash khi gọi trên state đã rỗng sẵn — đã revert-test bằng cách tạm bỏ dòng gọi `FlashcardPref.clear()`, xác nhận fail đúng `expected:<0> but was:<3>` rồi khôi phục) + 2 instrumented `SettingsActTest` (Cancel không xoá gì, Confirm xoá đúng progress nhưng giữ nguyên Notes).
+- Full suite: `testDevDebugUnitTest` xanh. Instrumented: 9/9 pass trên **CPH1989 phần cứng thật** (2 lần liên tiếp, xen giữa là revert-test xác nhận bug thật bị bắt).
+- Tự chấm điểm: **9.4/10** — phát hiện đúng 1 gap tiềm ẩn trong Backup/Restore cũ (thiếu Quiz Best Score) qua việc đối chiếu 2 định nghĩa "progress" khác nhau trong codebase, chọn đúng định nghĩa đầy đủ hơn cho feature mới; revert-test xác nhận test thật sự bắt được lỗi thiếu sót (không phải test hình thức). Trừ điểm vì quyết định không refresh UI ngay là đơn giản hoá có thể gây khó chịu nhẹ cho user (thấy streak cũ vẫn hiện tới khi thoát màn hình), và chưa test trên S24U (bị session khác chiếm dụng suốt phiên).
+- Trạng thái: ✅ Đã fix (2026-09-02), đã push `origin/dev`.
 
 ## 18. Cỡ chữ / Accessibility — 📋 Picked
 

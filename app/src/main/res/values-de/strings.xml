@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">Der Import ersetzt deinen aktuellen Karteikarten-Fortschritt, deine Serie, deinen Prüfungsverlauf und deine Notizen. Dies kann nicht rückgängig gemacht werden.</string>
     <string name="import_progress_success">Fortschritt erfolgreich importiert</string>
     <string name="import_progress_failure">Import des Fortschritts fehlgeschlagen — die Datei ist möglicherweise beschädigt oder stammt aus einer neueren App-Version</string>
+    <string name="reset_progress_title">Fortschritt zurücksetzen</string>
+    <string name="reset_progress_desc">Löscht deine Serie, den Lernkarten-Zeitplan, den Prüfungsverlauf und die beste Quiz-Punktzahl</string>
+    <string name="reset_progress_confirm_title">Gesamten Lernfortschritt zurücksetzen?</string>
+    <string name="reset_progress_confirm_message">Dies löscht deine Serie, den Lernkarten-Zeitplan, den Prüfungsverlauf und die beste Quiz-Punktzahl. Notizen und VIP-Status sind nicht betroffen. Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="reset_progress_success">Lernfortschritt zurückgesetzt</string>
     <string name="compound_builder_title">Verbindungs-Baukasten</string>
     <string name="category_practice_title">Kategorieübung</string>
     <string name="category_practice_picker_title">Kategorie auswählen</string>

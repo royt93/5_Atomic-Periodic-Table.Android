@@ -20,4 +20,8 @@ class QuizBestScorePref(context: Context) {
             preference.edit { putInt("best_score", score) }
         }
     }
+
+    fun clear() {
+        preference.edit { clear() }
+    }
 }

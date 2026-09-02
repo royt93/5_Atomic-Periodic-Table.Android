@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">インポートすると、現在のフラッシュカードの進捗、連続記録、試験履歴、メモが置き換えられます。この操作は元に戻せません。</string>
     <string name="import_progress_success">進捗のインポートに成功しました</string>
     <string name="import_progress_failure">進捗のインポートに失敗しました — ファイルが破損しているか、新しいバージョンのアプリのものである可能性があります</string>
+    <string name="reset_progress_title">進捗をリセット</string>
+    <string name="reset_progress_desc">連続記録、フラッシュカードのスケジュール、試験履歴、クイズの最高スコアを消去します</string>
+    <string name="reset_progress_confirm_title">学習の進捗をすべてリセットしますか?</string>
+    <string name="reset_progress_confirm_message">これにより、連続記録、フラッシュカードのスケジュール、試験履歴、クイズの最高スコアが消去されます。メモとVIPステータスには影響しません。この操作は元に戻せません。</string>
+    <string name="reset_progress_success">学習の進捗をリセットしました</string>
     <string name="compound_builder_title">化合物ビルダー</string>
     <string name="category_practice_title">カテゴリー練習</string>
     <string name="category_practice_picker_title">カテゴリーを選択</string>

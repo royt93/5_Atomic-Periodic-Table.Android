@@ -8,13 +8,18 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import com.mckimquyen.atomicPeriodicTable.R
+import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
+import com.mckimquyen.atomicPeriodicTable.feature.quiz.QuizBestScorePref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
+import com.mckimquyen.atomicPeriodicTable.pref.NotesPref
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -144,5 +149,55 @@ class SettingsActTest {
             assertEquals(20003L, StudyStreakPref(context).getLastEpochDay())
         }
         tempFile.delete()
+    }
+
+    private fun scrollTo(activity: SettingsAct, rowId: Int) {
+        val scrollView = activity.findViewById<ScrollView>(R.id.scrollSettings)
+        val row = activity.findViewById<android.view.View>(rowId)
+        val rowLoc = IntArray(2).also { row.getLocationInWindow(it) }
+        val scrollViewLoc = IntArray(2).also { scrollView.getLocationInWindow(it) }
+        scrollView.scrollTo(0, scrollView.scrollY + (rowLoc[1] - scrollViewLoc[1]))
+    }
+
+    // Reset Progress (vòng 5 mục 17): tapping the row shows a confirm dialog; Cancel must leave
+    // every progress source untouched.
+    @Test
+    fun tappingResetProgress_thenCancel_leavesProgressUntouched() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Study_Streak_Preference", android.content.Context.MODE_PRIVATE).edit().clear().commit()
+        StudyStreakPref(context).recordStudyToday(todayEpochDay = 20010L)
+
+        ActivityScenario.launch(SettingsAct::class.java).use { scenario ->
+            scenario.onActivity { activity -> scrollTo(activity, R.id.resetProgressSettings) }
+            onView(withId(R.id.resetProgressSettings)).perform(click())
+
+            onView(withText(R.string.cancel)).inRoot(isDialog()).perform(click())
+
+            assertEquals(1, StudyStreakPref(context).getCurrentStreak())
+        }
+    }
+
+    @Test
+    fun tappingResetProgress_thenConfirm_wipesProgress_butNotNotes() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        for (name in listOf("Study_Streak_Preference", "Exam_History_Preference", "Quiz_Best_Score_Preference", "Element_Notes_Preference")) {
+            context.getSharedPreferences(name, android.content.Context.MODE_PRIVATE).edit().clear().commit()
+        }
+        StudyStreakPref(context).recordStudyToday(todayEpochDay = 20011L)
+        ExamHistoryPref(context).addResult(score = 7, total = 10)
+        QuizBestScorePref(context).recordScore(9)
+        NotesPref(context).saveNote("H", "kept across reset")
+
+        ActivityScenario.launch(SettingsAct::class.java).use { scenario ->
+            scenario.onActivity { activity -> scrollTo(activity, R.id.resetProgressSettings) }
+            onView(withId(R.id.resetProgressSettings)).perform(click())
+
+            onView(withText(R.string.confirm)).inRoot(isDialog()).perform(click())
+
+            assertEquals(0, StudyStreakPref(context).getCurrentStreak())
+            assertTrue(ExamHistoryPref(context).getHistory().isEmpty())
+            assertEquals(0, QuizBestScorePref(context).getBestScore())
+            assertEquals("kept across reset", NotesPref(context).getNote("H"))
+        }
     }
 }

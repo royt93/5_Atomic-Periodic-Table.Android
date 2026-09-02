@@ -31,4 +31,9 @@ class FlashcardPref(context: Context) {
             putLong("flashcard_next_$symbol", nextReviewAtMs)
         }
     }
+
+    /** Wipes all per-symbol scheduling state — this file holds nothing else, so a full clear is safe. */
+    fun clear() {
+        preference.edit { clear() }
+    }
 }

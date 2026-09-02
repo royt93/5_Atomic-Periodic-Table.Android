@@ -631,6 +631,11 @@
     <string name="import_progress_confirm_message">导入将替换您当前的抽认卡进度、连续记录、考试历史和笔记。此操作无法撤消。</string>
     <string name="import_progress_success">进度导入成功</string>
     <string name="import_progress_failure">导入进度失败 — 文件可能已损坏或来自较新版本的应用</string>
+    <string name="reset_progress_title">重置进度</string>
+    <string name="reset_progress_desc">清除连续学习记录、抽认卡计划、考试记录和测验最高分</string>
+    <string name="reset_progress_confirm_title">重置全部学习进度?</string>
+    <string name="reset_progress_confirm_message">此操作会清除连续学习记录、抽认卡计划、考试记录和测验最高分。笔记和 VIP 状态不受影响。此操作无法撤销。</string>
+    <string name="reset_progress_success">已重置学习进度</string>
     <string name="compound_builder_title">化合物构建器</string>
     <string name="category_practice_title">分类练习</string>
     <string name="category_practice_picker_title">选择类别</string>

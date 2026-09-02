@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">Mengimpor akan mengganti progres kartu flash, rentetan, riwayat ujian, dan catatan Anda saat ini. Ini tidak dapat dibatalkan.</string>
     <string name="import_progress_success">Progres berhasil diimpor</string>
     <string name="import_progress_failure">Gagal mengimpor progres — file mungkin rusak atau berasal dari versi aplikasi yang lebih baru</string>
+    <string name="reset_progress_title">Reset Progres</string>
+    <string name="reset_progress_desc">Hapus rentetan, jadwal kartu, riwayat ujian, dan skor terbaik kuis Anda</string>
+    <string name="reset_progress_confirm_title">Reset semua progres belajar?</string>
+    <string name="reset_progress_confirm_message">Ini akan menghapus rentetan, jadwal kartu, riwayat ujian, dan skor terbaik kuis Anda. Catatan dan status VIP tidak terpengaruh. Ini tidak dapat dibatalkan.</string>
+    <string name="reset_progress_success">Progres belajar direset</string>
     <string name="compound_builder_title">Pembuat Senyawa</string>
     <string name="category_practice_title">Latihan Kategori</string>
     <string name="category_practice_picker_title">Pilih Kategori</string>

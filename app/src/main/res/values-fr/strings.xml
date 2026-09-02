@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">L\'importation remplacera votre progression actuelle des fiches, série, historique des examens et notes. Cette action est irréversible.</string>
     <string name="import_progress_success">Progression importée avec succès</string>
     <string name="import_progress_failure">Échec de l\'importation de la progression — le fichier est peut-être corrompu ou provient d\'une version plus récente de l\'application</string>
+    <string name="reset_progress_title">Réinitialiser la progression</string>
+    <string name="reset_progress_desc">Efface votre série, le calendrier des cartes-mémoire, l\'historique des examens et le meilleur score du quiz</string>
+    <string name="reset_progress_confirm_title">Réinitialiser toute la progression d\'étude ?</string>
+    <string name="reset_progress_confirm_message">Cela efface votre série, le calendrier des cartes-mémoire, l\'historique des examens et le meilleur score du quiz. Les notes et le statut VIP ne sont pas affectés. Cette action est irréversible.</string>
+    <string name="reset_progress_success">Progression d\'étude réinitialisée</string>
     <string name="compound_builder_title">Créateur de Composés</string>
     <string name="category_practice_title">Pratique par catégorie</string>
     <string name="category_practice_picker_title">Choisir une catégorie</string>

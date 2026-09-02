@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">आयात करने से आपकी वर्तमान फ्लैशकार्ड प्रगति, श्रृंखला, परीक्षा इतिहास और नोट्स बदल जाएंगे। इसे पूर्ववत नहीं किया जा सकता।</string>
     <string name="import_progress_success">प्रगति सफलतापूर्वक आयात की गई</string>
     <string name="import_progress_failure">प्रगति आयात करने में विफल — फ़ाइल दूषित हो सकती है या ऐप के नए संस्करण से हो सकती है</string>
+    <string name="reset_progress_title">प्रगति रीसेट करें</string>
+    <string name="reset_progress_desc">अपनी स्ट्रीक, फ्लैशकार्ड शेड्यूल, परीक्षा इतिहास और क्विज़ का सर्वश्रेष्ठ स्कोर मिटाएं</string>
+    <string name="reset_progress_confirm_title">सभी अध्ययन प्रगति रीसेट करें?</string>
+    <string name="reset_progress_confirm_message">यह आपकी स्ट्रीक, फ्लैशकार्ड शेड्यूल, परीक्षा इतिहास और क्विज़ का सर्वश्रेष्ठ स्कोर मिटा देगा। नोट्स और VIP स्थिति प्रभावित नहीं होंगी। इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="reset_progress_success">अध्ययन प्रगति रीसेट हो गई</string>
     <string name="compound_builder_title">यौगिक निर्माता</string>
     <string name="category_practice_title">श्रेणी अभ्यास</string>
     <string name="category_practice_picker_title">एक श्रेणी चुनें</string>

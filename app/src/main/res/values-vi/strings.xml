@@ -640,6 +640,11 @@
     <string name="import_progress_confirm_message">Nhập sẽ thay thế tiến độ thẻ ghi nhớ, chuỗi ngày học, lịch sử thi và ghi chú hiện tại của bạn. Không thể hoàn tác thao tác này.</string>
     <string name="import_progress_success">Nhập tiến độ thành công</string>
     <string name="import_progress_failure">Nhập tiến độ thất bại — file có thể bị hỏng hoặc từ phiên bản app mới hơn</string>
+    <string name="reset_progress_title">Đặt lại tiến độ</string>
+    <string name="reset_progress_desc">Xoá chuỗi ngày học, lịch flashcard, lịch sử thi và điểm cao nhất của quiz</string>
+    <string name="reset_progress_confirm_title">Đặt lại toàn bộ tiến độ học tập?</string>
+    <string name="reset_progress_confirm_message">Thao tác này xoá chuỗi ngày học, lịch flashcard, lịch sử thi và điểm cao nhất của quiz. Ghi chú và trạng thái VIP không bị ảnh hưởng. Không thể hoàn tác.</string>
+    <string name="reset_progress_success">Đã đặt lại tiến độ học tập</string>
     <string name="compound_builder_title">Ghép hợp chất</string>
     <string name="category_practice_title">Luyện tập theo nhóm</string>
     <string name="category_practice_picker_title">Chọn nhóm nguyên tố</string>

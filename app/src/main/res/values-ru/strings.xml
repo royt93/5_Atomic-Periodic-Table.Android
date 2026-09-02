@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">Импорт заменит ваш текущий прогресс карточек, серию, историю экзаменов и заметки. Это действие нельзя отменить.</string>
     <string name="import_progress_success">Прогресс успешно импортирован</string>
     <string name="import_progress_failure">Не удалось импортировать прогресс — файл может быть повреждён или из более новой версии приложения</string>
+    <string name="reset_progress_title">Сбросить прогресс</string>
+    <string name="reset_progress_desc">Удаляет серию дней, расписание карточек, историю экзаменов и лучший результат викторины</string>
+    <string name="reset_progress_confirm_title">Сбросить весь прогресс обучения?</string>
+    <string name="reset_progress_confirm_message">Это удалит серию дней, расписание карточек, историю экзаменов и лучший результат викторины. Заметки и статус VIP не затрагиваются. Это действие нельзя отменить.</string>
+    <string name="reset_progress_success">Прогресс обучения сброшен</string>
     <string name="compound_builder_title">Конструктор соединений</string>
     <string name="category_practice_title">Практика по категориям</string>
     <string name="category_practice_picker_title">Выберите категорию</string>

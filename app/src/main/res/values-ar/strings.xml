@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">سيؤدي الاستيراد إلى استبدال تقدم البطاقات التعليمية والسلسلة وسجل الاختبارات والملاحظات الحالية. لا يمكن التراجع عن هذا.</string>
     <string name="import_progress_success">تم استيراد التقدم بنجاح</string>
     <string name="import_progress_failure">فشل استيراد التقدم — قد يكون الملف تالفًا أو من إصدار أحدث من التطبيق</string>
+    <string name="reset_progress_title">إعادة تعيين التقدم</string>
+    <string name="reset_progress_desc">مسح سلسلة التتابع وجدول البطاقات التعليمية وسجل الاختبار وأفضل نتيجة اختبار</string>
+    <string name="reset_progress_confirm_title">إعادة تعيين كل تقدم الدراسة؟</string>
+    <string name="reset_progress_confirm_message">سيؤدي هذا إلى مسح سلسلة التتابع وجدول البطاقات التعليمية وسجل الاختبار وأفضل نتيجة اختبار. لن تتأثر الملاحظات وحالة VIP. لا يمكن التراجع عن هذا.</string>
+    <string name="reset_progress_success">تمت إعادة تعيين تقدم الدراسة</string>
     <string name="compound_builder_title">منشئ المركبات</string>
     <string name="category_practice_title">تدريب حسب الفئة</string>
     <string name="category_practice_picker_title">اختر فئة</string>

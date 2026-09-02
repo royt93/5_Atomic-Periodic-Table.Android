@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">匯入將取代您目前的單字卡進度、連續記錄、考試歷史和筆記。此操作無法復原。</string>
     <string name="import_progress_success">進度匯入成功</string>
     <string name="import_progress_failure">匯入進度失敗 — 檔案可能已損壞或來自較新版本的應用程式</string>
+    <string name="reset_progress_title">重設進度</string>
+    <string name="reset_progress_desc">清除連續學習記錄、單字卡排程、考試記錄和測驗最高分</string>
+    <string name="reset_progress_confirm_title">重設所有學習進度?</string>
+    <string name="reset_progress_confirm_message">此操作會清除連續學習記錄、單字卡排程、考試記錄和測驗最高分。筆記和 VIP 狀態不受影響。此操作無法復原。</string>
+    <string name="reset_progress_success">已重設學習進度</string>
     <string name="compound_builder_title">化合物建構器</string>
     <string name="category_practice_title">分類練習</string>
     <string name="category_practice_picker_title">選擇類別</string>

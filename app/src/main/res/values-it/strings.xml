@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">L\'importazione sostituirà i tuoi progressi attuali delle flashcard, serie, cronologia esami e note. Questa azione non può essere annullata.</string>
     <string name="import_progress_success">Progressi importati con successo</string>
     <string name="import_progress_failure">Impossibile importare i progressi — il file potrebbe essere danneggiato o provenire da una versione più recente dell\'app</string>
+    <string name="reset_progress_title">Ripristina progressi</string>
+    <string name="reset_progress_desc">Cancella la tua serie, il programma delle flashcard, la cronologia degli esami e il punteggio migliore del quiz</string>
+    <string name="reset_progress_confirm_title">Ripristinare tutti i progressi di studio?</string>
+    <string name="reset_progress_confirm_message">Questo cancellerà la tua serie, il programma delle flashcard, la cronologia degli esami e il punteggio migliore del quiz. Le note e lo stato VIP non sono interessati. Questa azione non può essere annullata.</string>
+    <string name="reset_progress_success">Progressi di studio ripristinati</string>
     <string name="compound_builder_title">Costruttore di Composti</string>
     <string name="category_practice_title">Pratica per categoria</string>
     <string name="category_practice_picker_title">Scegli una categoria</string>

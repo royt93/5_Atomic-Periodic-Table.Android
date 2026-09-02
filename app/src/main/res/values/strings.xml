@@ -641,6 +641,11 @@
     <string name="import_progress_confirm_message">Importing will replace your current flashcard progress, streak, exam history, and notes. This cannot be undone.</string>
     <string name="import_progress_success">Progress imported successfully</string>
     <string name="import_progress_failure">Failed to import progress — the file may be corrupted or from a newer app version</string>
+    <string name="reset_progress_title">Reset Progress</string>
+    <string name="reset_progress_desc">Erase your streak, flashcard schedule, exam history, and quiz best score</string>
+    <string name="reset_progress_confirm_title">Reset all study progress?</string>
+    <string name="reset_progress_confirm_message">This erases your streak, flashcard schedule, exam history, and quiz best score. Notes and VIP status are not affected. This cannot be undone.</string>
+    <string name="reset_progress_success">Study progress reset</string>
     <string name="compound_builder_title">Compound Builder</string>
     <string name="category_practice_title">Category Practice</string>
     <string name="category_practice_picker_title">Choose a Category</string>

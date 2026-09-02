@@ -613,6 +613,11 @@
     <string name="import_progress_confirm_message">การนำเข้าจะแทนที่ความคืบหน้าแฟลชการ์ด ความต่อเนื่อง ประวัติการสอบ และบันทึกปัจจุบันของคุณ ไม่สามารถยกเลิกการดำเนินการนี้ได้</string>
     <string name="import_progress_success">นำเข้าความคืบหน้าสำเร็จ</string>
     <string name="import_progress_failure">นำเข้าความคืบหน้าล้มเหลว — ไฟล์อาจเสียหายหรือมาจากแอปเวอร์ชันใหม่กว่า</string>
+    <string name="reset_progress_title">รีเซ็ตความคืบหน้า</string>
+    <string name="reset_progress_desc">ลบสตรีค ตารางแฟลชการ์ด ประวัติการสอบ และคะแนนดีที่สุดของแบบทดสอบ</string>
+    <string name="reset_progress_confirm_title">รีเซ็ตความคืบหน้าการเรียนทั้งหมด?</string>
+    <string name="reset_progress_confirm_message">การดำเนินการนี้จะลบสตรีค ตารางแฟลชการ์ด ประวัติการสอบ และคะแนนดีที่สุดของแบบทดสอบ โน้ตและสถานะ VIP จะไม่ได้รับผลกระทบ ไม่สามารถย้อนกลับได้</string>
+    <string name="reset_progress_success">รีเซ็ตความคืบหน้าการเรียนแล้ว</string>
     <string name="compound_builder_title">เครื่องมือสร้างสารประกอบ</string>
     <string name="category_practice_title">ฝึกฝนตามหมวดหมู่</string>
     <string name="category_practice_picker_title">เลือกหมวดหมู่</string>

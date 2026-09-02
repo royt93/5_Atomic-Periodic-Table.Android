@@ -31,6 +31,7 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
 import com.mckimquyen.atomicPeriodicTable.feature.backup.BackupManager
+import com.mckimquyen.atomicPeriodicTable.feature.reset.ProgressResetManager
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
@@ -182,6 +183,9 @@ class SettingsAct : BaseAct() {
         }
         binding.importProgressSettings.setOnClickListener {
             confirmThenImportProgress()
+        }
+        binding.resetProgressSettings.setOnClickListener {
+            confirmThenResetProgress()
         }
 
         // ===============================================================
@@ -393,6 +397,18 @@ class SettingsAct : BaseAct() {
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.confirm) { _, _ ->
                 importProgressLauncher.launch(arrayOf("application/json"))
+            }
+            .show()
+    }
+
+    private fun confirmThenResetProgress() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.reset_progress_confirm_title)
+            .setMessage(R.string.reset_progress_confirm_message)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.confirm) { _, _ ->
+                ProgressResetManager.resetAll(this)
+                Toast.makeText(this, R.string.reset_progress_success, Toast.LENGTH_SHORT).show()
             }
             .show()
     }
