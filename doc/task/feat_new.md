@@ -213,6 +213,69 @@ User chọn cả 4 idea được đề xuất (Category/Group Practice Mode — 
 - Full suite: `testDevDebugUnitTest` xanh. Instrumented: 3/3 pass trên emulator-5554, 3/3 pass trên **Samsung S24 Ultra thật (SM-S928B, serial R5CX613VZBR)** — device ưu tiên nhất theo yêu cầu ban đầu, kết nối lại đúng lúc cần smoke test feature cuối cùng vòng 4.
 - Tự chấm điểm: **9.5/10** — tách `CompareRanking` pure tổng quát hoá đúng cho N giá trị thay vì hard-code riêng case-3, giữ logic 2-cột cũ nguyên vẹn từng dòng nên regression-safe tuyệt đối (không phải "nên giống" mà là "chính xác cùng code path"), UI toggle mặc định ẩn không phá trải nghiệm quen thuộc, smoke test thật trên đúng S24U ưu tiên nhất. Trừ điểm nhỏ vì không có test cho trường hợp cả 3 giá trị đều thiếu/không phải số (edge case ít quan trọng, không ảnh hưởng UI theo review lại code — `numeric.size < 2` đã cover).
 
+**Tổng kết Vòng 4 (2026-09-02)**: cả 4 feature (Phát âm nguyên tố TTS, Nguyên tố xem gần đây, Category/Group Practice Mode, So sánh 3+ nguyên tố) đã hoàn tất theo đúng thứ tự effort tăng dần, mỗi feature đều pass gate >9/10 (9.4, 9.3, 9.4, 9.5) và đã push lên `origin/dev`.
+
+# Vòng 5 (2026-09-02) — 4 feature mới chọn qua AskUserQuestion
+
+User chọn cả 4 idea được đề xuất (Lọc nguyên tố nâng cao — recommended, Cỡ chữ/Accessibility, Reset tiến trình học tập, Widget câu hỏi nhanh). Yêu cầu rõ: **chỉ rã task vào file này, chưa code**. Thứ tự dưới đây xếp theo effort tăng dần dựa trên khảo sát thực tế code (không phải ước lượng ban đầu ở bước AskUserQuestion — thứ tự đã điều chỉnh sau khi đọc code thật, xem mục 19 để biết lý do "lọc nâng cao" bị đẩy lên effort cao hơn dự kiến ban đầu).
+
+## 17. Reset tiến trình học tập — 📋 Picked
+
+- Khảo sát: 4 nguồn dữ liệu "tiến trình" cần xoá, **không nguồn nào có sẵn method clear/reset**:
+  - `feature/streak/StudyStreakPref.kt` (file `Study_Streak_Preference`, keys `current_streak`/`last_study_epoch_day`) — có `restore(streak, epochDay)` nhưng đó là hàm GHI giá trị (dùng cho Backup/Restore), không phải reset; dùng lại `restore(0, 0)` hoặc thêm `clear()`.
+  - `feature/flashcard/FlashcardPref.kt` (file `Flashcard_Preference`, key phẳng theo từng symbol `flashcard_ease_$symbol`/`flashcard_interval_$symbol`/...) — chưa có bulk-clear, cần thêm (file riêng, không chứa dữ liệu nào khác nên `preference.edit { clear() }` an toàn).
+  - `feature/exam/ExamHistoryPref.kt` — đã có sẵn `replaceHistory(emptyList())`, dùng thẳng, không cần thêm method mới.
+  - `feature/quiz/QuizBestScorePref.kt` (file `Quiz_Best_Score_Preference`, key `best_score`) — `recordScore()` chỉ tăng dần, chưa có cách giảm về 0, cần thêm method mới.
+- **Xác nhận quan trọng qua đọc code**: `feature/badge/BadgeCalculator.kt` **không lưu trạng thái badge riêng** — `computeUnlockedBadges()` tính on-the-fly từ 4 nguồn trên (`StudyStreakPref`/`ExamHistoryPref`/`QuizBestScorePref`/`FlashcardPref.countReviewedSymbols()`). Nghĩa là reset đúng 4 pref trên tự động reset badge, không cần xoá gì thêm cho Badge.
+- **Bắt buộc KHÔNG được đụng**: `feature/vip/VipPrefs.kt` (đã có sẵn `clearGrantedAtMs()`/`clearUserRedeemed()` — không được gọi từ luồng reset progress, VIP là entitlement trả phí/redeem, không phải "tiến trình học tập").
+- UI: 1 row mới trong `SettingsAct` (đặt gần khu Export/Import Backup, `a_settings.xml` quanh dòng `exportProgressSettings`/`importProgressSettings`), theo đúng convention row 70dp đã dùng cho `clearCacheSettings` (`SettingsAct.kt` hàm `cacheSettings()`). Bắt buộc `MaterialAlertDialogBuilder` confirm dialog trước khi xoá (hành động không thể hoàn tác) — tái dùng pattern confirm đã có ở luồng Import Backup (mục 11).
+- Quyết định cần làm rõ khi code:
+  1. `feature/history/RecentlyViewedPref.kt` có tính là "tiến trình" cần xoá không? Nghiêng về KHÔNG (nó gần với `pref/SearchPref.kt` — tiện ích tìm kiếm/xem gần đây, không phải thành tích học tập) — nhưng cần chốt rõ, có thể hỏi AskUserQuestion nếu không tự tin.
+  2. Thêm `clear()` riêng lẻ vào từng 3 pref còn thiếu, hay viết 1 `ProgressResetManager.resetAll(context)` gom cả 4 nguồn — nghiêng về `ProgressResetManager` để tránh rải rác danh sách "cái gì tính là tiến trình" ở nhiều nơi gọi.
+  3. Sau khi reset, `MainAct`/`BadgeAct` đang mở có cần refresh ngay UI (streak indicator, badge lock state) không cần thoát app, hay chấp nhận chỉ đúng sau khi mở lại màn hình (đơn giản hơn, có thể chấp nhận cho v1).
+- Test dự kiến: JVM unit test cho `ProgressResetManager`/từng `clear()` mới (trước reset có dữ liệu, sau reset về đúng giá trị mặc định, VIP không bị đụng), instrumented test luồng tap row → dialog confirm → xác nhận → streak/badge/exam history/best score đều về 0, test huỷ dialog (bấm Cancel) không xoá gì.
+- Trạng thái: 📋 Picked (chưa code)
+
+## 18. Cỡ chữ / Accessibility — 📋 Picked
+
+- Khảo sát nền tảng đã có: `util/LocaleHelper.kt` hàm `setLocale()` build `Configuration(context.resources.configuration)` (copy-constructor) rồi CHỈ sửa locale/layout-direction — **fontScale hệ thống được kế thừa nguyên vẹn, không bị đụng tới**. Có comment để lại từ bug đã fix trước đó (`FIX (P3)`): việc từng ép `fontScale = 1.0f` ở đây đã ĐÈ MẤT cài đặt "cỡ chữ" toàn hệ thống (Accessibility) của user mỗi lần đổi ngôn ngữ — **bài học bắt buộc phải nhớ khi code mục này**: feature mới KHÔNG được thay thế (`=`) giá trị `fontScale`, chỉ được NHÂN THÊM hệ số của app (`config.fontScale *= multiplier`) để tôn trọng cả 2 lớp cài đặt (hệ thống + app).
+- Điểm chèn: `act/BaseAct.kt` hàm `attachBaseContext()` — nơi duy nhất gọi `LocaleHelper.applyLanguage(context)`, cùng điểm chèn cho font-scale override.
+- Thiết kế: `pref/FontScalePref.kt` mới, copy đúng pattern `pref/ThemePref.kt` (1 file SharedPreferences, 1 key Int, 3 giá trị) — đề xuất enum Small(0.85x)/Default(1.0x)/Large(1.15x) thay vì cho user nhập số tự do (đơn giản, tránh giá trị cực đoan phá layout). UI: 1 panel chọn 3-way giống `themeSettings()`/`binding.themePanel` trong `SettingsAct.kt` (radio-icon rows `ic_radio_checked`/`ic_radio_unchecked`), không phải row đơn giản.
+- Quyết định cần làm rõ khi code:
+  1. Đổi fontScale trên Activity đang mở có cần gọi `recreate()` ngay (giống luồng đổi theme đã có `themeChangeHandler`) hay chỉ áp dụng từ lần mở Activity kế tiếp — nghiêng về cần `recreate()` để trải nghiệm mượt, tái dùng đúng cơ chế theme đã có.
+  2. Test layout ở scale 1.15x trên các màn hình chữ dày đặc nhất (bảng so sánh `CompareAct`, bảng Quiz) để đảm bảo không tràn/cắt chữ — cần liệt kê rõ danh sách màn hình phải kiểm tra bằng screenshot thật trước khi báo xong.
+- Test dự kiến: JVM unit test cho `FontScalePref` (giá trị mặc định, lưu/đọc đúng 3 mức), instrumented test xác nhận `Configuration.fontScale` sau khi áp dụng bằng đúng `hệ thống × hệ số app` (không phải ghi đè), screenshot thật ở cả 3 mức trên ít nhất 2 màn hình chữ dày đặc.
+- Trạng thái: 📋 Picked (chưa code)
+
+## 19. Lọc nguyên tố nâng cao — 📋 Picked
+
+- **Khảo sát làm thay đổi đáng kể phạm vi/effort so với ước lượng ban đầu**: bảng tuần hoàn hiển thị trên `MainAct` **KHÔNG phải RecyclerView** — nó là layout XML tĩnh (`a_main.xml`), mỗi ô là 1 view riêng với id sinh từ tên nguyên tố (ví dụ `hydrogen_btn`), tra bằng `resources.getIdentifier("${item.element}_btn", "id", packageName)` trong `MainAct.kt` (`setOnCLickListenerSetups()`). Cái tên "filter" hiện có trong code (`searchFilter()`) thực ra chỉ là bộ chọn CÁCH SẮP XẾP (số hiệu/độ âm điện/alphabet) cho danh sách kết quả tìm kiếm ẩn (`rvElement`, RecyclerView thật), KHÔNG đụng tới bảng chính. Bảng chính hiện **không có cơ chế ẩn/làm mờ ô nào cả**.
+- Do đó có 2 hướng phạm vi rất khác nhau về effort, PHẢI chốt trước khi code (đề xuất dùng AskUserQuestion nếu không rõ):
+  - (a) Filter áp dụng lên bảng chính tĩnh: cần lặp qua tối đa 118 `findViewById` để set `alpha`/`visibility` theo điều kiện lọc — code mới hoàn toàn, rủi ro hiệu năng nhỏ (118 lookup mỗi lần đổi filter) nhưng trải nghiệm trực quan nhất (thấy ngay trên bảng).
+  - (b) Filter chỉ mở rộng overlay tìm kiếm đã có (`rvElement`/`mAdapter`) — tái dùng hạ tầng `filterList()` có sẵn, effort thấp hơn nhiều, nhưng user phải mở ô tìm kiếm mới thấy kết quả lọc (không trực quan bằng phương án a).
+- Dữ liệu lọc: `model/Element.kt` chỉ có `electro` (Double) sẵn trong bộ nhớ, không cần Context — lọc theo độ âm điện làm được ngay. Lọc theo **khối lượng nguyên tử** phải qua `util/ElementWeightCache.getMass(symbol)` (đọc JSON, cần `ElementWeightCache.init(context)` gọi trước — cần xác nhận đã init sẵn ở đâu đó trong `MainAct`/`RoyApp` trước khi dùng). Lọc theo category tái dùng thẳng `feature/quiz/CategoryFilter.kt` (`filterElementsByCategory`, `ALL_CATEGORIES`) đã có sẵn từ mục 15, không cần viết lại.
+- Thiết kế (giả định chọn phương án a — trực quan hơn, đúng kỳ vọng "lọc bảng tuần hoàn" của user): 1 dialog/bottom sheet mới (2 seekbar/range cho mass + electronegativity, checkbox/chip cho category) → hàm pure `feature/quiz/CategoryFilter`-style mới trong `feature/filter/ElementFilter.kt` (`matches(element, criteria): Boolean`) → áp dụng lên bảng bằng cách set `alpha = 0.25f` (không dùng `GONE`, giữ layout ổn định không bị nhảy vị trí) cho ô không khớp.
+- Quyết định cần làm rõ khi code:
+  1. Chốt phương án (a) hay (b) trước — đây là quyết định ảnh hưởng effort lớn nhất của cả mục này.
+  2. Filter có persist qua việc thoát/mở lại `MainAct` không, hay reset mỗi lần mở lại (giống Category Practice Mode dialog stateless ở mục 15) — nghiêng về KHÔNG persist (đơn giản hơn, tránh user quên đã bật filter rồi thắc mắc sao bảng thiếu nguyên tố).
+  3. Có cần nút "Xoá bộ lọc" hiển thị rõ ràng khi filter đang active không (tránh user bối rối khi thấy bảng bị mờ nhiều ô).
+- Test dự kiến: JVM unit test cho `ElementFilter.matches()` (đủ case: chỉ mass, chỉ electronegativity, chỉ category, kết hợp cả 3, không điều kiện nào = match hết), instrumented test luồng mở filter → chọn điều kiện → xác nhận đúng tập ô bị mờ/ẩn, test xoá filter trả bảng về trạng thái đầy đủ.
+- Trạng thái: 📋 Picked (chưa code)
+
+## 20. Widget câu hỏi nhanh — 📋 Picked
+
+- Khảo sát: `widget/ShortCommandWidget.kt` hiện tại chỉ hiển thị fact tĩnh (`ElementWeightCache.getFact(symbol)` — câu đầu tiên của mô tả JSON) + 1 vùng bấm DUY NHẤT mở `ElementInfoAct` (`setOnClickPendingIntent` trên `widgetRoot`, có comment giải thích lý do bind vào `widgetRoot` thay vì `flWidgetSearchBar` để tránh no-op im lặng trên API<31). **Không có sẵn dữ liệu câu hỏi trắc nghiệm nào cho "nguyên tố hôm nay"** — toàn bộ hạ tầng trivia hiện tại (`feature/trivia/`) chỉ là fact-string, không phải câu hỏi+đáp án.
+- **Không có tiền lệ nào trong app cho nhiều vùng bấm độc lập trong 1 `RemoteViews`** (grep `setOnClickPendingIntent` = đúng 1 kết quả, ở widget này) — mỗi đáp án cần 1 `PendingIntent` riêng (request code riêng) mang theo index đáp án qua Intent extra, vì `RemoteViews` không giữ được state tại thời điểm bấm.
+- Kích thước hiện tại `res/xml/short_command_widget_info.xml` (giống nhau ở cả 3 biến thể build): `minWidth=200dp`, `targetCellWidth=3`, `minHeight=110dp` — khá chật cho 3-4 nút đáp án, cần tăng lên (cả 3 file build variant phải sửa đồng bộ).
+- Thiết kế: `feature/trivia/TriviaQuestionGenerator.kt` mới (pure, theo đúng pattern `feature/exam/MolarMassQuestionGenerator.kt`: `generate(random, factLookup): Question(elementName, choices)`) — câu hỏi dạng "nguyên tố nào có fact này?" (đưa fact, 4 lựa chọn tên nguyên tố) để tái dùng đúng `ElementOfDay.indexForDay()` + `ElementWeightCache.getFact()` đã có, không tạo nguồn "nguyên tố hôm nay" thứ 2 (bắt buộc theo đúng data hiện có, tránh lệch với Daily Trivia notification cùng ngày).
+- Quyết định cần làm rõ khi code:
+  1. Cách disambiguate nút bấm: 4 `PendingIntent` riêng biệt (đơn giản, ít rủi ro hơn) hay `RemoteViewsService`/`RemoteViewsFactory` dạng list (phức tạp hơn nhiều, không có tiền lệ) — nghiêng hẳn về 4 `PendingIntent` riêng.
+  2. Phản hồi đúng/sai có cần cập nhật lại ngay giao diện widget (`appWidgetManager.updateAppWidget` gọi lại từ 1 `BroadcastReceiver` mới) hay chỉ mở `Toast`/`ElementInfoAct` — cần chốt trước vì ảnh hưởng có cần thêm receiver mới hay không.
+  3. Widget đổi kích thước tối thiểu có phá bố cục người dùng đã ghim trên home screen thật không (kích thước cell home-screen launcher khác nhau) — cần test thật trên launcher thật (S24U/CPH1989), không chỉ emulator.
+  4. Layout `layout-v31/view_short_command_widget.xml` (Material You) và `layout/` (fallback) đều cần thêm 4 nút — có nguy cơ lệch UI giữa 2 biến thể nếu chỉ sửa 1 file.
+- Test dự kiến: JVM unit test cho `TriviaQuestionGenerator` (4 đáp án phân biệt, câu hỏi luôn có đáp án đúng nằm trong choices, không crash khi fact rỗng — cần fallback), instrumented/manual test luồng bấm từng nút đáp án trên widget thật (Espresso không test được RemoteViews trực tiếp — cần quy trình verify riêng qua `AppWidgetHostView` hoặc test thủ công có screenshot, ghi rõ giới hạn này khi code).
+- Trạng thái: 📋 Picked (chưa code)
+
 ## Quy tắc thực hiện chung
 
 - Mỗi mục xong: build xanh, chạy test liên quan, cập nhật status trong file này + `doc/feat.md` mục Picked/Implemented, commit + push origin/dev.

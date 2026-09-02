@@ -20,6 +20,7 @@ This document specifies the design, architecture, localization, UI/UX guidelines
 - ✅ Implemented: Nguyên tố xem gần đây — `feature/history/RecentlyViewedPref.kt`, hàng chip mới `recentlyViewedRow` trong `MainAct`/`a_main.xml` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 14).
 - ✅ Implemented: Category/Group Practice Mode — `feature/quiz/CategoryFilter.kt`, `QuizAct` thêm `EXTRA_CATEGORY_FILTER`, dialog chọn category mới trong `MainAct` (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 15).
 - ✅ Implemented: So sánh 3+ nguyên tố — `feature/compare/CompareRanking.kt`, `CompareAct` thêm cột 3 tuỳ chọn qua nút toggle (2026-09-02, breakdown ở `doc/task/feat_new.md` mục 16). Cả 4 feature vòng 4 (2026-09-02) đã hoàn tất.
+- 📋 Picked (vòng 5, breakdown chi tiết ở `doc/task/feat_new.md` mục 17-20, chọn qua AskUserQuestion 2026-09-02): Reset tiến trình học tập, Cỡ chữ/Accessibility, Lọc nguyên tố nâng cao, Widget câu hỏi nhanh.
 
 ---
 
