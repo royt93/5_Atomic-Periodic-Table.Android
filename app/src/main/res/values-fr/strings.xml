@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Révisez 50 éléments différents</string>
     <string name="badge_flashcard_100_name">📇 100 fiches</string>
     <string name="badge_flashcard_100_desc">Révisez 100 éléments différents</string>
+    <string name="daily_trivia_notification_title">Anecdote quotidienne sur les éléments</string>
+    <string name="daily_trivia_notification_desc">Recevez une notification sur un nouvel élément chaque jour</string>
+    <string name="daily_trivia_channel_name">Anecdote quotidienne</string>
 </resources>

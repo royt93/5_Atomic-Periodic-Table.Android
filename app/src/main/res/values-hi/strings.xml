@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">50 अलग-अलग तत्वों की समीक्षा करें</string>
     <string name="badge_flashcard_100_name">📇 100 फ्लैशकार्ड</string>
     <string name="badge_flashcard_100_desc">100 अलग-अलग तत्वों की समीक्षा करें</string>
+    <string name="daily_trivia_notification_title">दैनिक तत्व ज्ञान</string>
+    <string name="daily_trivia_notification_desc">हर दिन एक नए तत्व के बारे में सूचना पाएं</string>
+    <string name="daily_trivia_channel_name">दैनिक ज्ञान</string>
 </resources>

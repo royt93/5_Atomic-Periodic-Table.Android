@@ -340,6 +340,67 @@
                             android:textSize="12sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/dailyTriviaSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_d_ripple">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/dailyTriviaSettingsIcon"
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/baseline_notifications_24"
+                        app:tint="?attr/colorOnBackground" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/dailyTriviaSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:scaleX="1.2"
+                        android:scaleY="1.2"
+                        android:thumb="@drawable/selector_switch_thumb"
+                        app:track="@drawable/selector_switch_track" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_toStartOf="@id/dailyTriviaSwitch"
+                        android:layout_toEndOf="@id/dailyTriviaSettingsIcon"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="@string/daily_trivia_notification_title"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="16sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:alpha="0.7"
+                            android:gravity="start"
+                            android:text="@string/daily_trivia_notification_desc"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="12sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView

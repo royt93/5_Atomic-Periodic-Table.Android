@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Wiederhole 50 verschiedene Elemente</string>
     <string name="badge_flashcard_100_name">📇 100 Karteikarten</string>
     <string name="badge_flashcard_100_desc">Wiederhole 100 verschiedene Elemente</string>
+    <string name="daily_trivia_notification_title">Tägliches Element-Wissen</string>
+    <string name="daily_trivia_notification_desc">Erhalte jeden Tag eine Benachrichtigung über ein neues Element</string>
+    <string name="daily_trivia_channel_name">Tägliches Wissen</string>
 </resources>

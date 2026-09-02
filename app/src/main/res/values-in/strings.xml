@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Ulas 50 elemen berbeda</string>
     <string name="badge_flashcard_100_name">📇 100 Kartu</string>
     <string name="badge_flashcard_100_desc">Ulas 100 elemen berbeda</string>
+    <string name="daily_trivia_notification_title">Trivia Elemen Harian</string>
+    <string name="daily_trivia_notification_desc">Dapatkan notifikasi tentang elemen baru setiap hari</string>
+    <string name="daily_trivia_channel_name">Trivia Harian</string>
 </resources>

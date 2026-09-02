@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Repasa 50 elementos diferentes</string>
     <string name="badge_flashcard_100_name">📇 100 tarjetas</string>
     <string name="badge_flashcard_100_desc">Repasa 100 elementos diferentes</string>
+    <string name="daily_trivia_notification_title">Trivia diaria de elementos</string>
+    <string name="daily_trivia_notification_desc">Recibe una notificación sobre un nuevo elemento cada día</string>
+    <string name="daily_trivia_channel_name">Trivia diaria</string>
 </resources>

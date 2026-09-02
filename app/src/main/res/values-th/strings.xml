@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">ทบทวนธาตุที่แตกต่างกัน 50 ธาตุ</string>
     <string name="badge_flashcard_100_name">📇 แฟลชการ์ด 100 ใบ</string>
     <string name="badge_flashcard_100_desc">ทบทวนธาตุที่แตกต่างกัน 100 ธาตุ</string>
+    <string name="daily_trivia_notification_title">เกร็ดความรู้ธาตุประจำวัน</string>
+    <string name="daily_trivia_notification_desc">รับการแจ้งเตือนเกี่ยวกับธาตุใหม่ทุกวัน</string>
+    <string name="daily_trivia_channel_name">เกร็ดความรู้ประจำวัน</string>
 </resources>

@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">50種類の元素を復習する</string>
     <string name="badge_flashcard_100_name">📇 フラッシュカード100枚</string>
     <string name="badge_flashcard_100_desc">100種類の元素を復習する</string>
+    <string name="daily_trivia_notification_title">今日の元素豆知識</string>
+    <string name="daily_trivia_notification_desc">毎日新しい元素についての通知を受け取る</string>
+    <string name="daily_trivia_channel_name">今日の豆知識</string>
 </resources>

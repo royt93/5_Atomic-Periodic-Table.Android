@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Повторите 50 разных элементов</string>
     <string name="badge_flashcard_100_name">📇 100 карточек</string>
     <string name="badge_flashcard_100_desc">Повторите 100 разных элементов</string>
+    <string name="daily_trivia_notification_title">Ежедневный факт об элементе</string>
+    <string name="daily_trivia_notification_desc">Получайте уведомление о новом элементе каждый день</string>
+    <string name="daily_trivia_channel_name">Ежедневный факт</string>
 </resources>

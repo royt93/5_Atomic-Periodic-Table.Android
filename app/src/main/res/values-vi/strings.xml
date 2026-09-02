@@ -624,4 +624,7 @@
     <string name="badge_flashcard_50_desc">Ôn tập 50 nguyên tố khác nhau</string>
     <string name="badge_flashcard_100_name">📇 100 thẻ ghi nhớ</string>
     <string name="badge_flashcard_100_desc">Ôn tập 100 nguyên tố khác nhau</string>
+    <string name="daily_trivia_notification_title">Kiến thức nguyên tố mỗi ngày</string>
+    <string name="daily_trivia_notification_desc">Nhận thông báo về 1 nguyên tố mới mỗi ngày</string>
+    <string name="daily_trivia_channel_name">Kiến thức mỗi ngày</string>
 </resources>

@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Ripassa 50 elementi diversi</string>
     <string name="badge_flashcard_100_name">📇 100 schede</string>
     <string name="badge_flashcard_100_desc">Ripassa 100 elementi diversi</string>
+    <string name="daily_trivia_notification_title">Curiosità quotidiana sugli elementi</string>
+    <string name="daily_trivia_notification_desc">Ricevi una notifica su un nuovo elemento ogni giorno</string>
+    <string name="daily_trivia_channel_name">Curiosità quotidiana</string>
 </resources>

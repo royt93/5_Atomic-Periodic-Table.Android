@@ -625,5 +625,8 @@
     <string name="badge_flashcard_50_desc">Review 50 different elements</string>
     <string name="badge_flashcard_100_name">📇 100 Flashcards</string>
     <string name="badge_flashcard_100_desc">Review 100 different elements</string>
+    <string name="daily_trivia_notification_title">Daily Element Trivia</string>
+    <string name="daily_trivia_notification_desc">Get a notification about a new element every day</string>
+    <string name="daily_trivia_channel_name">Daily Trivia</string>
 </resources>
 

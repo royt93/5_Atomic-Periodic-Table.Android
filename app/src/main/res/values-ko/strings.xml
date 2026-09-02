@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">50개의 서로 다른 원소 복습하기</string>
     <string name="badge_flashcard_100_name">📇 플래시카드 100개</string>
     <string name="badge_flashcard_100_desc">100개의 서로 다른 원소 복습하기</string>
+    <string name="daily_trivia_notification_title">매일 원소 트리비아</string>
+    <string name="daily_trivia_notification_desc">매일 새로운 원소에 대한 알림을 받아보세요</string>
+    <string name="daily_trivia_channel_name">매일 트리비아</string>
 </resources>

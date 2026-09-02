@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- AdMob Advertising ID Permission
          Used ONLY for advertising and analytics purposes:
@@ -56,6 +57,18 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/short_command_widget_info" />
+        </receiver>
+
+        <!-- Daily Trivia Notification: alarm-fire is an explicit-component broadcast (no
+             intent-filter needed); BOOT_COMPLETED reschedules the alarm since alarms don't
+             survive a reboot. exported=false is fine — BOOT_COMPLETED is a protected system
+             broadcast still delivered to manifest-declared receivers regardless of exported. -->
+        <receiver
+            android:name=".feature.trivia.DailyTriviaReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
 
         <!-- =============================================================== -->

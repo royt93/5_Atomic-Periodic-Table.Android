@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">راجع 50 عنصرًا مختلفًا</string>
     <string name="badge_flashcard_100_name">📇 100 بطاقة تعليمية</string>
     <string name="badge_flashcard_100_desc">راجع 100 عنصر مختلف</string>
+    <string name="daily_trivia_notification_title">كويز يومي عن العناصر</string>
+    <string name="daily_trivia_notification_desc">احصل على إشعار حول عنصر جديد كل يوم</string>
+    <string name="daily_trivia_channel_name">الكويز اليومي</string>
 </resources>

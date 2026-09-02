@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">複習50個不同的元素</string>
     <string name="badge_flashcard_100_name">📇 100張卡片</string>
     <string name="badge_flashcard_100_desc">複習100個不同的元素</string>
+    <string name="daily_trivia_notification_title">每日元素小知識</string>
+    <string name="daily_trivia_notification_desc">每天接收關於新元素的通知</string>
+    <string name="daily_trivia_channel_name">每日小知識</string>
 </resources>

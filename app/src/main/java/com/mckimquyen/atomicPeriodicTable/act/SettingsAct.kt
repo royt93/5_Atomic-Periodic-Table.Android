@@ -1,7 +1,9 @@
 package com.mckimquyen.atomicPeriodicTable.act
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +14,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.mckimquyen.atomicPeriodicTable.BuildConfig
 import com.mckimquyen.atomicPeriodicTable.R
@@ -23,6 +27,8 @@ import com.mckimquyen.atomicPeriodicTable.act.setting.SubmitAct
 import com.mckimquyen.atomicPeriodicTable.act.setting.UnitAct
 import com.mckimquyen.atomicPeriodicTable.databinding.ASettingsBinding
 import com.mckimquyen.atomicPeriodicTable.ext.rateApp
+import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
+import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
@@ -49,6 +55,16 @@ class SettingsAct : BaseAct() {
     private var themeChangeHandler: Handler? = null
     // Language change: Store pending language code
     private var pendingLanguageCode: String? = null
+
+    // Must be registered unconditionally before STARTED, so this stays a class-level property.
+    private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            DailyTriviaPref(this).setEnabled(true)
+            DailyTriviaScheduler.schedule(this)
+        } else {
+            binding.dailyTriviaSwitch.isChecked = false
+        }
+    }
 
     // ===============================================================
     // Helper function: Modern Activity Transition API
@@ -141,9 +157,13 @@ class SettingsAct : BaseAct() {
         initializeCache()
         cacheSettings()
         initOfflineSwitches()
+        initDailyTriviaSwitch()
 
         binding.offlineSettings.setOnClickListener {
             binding.offlineInternetSwitch.toggle()
+        }
+        binding.dailyTriviaSettings.setOnClickListener {
+            binding.dailyTriviaSwitch.toggle()
         }
 
         // ===============================================================
@@ -309,6 +329,31 @@ class SettingsAct : BaseAct() {
                 val offlinePreference = OfflinePreference(this)
                 offlinePreference.setValue(0)
             }
+        }
+    }
+
+    private fun initDailyTriviaSwitch() {
+        val pref = DailyTriviaPref(this)
+        binding.dailyTriviaSwitch.isChecked = pref.isEnabled()
+
+        binding.dailyTriviaSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                requestNotificationPermissionThenEnableTrivia()
+            } else {
+                pref.setEnabled(false)
+                DailyTriviaScheduler.cancel(this)
+            }
+        }
+    }
+
+    private fun requestNotificationPermissionThenEnableTrivia() {
+        val alreadyGranted = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        if (alreadyGranted) {
+            DailyTriviaPref(this).setEnabled(true)
+            DailyTriviaScheduler.schedule(this)
+        } else {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 

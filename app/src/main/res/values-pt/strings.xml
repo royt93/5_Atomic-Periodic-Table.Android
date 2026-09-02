@@ -597,4 +597,7 @@
     <string name="badge_flashcard_50_desc">Revise 50 elementos diferentes</string>
     <string name="badge_flashcard_100_name">📇 100 flashcards</string>
     <string name="badge_flashcard_100_desc">Revise 100 elementos diferentes</string>
+    <string name="daily_trivia_notification_title">Curiosidade diária de elementos</string>
+    <string name="daily_trivia_notification_desc">Receba uma notificação sobre um novo elemento todos os dias</string>
+    <string name="daily_trivia_channel_name">Curiosidade diária</string>
 </resources>
