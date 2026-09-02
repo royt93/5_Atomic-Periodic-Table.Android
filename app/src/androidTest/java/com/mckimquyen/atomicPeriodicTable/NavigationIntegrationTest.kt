@@ -163,4 +163,25 @@ class NavigationIntegrationTest {
             onView(withId(R.id.timerContainer)).check(matches(not(isDisplayed())))
         }
     }
+
+    @Test
+    fun testNavigateFromMainToBadges() {
+        ActivityScenario.launch(MainAct::class.java).use { scenario ->
+            // Open navigation drawer programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.navBarMain).visibility = View.VISIBLE
+                activity.findViewById<View>(R.id.menuBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Click Badges menu button programmatically
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.menuBadgesBtn).performClick()
+            }
+            Thread.sleep(1000)
+
+            // Verify Badges screen is visible
+            onView(withId(R.id.cardStreak3)).check(matches(isDisplayed()))
+        }
+    }
 }

@@ -609,4 +609,19 @@
     <string name="quiz_question_molar_mass">Khối lượng mol của %1$s là bao nhiêu (g/mol)?</string>
     <string name="exam_history_label">Lần thi gần đây:\n%1$s</string>
     <string name="practice_exam_restart">Thi lại</string>
+    <string name="badges_title">Thành tích</string>
+    <string name="badge_streak_3_name">🔥 Chuỗi 3 ngày</string>
+    <string name="badge_streak_3_desc">Học liên tục 3 ngày</string>
+    <string name="badge_streak_7_name">🔥 Chuỗi 7 ngày</string>
+    <string name="badge_streak_7_desc">Học liên tục 7 ngày</string>
+    <string name="badge_streak_30_name">🔥 Chuỗi 30 ngày</string>
+    <string name="badge_streak_30_desc">Học liên tục 30 ngày</string>
+    <string name="badge_perfect_quiz_name">🏆 Quiz hoàn hảo</string>
+    <string name="badge_perfect_quiz_desc">Đạt điểm tuyệt đối 10/10 trong Quiz</string>
+    <string name="badge_perfect_exam_name">🏆 Bài thi hoàn hảo</string>
+    <string name="badge_perfect_exam_desc">Đạt điểm tuyệt đối trong 1 lần Luyện thi</string>
+    <string name="badge_flashcard_50_name">📇 50 thẻ ghi nhớ</string>
+    <string name="badge_flashcard_50_desc">Ôn tập 50 nguyên tố khác nhau</string>
+    <string name="badge_flashcard_100_name">📇 100 thẻ ghi nhớ</string>
+    <string name="badge_flashcard_100_desc">Ôn tập 100 nguyên tố khác nhau</string>
 </resources>

@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">%1$s のモル質量 (g/mol) はいくつですか?</string>
     <string name="exam_history_label">最近の記録:\n%1$s</string>
     <string name="practice_exam_restart">試験をやり直す</string>
+    <string name="badges_title">実績</string>
+    <string name="badge_streak_3_name">🔥 3日連続</string>
+    <string name="badge_streak_3_desc">3日連続で学習する</string>
+    <string name="badge_streak_7_name">🔥 7日連続</string>
+    <string name="badge_streak_7_desc">7日連続で学習する</string>
+    <string name="badge_streak_30_name">🔥 30日連続</string>
+    <string name="badge_streak_30_desc">30日連続で学習する</string>
+    <string name="badge_perfect_quiz_name">🏆 パーフェクトクイズ</string>
+    <string name="badge_perfect_quiz_desc">クイズで10問中10問正解する</string>
+    <string name="badge_perfect_exam_name">🏆 パーフェクト試験</string>
+    <string name="badge_perfect_exam_desc">実践試験で満点を取る</string>
+    <string name="badge_flashcard_50_name">📇 フラッシュカード50枚</string>
+    <string name="badge_flashcard_50_desc">50種類の元素を復習する</string>
+    <string name="badge_flashcard_100_name">📇 フラッシュカード100枚</string>
+    <string name="badge_flashcard_100_desc">100種類の元素を復習する</string>
 </resources>

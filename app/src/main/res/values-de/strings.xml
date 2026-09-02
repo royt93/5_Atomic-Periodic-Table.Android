@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">Wie hoch ist die molare Masse von %1$s (g/mol)?</string>
     <string name="exam_history_label">Letzte Versuche:\n%1$s</string>
     <string name="practice_exam_restart">Prüfung neu starten</string>
+    <string name="badges_title">Erfolge</string>
+    <string name="badge_streak_3_name">🔥 3-Tage-Serie</string>
+    <string name="badge_streak_3_desc">3 Tage in Folge lernen</string>
+    <string name="badge_streak_7_name">🔥 7-Tage-Serie</string>
+    <string name="badge_streak_7_desc">7 Tage in Folge lernen</string>
+    <string name="badge_streak_30_name">🔥 30-Tage-Serie</string>
+    <string name="badge_streak_30_desc">30 Tage in Folge lernen</string>
+    <string name="badge_perfect_quiz_name">🏆 Perfektes Quiz</string>
+    <string name="badge_perfect_quiz_desc">Erreiche 10/10 im Quiz</string>
+    <string name="badge_perfect_exam_name">🏆 Perfekte Prüfung</string>
+    <string name="badge_perfect_exam_desc">Erreiche ein perfektes Ergebnis in einer Übungsprüfung</string>
+    <string name="badge_flashcard_50_name">📇 50 Karteikarten</string>
+    <string name="badge_flashcard_50_desc">Wiederhole 50 verschiedene Elemente</string>
+    <string name="badge_flashcard_100_name">📇 100 Karteikarten</string>
+    <string name="badge_flashcard_100_desc">Wiederhole 100 verschiedene Elemente</string>
 </resources>

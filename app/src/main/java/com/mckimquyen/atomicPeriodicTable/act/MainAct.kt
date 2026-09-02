@@ -482,6 +482,9 @@ class MainAct : TableExt(), ElementAdt.OnElementClickListener2 {
                 .putExtra(QuizAct.EXTRA_TOTAL_QUESTIONS, QuizAct.PRACTICE_EXAM_QUESTION_COUNT)
             startActivity(intent)
         }
+        binding.navMenuInclude.menuBadgesBtn.setOnClickListener {
+            startActivity(Intent(this, BadgeAct::class.java))
+        }
     }
 
     private fun hoverListeners(elements: ArrayList<Element>) {

@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">มวลโมลาร์ของ %1$s คือเท่าใด (g/mol)?</string>
     <string name="exam_history_label">ความพยายามล่าสุด:\n%1$s</string>
     <string name="practice_exam_restart">เริ่มสอบใหม่</string>
+    <string name="badges_title">ความสำเร็จ</string>
+    <string name="badge_streak_3_name">🔥 ต่อเนื่อง 3 วัน</string>
+    <string name="badge_streak_3_desc">เรียน 3 วันติดต่อกัน</string>
+    <string name="badge_streak_7_name">🔥 ต่อเนื่อง 7 วัน</string>
+    <string name="badge_streak_7_desc">เรียน 7 วันติดต่อกัน</string>
+    <string name="badge_streak_30_name">🔥 ต่อเนื่อง 30 วัน</string>
+    <string name="badge_streak_30_desc">เรียน 30 วันติดต่อกัน</string>
+    <string name="badge_perfect_quiz_name">🏆 แบบทดสอบสมบูรณ์แบบ</string>
+    <string name="badge_perfect_quiz_desc">ทำคะแนนเต็ม 10/10 ในแบบทดสอบ</string>
+    <string name="badge_perfect_exam_name">🏆 การสอบสมบูรณ์แบบ</string>
+    <string name="badge_perfect_exam_desc">ทำคะแนนสมบูรณ์แบบในแบบทดสอบฝึกฝน</string>
+    <string name="badge_flashcard_50_name">📇 แฟลชการ์ด 50 ใบ</string>
+    <string name="badge_flashcard_50_desc">ทบทวนธาตุที่แตกต่างกัน 50 ธาตุ</string>
+    <string name="badge_flashcard_100_name">📇 แฟลชการ์ด 100 ใบ</string>
+    <string name="badge_flashcard_100_desc">ทบทวนธาตุที่แตกต่างกัน 100 ธาตุ</string>
 </resources>

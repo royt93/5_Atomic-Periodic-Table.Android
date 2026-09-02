@@ -20,6 +20,9 @@ class FlashcardPref(context: Context) {
 
     fun getNextReviewAtMs(symbol: String): Long = preference.getLong("flashcard_next_$symbol", 0L)
 
+    /** Count of symbols that have been rated at least once (repetitions > 0), for badge progress. */
+    fun countReviewedSymbols(allSymbols: List<String>): Int = allSymbols.count { getState(it).repetitions > 0 }
+
     fun saveState(symbol: String, state: FlashcardState, nextReviewAtMs: Long) {
         preference.edit {
             putFloat("flashcard_ease_$symbol", state.easeFactor)

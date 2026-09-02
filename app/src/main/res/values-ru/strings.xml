@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">Какова молярная масса %1$s (г/моль)?</string>
     <string name="exam_history_label">Последние попытки:\n%1$s</string>
     <string name="practice_exam_restart">Начать экзамен заново</string>
+    <string name="badges_title">Достижения</string>
+    <string name="badge_streak_3_name">🔥 Серия 3 дня</string>
+    <string name="badge_streak_3_desc">Занимайтесь 3 дня подряд</string>
+    <string name="badge_streak_7_name">🔥 Серия 7 дней</string>
+    <string name="badge_streak_7_desc">Занимайтесь 7 дней подряд</string>
+    <string name="badge_streak_30_name">🔥 Серия 30 дней</string>
+    <string name="badge_streak_30_desc">Занимайтесь 30 дней подряд</string>
+    <string name="badge_perfect_quiz_name">🏆 Идеальная викторина</string>
+    <string name="badge_perfect_quiz_desc">Наберите идеальные 10/10 в викторине</string>
+    <string name="badge_perfect_exam_name">🏆 Идеальный экзамен</string>
+    <string name="badge_perfect_exam_desc">Получите идеальный результат на пробном экзамене</string>
+    <string name="badge_flashcard_50_name">📇 50 карточек</string>
+    <string name="badge_flashcard_50_desc">Повторите 50 разных элементов</string>
+    <string name="badge_flashcard_100_name">📇 100 карточек</string>
+    <string name="badge_flashcard_100_desc">Повторите 100 разных элементов</string>
 </resources>

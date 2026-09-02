@@ -12,6 +12,7 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.databinding.AQuizBinding
 import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
 import com.mckimquyen.atomicPeriodicTable.feature.exam.MolarMassQuestionGenerator
+import com.mckimquyen.atomicPeriodicTable.feature.quiz.QuizBestScorePref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
@@ -29,7 +30,7 @@ class QuizAct : BaseAct() {
     private val random = Random()
 
     private var currentQuestionIndex = 0
-    private var totalQuestions = 10
+    private var totalQuestions = DEFAULT_QUESTION_COUNT
     private var isPracticeMode = false
     private var score = 0
 
@@ -56,7 +57,7 @@ class QuizAct : BaseAct() {
         setContentView(binding.root)
 
         isPracticeMode = intent.getBooleanExtra(EXTRA_PRACTICE_MODE, false)
-        totalQuestions = intent.getIntExtra(EXTRA_TOTAL_QUESTIONS, 10)
+        totalQuestions = intent.getIntExtra(EXTRA_TOTAL_QUESTIONS, DEFAULT_QUESTION_COUNT)
         if (isPracticeMode) {
             binding.quizTitleText.text = getString(R.string.practice_exam_title)
             binding.timerContainer.visibility = View.GONE
@@ -586,6 +587,8 @@ class QuizAct : BaseAct() {
         StudyStreakPref(this).recordStudyToday()
         if (isPracticeMode) {
             ExamHistoryPref(this).addResult(score, totalQuestions)
+        } else {
+            QuizBestScorePref(this).recordScore(score)
         }
 
         // Fade out quiz components smoothly
@@ -792,5 +795,6 @@ class QuizAct : BaseAct() {
         const val EXTRA_PRACTICE_MODE = "extra_practice_mode"
         const val EXTRA_TOTAL_QUESTIONS = "extra_total_questions"
         const val PRACTICE_EXAM_QUESTION_COUNT = 20
+        const val DEFAULT_QUESTION_COUNT = 10
     }
 }

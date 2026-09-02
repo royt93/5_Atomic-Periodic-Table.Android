@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">Berapa massa molar dari %1$s (g/mol)?</string>
     <string name="exam_history_label">Percobaan terbaru:\n%1$s</string>
     <string name="practice_exam_restart">Ulangi Ujian</string>
+    <string name="badges_title">Pencapaian</string>
+    <string name="badge_streak_3_name">🔥 Rentetan 3 Hari</string>
+    <string name="badge_streak_3_desc">Belajar 3 hari berturut-turut</string>
+    <string name="badge_streak_7_name">🔥 Rentetan 7 Hari</string>
+    <string name="badge_streak_7_desc">Belajar 7 hari berturut-turut</string>
+    <string name="badge_streak_30_name">🔥 Rentetan 30 Hari</string>
+    <string name="badge_streak_30_desc">Belajar 30 hari berturut-turut</string>
+    <string name="badge_perfect_quiz_name">🏆 Kuis Sempurna</string>
+    <string name="badge_perfect_quiz_desc">Raih skor sempurna 10/10 di Kuis</string>
+    <string name="badge_perfect_exam_name">🏆 Ujian Sempurna</string>
+    <string name="badge_perfect_exam_desc">Raih hasil sempurna di Ujian Latihan</string>
+    <string name="badge_flashcard_50_name">📇 50 Kartu</string>
+    <string name="badge_flashcard_50_desc">Ulas 50 elemen berbeda</string>
+    <string name="badge_flashcard_100_name">📇 100 Kartu</string>
+    <string name="badge_flashcard_100_desc">Ulas 100 elemen berbeda</string>
 </resources>

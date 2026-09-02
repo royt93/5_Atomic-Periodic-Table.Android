@@ -45,4 +45,26 @@ class FlashcardPrefTest {
         assertEquals(1_000L, pref.getNextReviewAtMs("H"))
         assertEquals(2_000L, pref.getNextReviewAtMs("He"))
     }
+
+    @Test
+    fun countReviewedSymbols_countsOnlySymbolsWithAtLeastOneRepetition() {
+        val pref = freshPref()
+        pref.saveState("H", FlashcardState(repetitions = 1), 1_000L)
+        pref.saveState("He", FlashcardState(repetitions = 3), 2_000L)
+        pref.saveState("Li", FlashcardState(repetitions = 0), 3_000L) // rated "Again" — never advanced past 0
+
+        assertEquals(2, pref.countReviewedSymbols(listOf("H", "He", "Li", "Be")))
+    }
+
+    @Test
+    fun countReviewedSymbols_emptySymbolList_isZero() {
+        val pref = freshPref()
+        assertEquals(0, pref.countReviewedSymbols(emptyList()))
+    }
+
+    @Test
+    fun countReviewedSymbols_noneReviewedYet_isZero() {
+        val pref = freshPref()
+        assertEquals(0, pref.countReviewedSymbols(listOf("H", "He", "Li")))
+    }
 }

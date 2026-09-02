@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">Quelle est la masse molaire de %1$s (g/mol) ?</string>
     <string name="exam_history_label">Tentatives récentes :\n%1$s</string>
     <string name="practice_exam_restart">Recommencer l\'examen</string>
+    <string name="badges_title">Succès</string>
+    <string name="badge_streak_3_name">🔥 Série de 3 jours</string>
+    <string name="badge_streak_3_desc">Étudier 3 jours de suite</string>
+    <string name="badge_streak_7_name">🔥 Série de 7 jours</string>
+    <string name="badge_streak_7_desc">Étudier 7 jours de suite</string>
+    <string name="badge_streak_30_name">🔥 Série de 30 jours</string>
+    <string name="badge_streak_30_desc">Étudier 30 jours de suite</string>
+    <string name="badge_perfect_quiz_name">🏆 Quiz parfait</string>
+    <string name="badge_perfect_quiz_desc">Obtenez un 10/10 parfait au Quiz</string>
+    <string name="badge_perfect_exam_name">🏆 Examen parfait</string>
+    <string name="badge_perfect_exam_desc">Obtenez un résultat parfait à un Examen d\'entraînement</string>
+    <string name="badge_flashcard_50_name">📇 50 fiches</string>
+    <string name="badge_flashcard_50_desc">Révisez 50 éléments différents</string>
+    <string name="badge_flashcard_100_name">📇 100 fiches</string>
+    <string name="badge_flashcard_100_desc">Révisez 100 éléments différents</string>
 </resources>

@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">%1$s의 몰 질량(g/mol)은 얼마입니까?</string>
     <string name="exam_history_label">최근 기록:\n%1$s</string>
     <string name="practice_exam_restart">시험 다시 시작</string>
+    <string name="badges_title">업적</string>
+    <string name="badge_streak_3_name">🔥 3일 연속</string>
+    <string name="badge_streak_3_desc">3일 연속 학습하기</string>
+    <string name="badge_streak_7_name">🔥 7일 연속</string>
+    <string name="badge_streak_7_desc">7일 연속 학습하기</string>
+    <string name="badge_streak_30_name">🔥 30일 연속</string>
+    <string name="badge_streak_30_desc">30일 연속 학습하기</string>
+    <string name="badge_perfect_quiz_name">🏆 완벽한 퀴즈</string>
+    <string name="badge_perfect_quiz_desc">퀴즈에서 10/10 만점 받기</string>
+    <string name="badge_perfect_exam_name">🏆 완벽한 시험</string>
+    <string name="badge_perfect_exam_desc">연습 시험에서 만점 받기</string>
+    <string name="badge_flashcard_50_name">📇 플래시카드 50개</string>
+    <string name="badge_flashcard_50_desc">50개의 서로 다른 원소 복습하기</string>
+    <string name="badge_flashcard_100_name">📇 플래시카드 100개</string>
+    <string name="badge_flashcard_100_desc">100개의 서로 다른 원소 복습하기</string>
 </resources>

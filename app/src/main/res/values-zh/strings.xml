@@ -600,5 +600,20 @@
     <string name="quiz_question_molar_mass">%1$s 的摩尔质量是多少 (g/mol)?</string>
     <string name="exam_history_label">最近记录:\n%1$s</string>
     <string name="practice_exam_restart">重新测验</string>
+    <string name="badges_title">成就</string>
+    <string name="badge_streak_3_name">🔥 连续3天</string>
+    <string name="badge_streak_3_desc">连续学习3天</string>
+    <string name="badge_streak_7_name">🔥 连续7天</string>
+    <string name="badge_streak_7_desc">连续学习7天</string>
+    <string name="badge_streak_30_name">🔥 连续30天</string>
+    <string name="badge_streak_30_desc">连续学习30天</string>
+    <string name="badge_perfect_quiz_name">🏆 完美测验</string>
+    <string name="badge_perfect_quiz_desc">在测验中获得满分10/10</string>
+    <string name="badge_perfect_exam_name">🏆 完美模拟测验</string>
+    <string name="badge_perfect_exam_desc">在模拟测验中获得完美成绩</string>
+    <string name="badge_flashcard_50_name">📇 50张卡片</string>
+    <string name="badge_flashcard_50_desc">复习50个不同的元素</string>
+    <string name="badge_flashcard_100_name">📇 100张卡片</string>
+    <string name="badge_flashcard_100_desc">复习100个不同的元素</string>
 </resources>
 

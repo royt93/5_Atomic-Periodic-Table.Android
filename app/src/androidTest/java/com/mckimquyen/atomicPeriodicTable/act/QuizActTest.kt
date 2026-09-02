@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mckimquyen.atomicPeriodicTable.R
 import com.mckimquyen.atomicPeriodicTable.feature.exam.ExamHistoryPref
+import com.mckimquyen.atomicPeriodicTable.feature.quiz.QuizBestScorePref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
@@ -188,6 +189,31 @@ class QuizActTest {
                     assertEquals("choices must be distinct: $choices", 4, choices.toSet().size)
                 }
             }
+        }
+    }
+
+    // Regression guard for the badges feature (mục 9): finishing a STANDARD (non-practice) quiz
+    // must record the score into QuizBestScorePref so the "Perfect Quiz" badge can unlock —
+    // this pref didn't exist before badges, standard Quiz previously discarded score on exit.
+    @Test
+    fun finishingStandardQuiz_recordsBestScore() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Quiz_Best_Score_Preference", android.content.Context.MODE_PRIVATE)
+            .edit().clear().commit()
+
+        ActivityScenario.launch(QuizAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                val scoreField = QuizAct::class.java.getDeclaredField("score")
+                scoreField.isAccessible = true
+                scoreField.setInt(activity, 8)
+
+                val method = QuizAct::class.java.getDeclaredMethod("showResults")
+                method.isAccessible = true
+                method.invoke(activity)
+            }
+            Thread.sleep(400) // fade-out/fade-in animation inside showResults()
+
+            assertEquals(8, QuizBestScorePref(context).getBestScore())
         }
     }
 }

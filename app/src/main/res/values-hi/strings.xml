@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">%1$s का मोलर द्रव्यमान (g/mol) क्या है?</string>
     <string name="exam_history_label">हाल के प्रयास:\n%1$s</string>
     <string name="practice_exam_restart">परीक्षा फिर से शुरू करें</string>
+    <string name="badges_title">उपलब्धियाँ</string>
+    <string name="badge_streak_3_name">🔥 3-दिन की श्रृंखला</string>
+    <string name="badge_streak_3_desc">लगातार 3 दिन अध्ययन करें</string>
+    <string name="badge_streak_7_name">🔥 7-दिन की श्रृंखला</string>
+    <string name="badge_streak_7_desc">लगातार 7 दिन अध्ययन करें</string>
+    <string name="badge_streak_30_name">🔥 30-दिन की श्रृंखला</string>
+    <string name="badge_streak_30_desc">लगातार 30 दिन अध्ययन करें</string>
+    <string name="badge_perfect_quiz_name">🏆 परफेक्ट क्विज़</string>
+    <string name="badge_perfect_quiz_desc">क्विज़ में पूर्ण 10/10 स्कोर करें</string>
+    <string name="badge_perfect_exam_name">🏆 परफेक्ट परीक्षा</string>
+    <string name="badge_perfect_exam_desc">अभ्यास परीक्षा में परफेक्ट स्कोर करें</string>
+    <string name="badge_flashcard_50_name">📇 50 फ्लैशकार्ड</string>
+    <string name="badge_flashcard_50_desc">50 अलग-अलग तत्वों की समीक्षा करें</string>
+    <string name="badge_flashcard_100_name">📇 100 फ्लैशकार्ड</string>
+    <string name="badge_flashcard_100_desc">100 अलग-अलग तत्वों की समीक्षा करें</string>
 </resources>

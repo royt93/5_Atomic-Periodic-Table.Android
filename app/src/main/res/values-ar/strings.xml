@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">ما هي الكتلة المولية لـ %1$s (غ/مول)؟</string>
     <string name="exam_history_label">المحاولات الأخيرة:\n%1$s</string>
     <string name="practice_exam_restart">إعادة الاختبار</string>
+    <string name="badges_title">الإنجازات</string>
+    <string name="badge_streak_3_name">🔥 سلسلة 3 أيام</string>
+    <string name="badge_streak_3_desc">ادرس 3 أيام متتالية</string>
+    <string name="badge_streak_7_name">🔥 سلسلة 7 أيام</string>
+    <string name="badge_streak_7_desc">ادرس 7 أيام متتالية</string>
+    <string name="badge_streak_30_name">🔥 سلسلة 30 يوم</string>
+    <string name="badge_streak_30_desc">ادرس 30 يومًا متتاليًا</string>
+    <string name="badge_perfect_quiz_name">🏆 اختبار مثالي</string>
+    <string name="badge_perfect_quiz_desc">احصل على 10/10 في الاختبار</string>
+    <string name="badge_perfect_exam_name">🏆 امتحان مثالي</string>
+    <string name="badge_perfect_exam_desc">احصل على نتيجة مثالية في اختبار تدريبي</string>
+    <string name="badge_flashcard_50_name">📇 50 بطاقة تعليمية</string>
+    <string name="badge_flashcard_50_desc">راجع 50 عنصرًا مختلفًا</string>
+    <string name="badge_flashcard_100_name">📇 100 بطاقة تعليمية</string>
+    <string name="badge_flashcard_100_desc">راجع 100 عنصر مختلف</string>
 </resources>

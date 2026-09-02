@@ -610,5 +610,20 @@
     <string name="quiz_question_molar_mass">What is the molar mass of %1$s (g/mol)?</string>
     <string name="exam_history_label">Recent attempts:\n%1$s</string>
     <string name="practice_exam_restart">Restart Exam</string>
+    <string name="badges_title">Achievements</string>
+    <string name="badge_streak_3_name">🔥 3-Day Streak</string>
+    <string name="badge_streak_3_desc">Study 3 days in a row</string>
+    <string name="badge_streak_7_name">🔥 7-Day Streak</string>
+    <string name="badge_streak_7_desc">Study 7 days in a row</string>
+    <string name="badge_streak_30_name">🔥 30-Day Streak</string>
+    <string name="badge_streak_30_desc">Study 30 days in a row</string>
+    <string name="badge_perfect_quiz_name">🏆 Perfect Quiz</string>
+    <string name="badge_perfect_quiz_desc">Score a perfect 10/10 on the Quiz</string>
+    <string name="badge_perfect_exam_name">🏆 Perfect Exam</string>
+    <string name="badge_perfect_exam_desc">Score a perfect result on a Practice Exam</string>
+    <string name="badge_flashcard_50_name">📇 50 Flashcards</string>
+    <string name="badge_flashcard_50_desc">Review 50 different elements</string>
+    <string name="badge_flashcard_100_name">📇 100 Flashcards</string>
+    <string name="badge_flashcard_100_desc">Review 100 different elements</string>
 </resources>
 

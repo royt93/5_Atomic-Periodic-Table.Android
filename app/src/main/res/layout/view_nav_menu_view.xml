@@ -553,6 +553,42 @@
 
             </FrameLayout>
 
+            <!-- Achievements/Badges Button -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/menuBadgesBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="?attr/colorSurface"
+                    android:backgroundTint="?attr/colorSurface"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_star"
+                    android:drawablePadding="18dp"
+                    android:drawableTint="?attr/colorOnSecondaryContainer"
+                    android:elevation="0dp"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_d_ripple"
+                    android:gravity="center_vertical"
+                    android:padding="18dp"
+                    android:text="@string/badges_title"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/colorOnSecondaryContainer"
+                    android:textColorHighlight="?attr/colorOnSecondaryContainer"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:alpha="0.11"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="0dp" />
+
+            </FrameLayout>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/space5"
 

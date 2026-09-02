@@ -582,4 +582,19 @@
     <string name="quiz_question_molar_mass">%1$s 的莫耳質量是多少 (g/mol)?</string>
     <string name="exam_history_label">最近記錄:\n%1$s</string>
     <string name="practice_exam_restart">重新測驗</string>
+    <string name="badges_title">成就</string>
+    <string name="badge_streak_3_name">🔥 連續3天</string>
+    <string name="badge_streak_3_desc">連續學習3天</string>
+    <string name="badge_streak_7_name">🔥 連續7天</string>
+    <string name="badge_streak_7_desc">連續學習7天</string>
+    <string name="badge_streak_30_name">🔥 連續30天</string>
+    <string name="badge_streak_30_desc">連續學習30天</string>
+    <string name="badge_perfect_quiz_name">🏆 完美測驗</string>
+    <string name="badge_perfect_quiz_desc">在測驗中獲得滿分10/10</string>
+    <string name="badge_perfect_exam_name">🏆 完美模擬測驗</string>
+    <string name="badge_perfect_exam_desc">在模擬測驗中獲得完美成績</string>
+    <string name="badge_flashcard_50_name">📇 50張卡片</string>
+    <string name="badge_flashcard_50_desc">複習50個不同的元素</string>
+    <string name="badge_flashcard_100_name">📇 100張卡片</string>
+    <string name="badge_flashcard_100_desc">複習100個不同的元素</string>
 </resources>
