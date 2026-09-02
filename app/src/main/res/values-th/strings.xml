@@ -162,6 +162,12 @@
     <string name="more_options">ตัวเลือกเพิ่มเติม</string>
     <string name="themes">ธีม</string>
     <string name="select_theme">เลือกธีม</string>
+    <string name="font_size_title">ขนาดตัวอักษร</string>
+    <string name="font_size_desc">ปรับขนาดข้อความเพิ่มเติมจากการตั้งค่าระบบของคุณ</string>
+    <string name="select_font_size">เลือกขนาดตัวอักษร</string>
+    <string name="font_size_small">เล็ก</string>
+    <string name="font_size_default">ค่าเริ่มต้น</string>
+    <string name="font_size_large">ใหญ่</string>
     <string name="favorite_bar">แถบรายการโปรด</string>
     <string name="personalise_the_favorite_bar">ปรับแต่งแถบรายการโปรด</string>
     <string name="detail_card_order">ลำดับการ์ดรายละเอียด</string>

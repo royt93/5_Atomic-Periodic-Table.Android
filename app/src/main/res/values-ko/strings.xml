@@ -162,6 +162,12 @@
     <string name="more_options">더 보기</string>
     <string name="themes">테마</string>
     <string name="select_theme">테마 선택</string>
+    <string name="font_size_title">글꼴 크기</string>
+    <string name="font_size_desc">시스템 설정에 더해 텍스트 크기를 조정합니다</string>
+    <string name="select_font_size">글꼴 크기 선택</string>
+    <string name="font_size_small">작게</string>
+    <string name="font_size_default">기본</string>
+    <string name="font_size_large">크게</string>
     <string name="favorite_bar">즐겨찾기 바</string>
     <string name="personalise_the_favorite_bar">바 사용자 정의</string>
     <string name="detail_card_order">상세 카드 순서</string>

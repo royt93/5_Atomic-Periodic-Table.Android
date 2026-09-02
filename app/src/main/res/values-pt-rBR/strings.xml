@@ -162,6 +162,12 @@
     <string name="more_options">Mais opções</string>
     <string name="themes">Temas</string>
     <string name="select_theme">Selecionar tema</string>
+    <string name="font_size_title">Tamanho da Fonte</string>
+    <string name="font_size_desc">Ajusta o tamanho do texto além da configuração do sistema</string>
+    <string name="select_font_size">Selecionar Tamanho da Fonte</string>
+    <string name="font_size_small">Pequeno</string>
+    <string name="font_size_default">Padrão</string>
+    <string name="font_size_large">Grande</string>
     <string name="favorite_bar">Barra de favoritos</string>
     <string name="personalise_the_favorite_bar">Personalizar barra</string>
     <string name="detail_card_order">Ordem dos cartões</string>

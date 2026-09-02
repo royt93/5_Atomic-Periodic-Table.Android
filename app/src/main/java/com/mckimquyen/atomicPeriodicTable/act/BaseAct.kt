@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
+import com.mckimquyen.atomicPeriodicTable.util.FontScaleHelper
 import com.mckimquyen.atomicPeriodicTable.util.LocaleHelper
 import com.roy.sdkadbmob.AdManager
 
@@ -69,9 +70,10 @@ abstract class BaseAct : AppCompatActivity(), View.OnApplyWindowInsetsListener {
     }
 
     override fun attachBaseContext(context: Context) {
-        // Apply the saved language and font scale via LocaleHelper
+        // Apply the saved language, then the saved font-scale multiplier on top of it.
         val localizedContext = LocaleHelper.applyLanguage(context)
-        super.attachBaseContext(localizedContext)
+        val scaledContext = FontScaleHelper.applyFontScale(localizedContext)
+        super.attachBaseContext(scaledContext)
     }
 
     override fun onStart() {

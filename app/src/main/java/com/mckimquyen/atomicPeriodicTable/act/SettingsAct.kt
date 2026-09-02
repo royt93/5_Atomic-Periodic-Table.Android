@@ -35,6 +35,7 @@ import com.mckimquyen.atomicPeriodicTable.feature.reset.ProgressResetManager
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
 import com.mckimquyen.atomicPeriodicTable.feature.vip.VipManagementAct
+import com.mckimquyen.atomicPeriodicTable.pref.FontScalePref
 import com.mckimquyen.atomicPeriodicTable.pref.OfflinePreference
 import com.mckimquyen.atomicPeriodicTable.pref.ThemePref
 import com.mckimquyen.atomicPeriodicTable.setting.ExperimentalAct
@@ -164,8 +165,11 @@ class SettingsAct : BaseAct() {
             binding.themePanel.darkBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_checked, 0, 0, 0)
         }
 
+        updateFontScaleRadioButtons()
+
         openPages()
         themeSettings()
+        fontScaleSettings()
         languageSettings()
         initializeCache()
         cacheSettings()
@@ -549,6 +553,52 @@ class SettingsAct : BaseAct() {
         }
         binding.themePanel.cancelBtn.setOnClickListener {
             Utils.fadeOutAnim(binding.themePanel.root, 300)
+        }
+    }
+
+    private fun updateFontScaleRadioButtons() {
+        val checked = R.drawable.ic_radio_checked
+        val unchecked = R.drawable.ic_radio_unchecked
+        val value = FontScalePref(this).getValue()
+
+        binding.fontScalePanel.fontSizeSmallBtn.setCompoundDrawablesWithIntrinsicBounds(
+            if (value == FontScalePref.SMALL) checked else unchecked, 0, 0, 0
+        )
+        binding.fontScalePanel.fontSizeDefaultBtn.setCompoundDrawablesWithIntrinsicBounds(
+            if (value == FontScalePref.DEFAULT) checked else unchecked, 0, 0, 0
+        )
+        binding.fontScalePanel.fontSizeLargeBtn.setCompoundDrawablesWithIntrinsicBounds(
+            if (value == FontScalePref.LARGE) checked else unchecked, 0, 0, 0
+        )
+    }
+
+    private fun selectFontScale(value: Int) {
+        FontScalePref(this).setValue(value)
+        Utils.fadeOutAnim(binding.fontScalePanel.root, 300)
+
+        // Relaunching (not recreate()) re-runs attachBaseContext() with the new multiplier —
+        // same pattern as themeSettings() above.
+        themeChangeHandler?.removeCallbacksAndMessages(null)
+        themeChangeHandler = Handler(Looper.getMainLooper())
+        themeChangeHandler?.postDelayed({
+            overrideTransition(0, 0)
+            finish()
+            startActivity(intent)
+        }, 302)
+    }
+
+    private fun fontScaleSettings() {
+        binding.fontSizeSettings.setOnClickListener {
+            Utils.fadeInAnim(view = binding.fontScalePanel.root, time = 300)
+        }
+        binding.fontScalePanel.fontSizeSmallBtn.setOnClickListener { selectFontScale(FontScalePref.SMALL) }
+        binding.fontScalePanel.fontSizeDefaultBtn.setOnClickListener { selectFontScale(FontScalePref.DEFAULT) }
+        binding.fontScalePanel.fontSizeLargeBtn.setOnClickListener { selectFontScale(FontScalePref.LARGE) }
+        binding.fontScalePanel.fontSizeBackground.setOnClickListener {
+            Utils.fadeOutAnim(binding.fontScalePanel.root, 300)
+        }
+        binding.fontScalePanel.fontSizeCancelBtn.setOnClickListener {
+            Utils.fadeOutAnim(binding.fontScalePanel.root, 300)
         }
     }
 

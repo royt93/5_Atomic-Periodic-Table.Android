@@ -162,6 +162,12 @@
     <string name="more_options">その他のオプション</string>
     <string name="themes">テーマ</string>
     <string name="select_theme">テーマを選択</string>
+    <string name="font_size_title">文字サイズ</string>
+    <string name="font_size_desc">システム設定に加えて文字サイズを調整します</string>
+    <string name="select_font_size">文字サイズを選択</string>
+    <string name="font_size_small">小</string>
+    <string name="font_size_default">デフォルト</string>
+    <string name="font_size_large">大</string>
     <string name="favorite_bar">お気に入りバー</string>
     <string name="personalise_the_favorite_bar">バーをカスタマイズ</string>
     <string name="detail_card_order">詳細カードの順序</string>

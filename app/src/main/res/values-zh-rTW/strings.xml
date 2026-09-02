@@ -162,6 +162,12 @@
     <string name="more_options">更多選項</string>
     <string name="themes">主題</string>
     <string name="select_theme">選擇主題</string>
+    <string name="font_size_title">字型大小</string>
+    <string name="font_size_desc">在系統設定基礎上調整文字大小</string>
+    <string name="select_font_size">選擇字型大小</string>
+    <string name="font_size_small">小</string>
+    <string name="font_size_default">預設</string>
+    <string name="font_size_large">大</string>
     <string name="favorite_bar">收藏欄</string>
     <string name="personalise_the_favorite_bar">自定義欄</string>
     <string name="detail_card_order">卡片順序</string>

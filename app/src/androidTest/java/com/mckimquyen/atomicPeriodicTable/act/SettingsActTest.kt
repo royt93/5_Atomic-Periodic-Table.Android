@@ -19,6 +19,7 @@ import com.mckimquyen.atomicPeriodicTable.feature.quiz.QuizBestScorePref
 import com.mckimquyen.atomicPeriodicTable.feature.streak.StudyStreakPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaPref
 import com.mckimquyen.atomicPeriodicTable.feature.trivia.DailyTriviaScheduler
+import com.mckimquyen.atomicPeriodicTable.pref.FontScalePref
 import com.mckimquyen.atomicPeriodicTable.pref.NotesPref
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -198,6 +199,57 @@ class SettingsActTest {
             assertTrue(ExamHistoryPref(context).getHistory().isEmpty())
             assertEquals(0, QuizBestScorePref(context).getBestScore())
             assertEquals("kept across reset", NotesPref(context).getNote("H"))
+        }
+    }
+
+    // Font Size / Accessibility (vòng 5 mục 18)
+    @Test
+    fun tappingFontSize_thenSelectLarge_persistsPreference() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Font_Scale_Preference", android.content.Context.MODE_PRIVATE).edit().clear().commit()
+
+        ActivityScenario.launch(SettingsAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.fontSizeSettings).performClick()
+            }
+            Thread.sleep(400) // fade-in panel animation
+
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.fontSizeLargeBtn).performClick()
+            }
+            Thread.sleep(400) // pref write happens synchronously before the 302ms relaunch delay
+
+            assertEquals(FontScalePref.LARGE, FontScalePref(context).getValue())
+
+            // Selecting a font size triggers finish()+startActivity(intent) to relaunch this
+            // Activity (so attachBaseContext re-applies the new scale) — that relaunched
+            // instance is NOT managed by this test's ActivityScenario, so it would otherwise
+            // linger and can interfere with the next test in a batch run (same category of
+            // issue fixed in MainActTest — mục 14). Best-effort close it here.
+            try {
+                androidx.test.espresso.Espresso.pressBackUnconditionally()
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    @Test
+    fun tappingFontSize_thenCancel_leavesPreferenceUntouched() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        context.getSharedPreferences("Font_Scale_Preference", android.content.Context.MODE_PRIVATE).edit().clear().commit()
+
+        ActivityScenario.launch(SettingsAct::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.fontSizeSettings).performClick()
+            }
+            Thread.sleep(400)
+
+            scenario.onActivity { activity ->
+                activity.findViewById<android.view.View>(R.id.fontSizeCancelBtn).performClick()
+            }
+            Thread.sleep(400)
+
+            assertEquals(FontScalePref.DEFAULT, FontScalePref(context).getValue())
         }
     }
 }

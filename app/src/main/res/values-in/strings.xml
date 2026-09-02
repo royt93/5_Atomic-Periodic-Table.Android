@@ -162,6 +162,12 @@
     <string name="more_options">Opsi lainnya</string>
     <string name="themes">Tema</string>
     <string name="select_theme">Pilih tema</string>
+    <string name="font_size_title">Ukuran Font</string>
+    <string name="font_size_desc">Sesuaikan ukuran teks di atas pengaturan sistem Anda</string>
+    <string name="select_font_size">Pilih Ukuran Font</string>
+    <string name="font_size_small">Kecil</string>
+    <string name="font_size_default">Default</string>
+    <string name="font_size_large">Besar</string>
     <string name="favorite_bar">Bilah Favorit</string>
     <string name="personalise_the_favorite_bar">Personalisasi bilah</string>
     <string name="detail_card_order">Urutan kartu</string>

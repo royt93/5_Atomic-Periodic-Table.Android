@@ -162,6 +162,12 @@
     <string name="more_options">Thêm tuỳ chọn</string>
     <string name="themes">Giao diện</string>
     <string name="select_theme">Chọn giao diện</string>
+    <string name="font_size_title">Cỡ chữ</string>
+    <string name="font_size_desc">Điều chỉnh cỡ chữ dựa trên cài đặt hệ thống của bạn</string>
+    <string name="select_font_size">Chọn cỡ chữ</string>
+    <string name="font_size_small">Nhỏ</string>
+    <string name="font_size_default">Mặc định</string>
+    <string name="font_size_large">Lớn</string>
     <string name="favorite_bar">Thanh yêu thích</string>
     <string name="personalise_the_favorite_bar">Cá nhân hoá thanh yêu thích</string>
     <string name="detail_card_order">Thứ tự thẻ chi tiết</string>
