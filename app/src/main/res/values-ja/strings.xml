@@ -630,4 +630,5 @@
     <string name="compound_name_fe2o3">酸化鉄(III)</string>
     <string name="compound_name_agno3">硝酸銀</string>
     <string name="compound_name_al2o3">酸化アルミニウム</string>
+    <string name="speak_element_button">元素名を読み上げる</string>
 </resources>

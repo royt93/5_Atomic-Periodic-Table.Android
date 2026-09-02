@@ -58,6 +58,18 @@
                     android:orientation="horizontal">
 
                     <ImageButton
+                        android:id="@+id/speakElementBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:contentDescription="@string/speak_element_button"
+                        android:padding="16dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/baseline_volume_up_24"
+                        app:tint="?attr/colorOnSecondaryContainer"
+                        tools:ignore="PrivateResource" />
+
+                    <ImageButton
                         android:id="@+id/shareElementBtn"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="56dp"
@@ -89,7 +101,7 @@
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_marginStart="70dp"
-                    android:layout_marginEnd="126dp"
+                    android:layout_marginEnd="182dp"
                     android:gravity="center_vertical"
                     android:text="@string/periodic_table"
                     android:textColor="?attr/colorOnSecondaryContainer"

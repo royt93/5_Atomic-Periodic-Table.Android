@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.speech.tts.TextToSpeech
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -19,6 +20,7 @@ import com.mckimquyen.atomicPeriodicTable.databinding.AElementInfoBinding
 import com.mckimquyen.atomicPeriodicTable.ext.InfoExt
 import com.mckimquyen.atomicPeriodicTable.ext.shareImage
 import com.mckimquyen.atomicPeriodicTable.feature.share.ElementCardRenderer
+import com.mckimquyen.atomicPeriodicTable.feature.tts.TtsAvailability
 import com.mckimquyen.atomicPeriodicTable.model.Element
 import com.mckimquyen.atomicPeriodicTable.model.ElementModel
 import com.mckimquyen.atomicPeriodicTable.pref.ElementSendAndLoad
@@ -31,14 +33,25 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
+import java.util.Locale
 import androidx.core.view.isVisible
 
 class ElementInfoAct : InfoExt() {
+
+    private var textToSpeech: TextToSpeech? = null
+    private var ttsReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createAdInter()
         setupViews()
+    }
+
+    override fun onDestroy() {
+        textToSpeech?.stop()
+        textToSpeech?.shutdown()
+        textToSpeech = null
+        super.onDestroy()
     }
 
 
@@ -136,12 +149,33 @@ class ElementInfoAct : InfoExt() {
             shareCurrentElement()
         }
 
+        binding.speakElementBtn.isEnabled = false
+        binding.speakElementBtn.alpha = 0.4f
+        textToSpeech = TextToSpeech(this) { status ->
+            val languageResult = if (status == TextToSpeech.SUCCESS) textToSpeech?.setLanguage(Locale.US) else null
+            ttsReady = TtsAvailability.isUsable(status, languageResult)
+            binding.speakElementBtn.isEnabled = ttsReady
+            binding.speakElementBtn.alpha = if (ttsReady) 1f else 0.4f
+        }
+        binding.speakElementBtn.setOnClickListener {
+            speakCurrentElementName()
+        }
+
         refreshVipGatedBanner(
             container = findViewById(R.id.bannerContainer),
             tvLabelAd = findViewById(R.id.tvLabelAd),
         )
     }
 
+
+    /** Speaks the raw English element name (not the localized display name) — pronunciation
+     * stays reliable regardless of whether the device's TTS engine has a voice installed for
+     * the app's current UI locale. */
+    private fun speakCurrentElementName() {
+        if (!ttsReady) return
+        val elementName = ElementSendAndLoad(this).getValue() ?: return
+        textToSpeech?.speak(elementName, TextToSpeech.QUEUE_FLUSH, null, "element_name_utterance")
+    }
 
     private fun shareCurrentElement() {
         val elementName = ElementSendAndLoad(this).getValue() ?: return

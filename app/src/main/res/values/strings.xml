@@ -658,5 +658,6 @@
     <string name="compound_name_fe2o3">Iron(III) Oxide</string>
     <string name="compound_name_agno3">Silver Nitrate</string>
     <string name="compound_name_al2o3">Aluminum Oxide</string>
+    <string name="speak_element_button">Speak element name</string>
 </resources>
 

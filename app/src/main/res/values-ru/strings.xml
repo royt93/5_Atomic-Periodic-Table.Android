@@ -630,4 +630,5 @@
     <string name="compound_name_fe2o3">Оксид железа(III)</string>
     <string name="compound_name_agno3">Нитрат серебра</string>
     <string name="compound_name_al2o3">Оксид алюминия</string>
+    <string name="speak_element_button">Произнести название элемента</string>
 </resources>

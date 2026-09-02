@@ -630,4 +630,5 @@
     <string name="compound_name_fe2o3">Eisen(III)-oxid</string>
     <string name="compound_name_agno3">Silbernitrat</string>
     <string name="compound_name_al2o3">Aluminiumoxid</string>
+    <string name="speak_element_button">Elementnamen vorlesen</string>
 </resources>

@@ -630,4 +630,5 @@
     <string name="compound_name_fe2o3">Ossido di Ferro(III)</string>
     <string name="compound_name_agno3">Nitrato d\'Argento</string>
     <string name="compound_name_al2o3">Ossido di Alluminio</string>
+    <string name="speak_element_button">Pronuncia il nome dell\'elemento</string>
 </resources>
