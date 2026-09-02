@@ -22,6 +22,7 @@ import com.roy.sdkadbmob.AdManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.ceil
 import kotlin.math.max
 
 class VipManagementAct : BaseAct() {
@@ -141,7 +142,7 @@ class VipManagementAct : BaseAct() {
         binding.btnWatchAdVip.isEnabled = !active
 
         if (active && expiryMs > 0L) {
-            binding.tvVipEntryLabel.text = getVipEntryLabel()
+            binding.tvVipEntryLabel.text = getVipEntryLabel(expiryMs)
             binding.tvVipEntryExpiry.text = getString(R.string.vip_until, formatDate(expiryMs))
             startCountdown(grantedAtMs, expiryMs)
         } else {
@@ -150,12 +151,19 @@ class VipManagementAct : BaseAct() {
         }
     }
 
-    private fun getVipEntryLabel(): String {
+    // vipRedeemCodes (SDK 1.2+) is additive: redeeming a second code extends the real expiry
+    // instead of replacing it, so the label must reflect days remaining until expiryMs — not
+    // vipPrefs.getActivatedDays(), which only ever holds the LAST redeemed code's day-length
+    // and would show e.g. "VIP 3 days" right after a 30d+3d combo that actually has ~33 days
+    // left. Ceiling (not floor) so redeeming a 30d code shows "30" immediately, not "29".
+    private fun getVipEntryLabel(expiryMs: Long): String {
         if (!vipPrefs.userRedeemedAtLeastOnce()) {
             return getString(R.string.vip_entry_first_install)
         }
-        val days = vipPrefs.getActivatedDays().takeIf { it > 0 } ?: 30
-        return getString(R.string.vip_entry_redeemed, days)
+        val remainingDays = ceil((expiryMs - System.currentTimeMillis()) / 86_400_000.0)
+            .toInt()
+            .coerceAtLeast(0)
+        return getString(R.string.vip_entry_redeemed, remainingDays)
     }
 
     private fun startCountdown(grantedAtMs: Long, expiresAtMs: Long) {

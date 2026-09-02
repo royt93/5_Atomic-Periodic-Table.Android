@@ -21,6 +21,7 @@ import com.mckimquyen.atomicPeriodicTable.R
 import com.roy.sdkadbmob.AdManager
 import com.roy.sdkadbmob.clearAppPreferencesForTest
 import com.roy.sdkadbmob.resetVipActivationBackoffForTest
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Test
@@ -257,6 +258,20 @@ class VipManagementActTest {
             activateVip30dAndDismiss()
             enterKeyAndActivate(VipKeys.VIP_3D_KEY)
             onView(withText(R.string.vip_success_title)).check(matches(isDisplayed()))
+        }
+    }
+
+    // Regression: the entry label must reflect days remaining until the real expiry, not
+    // vipPrefs.getActivatedDays() (which only holds the LAST redeemed code's day-length —
+    // would wrongly show "VIP 3 days" right after a 30d+3d combo that has ~33 days left).
+    @Test
+    fun redeemSecondKeyWhileActive_labelReflectsAccumulatedDaysNotLastCode() {
+        ActivityScenario.launch(VipManagementAct::class.java).use {
+            activateVip30dAndDismiss()
+            enterKeyAndActivate(VipKeys.VIP_3D_KEY)
+            dismissDialog()
+            val staleThreeDayLabel = ctx.getString(R.string.vip_entry_redeemed, 3)
+            onView(withId(R.id.tvVipEntryLabel)).check(matches(not(withText(equalTo(staleThreeDayLabel)))))
         }
     }
 
