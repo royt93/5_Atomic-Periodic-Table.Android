@@ -15,6 +15,25 @@ import com.roy.sdkadbmob.AdSdkConfig
 import com.roy.sdkadbmob.PaidEventListener
 
 class RoyApp : Application() {
+    companion object {
+        // AdMob test-device hashes (hex from ANDROID_ID, NOT GAID — see AD_PROMPT_AOS.MD Bước 3b).
+        // Registering these makes AdMob serve "Test Ad"-labeled ads to these physical devices
+        // even on production ad-unit IDs, protecting the AdMob account from invalid-traffic
+        // flags when dev/QA click ads during manual testing. Add one entry per QA device.
+        //
+        // ANDROID_ID is scoped per app-SIGNING-CERTIFICATE since Android 8 (Oreo) — the same
+        // physical device gets a DIFFERENT ANDROID_ID (and thus a different AdMob test-device
+        // hash) depending on whether the installed APK is debug-signed or release-signed.
+        // Confirmed by smoke test 2026-09-03: debug build on SM-S928B hashed to
+        // 07944946EDFFB8A0257C78AC2D37BDDC, the production-release build on the SAME device
+        // hashed to CCC444C6C6BAD6B6B9C344EC8A6509D8. Register BOTH per QA device, or release
+        // testing on that device will silently serve real (non-test) ads.
+        private val QA_TEST_DEVICE_HASHES = arrayOf(
+            "07944946EDFFB8A0257C78AC2D37BDDC", // Samsung SM-S928B (S24 Ultra) — debug build
+            "CCC444C6C6BAD6B6B9C344EC8A6509D8", // Samsung SM-S928B (S24 Ultra) — release build
+        )
+    }
+
     // FIX-012: guards adsInitializeStarted/adsInitialized/pendingAdInitCallbacks —
     // AdManager.initialize()'s completion callback is not guaranteed to run on the main
     // thread, so mutating this state from both a caller thread and the SDK's callback
@@ -120,6 +139,7 @@ class RoyApp : Application() {
         )
 
         AdManager.setConfig(adConfig)
+        AdManager.setTestDeviceIds(*QA_TEST_DEVICE_HASHES)
 
         // Must be set here in Application.onCreate(), not in an Activity: the SDK ties the
         // listener's lifetime to whichever Activity is foreground when set and clears it on
