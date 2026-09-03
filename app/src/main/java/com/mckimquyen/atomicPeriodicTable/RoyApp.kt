@@ -7,10 +7,12 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.mckimquyen.atomicPeriodicTable.act.SplashAct
 import com.mckimquyen.atomicPeriodicTable.common.const.AdKeys
 import com.roy.sdkadbmob.AdManager
 import com.roy.sdkadbmob.AdSafetyLimits
 import com.roy.sdkadbmob.AdSdkConfig
+import com.roy.sdkadbmob.PaidEventListener
 
 class RoyApp : Application() {
     // FIX-012: guards adsInitializeStarted/adsInitialized/pendingAdInitCallbacks —
@@ -23,8 +25,16 @@ class RoyApp : Application() {
     private var adsInitialized = false
     private val pendingAdInitCallbacks = mutableListOf<(Boolean, String?) -> Unit>()
 
-    // Track AppLovin fullscreen activities (App Open, Interstitial) to detect the race
-    // between ProcessLifecycle.showAppOpenAd and initSplashScreen on warm relaunch.
+    // Track fullscreen ad activities (App Open, Interstitial) to detect the race between
+    // ProcessLifecycle.showAppOpenAd and initSplashScreen on warm relaunch. Must match BOTH
+    // providers' internal Activity class names — audit finding: this only matched AppLovin's
+    // ("AppLovinFullscreen...") while IS_ENABLE_ADMOB=true (release AND debug) means the
+    // effective provider serving App Open/Interstitial is AdMob's own AdActivity, so the
+    // guard was silently dead for every ad this app actually shows.
+    private fun isTrackedFullscreenAdActivity(a: Activity) =
+        a.javaClass.name.contains("AppLovinFullscreen") ||
+            a.javaClass.name == "com.google.android.gms.ads.AdActivity"
+
     var isFullscreenAdShowing = false
         private set
     private val fullscreenAdDismissListeners = mutableListOf<() -> Unit>()
@@ -53,12 +63,12 @@ class RoyApp : Application() {
     private fun registerFullscreenAdTracker() {
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(a: Activity, b: Bundle?) {
-                if (a.javaClass.name.contains("AppLovinFullscreen")) {
+                if (isTrackedFullscreenAdActivity(a)) {
                     isFullscreenAdShowing = true
                 }
             }
             override fun onActivityDestroyed(a: Activity) {
-                if (a.javaClass.name.contains("AppLovinFullscreen")) {
+                if (isTrackedFullscreenAdActivity(a)) {
                     isFullscreenAdShowing = false
                     val listeners = fullscreenAdDismissListeners.toList()
                     fullscreenAdDismissListeners.clear()
@@ -86,8 +96,18 @@ class RoyApp : Application() {
             applovinAppOpenId      = BuildConfig.APPLOVIN_APP_OPEN_ID,
             applovinRewardedId     = BuildConfig.APPLOVIN_REWARDED_ID,
             safety                 = if (BuildConfig.DEBUG) AdSafetyLimits.TEST else AdSafetyLimits.CONTENT,
+            // Audit note (2026-09-03): vipKeySecret reuses VIP_30D_KEY (the same code users
+            // type into VipManagementAct) rather than a dedicated secret. The SDK guide's
+            // sample config uses a separate value here (it only guards local anti-tamper
+            // SharedPreferences signing, not server auth), so reusing a user-facing/shareable
+            // code technically weakens that guard. Left as-is deliberately: VIP is a marketing
+            // freebie, not a paid entitlement, so the attack cost/reward is negligible — see
+            // "VIP kích hoạt client-side" accepted-risk note in doc/admob/AD_PROMPT_AOS.MD.
             vipKeySecret           = AdKeys.VIP_SECRET,
             applovinSdkKey         = BuildConfig.APPLOVIN_SDK_KEY,
+            // Prevents the auto-resume App Open ad from ever firing on top of the splash
+            // screen itself (it already shows its own App Open via initSplashScreen()).
+            appOpenExcludedActivities = listOf(SplashAct::class.java),
             // Fixed-code redeem (SDK 1.2+): VIP_30D_KEY/VIP_3D_KEY map straight to their day
             // counts — this is the SDK's supported mechanism for "a few fixed codes -> fixed
             // days" (unlike allowLegacyPlaintextVipKey, which is @Deprecated and slated for
@@ -100,6 +120,17 @@ class RoyApp : Application() {
         )
 
         AdManager.setConfig(adConfig)
+
+        // Must be set here in Application.onCreate(), not in an Activity: the SDK ties the
+        // listener's lifetime to whichever Activity is foreground when set and clears it on
+        // that Activity's onDestroy() (leak guard) — setting it from an Activity would
+        // silently stop all revenue tracking once that Activity is destroyed.
+        AdManager.paidEventListener = PaidEventListener { adType, valueMicros, currency, precision, adSource ->
+            Log.d(
+                "AdsRevenue",
+                "adType=$adType valueMicros=$valueMicros currency=$currency precision=$precision adSource=$adSource"
+            )
+        }
     }
 
     fun initializeAdsIfNeeded(onComplete: (Boolean, String?) -> Unit) {

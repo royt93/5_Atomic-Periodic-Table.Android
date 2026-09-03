@@ -1,5 +1,22 @@
 # AD Migration Report - AdmobApplovinWrapper 1.1.5
 
+> ⚠️ **Tài liệu lịch sử — đóng băng tại thời điểm migrate lên SDK 1.1.5.** Nhiều mô tả bên dưới
+> KHÔNG còn đúng với code hiện tại (2026-09-03), giữ nguyên vì đây là báo cáo lịch sử, không phải
+> spec sống. Cho trạng thái hiện tại, tin `CLAUDE.md` (mục "Ad SDK integration" + "VIP feature")
+> làm nguồn sự thật, không phải file này. Sai lệch đã biết:
+> - SDK hiện tại: `1.8.5` (không phải `1.1.5`) — xem `app/build.gradle`.
+> - `IS_ENABLE_ADMOB=true` cho cả debug lẫn release (không còn `false`/AppLovin-mặc-định như mô tả
+>   ở mục "Setup Gradle" và bảng "Before/After" bên dưới). App ID lấy qua `manifestPlaceholders`
+>   từ secrets (`DEBUG_ADMOB_APP_ID`/`RELEASE_ADMOB_APP_ID`), không hardcode trong Manifest.
+> - Mục "6. Rewarded" mô tả `grantViaRewarded()` gọi `activateVipByKey(context, AdKeys.VIP_SECRET, 3)`
+>   — đây là hack SDK cũ **đã bị bỏ**. Code thật hiện tại (`VipManagementAct.grantRewardedVip()`)
+>   dùng `AdManager.grantVipDays(context, 3)`. Đừng copy lại pattern cũ trong mục 6.
+>   `redeemInputKey()` cũng không còn ép cứng key = `vipKeySecret`; key gõ tay của user đi thẳng
+>   qua `AdSdkConfig.vipRedeemCodes` (SDK 1.2+).
+> - `RoyApp.kt` giờ có thêm `appOpenExcludedActivities` (loại trừ `SplashAct`) và
+>   `AdManager.paidEventListener` (set trong `onCreate`) — 2 field này SDK `1.1.5` không có trong
+>   mô tả gốc bên dưới.
+
 Source prompt: `doc/AD_PROMPT_AOS.MD`  
 Reference SDK doc: `/Users/loitran/AndroidStudioProjects/@mckimquyen/@playstore/@prodution/_AdmobWrapper/doc/AD.MD`  
 Target SDK: `com.github.royt93:AdmobApplovinWrapper:1.1.5`
